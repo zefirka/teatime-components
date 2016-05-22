@@ -30795,17 +30795,18 @@
 	    value: function renderButton() {
 	      var _props2 = this.props;
 	      var disabled = _props2.disabled;
+	      var options = _props2.options;
 	      var styles = _props2.styles;
 	      var _state3 = this.state;
 	      var isOpened = _state3.isOpened;
-	      var value = _state3.value;
+	      var selected = _state3.selected;
 
 
 	      return Button({
 	        disabled: disabled,
 	        onClick: this.onClick,
 	        styles: styles[isOpened ? 'buttonOpened' : 'buttonClosed']
-	      }, value);
+	      }, options[selected].text);
 	    }
 	  }, {
 	    key: 'renderOptions',
