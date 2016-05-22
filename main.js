@@ -51,7 +51,8 @@
 	__webpack_require__(421);
 	__webpack_require__(433);
 	__webpack_require__(446);
-	module.exports = __webpack_require__(485);
+	__webpack_require__(485);
+	module.exports = __webpack_require__(499);
 
 
 /***/ },
@@ -19558,6 +19559,7 @@
 	var _require2 = __webpack_require__(171);
 
 	var createTag = _require2.createTag;
+	var a = _require2.a;
 	var div = _require2.div;
 	var h1 = _require2.h1;
 
@@ -19576,7 +19578,9 @@
 	    return div.apply(null, [{ key: '_' + title + i, styleName: 'row' }].concat(components));
 	  });
 
-	  return div(null, h1({ styleName: 'header' }, title), content);
+	  var anchor = title.toLowerCase();
+
+	  return div(null, h1({ styleName: 'header' }, a({ className: 'anchor', name: anchor }), title, ' ', a({ href: '#' + anchor, styleName: 'hashLink' }, '#')), content);
 	}
 
 	DemoContainer.defaultProps = {};
@@ -26844,11 +26848,12 @@
 
 
 	// module
-	exports.push([module.id, "html,\nbody\n{\n  margin: 0;\n  padding: 0;\n}\n\n.demo-container--header\n{\n  margin: 25px 20px;\n\n  text-transform: capitalize;\n\n  color: #333;\n\n  font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';\n  font-size: 36px;\n  line-height: 1.2;\n}\n\n.demo-container--row\n{\n  margin: 10px 20px;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody\n{\n  margin: 0;\n  padding: 0;\n}\n\n.demo-container--header\n{\n  margin: 25px 20px;\n\n  text-transform: capitalize;\n\n  color: #333;\n\n  font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';\n  font-size: 36px;\n  line-height: 1.2;\n}\n\n.demo-container--hashLink\n{\n  display: none;\n\n  text-decoration: none;\n\n  color: #aaa;\n}\n\n.demo-container--hashLink:hover\n{\n  text-decoration: underline;\n\n  color: #a5473a;\n}\n\n.demo-container--header:hover .demo-container--hashLink\n{\n  display: inline;\n}\n\n.demo-container--row\n{\n  margin: 10px 20px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
 		"header": "demo-container--header",
+		"hashLink": "demo-container--hashLink",
 		"row": "demo-container--row"
 	};
 
@@ -28318,6 +28323,7 @@
 	exports.camelcase = __webpack_require__(396);
 	exports.decrement = decrement;
 	exports.increment = increment;
+	exports.findIndexByValueProp = findIndexByValueProp;
 	exports.noop = noop;
 	exports.toArray = toArray;
 
@@ -28349,6 +28355,24 @@
 	 */
 	function increment(value, limit) {
 	  return value < limit - 1 ? value + 1 : 0;
+	}
+
+	/**
+	 * @param  {object[]} collection
+	 * @param  {string} value
+	 * @return {number}
+	 */
+	function findIndexByValueProp(collection, value) {
+	  var length = collection.length;
+	  for (var i = 0; i < length; ++i) {
+	    if (collection[i].value !== value) {
+	      continue;
+	    }
+
+	    return i;
+	  }
+
+	  return -1;
 	}
 
 	function noop() {}
@@ -30439,6 +30463,7 @@
 	    }],
 	    "size": "s"
 	  }, {
+	    "defaultValue": "mz",
 	    "disabled": true,
 	    "name": "motorrad-2",
 	    "options": [{
@@ -30650,6 +30675,7 @@
 	var bind = _require5.bind;
 	var decrement = _require5.decrement;
 	var increment = _require5.increment;
+	var findIndexByValueProp = _require5.findIndexByValueProp;
 
 	var cssModules = __webpack_require__(173);
 	var reactOutsideEvent = __webpack_require__(451);
@@ -30662,19 +30688,24 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
+	    var value = props.defaultValue || props.value;
+	    var index = typeof value === 'string' ? findIndexByValueProp(props.options, value) : 0;
+
+	    if (index === -1) {
+	      console.error('Warning: Failed propType: Required prop `options` doesn\'t contains `value` `' + value + '` in `Select`'); // eslint-disable-line no-console
+	      index = 0;
+	    }
+
 	    _this.state = {
 	      isOpened: false,
-	      position: 0,
-	      selected: 0,
-	      value: props.defaultValue || props.value || props.options[0].value
+	      position: index,
+	      selected: index,
+	      value: props.defaultValue || props.value || props.options[index].value
 	    };
 
-	    bind(_this, ['onClick', 'onKeyDown']);
+	    bind(_this, ['onClick', 'onKeyDown', 'onOptionClick', 'onOptionMouseEnter']);
 	    return _this;
 	  }
-
-	  // https://github.com/sullenor/teatime-components/blob/c01b639d39ab9c7ac387724c330cb9f11066749c/components/select.js
-
 
 	  _createClass(Select, [{
 	    key: 'onClick',
@@ -30793,14 +30824,11 @@
 	        var text = _ref.text;
 	        var value = _ref.value;
 	        return Option({
-	          onClick: function onClick(e) {
-	            return _this2.onOptionClick(e, i);
-	          },
-	          onMouseEnter: function onMouseEnter(e) {
-	            return _this2.onOptionMouseEnter(e, i);
-	          },
-	          key: '_' + value + i,
 	          focused: position === i,
+	          identity: i,
+	          key: '_' + value + i,
+	          onClick: _this2.onOptionClick,
+	          onMouseEnter: _this2.onOptionMouseEnter,
 	          selected: selected === i,
 	          styles: styles.option,
 	          value: value
@@ -30820,6 +30848,26 @@
 	  defaultValue: PropTypes.string,
 	  disabled: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
+	  onBlur: PropTypes.func,
+	  onChange: PropTypes.func,
+	  onClick: PropTypes.func,
+	  onContextMenu: PropTypes.func,
+	  onDoubleClick: PropTypes.func,
+	  onFocus: PropTypes.func,
+	  onKeyDown: PropTypes.func,
+	  onKeyPress: PropTypes.func,
+	  onKeyUp: PropTypes.func,
+	  onMouseDown: PropTypes.func,
+	  onMouseEnter: PropTypes.func,
+	  onMouseLeave: PropTypes.func,
+	  onMouseMove: PropTypes.func,
+	  onMouseOut: PropTypes.func,
+	  onMouseOver: PropTypes.func,
+	  onMouseUp: PropTypes.func,
+	  onTouchCancel: PropTypes.func,
+	  onTouchEnd: PropTypes.func,
+	  onTouchMove: PropTypes.func,
+	  onTouchStart: PropTypes.func,
 	  options: PropTypes.array,
 	  styles: PropTypes.object,
 	  value: PropTypes.string
@@ -30836,15 +30884,25 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var _require = __webpack_require__(165);
 
+	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
 	var _require2 = __webpack_require__(395);
 
 	var camelcase = _require2.camelcase;
+	var bind = _require2.bind;
 
 	var _require3 = __webpack_require__(171);
 
@@ -30854,21 +30912,56 @@
 	var classnames = __webpack_require__(450);
 	var cssModules = __webpack_require__(173);
 
-	function Option(_ref) {
-	  var focused = _ref.focused;
-	  var selected = _ref.selected;
-	  var value = _ref.value;
+	var Option = function (_Component) {
+	  _inherits(Option, _Component);
 
-	  var o = _objectWithoutProperties(_ref, ['focused', 'selected', 'value']);
+	  function Option(props) {
+	    _classCallCheck(this, Option);
 
-	  return span(_extends({}, o, {
-	    'data-value': value,
-	    styleName: camelcase(classnames('control', {
-	      focused: focused,
-	      selected: selected
-	    }))
-	  }));
-	}
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Option).call(this, props));
+
+	    bind(_this, ['onClick', 'onMouseEnter']);
+	    return _this;
+	  }
+
+	  _createClass(Option, [{
+	    key: 'onClick',
+	    value: function onClick(e) {
+	      this.props.onClick(e, this.props.identity);
+	    }
+	  }, {
+	    key: 'onMouseEnter',
+	    value: function onMouseEnter(e) {
+	      this.props.onMouseEnter(e, this.props.identity);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var focused = _props.focused;
+	      var onClick = _props.onClick;
+	      var // eslint-disable-line no-unused-vars
+	      onMouseEnter = _props.onMouseEnter;
+	      var // eslint-disable-line no-unused-vars
+	      selected = _props.selected;
+	      var value = _props.value;
+
+	      var o = _objectWithoutProperties(_props, ['focused', 'onClick', 'onMouseEnter', 'selected', 'value']);
+
+	      return span(_extends({}, o, {
+	        'data-value': value,
+	        onClick: this.onClick,
+	        onMouseEnter: this.onMouseEnter,
+	        styleName: camelcase(classnames('control', {
+	          focused: focused,
+	          selected: selected
+	        }))
+	      }));
+	    }
+	  }]);
+
+	  return Option;
+	}(Component);
 
 	Option.defaultProps = {
 	  styles: {}
@@ -30876,6 +30969,9 @@
 
 	Option.propTypes = {
 	  focused: PropTypes.bool,
+	  identity: PropTypes.number.isRequired,
+	  onClick: PropTypes.func.isRequired,
+	  onMouseEnter: PropTypes.func.isRequired,
 	  selected: PropTypes.bool,
 	  styles: PropTypes.object,
 	  value: PropTypes.string.isRequired
@@ -31217,7 +31313,7 @@
 	exports.i(__webpack_require__(462), undefined);
 
 	// module
-	exports.push([module.id, ".button-closed-s--control\n{\n}\n", ""]);
+	exports.push([module.id, ".button-closed-s--control\n{\n}\n\n.button-closed-s--control:after\n{\n  height: 9px;\n  margin: 0 0 0 8px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -31267,7 +31363,7 @@
 
 
 	// module
-	exports.push([module.id, ".arrow--control:after\n{\n  display: inline-block;\n\n  width: 11px;\n  height: 6px;\n  margin: 0 0 0 12px;\n\n  content: '';\n  transition: transform .1s ease-out 0s;\n\n  background: url(" + __webpack_require__(464) + ") 0 0 no-repeat;\n}\n\n.arrow--control:disabled:after\n{\n  opacity: .4;\n}\n", ""]);
+	exports.push([module.id, ".arrow--control:after\n{\n  display: inline-block;\n\n  width: 11px;\n  height: 6px;\n\n  content: '';\n  transition: transform .1s ease-out 0s;\n\n  background: url(" + __webpack_require__(464) + ") 0 50% no-repeat;\n}\n\n.arrow--control:disabled:after\n{\n  opacity: .4;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -31316,7 +31412,7 @@
 	exports.i(__webpack_require__(462), undefined);
 
 	// module
-	exports.push([module.id, ".button-closed-m--control\n{\n}\n", ""]);
+	exports.push([module.id, ".button-closed-m--control\n{\n}\n\n.button-closed-m--control:after\n{\n  height: 9px;\n  margin: 0 0 0 11px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -31377,7 +31473,7 @@
 	exports.i(__webpack_require__(462), undefined);
 
 	// module
-	exports.push([module.id, ".button-closed-l--control\n{\n}\n", ""]);
+	exports.push([module.id, ".button-closed-l--control\n{\n}\n\n.button-closed-l--control:after\n{\n  height: 11px;\n  margin: 0 0 0 13px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -31438,7 +31534,7 @@
 	exports.i(__webpack_require__(473), undefined);
 
 	// module
-	exports.push([module.id, ".button-opened-s--control\n{\n}\n", ""]);
+	exports.push([module.id, ".button-opened-s--control\n{\n}\n\n.button-opened-s--control:after\n{\n  height: 9px;\n  margin: 0 0 0 8px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -31497,7 +31593,7 @@
 	exports.i(__webpack_require__(473), undefined);
 
 	// module
-	exports.push([module.id, ".button-opened-m--control\n{\n}\n", ""]);
+	exports.push([module.id, ".button-opened-m--control\n{\n}\n\n.button-opened-m--control:after\n{\n  height: 9px;\n  margin: 0 0 0 11px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -31540,7 +31636,7 @@
 	exports.i(__webpack_require__(473), undefined);
 
 	// module
-	exports.push([module.id, ".button-opened-l--control\n{\n}\n", ""]);
+	exports.push([module.id, ".button-opened-l--control\n{\n}\n\n.button-opened-l--control:after\n{\n  height: 11px;\n  margin: 0 0 0 13px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -31709,6 +31805,346 @@
 
 	var render = __webpack_require__(2);
 	module.exports = render({
+	  "name": "spin",
+	  "hyper": "Spin",
+	  "data": [[{
+	    "size": "xs"
+	  }, {
+	    "size": "s"
+	  }, {
+	    "size": "m"
+	  }, {
+	    "size": "l"
+	  }, {
+	    "size": "xl"
+	  }]]
+	}, __webpack_require__(486));
+
+/***/ },
+/* 486 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	var _require = __webpack_require__(165);
+
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(487);
+
+	var BaseSpin = _require2.Spin;
+
+	var _require3 = __webpack_require__(171);
+
+	var createTag = _require3.createTag;
+
+	var cssModules = __webpack_require__(173);
+
+	var baseStyles = {
+	  xs: __webpack_require__(488),
+	  s: __webpack_require__(491),
+	  m: __webpack_require__(493),
+	  l: __webpack_require__(495),
+	  xl: __webpack_require__(497)
+	};
+
+	function Spin(_ref) {
+	  var size = _ref.size;
+	  var styles = _ref.styles;
+
+	  var o = _objectWithoutProperties(_ref, ['size', 'styles']);
+
+	  return BaseSpin(_extends({}, o, { styles: _extends({}, baseStyles[size], {
+	      styles: styles
+	    }) }));
+	}
+
+	Spin.defaultProps = {
+	  size: 'm',
+	  styles: {}
+	};
+
+	Spin.propTypes = {
+	  size: PropTypes.oneOf(['xs', 's', 'm', 'l', 'xl']),
+	  styles: PropTypes.object
+	};
+
+	module.exports = cssModules(Spin);
+	module.exports.Spin = createTag(module.exports);
+
+/***/ },
+/* 487 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _require = __webpack_require__(165);
+
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(171);
+
+	var createTag = _require2.createTag;
+	var span = _require2.span;
+
+	var cssModules = __webpack_require__(173);
+
+	function Spin(props) {
+	  return span(_extends({}, props, { styleName: 'control' }));
+	}
+
+	Spin.defaultProps = {
+	  styles: {}
+	};
+
+	Spin.propTypes = {
+	  styles: PropTypes.object
+	};
+
+	module.exports = cssModules(Spin);
+	module.exports.Spin = createTag(module.exports);
+
+/***/ },
+/* 488 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(489);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(360)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]!./../../node_modules/postcss-loader/index.js!./spin-xs.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]!./../../node_modules/postcss-loader/index.js!./spin-xs.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 489 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(359)();
+	// imports
+	exports.i(__webpack_require__(490), undefined);
+
+	// module
+	exports.push([module.id, ".spin-xs--control\n{\n\n  width: 16px;\n  height: 16px;\n\n  line-height: 16px;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"control": "spin-xs--control " + __webpack_require__(490).locals["control"] + ""
+	};
+
+/***/ },
+/* 490 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(359)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "@keyframes spin--spin\n{\n  from\n  {\n    transform: rotate(0deg);\n  }\n\n  to\n  {\n    transform: rotate(360deg);\n  }\n}\n\n.spin--control\n{\n  display: inline-block;\n\n  width: 16px;\n  height: 16px;\n\n  animation: spin--spin 1s infinite linear;\n\n  border: 2px solid #fc0;\n  border-top-color: transparent;\n  border-left-color: transparent;\n  border-radius: 50%;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"control": "spin--control",
+		"spin": "spin--spin"
+	};
+
+/***/ },
+/* 491 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(492);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(360)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]!./../../node_modules/postcss-loader/index.js!./spin-s.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]!./../../node_modules/postcss-loader/index.js!./spin-s.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 492 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(359)();
+	// imports
+	exports.i(__webpack_require__(490), undefined);
+
+	// module
+	exports.push([module.id, ".spin-s--control\n{\n\n  width: 24px;\n  height: 24px;\n\n  line-height: 24px;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"control": "spin-s--control " + __webpack_require__(490).locals["control"] + ""
+	};
+
+/***/ },
+/* 493 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(494);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(360)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]!./../../node_modules/postcss-loader/index.js!./spin-m.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]!./../../node_modules/postcss-loader/index.js!./spin-m.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 494 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(359)();
+	// imports
+	exports.i(__webpack_require__(490), undefined);
+
+	// module
+	exports.push([module.id, ".spin-m--control\n{\n\n  width: 28px;\n  height: 28px;\n\n  line-height: 28px;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"control": "spin-m--control " + __webpack_require__(490).locals["control"] + ""
+	};
+
+/***/ },
+/* 495 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(496);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(360)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]!./../../node_modules/postcss-loader/index.js!./spin-l.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]!./../../node_modules/postcss-loader/index.js!./spin-l.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 496 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(359)();
+	// imports
+	exports.i(__webpack_require__(490), undefined);
+
+	// module
+	exports.push([module.id, ".spin-l--control\n{\n\n  width: 32px;\n  height: 32px;\n\n  line-height: 32px;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"control": "spin-l--control " + __webpack_require__(490).locals["control"] + ""
+	};
+
+/***/ },
+/* 497 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(498);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(360)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]!./../../node_modules/postcss-loader/index.js!./spin-xl.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]!./../../node_modules/postcss-loader/index.js!./spin-xl.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 498 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(359)();
+	// imports
+	exports.i(__webpack_require__(490), undefined);
+
+	// module
+	exports.push([module.id, ".spin-xl--control\n{\n\n  width: 38px;\n  height: 38px;\n\n  line-height: 38px;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"control": "spin-xl--control " + __webpack_require__(490).locals["control"] + ""
+	};
+
+/***/ },
+/* 499 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var render = __webpack_require__(2);
+	module.exports = render({
 	  "name": "textarea",
 	  "hyper": "Textarea",
 	  "data": [[{
@@ -31734,10 +32170,10 @@
 	    "placeholder": "size l",
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(486));
+	}, __webpack_require__(500));
 
 /***/ },
-/* 486 */
+/* 500 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31746,7 +32182,7 @@
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-	var _require = __webpack_require__(487);
+	var _require = __webpack_require__(501);
 
 	var BaseTextarea = _require.Textarea;
 
@@ -31760,8 +32196,8 @@
 
 
 	var baseStyles = {
-	  'm': __webpack_require__(488),
-	  'l': __webpack_require__(490)
+	  'm': __webpack_require__(502),
+	  'l': __webpack_require__(504)
 	};
 
 	function Textarea(_ref) {
@@ -31787,7 +32223,7 @@
 	module.exports.Textarea = createTag(module.exports);
 
 /***/ },
-/* 487 */
+/* 501 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31842,13 +32278,13 @@
 	module.exports.Textarea = createTag(module.exports);
 
 /***/ },
-/* 488 */
+/* 502 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(489);
+	var content = __webpack_require__(503);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(360)(content, {});
@@ -31868,7 +32304,7 @@
 	}
 
 /***/ },
-/* 489 */
+/* 503 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(359)();
@@ -31886,13 +32322,13 @@
 	};
 
 /***/ },
-/* 490 */
+/* 504 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(491);
+	var content = __webpack_require__(505);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(360)(content, {});
@@ -31912,7 +32348,7 @@
 	}
 
 /***/ },
-/* 491 */
+/* 505 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(359)();
