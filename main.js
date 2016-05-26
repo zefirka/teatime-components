@@ -30090,17 +30090,13 @@
 
 	var Component = _require.Component;
 
-	var _require2 = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _require2 = __webpack_require__(40);
 
-	var createTag = _require2.createTag;
+	var findDOMNode = _require2.findDOMNode;
 
-	var _require3 = __webpack_require__(40);
+	var _require3 = __webpack_require__(393);
 
-	var findDOMNode = _require3.findDOMNode;
-
-	var _require4 = __webpack_require__(393);
-
-	var generateId = _require4.generateId;
+	var generateId = _require3.generateId;
 
 	var React = __webpack_require__(3);
 
