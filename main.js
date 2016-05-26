@@ -47,12 +47,12 @@
 	__webpack_require__(1);
 	__webpack_require__(390);
 	__webpack_require__(399);
-	__webpack_require__(417);
-	__webpack_require__(427);
-	__webpack_require__(439);
-	__webpack_require__(452);
-	__webpack_require__(487);
-	module.exports = __webpack_require__(501);
+	__webpack_require__(416);
+	__webpack_require__(426);
+	__webpack_require__(438);
+	__webpack_require__(449);
+	__webpack_require__(468);
+	module.exports = __webpack_require__(482);
 
 
 /***/ },
@@ -28227,7 +28227,7 @@
 
 	      return React.createElement(
 	        'div',
-	        { className: className, styleName: 'container' },
+	        { className: className, styleName: 'wrapper' },
 	        React.createElement('input', _extends({}, o, { id: id, styleName: 'native', type: 'checkbox' })),
 	        React.createElement('label', { htmlFor: id, styleName: 'control' }),
 	        React.createElement(
@@ -28330,12 +28330,12 @@
 	exports.i(__webpack_require__(396), undefined);
 
 	// module
-	exports.push([module.id, ".check-m--container\n{\n\n  font-size: " + __webpack_require__(373).locals["size-m"] + ";\n  line-height: 15px;\n}\n\n.check-m--control\n{\n\n  top: 2px;\n\n  width: 14px;\n  height: 14px;\n\n  line-height: 14px;\n}\n\n.check-m--control:after\n{\n  width: 15px;\n  height: 16px;\n}\n\n.check-m--native\n{\n}\n\n.check-m--label\n{\n\n  margin: 0 0 0 5px;\n}\n", ""]);
+	exports.push([module.id, ".check-m--wrapper\n{\n\n  font-size: " + __webpack_require__(373).locals["size-m"] + ";\n  line-height: 15px;\n}\n\n.check-m--control\n{\n\n  top: 2px;\n\n  width: 14px;\n  height: 14px;\n\n  line-height: 14px;\n}\n\n.check-m--control:after\n{\n  width: 15px;\n  height: 16px;\n}\n\n.check-m--native\n{\n}\n\n.check-m--label\n{\n\n  margin: 0 0 0 5px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
 		"size-m": "" + __webpack_require__(373).locals["size-m"] + "",
-		"container": "check-m--container " + __webpack_require__(396).locals["container"] + "",
+		"wrapper": "check-m--wrapper " + __webpack_require__(396).locals["wrapper"] + "",
 		"control": "check-m--control " + __webpack_require__(396).locals["control"] + "",
 		"native": "check-m--native " + __webpack_require__(396).locals["native"] + "",
 		"label": "check-m--label " + __webpack_require__(396).locals["label"] + ""
@@ -28350,11 +28350,11 @@
 
 
 	// module
-	exports.push([module.id, ".check--container\n{\n  position: relative;\n\n  display: inline-block;\n\n  font-family: arial,helvetica,sans-serif;\n}\n\n.check--control\n{\n  position: relative;\n\n  display: inline-block;\n\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  transition: background .1s ease-out 0s;\n\n  border: none;\n  border-radius: 3px;\n  outline: none;\n  background: #fff;\n  box-shadow: inset 0 0 0 1px #ccc;\n}\n\n.check--control:hover\n{\n  box-shadow: inset 0 0 0 1px #b3b3b3;\n}\n\n.check--control:after\n{\n  position: absolute;\n  top: -10px;\n  left: 2px;\n\n  display: block;\n  visibility: hidden;\n\n  content: '';\n  transition: top .05s ease-out,opacity .05s ease-out,visibility 0s linear .05s;\n\n  opacity: 0;\n  background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2215%22%20height%3D%2216%22%3E%3Cpath%20d%3D%22M13.5.5l-8%2012L1.7%208l-1%201.6L5.6%2015l9.1-13.4z%22%2F%3E%3C%2Fsvg%3E) 0 0 no-repeat;\n  background-size: 100%;\n}\n\n.check--native\n{\n  position: absolute;\n\n  opacity: 0;\n}\n\n.check--native:checked + .check--control\n{\n  background: #ffeba0;\n  box-shadow: inset 0 0 0 1px #ccbd80;\n}\n\n.check--native:checked + .check--control:after\n{\n  top: -5px;\n\n  visibility: visible;\n\n  opacity: 1;\n}\n\n.check--native:focus + .check--control\n{\n  box-shadow: 0 0 0 1px #fc0,inset 0 0 0 1px #fc0;\n}\n\n.check--native:disabled + .check--control\n{\n  cursor: default;\n\n  background: #ebebeb;\n  box-shadow: none;\n}\n\n.check--native:disabled + .check--control:after\n{\n  opacity: .4;\n}\n\n.check--native:disabled ~ .check--label\n{\n  color: #999;\n}\n", ""]);
+	exports.push([module.id, ".check--wrapper\n{\n  position: relative;\n\n  display: inline-block;\n\n  font-family: arial,helvetica,sans-serif;\n}\n\n.check--control\n{\n  position: relative;\n\n  display: inline-block;\n\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  transition: background .1s ease-out 0s;\n\n  border: none;\n  border-radius: 3px;\n  outline: none;\n  background: #fff;\n  box-shadow: inset 0 0 0 1px #ccc;\n}\n\n.check--control:hover\n{\n  box-shadow: inset 0 0 0 1px #b3b3b3;\n}\n\n.check--control:after\n{\n  position: absolute;\n  top: -10px;\n  left: 2px;\n\n  display: block;\n  visibility: hidden;\n\n  content: '';\n  transition: top .05s ease-out,opacity .05s ease-out,visibility 0s linear .05s;\n\n  opacity: 0;\n  background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2215%22%20height%3D%2216%22%3E%3Cpath%20d%3D%22M13.5.5l-8%2012L1.7%208l-1%201.6L5.6%2015l9.1-13.4z%22%2F%3E%3C%2Fsvg%3E) 0 0 no-repeat;\n  background-size: 100%;\n}\n\n.check--native\n{\n  position: absolute;\n\n  opacity: 0;\n}\n\n.check--native:checked + .check--control\n{\n  background: #ffeba0;\n  box-shadow: inset 0 0 0 1px #ccbd80;\n}\n\n.check--native:checked + .check--control:after\n{\n  top: -5px;\n\n  visibility: visible;\n\n  opacity: 1;\n}\n\n.check--native:focus + .check--control\n{\n  box-shadow: 0 0 0 1px #fc0,inset 0 0 0 1px #fc0;\n}\n\n.check--native:disabled + .check--control\n{\n  cursor: default;\n\n  background: #ebebeb;\n  box-shadow: none;\n}\n\n.check--native:disabled + .check--control:after\n{\n  opacity: .4;\n}\n\n.check--native:disabled ~ .check--label\n{\n  color: #999;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"container": "check--container",
+		"wrapper": "check--wrapper",
 		"control": "check--control",
 		"native": "check--native",
 		"label": "check--label"
@@ -28396,12 +28396,12 @@
 	exports.i(__webpack_require__(396), undefined);
 
 	// module
-	exports.push([module.id, ".check-l--container\n{\n\n  font-size: " + __webpack_require__(373).locals["size-l"] + ";\n  line-height: 15px;\n}\n\n.check-l--control\n{\n\n  top: 3px;\n\n  width: 17px;\n  height: 17px;\n\n  line-height: 17px;\n}\n\n.check-l--control:after\n{\n  width: 18px;\n  height: 18px;\n}\n\n.check-l--native\n{\n}\n\n.check-l--label\n{\n\n  margin-left: 7px;\n}\n", ""]);
+	exports.push([module.id, ".check-l--wrapper\n{\n\n  font-size: " + __webpack_require__(373).locals["size-l"] + ";\n  line-height: 15px;\n}\n\n.check-l--control\n{\n\n  top: 3px;\n\n  width: 17px;\n  height: 17px;\n\n  line-height: 17px;\n}\n\n.check-l--control:after\n{\n  width: 18px;\n  height: 18px;\n}\n\n.check-l--native\n{\n}\n\n.check-l--label\n{\n\n  margin-left: 7px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
 		"size-l": "" + __webpack_require__(373).locals["size-l"] + "",
-		"container": "check-l--container " + __webpack_require__(396).locals["container"] + "",
+		"wrapper": "check-l--wrapper " + __webpack_require__(396).locals["wrapper"] + "",
 		"control": "check-l--control " + __webpack_require__(396).locals["control"] + "",
 		"native": "check-l--native " + __webpack_require__(396).locals["native"] + "",
 		"label": "check-l--label " + __webpack_require__(396).locals["label"] + ""
@@ -28514,15 +28514,11 @@
 	module.exports = simplify(CheckGroup, function (styles, _ref) {
 	  var size = _ref.size;
 	  return {
-	    optionStyles: styles.optionStyles[size],
-	    styles: styles.styles
+	    styles: styles[size]
 	  };
 	}, {
-	  optionStyles: {
-	    m: __webpack_require__(411),
-	    l: __webpack_require__(413)
-	  },
-	  styles: __webpack_require__(415)
+	  m: __webpack_require__(411),
+	  l: __webpack_require__(414)
 	}, {
 	  size: 'm'
 	}, {
@@ -28621,8 +28617,8 @@
 	      var // eslint-disable-line no-unused-vars
 	      disabled = _props2.disabled;
 	      var name = _props2.name;
-	      var optionStyles = _props2.optionStyles;
 	      var options = _props2.options;
+	      var styles = _props2.styles;
 	      var selected = this.state.selected;
 
 
@@ -28637,7 +28633,7 @@
 	            key: '_' + value + i,
 	            name: name,
 	            onChange: _this2.onChange,
-	            styles: optionStyles,
+	            styles: styles,
 	            value: value
 	          },
 	          text
@@ -28651,7 +28647,6 @@
 
 	CheckGroup.defaultProps = {
 	  onChange: noop,
-	  optionStyles: {},
 	  styles: {}
 	};
 
@@ -28679,7 +28674,6 @@
 	  onTouchEnd: PropTypes.func,
 	  onTouchMove: PropTypes.func,
 	  onTouchStart: PropTypes.func,
-	  optionStyles: PropTypes.object,
 	  options: PropTypes.array.isRequired,
 	  styles: PropTypes.object,
 	  value: PropTypes.array
@@ -29452,8 +29446,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./check-option-m.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./check-option-m.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./check-group-m.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./check-group-m.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -29468,92 +29462,23 @@
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
+	exports.i(__webpack_require__(413), undefined);
 	exports.i(__webpack_require__(395), undefined);
 
 	// module
-	exports.push([module.id, ".check-option-m--container\n{\n\n  display: block;\n}\n.check-option-m--control\n{\n}\n.check-option-m--native\n{\n}\n.check-option-m--label\n{\n}\n", ""]);
+	exports.push([module.id, ".check-group-m--container\n{\n}\n\n.check-group-m--wrapper\n{\n\n  display: block;\n}\n\n.check-group-m--control\n{\n}\n\n.check-group-m--native\n{\n}\n\n.check-group-m--label\n{\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"container": "check-option-m--container " + __webpack_require__(395).locals["container"] + "",
-		"control": "check-option-m--control " + __webpack_require__(395).locals["control"] + "",
-		"native": "check-option-m--native " + __webpack_require__(395).locals["native"] + "",
-		"label": "check-option-m--label " + __webpack_require__(395).locals["label"] + ""
+		"container": "check-group-m--container " + __webpack_require__(413).locals["container"] + "",
+		"wrapper": "check-group-m--wrapper " + __webpack_require__(395).locals["wrapper"] + "",
+		"control": "check-group-m--control " + __webpack_require__(395).locals["control"] + "",
+		"native": "check-group-m--native " + __webpack_require__(395).locals["native"] + "",
+		"label": "check-group-m--label " + __webpack_require__(395).locals["label"] + ""
 	};
 
 /***/ },
 /* 413 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(414);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./check-option-l.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./check-option-l.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 414 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(398), undefined);
-
-	// module
-	exports.push([module.id, ".check-option-l--container\n{\n\n  display: block;\n}\n.check-option-l--control\n{\n}\n.check-option-l--native\n{\n}\n.check-option-l--label\n{\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"container": "check-option-l--container " + __webpack_require__(398).locals["container"] + "",
-		"control": "check-option-l--control " + __webpack_require__(398).locals["control"] + "",
-		"native": "check-option-l--native " + __webpack_require__(398).locals["native"] + "",
-		"label": "check-option-l--label " + __webpack_require__(398).locals["label"] + ""
-	};
-
-/***/ },
-/* 415 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(416);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./check-group.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./check-group.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
@@ -29569,7 +29494,54 @@
 	};
 
 /***/ },
-/* 417 */
+/* 414 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(415);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(367)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./check-group-l.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./check-group-l.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 415 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(366)();
+	// imports
+	exports.i(__webpack_require__(413), undefined);
+	exports.i(__webpack_require__(398), undefined);
+
+	// module
+	exports.push([module.id, ".check-group-l--container\n{\n}\n\n.check-group-l--wrapper\n{\n\n  display: block;\n}\n\n.check-group-l--control\n{\n}\n\n.check-group-l--native\n{\n}\n\n.check-group-l--label\n{\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"container": "check-group-l--container " + __webpack_require__(413).locals["container"] + "",
+		"wrapper": "check-group-l--wrapper " + __webpack_require__(398).locals["wrapper"] + "",
+		"control": "check-group-l--control " + __webpack_require__(398).locals["control"] + "",
+		"native": "check-group-l--native " + __webpack_require__(398).locals["native"] + "",
+		"label": "check-group-l--label " + __webpack_require__(398).locals["label"] + ""
+	};
+
+/***/ },
+/* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29612,10 +29584,10 @@
 	    "placeholder": "size l",
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(418));
+	}, __webpack_require__(417));
 
 /***/ },
-/* 418 */
+/* 417 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29624,16 +29596,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Input = __webpack_require__(419);
+	var Input = __webpack_require__(418);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Input, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  's': __webpack_require__(420),
-	  'm': __webpack_require__(423),
-	  'l': __webpack_require__(425)
+	  's': __webpack_require__(419),
+	  'm': __webpack_require__(422),
+	  'l': __webpack_require__(424)
 	}, {
 	  size: 'm'
 	}, {
@@ -29641,7 +29613,7 @@
 	});
 
 /***/ },
-/* 419 */
+/* 418 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29708,13 +29680,13 @@
 	module.exports = cssModules(Input);
 
 /***/ },
-/* 420 */
+/* 419 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(421);
+	var content = __webpack_require__(420);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -29734,13 +29706,13 @@
 	}
 
 /***/ },
-/* 421 */
+/* 420 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
 	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(422), undefined);
+	exports.i(__webpack_require__(421), undefined);
 
 	// module
 	exports.push([module.id, ".input-s--control\n{\n\n  height: 24px;\n  padding: 0 6px;\n\n  font-size: " + __webpack_require__(373).locals["size-s"] + ";\n  line-height: 16px;\n}\n", ""]);
@@ -29748,11 +29720,11 @@
 	// exports
 	exports.locals = {
 		"size-s": "" + __webpack_require__(373).locals["size-s"] + "",
-		"control": "input-s--control " + __webpack_require__(422).locals["control"] + ""
+		"control": "input-s--control " + __webpack_require__(421).locals["control"] + ""
 	};
 
 /***/ },
-/* 422 */
+/* 421 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
@@ -29768,13 +29740,13 @@
 	};
 
 /***/ },
-/* 423 */
+/* 422 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(424);
+	var content = __webpack_require__(423);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -29794,13 +29766,13 @@
 	}
 
 /***/ },
-/* 424 */
+/* 423 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
 	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(422), undefined);
+	exports.i(__webpack_require__(421), undefined);
 
 	// module
 	exports.push([module.id, ".input-m--control\n{\n\n  height: 28px;\n  padding: 0 8px;\n\n  font-size: " + __webpack_require__(373).locals["size-m"] + ";\n  line-height: 16px;\n}\n", ""]);
@@ -29808,17 +29780,17 @@
 	// exports
 	exports.locals = {
 		"size-m": "" + __webpack_require__(373).locals["size-m"] + "",
-		"control": "input-m--control " + __webpack_require__(422).locals["control"] + ""
+		"control": "input-m--control " + __webpack_require__(421).locals["control"] + ""
 	};
 
 /***/ },
-/* 425 */
+/* 424 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(426);
+	var content = __webpack_require__(425);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -29838,13 +29810,13 @@
 	}
 
 /***/ },
-/* 426 */
+/* 425 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
 	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(422), undefined);
+	exports.i(__webpack_require__(421), undefined);
 
 	// module
 	exports.push([module.id, ".input-l--control\n{\n\n  height: 32px;\n  padding: 0 10px;\n\n  font-size: " + __webpack_require__(373).locals["size-l"] + ";\n  line-height: 18px;\n}\n", ""]);
@@ -29852,11 +29824,11 @@
 	// exports
 	exports.locals = {
 		"size-l": "" + __webpack_require__(373).locals["size-l"] + "",
-		"control": "input-l--control " + __webpack_require__(422).locals["control"] + ""
+		"control": "input-l--control " + __webpack_require__(421).locals["control"] + ""
 	};
 
 /***/ },
-/* 427 */
+/* 426 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29882,10 +29854,10 @@
 	    "href": "#",
 	    "size": "xl"
 	  }]]
-	}, __webpack_require__(428));
+	}, __webpack_require__(427));
 
 /***/ },
-/* 428 */
+/* 427 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29894,17 +29866,17 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Link = __webpack_require__(429);
+	var Link = __webpack_require__(428);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Link, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  's': __webpack_require__(430),
-	  'm': __webpack_require__(433),
-	  'l': __webpack_require__(435),
-	  'xl': __webpack_require__(437)
+	  's': __webpack_require__(429),
+	  'm': __webpack_require__(432),
+	  'l': __webpack_require__(434),
+	  'xl': __webpack_require__(436)
 	}, {
 	  size: 'm'
 	}, {
@@ -29912,7 +29884,7 @@
 	});
 
 /***/ },
-/* 429 */
+/* 428 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29983,13 +29955,13 @@
 	module.exports = cssModules(Link);
 
 /***/ },
-/* 430 */
+/* 429 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(431);
+	var content = __webpack_require__(430);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -30009,13 +29981,13 @@
 	}
 
 /***/ },
-/* 431 */
+/* 430 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
 	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(432), undefined);
+	exports.i(__webpack_require__(431), undefined);
 
 	// module
 	exports.push([module.id, ".link-s--control\n{\n\n  font-size: " + __webpack_require__(373).locals["size-s"] + ";\n  line-height: 15px;\n}\n", ""]);
@@ -30023,11 +29995,11 @@
 	// exports
 	exports.locals = {
 		"size-s": "" + __webpack_require__(373).locals["size-s"] + "",
-		"control": "link-s--control " + __webpack_require__(432).locals["control"] + ""
+		"control": "link-s--control " + __webpack_require__(431).locals["control"] + ""
 	};
 
 /***/ },
-/* 432 */
+/* 431 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
@@ -30043,13 +30015,13 @@
 	};
 
 /***/ },
-/* 433 */
+/* 432 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(434);
+	var content = __webpack_require__(433);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -30069,13 +30041,13 @@
 	}
 
 /***/ },
-/* 434 */
+/* 433 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
 	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(432), undefined);
+	exports.i(__webpack_require__(431), undefined);
 
 	// module
 	exports.push([module.id, ".link-m--control\n{\n\n  font-size: " + __webpack_require__(373).locals["size-m"] + ";\n  line-height: 15px;\n}\n", ""]);
@@ -30083,17 +30055,17 @@
 	// exports
 	exports.locals = {
 		"size-m": "" + __webpack_require__(373).locals["size-m"] + "",
-		"control": "link-m--control " + __webpack_require__(432).locals["control"] + ""
+		"control": "link-m--control " + __webpack_require__(431).locals["control"] + ""
 	};
 
 /***/ },
-/* 435 */
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(436);
+	var content = __webpack_require__(435);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -30113,13 +30085,13 @@
 	}
 
 /***/ },
-/* 436 */
+/* 435 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
 	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(432), undefined);
+	exports.i(__webpack_require__(431), undefined);
 
 	// module
 	exports.push([module.id, ".link-l--control\n{\n\n  font-size: " + __webpack_require__(373).locals["size-l"] + ";\n  line-height: 15px;\n}\n", ""]);
@@ -30127,17 +30099,17 @@
 	// exports
 	exports.locals = {
 		"size-l": "" + __webpack_require__(373).locals["size-l"] + "",
-		"control": "link-l--control " + __webpack_require__(432).locals["control"] + ""
+		"control": "link-l--control " + __webpack_require__(431).locals["control"] + ""
 	};
 
 /***/ },
-/* 437 */
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(438);
+	var content = __webpack_require__(437);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -30157,13 +30129,13 @@
 	}
 
 /***/ },
-/* 438 */
+/* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
 	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(432), undefined);
+	exports.i(__webpack_require__(431), undefined);
 
 	// module
 	exports.push([module.id, ".link-xl--control\n{\n\n  font-size: " + __webpack_require__(373).locals["size-xl"] + ";\n  line-height: 15px;\n}\n", ""]);
@@ -30171,11 +30143,11 @@
 	// exports
 	exports.locals = {
 		"size-xl": "" + __webpack_require__(373).locals["size-xl"] + "",
-		"control": "link-xl--control " + __webpack_require__(432).locals["control"] + ""
+		"control": "link-xl--control " + __webpack_require__(431).locals["control"] + ""
 	};
 
 /***/ },
-/* 439 */
+/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30304,10 +30276,10 @@
 	    }],
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(440));
+	}, __webpack_require__(439));
 
 /***/ },
-/* 440 */
+/* 439 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30316,22 +30288,18 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var RadioGroup = __webpack_require__(441);
+	var RadioGroup = __webpack_require__(440);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(RadioGroup, function (styles, _ref) {
 	  var size = _ref.size;
 	  return {
-	    optionStyles: styles.optionStyles[size],
-	    styles: styles.styles
+	    styles: styles[size]
 	  };
 	}, {
-	  optionStyles: {
-	    s: __webpack_require__(443),
-	    m: __webpack_require__(446),
-	    l: __webpack_require__(448)
-	  },
-	  styles: __webpack_require__(450)
+	  s: __webpack_require__(442),
+	  m: __webpack_require__(445),
+	  l: __webpack_require__(447)
 	}, {
 	  size: 'm'
 	}, {
@@ -30339,7 +30307,7 @@
 	});
 
 /***/ },
-/* 441 */
+/* 440 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30356,7 +30324,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var RadioButton = __webpack_require__(442);
+	var RadioButton = __webpack_require__(441);
 	var React = __webpack_require__(3);
 	var Component = React.Component;
 	var PropTypes = React.PropTypes;
@@ -30420,8 +30388,8 @@
 	      var // eslint-disable-line no-unused-vars
 	      disabled = _props2.disabled;
 	      var name = _props2.name;
-	      var optionStyles = _props2.optionStyles;
 	      var options = _props2.options;
+	      var styles = _props2.styles;
 	      var selected = this.state.selected;
 
 
@@ -30436,7 +30404,7 @@
 	            key: '_' + value + i,
 	            name: name,
 	            onChange: _this2.onChange,
-	            styles: optionStyles,
+	            styles: styles,
 	            value: value
 	          },
 	          text
@@ -30485,7 +30453,7 @@
 	module.exports = cssModules(RadioGroup);
 
 /***/ },
-/* 442 */
+/* 441 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30540,7 +30508,7 @@
 
 	      return React.createElement(
 	        'span',
-	        { className: className, styleName: 'container' },
+	        { className: className, styleName: 'wrapper' },
 	        React.createElement('input', _extends({}, o, { id: id, styleName: 'native', type: 'radio' })),
 	        React.createElement(
 	          'label',
@@ -30570,13 +30538,13 @@
 	module.exports = cssModules(RadioButton);
 
 /***/ },
-/* 443 */
+/* 442 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(444);
+	var content = __webpack_require__(443);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -30585,8 +30553,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-option-s.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-option-s.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-group-s.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-group-s.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -30594,6 +30562,27 @@
 		// When the module is disposed, remove the <style> tags
 		module.hot.dispose(function() { update(); });
 	}
+
+/***/ },
+/* 443 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(366)();
+	// imports
+	exports.i(__webpack_require__(373), undefined);
+	exports.i(__webpack_require__(444), undefined);
+
+	// module
+	exports.push([module.id, ".radio-group-s--container\n{\n}\n\n.radio-group-s--wrapper\n{\n}\n\n.radio-group-s--control\n{\n\n  padding: 0 10px;\n\n  font-size: " + __webpack_require__(373).locals["size-s"] + ";\n  line-height: 22px;\n}\n\n.radio-group-s--native\n{\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"size-s": "" + __webpack_require__(373).locals["size-s"] + "",
+		"container": "radio-group-s--container " + __webpack_require__(444).locals["container"] + "",
+		"wrapper": "radio-group-s--wrapper " + __webpack_require__(444).locals["wrapper"] + "",
+		"control": "radio-group-s--control " + __webpack_require__(444).locals["control"] + "",
+		"native": "radio-group-s--native " + __webpack_require__(444).locals["native"] + ""
+	};
 
 /***/ },
 /* 444 */
@@ -30601,174 +30590,115 @@
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
-	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(445), undefined);
+
 
 	// module
-	exports.push([module.id, ".radio-option-s--container\n{\n}\n\n.radio-option-s--control\n{\n\n  padding: 0 10px;\n\n  font-size: " + __webpack_require__(373).locals["size-s"] + ";\n  line-height: 22px;\n}\n\n.radio-option-s--native\n{\n}\n", ""]);
+	exports.push([module.id, ".radio-group--container\n{\n  display: inline-block;\n\n  white-space: nowrap;\n}\n\n.radio-group--wrapper\n{\n  position: relative;\n\n  display: inline;\n}\n\n.radio-group--control\n{\n  display: inline-block;\n\n  margin-left: -1px;\n\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  text-align: center;\n  text-decoration: none;\n\n  color: #000;\n  border: none;\n  outline: none;\n  background: #fff;\n  box-shadow: inset 0 0 0 1px #ccc;\n\n  font-family: arial,helvetica,sans-serif;\n}\n\n.radio-group--control:hover\n{\n  box-shadow: inset 0 0 0 1px #b3b3b3;\n}\n\n.radio-group--native\n{\n  position: absolute;\n\n  opacity: 0;\n}\n\n.radio-group--native:checked + .radio-group--control\n{\n  position: relative;\n\n  color: #000;\n  background: #ffeba0;\n}\n\n.radio-group--native:focus + .radio-group--control\n{\n  box-shadow: 0 0 0 1px #fc0,inset 0 0 0 1px #fc0;\n}\n\n.radio-group--native:disabled + .radio-group--control\n{\n  cursor: default;\n\n  color: #aaa;\n  background: #ebebeb;\n  box-shadow: none;\n}\n\n.radio-group--native:disabled:checked + .radio-group--control\n{\n  background: #d9d9d9;\n}\n\n.radio-group--wrapper:first-child .radio-group--control\n{\n  margin-left: 0;\n\n  border-radius: 3px 0 0 3px;\n}\n\n.radio-group--wrapper:last-child .radio-group--control\n{\n  border-radius: 0 3px 3px 0;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"size-s": "" + __webpack_require__(373).locals["size-s"] + "",
-		"container": "radio-option-s--container " + __webpack_require__(445).locals["container"] + "",
-		"control": "radio-option-s--control " + __webpack_require__(445).locals["control"] + "",
-		"native": "radio-option-s--native " + __webpack_require__(445).locals["native"] + ""
+		"container": "radio-group--container",
+		"wrapper": "radio-group--wrapper",
+		"control": "radio-group--control",
+		"native": "radio-group--native"
 	};
 
 /***/ },
 /* 445 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(366)();
-	// imports
+	// style-loader: Adds some css to the DOM by adding a <style> tag
 
-
-	// module
-	exports.push([module.id, ".radio-option--container\n{\n  position: relative;\n\n  display: inline;\n}\n\n.radio-option--control\n{\n  display: inline-block;\n\n  margin-left: -1px;\n\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  text-align: center;\n  text-decoration: none;\n\n  color: #000;\n  border: none;\n  outline: none;\n  background: #fff;\n  box-shadow: inset 0 0 0 1px #ccc;\n\n  font-family: arial,helvetica,sans-serif;\n}\n\n.radio-option--control:hover\n{\n  box-shadow: inset 0 0 0 1px #b3b3b3;\n}\n\n.radio-option--native\n{\n  position: absolute;\n\n  opacity: 0;\n}\n\n.radio-option--native:checked + .radio-option--control\n{\n  position: relative;\n\n  color: #000;\n  background: #ffeba0;\n}\n\n.radio-option--native:focus + .radio-option--control\n{\n  box-shadow: 0 0 0 1px #fc0,inset 0 0 0 1px #fc0;\n}\n\n.radio-option--native:disabled + .radio-option--control\n{\n  cursor: default;\n\n  color: #aaa;\n  background: #ebebeb;\n  box-shadow: none;\n}\n\n.radio-option--native:disabled:checked + .radio-option--control\n{\n  background: #d9d9d9;\n}\n\n.radio-option--container:first-child .radio-option--control\n{\n  margin-left: 0;\n\n  border-radius: 3px 0 0 3px;\n}\n\n.radio-option--container:last-child .radio-option--control\n{\n  border-radius: 0 3px 3px 0;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"container": "radio-option--container",
-		"control": "radio-option--control",
-		"native": "radio-option--native"
-	};
+	// load the styles
+	var content = __webpack_require__(446);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(367)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-group-m.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-group-m.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
 
 /***/ },
 /* 446 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
+	exports = module.exports = __webpack_require__(366)();
+	// imports
+	exports.i(__webpack_require__(373), undefined);
+	exports.i(__webpack_require__(444), undefined);
 
-	// load the styles
-	var content = __webpack_require__(447);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-option-m.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-option-m.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
+	// module
+	exports.push([module.id, ".radio-group-m--container\n{\n}\n\n.radio-group-m--wrapper\n{\n}\n\n.radio-group-m--control\n{\n\n  padding: 0 13px;\n\n  font-size: " + __webpack_require__(373).locals["size-m"] + ";\n  line-height: 28px;\n}\n\n.radio-group-m--native\n{\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"size-m": "" + __webpack_require__(373).locals["size-m"] + "",
+		"container": "radio-group-m--container " + __webpack_require__(444).locals["container"] + "",
+		"wrapper": "radio-group-m--wrapper " + __webpack_require__(444).locals["wrapper"] + "",
+		"control": "radio-group-m--control " + __webpack_require__(444).locals["control"] + "",
+		"native": "radio-group-m--native " + __webpack_require__(444).locals["native"] + ""
+	};
 
 /***/ },
 /* 447 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(445), undefined);
+	// style-loader: Adds some css to the DOM by adding a <style> tag
 
-	// module
-	exports.push([module.id, ".radio-option-m--container\n{\n}\n\n.radio-option-m--control\n{\n\n  padding: 0 13px;\n\n  font-size: " + __webpack_require__(373).locals["size-m"] + ";\n  line-height: 28px;\n}\n\n.radio-option-m--native\n{\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"size-m": "" + __webpack_require__(373).locals["size-m"] + "",
-		"container": "radio-option-m--container " + __webpack_require__(445).locals["container"] + "",
-		"control": "radio-option-m--control " + __webpack_require__(445).locals["control"] + "",
-		"native": "radio-option-m--native " + __webpack_require__(445).locals["native"] + ""
-	};
+	// load the styles
+	var content = __webpack_require__(448);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(367)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-group-l.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-group-l.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
 
 /***/ },
 /* 448 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(449);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-option-l.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-option-l.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 449 */
-/***/ function(module, exports, __webpack_require__) {
-
 	exports = module.exports = __webpack_require__(366)();
 	// imports
 	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(445), undefined);
+	exports.i(__webpack_require__(444), undefined);
 
 	// module
-	exports.push([module.id, ".radio-option-l--container\n{\n}\n\n.radio-option-l--control\n{\n\n  padding: 0 15px;\n\n  font-size: " + __webpack_require__(373).locals["size-l"] + ";\n  line-height: 32px;\n}\n\n.radio-option-l--native\n{\n}\n", ""]);
+	exports.push([module.id, ".radio-group-l--container\n{\n}\n\n.radio-group-l--wrapper\n{\n}\n\n.radio-group-l--control\n{\n\n  padding: 0 15px;\n\n  font-size: " + __webpack_require__(373).locals["size-l"] + ";\n  line-height: 32px;\n}\n\n.radio-group-l--native\n{\n}\n", ""]);
 
 	// exports
 	exports.locals = {
 		"size-l": "" + __webpack_require__(373).locals["size-l"] + "",
-		"container": "radio-option-l--container " + __webpack_require__(445).locals["container"] + "",
-		"control": "radio-option-l--control " + __webpack_require__(445).locals["control"] + "",
-		"native": "radio-option-l--native " + __webpack_require__(445).locals["native"] + ""
+		"container": "radio-group-l--container " + __webpack_require__(444).locals["container"] + "",
+		"wrapper": "radio-group-l--wrapper " + __webpack_require__(444).locals["wrapper"] + "",
+		"control": "radio-group-l--control " + __webpack_require__(444).locals["control"] + "",
+		"native": "radio-group-l--native " + __webpack_require__(444).locals["native"] + ""
 	};
 
 /***/ },
-/* 450 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(451);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-group.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./radio-group.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 451 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".radio-group--container\n{\n  display: inline-block;\n\n  white-space: nowrap;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"container": "radio-group--container"
-	};
-
-/***/ },
-/* 452 */
+/* 449 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30896,10 +30826,10 @@
 	    }],
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(453));
+	}, __webpack_require__(450));
 
 /***/ },
-/* 453 */
+/* 450 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30908,48 +30838,26 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Select = __webpack_require__(454);
+	var Select = __webpack_require__(451);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Select, function (styles, _ref) {
 	  var size = _ref.size;
 	  return {
-	    buttonStyles: {
-	      buttonClosed: styles.buttonClosed[size],
-	      buttonOpened: styles.buttonOpened[size]
-	    },
-	    optionStyles: styles.optionStyles[size],
-	    styles: styles.styles[size]
+	    styles: styles[size]
 	  };
 	}, {
-	  buttonClosed: {
-	    s: __webpack_require__(458),
-	    m: __webpack_require__(462),
-	    l: __webpack_require__(464)
-	  },
-	  buttonOpened: {
-	    s: __webpack_require__(466),
-	    m: __webpack_require__(469),
-	    l: __webpack_require__(471)
-	  },
-	  optionStyles: {
-	    s: __webpack_require__(473),
-	    m: __webpack_require__(476),
-	    l: __webpack_require__(478)
-	  },
-	  styles: {
-	    s: __webpack_require__(480),
-	    m: __webpack_require__(483),
-	    l: __webpack_require__(485)
-	  }
+	  s: __webpack_require__(455),
+	  m: __webpack_require__(462),
+	  l: __webpack_require__(465)
 	}, {
 	  size: 'm'
 	}, {
-	  size: PropTypes.oneOf(['s', 'm', 'l', 'xl'])
+	  size: PropTypes.oneOf(['s', 'm', 'l'])
 	});
 
 /***/ },
-/* 454 */
+/* 451 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30967,7 +30875,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Button = __webpack_require__(369);
-	var Option = __webpack_require__(455);
+	var Option = __webpack_require__(452);
 	var React = __webpack_require__(3);
 	var Component = React.Component;
 	var PropTypes = React.PropTypes;
@@ -30981,7 +30889,7 @@
 	var noop = _require.noop;
 
 	var cssModules = __webpack_require__(171);
-	var reactOutsideEvent = __webpack_require__(457);
+	var reactOutsideEvent = __webpack_require__(454);
 
 	var Select = function (_Component) {
 	  _inherits(Select, _Component);
@@ -31102,7 +31010,7 @@
 	        _extends({}, o, {
 	          className: className,
 	          onKeyDown: this.onKeyDown,
-	          styleName: 'container'
+	          styleName: 'wrapper'
 	        }),
 	        this.renderButton(),
 	        this.renderPopup(),
@@ -31115,7 +31023,7 @@
 	      var _props2 = this.props;
 	      var disabled = _props2.disabled;
 	      var options = _props2.options;
-	      var buttonStyles = _props2.buttonStyles;
+	      var styles = _props2.styles;
 	      var _state2 = this.state;
 	      var isOpened = _state2.isOpened;
 	      var selected = _state2.selected;
@@ -31124,9 +31032,10 @@
 	      return React.createElement(
 	        Button,
 	        {
+	          className: styles[isOpened ? 'isOpened' : 'isClosed'],
 	          disabled: disabled,
 	          onClick: this.onClick,
-	          styles: buttonStyles[isOpened ? 'buttonOpened' : 'buttonClosed']
+	          styles: styles
 	        },
 	        options[selected].text
 	      );
@@ -31143,7 +31052,7 @@
 
 	      return React.createElement(
 	        'div',
-	        { styleName: 'popup' },
+	        { styleName: 'menu' },
 	        this.renderOptions()
 	      );
 	    }
@@ -31153,8 +31062,8 @@
 	      var _this2 = this;
 
 	      var _props3 = this.props;
-	      var optionStyles = _props3.optionStyles;
 	      var options = _props3.options;
+	      var styles = _props3.styles;
 	      var _state3 = this.state;
 	      var position = _state3.position;
 	      var selected = _state3.selected;
@@ -31172,7 +31081,7 @@
 	            onClick: _this2.onOptionClick,
 	            onMouseEnter: _this2.onOptionMouseEnter,
 	            selected: selected === i,
-	            styles: optionStyles,
+	            styles: styles,
 	            value: value
 	          },
 	          text
@@ -31185,16 +31094,13 @@
 	}(Component);
 
 	Select.defaultProps = {
-	  buttonStyles: {},
 	  onClick: noop,
 	  onChange: noop,
 	  onKeyDown: noop,
-	  optionStyles: {},
 	  styles: {}
 	};
 
 	Select.propTypes = {
-	  buttonStyles: PropTypes.object,
 	  defaultValue: PropTypes.string,
 	  disabled: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
@@ -31218,7 +31124,6 @@
 	  onTouchEnd: PropTypes.func,
 	  onTouchMove: PropTypes.func,
 	  onTouchStart: PropTypes.func,
-	  optionStyles: PropTypes.object,
 	  options: PropTypes.array,
 	  styles: PropTypes.object,
 	  value: PropTypes.string
@@ -31227,7 +31132,7 @@
 	module.exports = reactOutsideEvent(cssModules(Select), ['click']);
 
 /***/ },
-/* 455 */
+/* 452 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31253,7 +31158,7 @@
 	var camelcase = _require.camelcase;
 	var bind = _require.bind;
 
-	var classnames = __webpack_require__(456);
+	var classnames = __webpack_require__(453);
 	var cssModules = __webpack_require__(171);
 
 	var Option = function (_Component) {
@@ -31288,18 +31193,17 @@
 	      onMouseEnter = _props.onMouseEnter;
 	      var // eslint-disable-line no-unused-vars
 	      selected = _props.selected;
+	      var styles = _props.styles;
 	      var value = _props.value;
 
-	      var o = _objectWithoutProperties(_props, ['focused', 'onClick', 'onMouseEnter', 'selected', 'value']);
+	      var o = _objectWithoutProperties(_props, ['focused', 'onClick', 'onMouseEnter', 'selected', 'styles', 'value']);
 
 	      return React.createElement('span', _extends({}, o, {
+	        className: styles[camelcase(classnames('is', { focused: focused, selected: selected }))],
 	        'data-value': value,
 	        onClick: this.onClick,
 	        onMouseEnter: this.onMouseEnter,
-	        styleName: camelcase(classnames('control', {
-	          focused: focused,
-	          selected: selected
-	        }))
+	        styleName: 'item'
 	      }));
 	    }
 	  }]);
@@ -31324,7 +31228,7 @@
 	module.exports = cssModules(Option);
 
 /***/ },
-/* 456 */
+/* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -31378,7 +31282,7 @@
 
 
 /***/ },
-/* 457 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31475,473 +31379,13 @@
 
 
 /***/ },
-/* 458 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(459);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-closed-s.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-closed-s.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 459 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(382), undefined);
-	exports.i(__webpack_require__(460), undefined);
-
-	// module
-	exports.push([module.id, ".button-closed-s--control\n{\n\n  position: relative;\n\n  padding-right: 29px;\n\n  text-align: left;\n}\n\n.button-closed-s--control:after\n{\n  right: 10px;\n\n  height: 22px;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "button-closed-s--control " + __webpack_require__(382).locals["control"] + " " + __webpack_require__(460).locals["control"] + ""
-	};
-
-/***/ },
-/* 460 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(461), undefined);
-
-	// module
-	exports.push([module.id, ".button-closed--control\n{\n}\n\n.button-closed--control:after\n{\n  transform: rotate(0deg);\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "button-closed--control " + __webpack_require__(461).locals["control"] + ""
-	};
-
-/***/ },
-/* 461 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".arrow--control:after\n{\n  position: absolute;\n  top: 0;\n\n  display: block;\n\n  width: 11px;\n  /*height: 6px;*/\n\n  content: '';\n  transition: transform .1s ease-out 0s;\n\n  background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%226%22%3E%3Cpath%20d%3D%22M10.3%200L5.5%204.7.7%200%200%20.7%205.5%206%2011%20.7z%22%2F%3E%3C%2Fsvg%3E) 0 50% no-repeat;\n}\n\n.arrow--control:disabled:after\n{\n  opacity: .4;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "arrow--control"
-	};
-
-/***/ },
-/* 462 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(463);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-closed-m.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-closed-m.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 463 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(385), undefined);
-	exports.i(__webpack_require__(460), undefined);
-
-	// module
-	exports.push([module.id, ".button-closed-m--control\n{\n\n  position: relative;\n\n  padding-right: 35px;\n\n  text-align: left;\n}\n\n.button-closed-m--control:after\n{\n  right: 13px;\n\n  height: 28px;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "button-closed-m--control " + __webpack_require__(385).locals["control"] + " " + __webpack_require__(460).locals["control"] + ""
-	};
-
-/***/ },
-/* 464 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(465);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-closed-l.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-closed-l.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 465 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(387), undefined);
-	exports.i(__webpack_require__(460), undefined);
-
-	// module
-	exports.push([module.id, ".button-closed-l--control\n{\n\n  position: relative;\n\n  padding-right: 39px;\n\n  text-align: left;\n}\n\n.button-closed-l--control:after\n{\n  right: 15px;\n\n  height: 32px;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "button-closed-l--control " + __webpack_require__(387).locals["control"] + " " + __webpack_require__(460).locals["control"] + ""
-	};
-
-/***/ },
-/* 466 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(467);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-opened-s.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-opened-s.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 467 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(382), undefined);
-	exports.i(__webpack_require__(468), undefined);
-
-	// module
-	exports.push([module.id, ".button-opened-s--control\n{\n\n  position: relative;\n\n  padding-right: 29px;\n\n  text-align: left;\n}\n\n.button-opened-s--control:after\n{\n  right: 10px;\n\n  height: 22px;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "button-opened-s--control " + __webpack_require__(382).locals["control"] + " " + __webpack_require__(468).locals["control"] + ""
-	};
-
-/***/ },
-/* 468 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(461), undefined);
-
-	// module
-	exports.push([module.id, ".button-opened--control\n{\n}\n\n.button-opened--control:after\n{\n  transform: rotate(-180deg);\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "button-opened--control " + __webpack_require__(461).locals["control"] + ""
-	};
-
-/***/ },
-/* 469 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(470);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-opened-m.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-opened-m.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 470 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(385), undefined);
-	exports.i(__webpack_require__(468), undefined);
-
-	// module
-	exports.push([module.id, ".button-opened-m--control\n{\n\n  position: relative;\n\n  padding-right: 35px;\n\n  text-align: left;\n}\n\n.button-opened-m--control:after\n{\n  right: 13px;\n\n  height: 28px;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "button-opened-m--control " + __webpack_require__(385).locals["control"] + " " + __webpack_require__(468).locals["control"] + ""
-	};
-
-/***/ },
-/* 471 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(472);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-opened-l.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./button-opened-l.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 472 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(387), undefined);
-	exports.i(__webpack_require__(468), undefined);
-
-	// module
-	exports.push([module.id, ".button-opened-l--control\n{\n\n  position: relative;\n\n  padding-right: 39px;\n\n  text-align: left;\n}\n\n.button-opened-l--control:after\n{\n  right: 15px;\n\n  height: 32px;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "button-opened-l--control " + __webpack_require__(387).locals["control"] + " " + __webpack_require__(468).locals["control"] + ""
-	};
-
-/***/ },
-/* 473 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(474);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./option-s.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./option-s.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 474 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(475), undefined);
-
-	// module
-	exports.push([module.id, ".option-s--control\n{\n\n  height: 24px;\n  padding: 0 13px 0 30px;\n\n  background-position: 10px 50%;\n  background-size: 14px 14px;\n\n  font-size: 13px;\n  line-height: 25px;\n}\n\n.option-s--controlFocused\n{\n}\n\n.option-s--controlSelected\n{\n}\n\n.option-s--controlFocusedSelected\n{\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "option-s--control " + __webpack_require__(475).locals["control"] + "",
-		"controlFocused": "option-s--controlFocused option-s--control " + __webpack_require__(475).locals["control"] + " " + __webpack_require__(475).locals["focused"] + "",
-		"controlSelected": "option-s--controlSelected option-s--control " + __webpack_require__(475).locals["control"] + " " + __webpack_require__(475).locals["selected"] + "",
-		"controlFocusedSelected": "option-s--controlFocusedSelected option-s--control " + __webpack_require__(475).locals["control"] + " " + __webpack_require__(475).locals["focusedSelected"] + ""
-	};
-
-/***/ },
-/* 475 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".option--control\n{\n  display: block;\n\n  cursor: pointer;\n  white-space: nowrap;\n\n  font-family: arial,helvetica,sans-serif;\n}\n\n.option--focused\n{\n  background-color: #ffeba0;\n}\n\n.option--selected\n{\n  background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2215%22%20height%3D%2216%22%3E%3Cpath%20d%3D%22M13.5.5l-8%2012L1.7%208l-1%201.6L5.6%2015l9.1-13.4z%22%2F%3E%3C%2Fsvg%3E) 13px 50% no-repeat;\n}\n\n.option--focusedSelected\n{\n  background: #ffeba0 url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2215%22%20height%3D%2216%22%3E%3Cpath%20d%3D%22M13.5.5l-8%2012L1.7%208l-1%201.6L5.6%2015l9.1-13.4z%22%2F%3E%3C%2Fsvg%3E) 13px 50% no-repeat;\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "option--control",
-		"focused": "option--focused",
-		"selected": "option--selected",
-		"focusedSelected": "option--focusedSelected"
-	};
-
-/***/ },
-/* 476 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(477);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./option-m.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./option-m.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 477 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(475), undefined);
-
-	// module
-	exports.push([module.id, ".option-m--control\n{\n\n  height: 24px;\n  padding: 0 13px 0 30px;\n\n  background-position: 13px 50%;\n  background-size: 14px 14px;\n\n  font-size: 13px;\n  line-height: 25px;\n}\n\n.option-m--controlFocused\n{\n}\n\n.option-m--controlSelected\n{\n}\n\n.option-m--controlFocusedSelected\n{\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "option-m--control " + __webpack_require__(475).locals["control"] + "",
-		"controlFocused": "option-m--controlFocused option-m--control " + __webpack_require__(475).locals["control"] + " " + __webpack_require__(475).locals["focused"] + "",
-		"controlSelected": "option-m--controlSelected option-m--control " + __webpack_require__(475).locals["control"] + " " + __webpack_require__(475).locals["selected"] + "",
-		"controlFocusedSelected": "option-m--controlFocusedSelected option-m--control " + __webpack_require__(475).locals["control"] + " " + __webpack_require__(475).locals["focusedSelected"] + ""
-	};
-
-/***/ },
-/* 478 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(479);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(367)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./option-l.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js?modules&localIdentName=[name]--[local]&importLoaders=1!./../../node_modules/postcss-loader/index.js!./option-l.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 479 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(366)();
-	// imports
-	exports.i(__webpack_require__(475), undefined);
-
-	// module
-	exports.push([module.id, ".option-l--control\n{\n\n  height: 28px;\n  padding: 0 15px 0 34px;\n\n  background-position: 15px 50%;\n  background-size: 15px 15px;\n\n  font-size: 13px;\n  line-height: 28px;\n}\n\n.option-l--controlFocused\n{\n}\n\n.option-l--controlSelected\n{\n}\n\n.option-l--controlFocusedSelected\n{\n}\n", ""]);
-
-	// exports
-	exports.locals = {
-		"control": "option-l--control " + __webpack_require__(475).locals["control"] + "",
-		"controlFocused": "option-l--controlFocused option-l--control " + __webpack_require__(475).locals["control"] + " " + __webpack_require__(475).locals["focused"] + "",
-		"controlSelected": "option-l--controlSelected option-l--control " + __webpack_require__(475).locals["control"] + " " + __webpack_require__(475).locals["selected"] + "",
-		"controlFocusedSelected": "option-l--controlFocusedSelected option-l--control " + __webpack_require__(475).locals["control"] + " " + __webpack_require__(475).locals["focusedSelected"] + ""
-	};
-
-/***/ },
-/* 480 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(481);
+	var content = __webpack_require__(456);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -31961,24 +31405,59 @@
 	}
 
 /***/ },
-/* 481 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
-	exports.i(__webpack_require__(482), undefined);
+	exports.i(__webpack_require__(457), undefined);
+	exports.i(__webpack_require__(382), undefined);
+	exports.i(__webpack_require__(460), undefined);
 
 	// module
-	exports.push([module.id, ".select-s--container\n{\n}\n\n.select-s--popup\n{\n\n  padding: 3px 0;\n}\n", ""]);
+	exports.push([module.id, ".select-s--wrapper\n{\n}\n\n.select-s--control\n{\n\n  position: relative;\n\n  padding-right: 29px;\n\n  text-align: left;\n}\n\n.select-s--control:after\n{\n  right: 10px;\n\n  height: 22px;\n}\n\n.select-s--menu\n{\n}\n\n.select-s--item\n{\n}\n\n/* mixins */\n\n.select-s--isClosed\n{\n}\n\n.select-s--isOpened\n{\n}\n\n.select-s--is\n{\n  background-position: 10px 50%;\n  background-size: 14px 14px;\n}\n\n.select-s--isFocused\n{\n}\n\n.select-s--isSelected\n{\n}\n\n.select-s--isFocusedSelected\n{\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"container": "select-s--container " + __webpack_require__(482).locals["container"] + "",
-		"popup": "select-s--popup " + __webpack_require__(482).locals["popup"] + ""
+		"wrapper": "select-s--wrapper " + __webpack_require__(457).locals["wrapper"] + "",
+		"control": "select-s--control " + __webpack_require__(382).locals["control"] + " " + __webpack_require__(457).locals["control"] + "",
+		"menu": "select-s--menu " + __webpack_require__(460).locals["menu"] + " " + __webpack_require__(457).locals["menu"] + "",
+		"item": "select-s--item " + __webpack_require__(460).locals["item"] + " " + __webpack_require__(457).locals["item"] + "",
+		"isClosed": "select-s--isClosed " + __webpack_require__(457).locals["isClosed"] + "",
+		"isOpened": "select-s--isOpened " + __webpack_require__(457).locals["isOpened"] + "",
+		"is": "select-s--is",
+		"isFocused": "select-s--isFocused " + __webpack_require__(457).locals["isFocused"] + " select-s--is",
+		"isSelected": "select-s--isSelected " + __webpack_require__(457).locals["isSelected"] + " select-s--is",
+		"isFocusedSelected": "select-s--isFocusedSelected " + __webpack_require__(457).locals["isFocusedSelected"] + " select-s--is"
 	};
 
 /***/ },
-/* 482 */
+/* 457 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(366)();
+	// imports
+	exports.i(__webpack_require__(458), undefined);
+	exports.i(__webpack_require__(459), undefined);
+
+	// module
+	exports.push([module.id, ".select--wrapper\n{\n  position: relative;\n\n  display: inline-block;\n}\n\n.select--control\n{\n}\n\n.select--menu\n{\n\n  z-index: 1;\n\n  min-width: 100%;\n\n  background: #fff;\n}\n\n.select--item\n{\n  /* base */\n}\n\n/* mixins */\n\n.select--isClosed:after\n{\n  transform: rotate(0deg);\n}\n\n.select--isOpened:after\n{\n  transform: rotate(-180deg);\n}\n\n.select--isFocused\n{\n  background-color: #ffeba0;\n}\n\n.select--isSelected\n{\n  background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2215%22%20height%3D%2216%22%3E%3Cpath%20d%3D%22M13.5.5l-8%2012L1.7%208l-1%201.6L5.6%2015l9.1-13.4z%22%2F%3E%3C%2Fsvg%3E) 13px 50% no-repeat;\n}\n\n.select--isFocusedSelected\n{\n  background: #ffeba0 url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2215%22%20height%3D%2216%22%3E%3Cpath%20d%3D%22M13.5.5l-8%2012L1.7%208l-1%201.6L5.6%2015l9.1-13.4z%22%2F%3E%3C%2Fsvg%3E) 13px 50% no-repeat;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"wrapper": "select--wrapper",
+		"control": "select--control " + __webpack_require__(458).locals["control"] + "",
+		"menu": "select--menu " + __webpack_require__(459).locals["popup"] + "",
+		"item": "select--item",
+		"isClosed": "select--isClosed",
+		"isOpened": "select--isOpened",
+		"isFocused": "select--isFocused",
+		"isSelected": "select--isSelected",
+		"isFocusedSelected": "select--isFocusedSelected"
+	};
+
+/***/ },
+/* 458 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
@@ -31986,22 +31465,71 @@
 
 
 	// module
-	exports.push([module.id, ".select--container\n{\n  position: relative;\n\n  display: inline-block;\n}\n\n.select--popup\n{\n  position: absolute;\n  z-index: 1;\n  top: calc(100% + 8px);\n\n  min-width: 100%;\n\n  background: #fff;\n  box-shadow: 0 0 0 1px rgba(0,0,0,.1),0 10px 20px -5px rgba(0,0,0,.4);\n}\n", ""]);
+	exports.push([module.id, ".arrow--control:after\n{\n  position: absolute;\n  top: 0;\n\n  width: 11px;\n\n  content: '';\n  transition: transform .1s ease-out 0s;\n\n  background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%226%22%3E%3Cpath%20d%3D%22M10.3%200L5.5%204.7.7%200%200%20.7%205.5%206%2011%20.7z%22%2F%3E%3C%2Fsvg%3E) 0 50% no-repeat;\n}\n\n.arrow--control:disabled:after\n{\n  opacity: .4;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"container": "select--container",
-		"popup": "select--popup"
+		"control": "arrow--control"
 	};
 
 /***/ },
-/* 483 */
+/* 459 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(366)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".popup--popup\n{\n  position: absolute;\n  top: calc(100% + 8px);\n\n  box-shadow: 0 0 0 1px rgba(0,0,0,.1),0 10px 20px -5px rgba(0,0,0,.4);\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"popup": "popup--popup"
+	};
+
+/***/ },
+/* 460 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(366)();
+	// imports
+	exports.i(__webpack_require__(461), undefined);
+
+	// module
+	exports.push([module.id, ".menu-s--menu\n{\n\n  padding: 3px 0;\n}\n\n.menu-s--item\n{\n\n  height: 24px;\n  padding: 0 13px 0 30px;\n\n  font-size: 13px;\n  line-height: 25px;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"menu": "menu-s--menu " + __webpack_require__(461).locals["menu"] + "",
+		"item": "menu-s--item " + __webpack_require__(461).locals["item"] + ""
+	};
+
+/***/ },
+/* 461 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(366)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".menu--menu\n{\n  /* base */\n}\n\n.menu--item\n{\n  display: block;\n\n  cursor: pointer;\n  white-space: nowrap;\n\n  font-family: arial,helvetica,sans-serif;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"menu": "menu--menu",
+		"item": "menu--item"
+	};
+
+/***/ },
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(484);
+	var content = __webpack_require__(463);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -32021,30 +31549,57 @@
 	}
 
 /***/ },
-/* 484 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
-	exports.i(__webpack_require__(482), undefined);
+	exports.i(__webpack_require__(457), undefined);
+	exports.i(__webpack_require__(385), undefined);
+	exports.i(__webpack_require__(464), undefined);
 
 	// module
-	exports.push([module.id, ".select-m--container\n{\n}\n\n.select-m--popup\n{\n\n  padding: 4px 0;\n}\n", ""]);
+	exports.push([module.id, ".select-m--wrapper\n{\n}\n\n.select-m--control\n{\n\n  position: relative;\n\n  padding-right: 35px;\n\n  text-align: left;\n}\n\n.select-m--control:after\n{\n  right: 13px;\n\n  height: 28px;\n}\n\n.select-m--menu\n{\n}\n\n.select-m--item\n{\n}\n\n/* mixins */\n\n.select-m--isClosed\n{\n}\n\n.select-m--isOpened\n{\n}\n\n.select-m--is\n{\n  background-position: 13px 50%;\n  background-size: 14px 14px;\n}\n\n.select-m--isFocused\n{\n}\n\n.select-m--isSelected\n{\n}\n\n.select-m--isFocusedSelected\n{\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"container": "select-m--container " + __webpack_require__(482).locals["container"] + "",
-		"popup": "select-m--popup " + __webpack_require__(482).locals["popup"] + ""
+		"wrapper": "select-m--wrapper " + __webpack_require__(457).locals["wrapper"] + "",
+		"control": "select-m--control " + __webpack_require__(385).locals["control"] + " " + __webpack_require__(457).locals["control"] + "",
+		"menu": "select-m--menu " + __webpack_require__(464).locals["menu"] + " " + __webpack_require__(457).locals["menu"] + "",
+		"item": "select-m--item " + __webpack_require__(464).locals["item"] + " " + __webpack_require__(457).locals["item"] + "",
+		"isClosed": "select-m--isClosed " + __webpack_require__(457).locals["isClosed"] + "",
+		"isOpened": "select-m--isOpened " + __webpack_require__(457).locals["isOpened"] + "",
+		"is": "select-m--is",
+		"isFocused": "select-m--isFocused " + __webpack_require__(457).locals["isFocused"] + " select-m--is",
+		"isSelected": "select-m--isSelected " + __webpack_require__(457).locals["isSelected"] + " select-m--is",
+		"isFocusedSelected": "select-m--isFocusedSelected " + __webpack_require__(457).locals["isFocusedSelected"] + " select-m--is"
 	};
 
 /***/ },
-/* 485 */
+/* 464 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(366)();
+	// imports
+	exports.i(__webpack_require__(461), undefined);
+
+	// module
+	exports.push([module.id, ".menu-m--menu\n{\n\n  padding: 4px 0;\n}\n\n.menu-m--item\n{\n\n  height: 24px;\n  padding: 0 13px 0 30px;\n\n  font-size: 13px;\n  line-height: 25px;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"menu": "menu-m--menu " + __webpack_require__(461).locals["menu"] + "",
+		"item": "menu-m--item " + __webpack_require__(461).locals["item"] + ""
+	};
+
+/***/ },
+/* 465 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(486);
+	var content = __webpack_require__(466);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -32064,24 +31619,51 @@
 	}
 
 /***/ },
-/* 486 */
+/* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
-	exports.i(__webpack_require__(482), undefined);
+	exports.i(__webpack_require__(457), undefined);
+	exports.i(__webpack_require__(387), undefined);
+	exports.i(__webpack_require__(467), undefined);
 
 	// module
-	exports.push([module.id, ".select-l--container\n{\n}\n\n.select-l--popup\n{\n\n  padding: 5px 0;\n}\n", ""]);
+	exports.push([module.id, ".select-l--wrapper\n{\n}\n\n.select-l--control\n{\n\n  position: relative;\n\n  padding-right: 39px;\n\n  text-align: left;\n}\n\n.select-l--control:after\n{\n  right: 15px;\n\n  height: 32px;\n}\n\n.select-l--menu\n{\n}\n\n.select-l--item\n{\n}\n\n/* mixins */\n\n.select-l--isClosed\n{\n}\n\n.select-l--isOpened\n{\n}\n\n.select-l--is\n{\n  background-position: 15px 50%;\n  background-size: 15px 15px;\n}\n\n.select-l--isFocused\n{\n}\n\n.select-l--isSelected\n{\n}\n\n.select-l--isFocusedSelected\n{\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"container": "select-l--container " + __webpack_require__(482).locals["container"] + "",
-		"popup": "select-l--popup " + __webpack_require__(482).locals["popup"] + ""
+		"wrapper": "select-l--wrapper " + __webpack_require__(457).locals["wrapper"] + "",
+		"control": "select-l--control " + __webpack_require__(387).locals["control"] + " " + __webpack_require__(457).locals["control"] + "",
+		"menu": "select-l--menu " + __webpack_require__(467).locals["menu"] + " " + __webpack_require__(457).locals["menu"] + "",
+		"item": "select-l--item " + __webpack_require__(467).locals["item"] + " " + __webpack_require__(457).locals["item"] + "",
+		"isClosed": "select-l--isClosed " + __webpack_require__(457).locals["isClosed"] + "",
+		"isOpened": "select-l--isOpened " + __webpack_require__(457).locals["isOpened"] + "",
+		"is": "select-l--is",
+		"isFocused": "select-l--isFocused " + __webpack_require__(457).locals["isFocused"] + " select-l--is",
+		"isSelected": "select-l--isSelected " + __webpack_require__(457).locals["isSelected"] + " select-l--is",
+		"isFocusedSelected": "select-l--isFocusedSelected " + __webpack_require__(457).locals["isFocusedSelected"] + " select-l--is"
 	};
 
 /***/ },
-/* 487 */
+/* 467 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(366)();
+	// imports
+	exports.i(__webpack_require__(461), undefined);
+
+	// module
+	exports.push([module.id, ".menu-l--menu\n{\n\n  padding: 5px 0;\n}\n\n.menu-l--item\n{\n\n  height: 28px;\n  padding: 0 15px 0 34px;\n\n  font-size: 13px;\n  line-height: 28px;\n}\n", ""]);
+
+	// exports
+	exports.locals = {
+		"menu": "menu-l--menu " + __webpack_require__(461).locals["menu"] + "",
+		"item": "menu-l--item " + __webpack_require__(461).locals["item"] + ""
+	};
+
+/***/ },
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32101,10 +31683,10 @@
 	  }, {
 	    "size": "xl"
 	  }]]
-	}, __webpack_require__(488));
+	}, __webpack_require__(469));
 
 /***/ },
-/* 488 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32113,18 +31695,18 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Spin = __webpack_require__(489);
+	var Spin = __webpack_require__(470);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Spin, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(490),
-	  s: __webpack_require__(493),
-	  m: __webpack_require__(495),
-	  l: __webpack_require__(497),
-	  xl: __webpack_require__(499)
+	  xs: __webpack_require__(471),
+	  s: __webpack_require__(474),
+	  m: __webpack_require__(476),
+	  l: __webpack_require__(478),
+	  xl: __webpack_require__(480)
 	}, {
 	  size: 'm'
 	}, {
@@ -32132,7 +31714,7 @@
 	});
 
 /***/ },
-/* 489 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32183,13 +31765,13 @@
 	module.exports = cssModules(Spin);
 
 /***/ },
-/* 490 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(491);
+	var content = __webpack_require__(472);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -32209,23 +31791,23 @@
 	}
 
 /***/ },
-/* 491 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
-	exports.i(__webpack_require__(492), undefined);
+	exports.i(__webpack_require__(473), undefined);
 
 	// module
 	exports.push([module.id, ".spin-xs--control\n{\n\n  width: 16px;\n  height: 16px;\n\n  line-height: 16px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"control": "spin-xs--control " + __webpack_require__(492).locals["control"] + ""
+		"control": "spin-xs--control " + __webpack_require__(473).locals["control"] + ""
 	};
 
 /***/ },
-/* 492 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
@@ -32242,13 +31824,13 @@
 	};
 
 /***/ },
-/* 493 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(494);
+	var content = __webpack_require__(475);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -32268,29 +31850,29 @@
 	}
 
 /***/ },
-/* 494 */
+/* 475 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
-	exports.i(__webpack_require__(492), undefined);
+	exports.i(__webpack_require__(473), undefined);
 
 	// module
 	exports.push([module.id, ".spin-s--control\n{\n\n  width: 24px;\n  height: 24px;\n\n  line-height: 24px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"control": "spin-s--control " + __webpack_require__(492).locals["control"] + ""
+		"control": "spin-s--control " + __webpack_require__(473).locals["control"] + ""
 	};
 
 /***/ },
-/* 495 */
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(496);
+	var content = __webpack_require__(477);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -32310,29 +31892,29 @@
 	}
 
 /***/ },
-/* 496 */
+/* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
-	exports.i(__webpack_require__(492), undefined);
+	exports.i(__webpack_require__(473), undefined);
 
 	// module
 	exports.push([module.id, ".spin-m--control\n{\n\n  width: 28px;\n  height: 28px;\n\n  line-height: 28px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"control": "spin-m--control " + __webpack_require__(492).locals["control"] + ""
+		"control": "spin-m--control " + __webpack_require__(473).locals["control"] + ""
 	};
 
 /***/ },
-/* 497 */
+/* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(498);
+	var content = __webpack_require__(479);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -32352,29 +31934,29 @@
 	}
 
 /***/ },
-/* 498 */
+/* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
-	exports.i(__webpack_require__(492), undefined);
+	exports.i(__webpack_require__(473), undefined);
 
 	// module
 	exports.push([module.id, ".spin-l--control\n{\n\n  width: 32px;\n  height: 32px;\n\n  line-height: 32px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"control": "spin-l--control " + __webpack_require__(492).locals["control"] + ""
+		"control": "spin-l--control " + __webpack_require__(473).locals["control"] + ""
 	};
 
 /***/ },
-/* 499 */
+/* 480 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(500);
+	var content = __webpack_require__(481);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -32394,23 +31976,23 @@
 	}
 
 /***/ },
-/* 500 */
+/* 481 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
-	exports.i(__webpack_require__(492), undefined);
+	exports.i(__webpack_require__(473), undefined);
 
 	// module
 	exports.push([module.id, ".spin-xl--control\n{\n\n  width: 38px;\n  height: 38px;\n\n  line-height: 38px;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
-		"control": "spin-xl--control " + __webpack_require__(492).locals["control"] + ""
+		"control": "spin-xl--control " + __webpack_require__(473).locals["control"] + ""
 	};
 
 /***/ },
-/* 501 */
+/* 482 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32442,10 +32024,10 @@
 	    "placeholder": "size l",
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(502));
+	}, __webpack_require__(483));
 
 /***/ },
-/* 502 */
+/* 483 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32454,15 +32036,15 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Textarea = __webpack_require__(503);
+	var Textarea = __webpack_require__(484);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Textarea, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  m: __webpack_require__(504),
-	  l: __webpack_require__(506)
+	  m: __webpack_require__(485),
+	  l: __webpack_require__(487)
 	}, {
 	  size: 'm'
 	}, {
@@ -32470,7 +32052,7 @@
 	});
 
 /***/ },
-/* 503 */
+/* 484 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32542,13 +32124,13 @@
 	module.exports = cssModules(Textarea);
 
 /***/ },
-/* 504 */
+/* 485 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(505);
+	var content = __webpack_require__(486);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -32568,13 +32150,13 @@
 	}
 
 /***/ },
-/* 505 */
+/* 486 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
 	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(422), undefined);
+	exports.i(__webpack_require__(421), undefined);
 
 	// module
 	exports.push([module.id, ".textarea-m--control\n{\n\n  padding: 3px 5px;\n\n  font-size: " + __webpack_require__(373).locals["size-m"] + ";\n  line-height: 17px;\n}\n", ""]);
@@ -32582,17 +32164,17 @@
 	// exports
 	exports.locals = {
 		"size-m": "" + __webpack_require__(373).locals["size-m"] + "",
-		"control": "textarea-m--control " + __webpack_require__(422).locals["control"] + ""
+		"control": "textarea-m--control " + __webpack_require__(421).locals["control"] + ""
 	};
 
 /***/ },
-/* 506 */
+/* 487 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(507);
+	var content = __webpack_require__(488);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(367)(content, {});
@@ -32612,13 +32194,13 @@
 	}
 
 /***/ },
-/* 507 */
+/* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(366)();
 	// imports
 	exports.i(__webpack_require__(373), undefined);
-	exports.i(__webpack_require__(422), undefined);
+	exports.i(__webpack_require__(421), undefined);
 
 	// module
 	exports.push([module.id, ".textarea-l--control\n{\n\n  padding: 5px 7px;\n\n  font-size: " + __webpack_require__(373).locals["size-l"] + ";\n  line-height: 20px;\n}\n", ""]);
@@ -32626,7 +32208,7 @@
 	// exports
 	exports.locals = {
 		"size-l": "" + __webpack_require__(373).locals["size-l"] + "",
-		"control": "textarea-l--control " + __webpack_require__(422).locals["control"] + ""
+		"control": "textarea-l--control " + __webpack_require__(421).locals["control"] + ""
 	};
 
 /***/ }
