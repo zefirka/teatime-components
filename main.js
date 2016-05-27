@@ -49,11 +49,11 @@
 	__webpack_require__(399);
 	__webpack_require__(416);
 	__webpack_require__(426);
-	__webpack_require__(438);
+	__webpack_require__(436);
 	__webpack_require__(449);
-	__webpack_require__(470);
-	__webpack_require__(484);
-	module.exports = __webpack_require__(491);
+	__webpack_require__(467);
+	__webpack_require__(481);
+	module.exports = __webpack_require__(488);
 
 
 /***/ },
@@ -68,6 +68,15 @@
 	  "path": "Button",
 	  "data": [[{
 	    "children": "button",
+	    "size": "xs",
+	    "theme": "action"
+	  }, {
+	    "children": "button",
+	    "disabled": true,
+	    "size": "xs",
+	    "theme": "action"
+	  }], [{
+	    "children": "button",
 	    "size": "s",
 	    "theme": "action"
 	  }, {
@@ -95,13 +104,13 @@
 	    "theme": "action"
 	  }], [{
 	    "children": "button",
-	    "size": "xl",
-	    "theme": "action"
+	    "size": "xs",
+	    "theme": "normal"
 	  }, {
 	    "children": "button",
 	    "disabled": true,
-	    "size": "xl",
-	    "theme": "action"
+	    "size": "xs",
+	    "theme": "normal"
 	  }], [{
 	    "children": "button",
 	    "size": "s",
@@ -128,15 +137,6 @@
 	    "children": "button",
 	    "disabled": true,
 	    "size": "l",
-	    "theme": "normal"
-	  }], [{
-	    "children": "button",
-	    "size": "xl",
-	    "theme": "normal"
-	  }, {
-	    "children": "button",
-	    "disabled": true,
-	    "size": "xl",
 	    "theme": "normal"
 	  }]]
 	}, __webpack_require__(368));
@@ -27188,19 +27188,19 @@
 	  var theme = _ref.theme;
 	  return { styles: styles[theme + '-' + size] };
 	}, {
-	  'action-s': __webpack_require__(371),
-	  'action-m': __webpack_require__(375),
-	  'action-l': __webpack_require__(377),
-	  'action-xl': __webpack_require__(379),
-	  'normal-s': __webpack_require__(381),
-	  'normal-m': __webpack_require__(384),
-	  'normal-l': __webpack_require__(386),
-	  'normal-xl': __webpack_require__(388)
+	  'action-xs': __webpack_require__(371),
+	  'action-s': __webpack_require__(375),
+	  'action-m': __webpack_require__(377),
+	  'action-l': __webpack_require__(379),
+	  'normal-xs': __webpack_require__(381),
+	  'normal-s': __webpack_require__(384),
+	  'normal-m': __webpack_require__(386),
+	  'normal-l': __webpack_require__(388)
 	}, {
 	  size: 'm',
 	  theme: 'normal'
 	}, {
-	  size: PropTypes.oneOf(['s', 'm', 'l', 'xl']),
+	  size: PropTypes.oneOf(['xs', 's', 'm', 'l']),
 	  theme: PropTypes.oneOf(['action', 'normal'])
 	});
 
@@ -27335,7 +27335,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","control":"button-action-s--control button-action--control"};
+	module.exports = {"size-xs":"13px","control":"button-action-xs--control button-action--control"};
 
 /***/ },
 /* 372 */,
@@ -27345,7 +27345,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"13px","control":"button-action-m--control button-action--control"};
+	module.exports = {"size-s":"13px","control":"button-action-s--control button-action--control"};
 
 /***/ },
 /* 376 */,
@@ -27353,7 +27353,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"15px","control":"button-action-l--control button-action--control"};
+	module.exports = {"size-m":"15px","control":"button-action-m--control button-action--control"};
 
 /***/ },
 /* 378 */,
@@ -27361,7 +27361,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-xl":"18px","control":"button-action-xl--control button-action--control"};
+	module.exports = {"size-l":"18px","control":"button-action-l--control button-action--control"};
 
 /***/ },
 /* 380 */,
@@ -27369,7 +27369,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","control":"button-normal-s--control button-normal--control"};
+	module.exports = {"size-xs":"13px","control":"button-normal-xs--control button-normal--control"};
 
 /***/ },
 /* 382 */,
@@ -27378,7 +27378,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"13px","control":"button-normal-m--control button-normal--control"};
+	module.exports = {"size-s":"13px","control":"button-normal-s--control button-normal--control"};
 
 /***/ },
 /* 385 */,
@@ -27386,7 +27386,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"15px","control":"button-normal-l--control button-normal--control"};
+	module.exports = {"size-m":"15px","control":"button-normal-m--control button-normal--control"};
 
 /***/ },
 /* 387 */,
@@ -27394,7 +27394,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-xl":"18px","control":"button-normal-xl--control button-normal--control"};
+	module.exports = {"size-l":"18px","control":"button-normal-l--control button-normal--control"};
 
 /***/ },
 /* 389 */,
@@ -27408,6 +27408,26 @@
 	  "name": "check",
 	  "path": "Check",
 	  "data": [[{
+	    "name": "size-s",
+	    "size": "s",
+	    "value": "size-s"
+	  }, {
+	    "defaultChecked": true,
+	    "name": "size-s",
+	    "size": "s",
+	    "value": "size-s"
+	  }, {
+	    "disabled": true,
+	    "name": "size-s",
+	    "size": "s",
+	    "value": "size-s"
+	  }, {
+	    "defaultChecked": true,
+	    "disabled": true,
+	    "name": "size-s",
+	    "size": "s",
+	    "value": "size-s"
+	  }], [{
 	    "name": "size-m",
 	    "size": "m",
 	    "value": "size-m"
@@ -27428,26 +27448,17 @@
 	    "size": "m",
 	    "value": "size-m"
 	  }], [{
-	    "name": "size-l",
-	    "size": "l",
-	    "value": "size-l"
+	    "children": "Size s",
+	    "name": "size-s",
+	    "size": "s",
+	    "value": "size-s"
 	  }, {
-	    "defaultChecked": true,
-	    "name": "size-l",
-	    "size": "l",
-	    "value": "size-l"
-	  }, {
+	    "children": "Size s",
 	    "disabled": true,
-	    "name": "size-l",
-	    "size": "l",
-	    "value": "size-l"
+	    "name": "size-s",
+	    "size": "s",
+	    "value": "size-s"
 	  }, {
-	    "defaultChecked": true,
-	    "disabled": true,
-	    "name": "size-l",
-	    "size": "l",
-	    "value": "size-l"
-	  }], [{
 	    "children": "Size m",
 	    "name": "size-m",
 	    "size": "m",
@@ -27458,17 +27469,6 @@
 	    "name": "size-m",
 	    "size": "m",
 	    "value": "size-m"
-	  }, {
-	    "children": "Size l",
-	    "name": "size-l",
-	    "size": "l",
-	    "value": "size-l"
-	  }, {
-	    "children": "Size l",
-	    "disabled": true,
-	    "name": "size-l",
-	    "size": "l",
-	    "value": "size-l"
 	  }]]
 	}, __webpack_require__(391));
 
@@ -27489,12 +27489,12 @@
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  m: __webpack_require__(394),
-	  l: __webpack_require__(397)
+	  s: __webpack_require__(394),
+	  m: __webpack_require__(397)
 	}, {
 	  size: 'm'
 	}, {
-	  size: PropTypes.oneOf(['m', 'l'])
+	  size: PropTypes.oneOf(['s', 'm'])
 	});
 
 /***/ },
@@ -27625,7 +27625,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"13px","wrapper":"check-m--wrapper check--wrapper","control":"check-m--control check--control","native":"check-m--native check--native","label":"check-m--label check--label"};
+	module.exports = {"size-s":"13px","wrapper":"check-s--wrapper check--wrapper","control":"check-s--control check--control","native":"check-s--native check--native","label":"check-s--label check--label"};
 
 /***/ },
 /* 395 */,
@@ -27634,7 +27634,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"15px","wrapper":"check-l--wrapper check--wrapper","control":"check-l--control check--control","native":"check-l--native check--native","label":"check-l--label check--label"};
+	module.exports = {"size-m":"15px","wrapper":"check-m--wrapper check--wrapper","control":"check-m--control check--control","native":"check-m--native check--native","label":"check-m--label check--label"};
 
 /***/ },
 /* 398 */,
@@ -27665,7 +27665,7 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
-	    "size": "m"
+	    "size": "s"
 	  }, {
 	    "disabled": true,
 	    "name": "motorrad-2",
@@ -27685,7 +27685,7 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
-	    "size": "m"
+	    "size": "s"
 	  }], [{
 	    "name": "motorrad-3",
 	    "options": [{
@@ -27704,7 +27704,7 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
-	    "size": "l"
+	    "size": "m"
 	  }, {
 	    "disabled": true,
 	    "name": "motorrad-4",
@@ -27724,7 +27724,7 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
-	    "size": "l"
+	    "size": "m"
 	  }]]
 	}, __webpack_require__(400));
 
@@ -27747,12 +27747,12 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  m: __webpack_require__(411),
-	  l: __webpack_require__(414)
+	  s: __webpack_require__(411),
+	  m: __webpack_require__(414)
 	}, {
 	  size: 'm'
 	}, {
-	  size: PropTypes.oneOf(['m', 'l'])
+	  size: PropTypes.oneOf(['s', 'm'])
 	});
 
 /***/ },
@@ -28665,7 +28665,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"container":"check-group-m--container check-group--container","wrapper":"check-group-m--wrapper check-m--wrapper check--wrapper","control":"check-group-m--control check-m--control check--control","native":"check-group-m--native check-m--native check--native","label":"check-group-m--label check-m--label check--label"};
+	module.exports = {"container":"check-group-s--container check-group--container","wrapper":"check-group-s--wrapper check-s--wrapper check--wrapper","control":"check-group-s--control check-s--control check--control","native":"check-group-s--native check-s--native check--native","label":"check-group-s--label check-s--label check--label"};
 
 /***/ },
 /* 412 */,
@@ -28674,7 +28674,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"container":"check-group-l--container check-group--container","wrapper":"check-group-l--wrapper check-l--wrapper check--wrapper","control":"check-group-l--control check-l--control check--control","native":"check-group-l--native check-l--native check--native","label":"check-group-l--label check-l--label check--label"};
+	module.exports = {"container":"check-group-m--container check-group--container","wrapper":"check-group-m--wrapper check-m--wrapper check--wrapper","control":"check-group-m--control check-m--control check--control","native":"check-group-m--native check-m--native check--native","label":"check-group-m--label check-m--label check--label"};
 
 /***/ },
 /* 415 */,
@@ -28689,6 +28689,17 @@
 	  "path": "Input",
 	  "data": [[{
 	    "defaultValue": "input",
+	    "name": "input-size-xs",
+	    "placeholder": "size xs",
+	    "size": "xs"
+	  }, {
+	    "defaultValue": "input",
+	    "disabled": true,
+	    "name": "input-size-xs",
+	    "placeholder": "size xs",
+	    "size": "xs"
+	  }], [{
+	    "defaultValue": "input",
 	    "name": "input-size-s",
 	    "placeholder": "size s",
 	    "size": "s"
@@ -28709,17 +28720,6 @@
 	    "name": "input-size-m",
 	    "placeholder": "size m",
 	    "size": "m"
-	  }], [{
-	    "defaultValue": "input",
-	    "name": "input-size-l",
-	    "placeholder": "size l",
-	    "size": "l"
-	  }, {
-	    "defaultValue": "input",
-	    "disabled": true,
-	    "name": "input-size-l",
-	    "placeholder": "size l",
-	    "size": "l"
 	  }]]
 	}, __webpack_require__(417));
 
@@ -28740,13 +28740,13 @@
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  's': __webpack_require__(419),
-	  'm': __webpack_require__(422),
-	  'l': __webpack_require__(424)
+	  'xs': __webpack_require__(419),
+	  's': __webpack_require__(422),
+	  'm': __webpack_require__(424)
 	}, {
 	  size: 'm'
 	}, {
-	  size: PropTypes.oneOf(['s', 'm', 'l'])
+	  size: PropTypes.oneOf(['xs', 's', 'm'])
 	});
 
 /***/ },
@@ -28821,7 +28821,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","control":"input-s--control input--control"};
+	module.exports = {"size-xs":"13px","control":"input-xs--control input--control"};
 
 /***/ },
 /* 420 */,
@@ -28830,7 +28830,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"13px","control":"input-m--control input--control"};
+	module.exports = {"size-s":"13px","control":"input-s--control input--control"};
 
 /***/ },
 /* 423 */,
@@ -28838,7 +28838,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"15px","control":"input-l--control input--control"};
+	module.exports = {"size-m":"15px","control":"input-m--control input--control"};
 
 /***/ },
 /* 425 */,
@@ -28863,10 +28863,6 @@
 	    "children": "link",
 	    "href": "#",
 	    "size": "l"
-	  }, {
-	    "children": "link",
-	    "href": "#",
-	    "size": "xl"
 	  }]]
 	}, __webpack_require__(427));
 
@@ -28889,12 +28885,11 @@
 	}, {
 	  's': __webpack_require__(429),
 	  'm': __webpack_require__(432),
-	  'l': __webpack_require__(434),
-	  'xl': __webpack_require__(436)
+	  'l': __webpack_require__(434)
 	}, {
 	  size: 'm'
 	}, {
-	  size: PropTypes.oneOf(['s', 'm', 'l', 'xl'])
+	  size: PropTypes.oneOf(['s', 'm', 'l'])
 	});
 
 /***/ },
@@ -28982,7 +28977,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"13px","control":"link-m--control link--control"};
+	module.exports = {"size-m":"15px","control":"link-m--control link--control"};
 
 /***/ },
 /* 433 */,
@@ -28990,19 +28985,11 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"15px","control":"link-l--control link--control"};
+	module.exports = {"size-l":"18px","control":"link-l--control link--control"};
 
 /***/ },
 /* 435 */,
 /* 436 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"size-xl":"18px","control":"link-xl--control link--control"};
-
-/***/ },
-/* 437 */,
-/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29029,7 +29016,7 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
-	    "size": "s"
+	    "size": "xs"
 	  }], [{
 	    "disabled": true,
 	    "name": "motorrad-2",
@@ -29049,9 +29036,8 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
-	    "size": "s"
+	    "size": "xs"
 	  }], [{
-	    "defaultValue": "suzuki",
 	    "name": "motorrad-3",
 	    "options": [{
 	      "text": "Yamaha",
@@ -29069,9 +29055,8 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
-	    "size": "m"
+	    "size": "s"
 	  }], [{
-	    "defaultValue": "suzuki",
 	    "disabled": true,
 	    "name": "motorrad-4",
 	    "options": [{
@@ -29090,9 +29075,50 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
+	    "size": "s"
+	  }], [{
+	    "defaultValue": "suzuki",
+	    "name": "motorrad-5",
+	    "options": [{
+	      "text": "Yamaha",
+	      "value": "yamaha"
+	    }, {
+	      "text": "Suzuki",
+	      "value": "suzuki"
+	    }, {
+	      "text": "Kawasaki",
+	      "value": "kawasaki"
+	    }, {
+	      "text": "Vespa",
+	      "value": "vespa"
+	    }, {
+	      "text": "MZ",
+	      "value": "mz"
+	    }],
 	    "size": "m"
 	  }], [{
-	    "name": "motorrad-5",
+	    "defaultValue": "suzuki",
+	    "disabled": true,
+	    "name": "motorrad-6",
+	    "options": [{
+	      "text": "Yamaha",
+	      "value": "yamaha"
+	    }, {
+	      "text": "Suzuki",
+	      "value": "suzuki"
+	    }, {
+	      "text": "Kawasaki",
+	      "value": "kawasaki"
+	    }, {
+	      "text": "Vespa",
+	      "value": "vespa"
+	    }, {
+	      "text": "MZ",
+	      "value": "mz"
+	    }],
+	    "size": "m"
+	  }], [{
+	    "name": "motorrad-7",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -29112,7 +29138,7 @@
 	    "size": "l"
 	  }], [{
 	    "disabled": true,
-	    "name": "motorrad-6",
+	    "name": "motorrad-8",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -29131,10 +29157,10 @@
 	    }],
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(439));
+	}, __webpack_require__(437));
 
 /***/ },
-/* 439 */
+/* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29143,7 +29169,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var RadioGroup = __webpack_require__(440);
+	var RadioGroup = __webpack_require__(438);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(RadioGroup, function (styles, _ref) {
@@ -29152,17 +29178,18 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  s: __webpack_require__(442),
+	  xs: __webpack_require__(440),
+	  s: __webpack_require__(443),
 	  m: __webpack_require__(445),
 	  l: __webpack_require__(447)
 	}, {
 	  size: 'm'
 	}, {
-	  size: PropTypes.oneOf(['s', 'm', 'l'])
+	  size: PropTypes.oneOf(['xs', 's', 'm', 'l'])
 	});
 
 /***/ },
-/* 440 */
+/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29179,7 +29206,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var RadioButton = __webpack_require__(441);
+	var RadioButton = __webpack_require__(439);
 	var React = __webpack_require__(3);
 	var Component = React.Component;
 	var PropTypes = React.PropTypes;
@@ -29308,7 +29335,7 @@
 	module.exports = cssModules(RadioGroup);
 
 /***/ },
-/* 441 */
+/* 439 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29393,20 +29420,28 @@
 	module.exports = cssModules(RadioButton);
 
 /***/ },
-/* 442 */
+/* 440 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-xs":"13px","container":"radio-group-xs--container radio-group--container","wrapper":"radio-group-xs--wrapper radio-group--wrapper","control":"radio-group-xs--control radio-group--control","native":"radio-group-xs--native radio-group--native"};
+
+/***/ },
+/* 441 */,
+/* 442 */,
+/* 443 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","container":"radio-group-s--container radio-group--container","wrapper":"radio-group-s--wrapper radio-group--wrapper","control":"radio-group-s--control radio-group--control","native":"radio-group-s--native radio-group--native"};
 
 /***/ },
-/* 443 */,
 /* 444 */,
 /* 445 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"13px","container":"radio-group-m--container radio-group--container","wrapper":"radio-group-m--wrapper radio-group--wrapper","control":"radio-group-m--control radio-group--control","native":"radio-group-m--native radio-group--native"};
+	module.exports = {"size-m":"15px","container":"radio-group-m--container radio-group--container","wrapper":"radio-group-m--wrapper radio-group--wrapper","control":"radio-group-m--control radio-group--control","native":"radio-group-m--native radio-group--native"};
 
 /***/ },
 /* 446 */,
@@ -29414,7 +29449,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"15px","container":"radio-group-l--container radio-group--container","wrapper":"radio-group-l--wrapper radio-group--wrapper","control":"radio-group-l--control radio-group--control","native":"radio-group-l--native radio-group--native"};
+	module.exports = {"size-l":"18px","container":"radio-group-l--container radio-group--container","wrapper":"radio-group-l--wrapper radio-group--wrapper","control":"radio-group-l--control radio-group--control","native":"radio-group-l--native radio-group--native"};
 
 /***/ },
 /* 448 */,
@@ -29506,45 +29541,6 @@
 	      "value": "mz"
 	    }],
 	    "size": "m"
-	  }], [{
-	    "name": "motorrad-5",
-	    "options": [{
-	      "text": "Yamaha",
-	      "value": "yamaha"
-	    }, {
-	      "text": "Suzuki",
-	      "value": "suzuki"
-	    }, {
-	      "text": "Kawasaki",
-	      "value": "kawasaki"
-	    }, {
-	      "text": "Vespa",
-	      "value": "vespa"
-	    }, {
-	      "text": "MZ",
-	      "value": "mz"
-	    }],
-	    "size": "l"
-	  }, {
-	    "disabled": true,
-	    "name": "motorrad-6",
-	    "options": [{
-	      "text": "Yamaha",
-	      "value": "yamaha"
-	    }, {
-	      "text": "Suzuki",
-	      "value": "suzuki"
-	    }, {
-	      "text": "Kawasaki",
-	      "value": "kawasaki"
-	    }, {
-	      "text": "Vespa",
-	      "value": "vespa"
-	    }, {
-	      "text": "MZ",
-	      "value": "mz"
-	    }],
-	    "size": "l"
 	  }]]
 	}, __webpack_require__(450));
 
@@ -29568,12 +29564,11 @@
 	  };
 	}, {
 	  s: __webpack_require__(457),
-	  m: __webpack_require__(464),
-	  l: __webpack_require__(467)
+	  m: __webpack_require__(464)
 	}, {
 	  size: 'm'
 	}, {
-	  size: PropTypes.oneOf(['s', 'm', 'l'])
+	  size: PropTypes.oneOf(['s', 'm'])
 	});
 
 /***/ },
@@ -30037,14 +30032,14 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Popup).call(this, props));
 
 	    _this.state = {
-	      zIndex: 0
+	      zIndex: 100
 	    };
 	    return _this;
 	  }
 
 	  _createClass(Popup, [{
-	    key: 'onOrderChange',
-	    value: function onOrderChange(zIndex) {
+	    key: 'onLayersUpdate',
+	    value: function onLayersUpdate(zIndex) {
 	      this.setState({ zIndex: zIndex });
 	    }
 	  }, {
@@ -30119,33 +30114,22 @@
 	    _createClass(Layer, [{
 	      key: 'componentDidMount',
 	      value: function componentDidMount() {
-	        var id = this._id = generateId();
-	        layers[id] = { node: findDOMNode(this.refs.target), ref: this.refs.target };
-	        this.updateLayers();
+	        subscribeTo(this);
+	        updateLayers();
 	      }
+
+	      // componentDidUpdate(prevProps, prevState) {
+	      //   if (this.state.zIndex !== prevState.zIndex) {
+	      //     return;
+	      //   }
+
+	      //   updateLayers();
+	      // }
+
 	    }, {
 	      key: 'componentWillUnmount',
 	      value: function componentWillUnmount() {
-	        delete layers[this._id];
-	      }
-	    }, {
-	      key: 'updateLayers',
-	      value: function updateLayers() {
-	        var rects = [];
-
-	        for (var id in layers) {
-	          // https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
-	          var rect = layers[id].node.getBoundingClientRect();
-	          rects.push({ id: id, z: toNum(rect.top, rect.left) });
-	        }
-
-	        var length = rects.length;
-	        rects.sort(function (a, b) {
-	          return b.z - a.z;
-	        });
-	        while (length--) {
-	          layers[rects[length].id].ref.onOrderChange(length + 100);
-	        }
+	        unsubscribeFrom(this);
 	      }
 	    }, {
 	      key: 'render',
@@ -30160,13 +30144,69 @@
 	  return Layer;
 	};
 
+	function updateLayers() {
+	  var positions = [];
+	  var target;
+
+	  for (var id in layers) {
+	    var layer = layers[id];
+	    if (!layer) {
+	      continue;
+	    }
+
+	    target = layer.refs.target;
+	    if (!target) {
+	      continue;
+	    }
+
+	    target = findDOMNode(target);
+	    if (!target) {
+	      continue;
+	    }
+
+	    positions.push({
+	      layer: layer,
+	      position: calcPosition(target.getBoundingClientRect())
+	    });
+	  }
+
+	  positions.sort(function (a, b) {
+	    return b.position - a.position;
+	  });
+
+	  var length = positions.length;
+	  while (length--) {
+	    target = positions[length].layer.refs.target;
+	    if (typeof target.onLayersUpdate === 'function') {
+	      target.onLayersUpdate(length + 100);
+	    }
+	  }
+	}
+
 	/**
-	 * @param  {number} top
-	 * @param  {number} left
+	 * @param {reactClass} component
+	 */
+	function subscribeTo(component) {
+	  var id = component._id = generateId();
+	  layers[id] = component;
+	}
+
+	/**
+	 * @param {reactClass} component
+	 */
+	function unsubscribeFrom(component) {
+	  layers[component._id] = null;
+	  component._id = null;
+	}
+
+	/**
+	 * @param  {object} rect
+	 * @param  {number} rect.top
+	 * @param  {number} rect.left
 	 * @return {number}
 	 */
-	function toNum(top, left) {
-	  return Number(Math.round(top) + '.' + Math.round(left));
+	function calcPosition(clientRect) {
+	  return clientRect.top + Number('.' + Math.round(clientRect.left));
 	}
 
 /***/ },
@@ -30290,15 +30330,6 @@
 /* 465 */,
 /* 466 */,
 /* 467 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-l--wrapper select--wrapper","control":"select-l--control button-normal-l--control button-normal--control select--control arrow--control","menu":"select-l--menu menu-l--menu menu--menu select--menu popup--popup","item":"select-l--item menu-l--item menu--item select--item","isClosed":"select-l--isClosed select--isClosed","isOpened":"select-l--isOpened select--isOpened","is":"select-l--is","isFocused":"select-l--isFocused select--isFocused select-l--is","isSelected":"select-l--isSelected select--isSelected select-l--is","isFocusedSelected":"select-l--isFocusedSelected select--isFocusedSelected select-l--is"};
-
-/***/ },
-/* 468 */,
-/* 469 */,
-/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30318,10 +30349,10 @@
 	  }, {
 	    "size": "xl"
 	  }]]
-	}, __webpack_require__(471));
+	}, __webpack_require__(468));
 
 /***/ },
-/* 471 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30330,18 +30361,18 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Spin = __webpack_require__(472);
+	var Spin = __webpack_require__(469);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Spin, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(473),
-	  s: __webpack_require__(476),
-	  m: __webpack_require__(478),
-	  l: __webpack_require__(480),
-	  xl: __webpack_require__(482)
+	  xs: __webpack_require__(470),
+	  s: __webpack_require__(473),
+	  m: __webpack_require__(475),
+	  l: __webpack_require__(477),
+	  xl: __webpack_require__(479)
 	}, {
 	  size: 'm'
 	}, {
@@ -30349,7 +30380,7 @@
 	});
 
 /***/ },
-/* 472 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30400,48 +30431,48 @@
 	module.exports = cssModules(Spin);
 
 /***/ },
-/* 473 */
+/* 470 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xs--control spin--control"};
 
 /***/ },
-/* 474 */,
-/* 475 */,
-/* 476 */
+/* 471 */,
+/* 472 */,
+/* 473 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-s--control spin--control"};
 
 /***/ },
-/* 477 */,
-/* 478 */
+/* 474 */,
+/* 475 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-m--control spin--control"};
 
 /***/ },
-/* 479 */,
-/* 480 */
+/* 476 */,
+/* 477 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-l--control spin--control"};
 
 /***/ },
-/* 481 */,
-/* 482 */
+/* 478 */,
+/* 479 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xl--control spin--control"};
 
 /***/ },
-/* 483 */,
-/* 484 */
+/* 480 */,
+/* 481 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30452,31 +30483,31 @@
 	  "path": "Textarea",
 	  "data": [[{
 	    "defaultValue": "textarea",
-	    "name": "textarea-size-m",
-	    "placeholder": "size m",
-	    "size": "m"
+	    "name": "textarea-size-s",
+	    "placeholder": "size s",
+	    "size": "s"
 	  }, {
 	    "defaultValue": "textarea",
 	    "disabled": true,
-	    "name": "textarea-size-m",
-	    "placeholder": "size m",
-	    "size": "m"
+	    "name": "textarea-size-s",
+	    "placeholder": "size s",
+	    "size": "s"
 	  }], [{
 	    "defaultValue": "textarea",
-	    "name": "textarea-size-l",
-	    "placeholder": "size l",
-	    "size": "l"
+	    "name": "textarea-size-m",
+	    "placeholder": "size m",
+	    "size": "m"
 	  }, {
 	    "defaultValue": "textarea",
 	    "disabled": true,
-	    "name": "textarea-size-l",
-	    "placeholder": "size l",
-	    "size": "l"
+	    "name": "textarea-size-m",
+	    "placeholder": "size m",
+	    "size": "m"
 	  }]]
-	}, __webpack_require__(485));
+	}, __webpack_require__(482));
 
 /***/ },
-/* 485 */
+/* 482 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30485,23 +30516,23 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Textarea = __webpack_require__(486);
+	var Textarea = __webpack_require__(483);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Textarea, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  m: __webpack_require__(487),
-	  l: __webpack_require__(489)
+	  s: __webpack_require__(484),
+	  m: __webpack_require__(486)
 	}, {
 	  size: 'm'
 	}, {
-	  size: PropTypes.oneOf(['m', 'l'])
+	  size: PropTypes.oneOf(['s', 'm'])
 	});
 
 /***/ },
-/* 486 */
+/* 483 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30573,23 +30604,23 @@
 	module.exports = cssModules(Textarea);
 
 /***/ },
-/* 487 */
+/* 484 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"13px","control":"textarea-m--control input--control"};
+	module.exports = {"size-l":"18px","control":"textarea-s--control input--control"};
 
 /***/ },
-/* 488 */,
-/* 489 */
+/* 485 */,
+/* 486 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"15px","control":"textarea-l--control input--control"};
+	module.exports = {"size-m":"15px","control":"textarea-m--control input--control"};
 
 /***/ },
-/* 490 */,
-/* 491 */
+/* 487 */,
+/* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30616,10 +30647,10 @@
 	    "direction": "top",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(492));
+	}, __webpack_require__(489));
 
 /***/ },
-/* 492 */
+/* 489 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30628,20 +30659,20 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Popup = __webpack_require__(454);
+	var Tooltip = __webpack_require__(490);
 	var simplify = __webpack_require__(370);
 
-	module.exports = simplify(Popup, function (styles, _ref) {
+	module.exports = simplify(Tooltip, function (styles, _ref) {
 	  var direction = _ref.direction;
 	  return {
 	    styleName: 'control',
 	    styles: styles[direction + '-m']
 	  };
 	}, {
-	  'bottom-m': __webpack_require__(493),
-	  'left-m': __webpack_require__(496),
-	  'right-m': __webpack_require__(498),
-	  'top-m': __webpack_require__(500)
+	  'bottom-m': __webpack_require__(491),
+	  'left-m': __webpack_require__(494),
+	  'right-m': __webpack_require__(496),
+	  'top-m': __webpack_require__(498)
 	}, {
 	  direction: 'right',
 	  size: 'm'
@@ -30650,32 +30681,75 @@
 	});
 
 /***/ },
-/* 493 */
+/* 490 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Popup = __webpack_require__(454);
+
+	var Tooltip = function (_Popup) {
+	  _inherits(Tooltip, _Popup);
+
+	  function Tooltip() {
+	    _classCallCheck(this, Tooltip);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Tooltip).apply(this, arguments));
+	  }
+
+	  _createClass(Tooltip, [{
+	    key: 'render',
+	    value: function render() {
+	      if (!this.props.children) {
+	        return null;
+	      }
+
+	      return _get(Object.getPrototypeOf(Tooltip.prototype), 'render', this).call(this);
+	    }
+	  }]);
+
+	  return Tooltip;
+	}(Popup);
+
+	module.exports = Tooltip;
+
+/***/ },
+/* 491 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-bottom-m--control tooltip--control"};
 
 /***/ },
-/* 494 */,
-/* 495 */,
-/* 496 */
+/* 492 */,
+/* 493 */,
+/* 494 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-left-m--control tooltip--control"};
 
 /***/ },
-/* 497 */,
-/* 498 */
+/* 495 */,
+/* 496 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-right-m--control tooltip--control"};
 
 /***/ },
-/* 499 */,
-/* 500 */
+/* 497 */,
+/* 498 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
