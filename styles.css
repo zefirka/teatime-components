@@ -1374,3 +1374,237 @@ body
 {
   border-top-color: #ff8989;
 }
+.tumbler--wrapper
+{
+  position: relative;
+
+  display: inline-block;
+  overflow: hidden;
+
+  border-radius: 3px;
+}
+
+.tumbler--control
+{
+  display: block;
+
+  -webkit-user-select: none;
+
+     -moz-user-select: none;
+
+      -ms-user-select: none;
+
+          user-select: none;
+  transition: margin .1s ease-out;
+  white-space: nowrap;
+}
+
+.tumbler--label
+{
+  display: inline-block;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+
+  border-radius: 3px;
+  background: #f2f2f2;
+  box-shadow: inset 0 0 0 1px #c2c2c2;
+
+  font-family: arial,sans-serif;
+}
+
+.tumbler--label:first-child
+{
+  background: #ffeba0;
+  box-shadow: inset 0 0 0 1px #ccbd80;
+}
+
+.tumbler--delimiter
+{
+  display: inline-block;
+
+  cursor: pointer;
+  vertical-align: middle;
+
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px #ccc;
+}
+
+.tumbler--native
+{
+  position: absolute;
+
+  margin: 0;
+
+  opacity: 0;
+  border: 0;
+  outline: 0;
+}
+
+.tumbler--native:checked + .tumbler--control
+{
+  margin-left: 0;
+}
+
+.tumbler--native:focus + .tumbler--control .tumbler--delimiter
+{
+  box-shadow: inset 0 0 0 2px #fc0;
+}
+
+.tumbler--native:disabled + .tumbler--control .tumbler--label
+{
+  cursor: default;
+
+  color: rgba(0,0,0,.5);
+  background: #ebebeb;
+  box-shadow: inset 0 0 0 1px #ebebeb;
+}
+
+.tumbler--native:disabled + .tumbler--control .tumbler--label:first-child
+{
+  background: #d9d9d9;
+  box-shadow: inset 0 0 0 1px #d9d9d9;
+}
+
+.tumbler--native:disabled + .tumbler--control .tumbler--delimiter
+{
+  cursor: default;
+
+  background: #d8d8d8;
+  box-shadow: none;
+}
+
+.tumbler--native:disabled:checked + .tumbler--control .tumbler--delimiter
+{
+  background: #c8c8c8;
+}
+.tumbler-xs--wrapper
+{
+
+  width: 66px;
+  height: 24px;
+
+  font-size: 13px;
+}
+
+.tumbler-xs--control
+{
+
+  margin: 0 0 0 -42px;
+}
+
+.tumbler-xs--label
+{
+
+  width: 66px;
+  padding: 0 0 0 24px;
+
+  line-height: 24px;
+}
+
+.tumbler-xs--label:first-child
+{
+  margin: 0 -24px 0 0;
+  padding: 0 24px 0 0;
+}
+
+.tumbler-xs--delimiter
+{
+
+  width: 24px;
+  margin: 0 0 0 -66px;
+
+  line-height: 24px;
+}
+
+.tumbler-xs--native
+{
+}
+.tumbler-s--wrapper
+{
+
+  width: 76px;
+  height: 28px;
+
+  font-size: 13px;
+}
+
+.tumbler-s--control
+{
+
+  margin: 0 0 0 -48px;
+}
+
+.tumbler-s--label
+{
+
+  width: 76px;
+  padding: 0 0 0 28px;
+
+  line-height: 28px;
+}
+
+.tumbler-s--label:first-child
+{
+  margin: 0 -28px 0 0;
+  padding: 0 28px 0 0;
+}
+
+.tumbler-s--delimiter
+{
+
+  width: 28px;
+  margin: 0 0 0 -76px;
+
+  line-height: 28px;
+}
+
+.tumbler-s--native
+{
+}
+.tumbler-m--wrapper
+{
+
+  width: 82px;
+  height: 32px;
+
+  font-size: 15px;
+}
+
+.tumbler-m--control
+{
+
+  margin: 0 0 0 -50px;
+}
+
+.tumbler-m--label
+{
+
+  width: 82px;
+  padding: 0 0 0 32px;
+
+  line-height: 32px;
+}
+
+.tumbler-m--label:first-child
+{
+  margin: 0 -32px 0 0;
+  padding: 0 32px 0 0;
+}
+
+.tumbler-m--delimiter
+{
+
+  width: 32px;
+  margin: 0 0 0 -82px;
+
+  line-height: 32px;
+}
+
+.tumbler-m--native
+{
+}

@@ -54,7 +54,8 @@
 	__webpack_require__(462);
 	__webpack_require__(476);
 	__webpack_require__(490);
-	module.exports = __webpack_require__(497);
+	__webpack_require__(497);
+	module.exports = __webpack_require__(509);
 
 
 /***/ },
@@ -27548,6 +27549,11 @@
 	  }
 
 	  _createClass(Check, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({ id: nextProps.id });
+	    }
+	  }, {
 	    key: 'onChange',
 	    value: function onChange(e) {
 	      var _e$target = e.target;
@@ -27567,6 +27573,14 @@
 
 	      var id = this.state.id;
 
+	      /**
+	       * Still there is an issue about controlled and uncontrolled components,
+	       * related to the input[type="checkbox"] and input[type="radio"].
+	       * It results in the way controlled components are determined.
+	       *
+	       * @see https://github.com/facebook/react/blob/v15.1.0/src/renderers/dom/client/wrappers/ReactDOMInput.js#L171
+	       * @see https://github.com/facebook/react/issues/6779
+	       */
 
 	      return React.createElement(
 	        'div',
@@ -28892,7 +28906,7 @@
 	      var isOpened = this.state.isOpened;
 
 
-	      var tiles = palette.map(function (row, y) {
+	      var tiles = isOpened ? palette.map(function (row, y) {
 	        return React.createElement(
 	          'div',
 	          { key: y, styleName: 'line' },
@@ -28904,7 +28918,7 @@
 	              styles: styles });
 	          })
 	        );
-	      });
+	      }) : null;
 
 	      return React.createElement(
 	        Popup,
@@ -31129,6 +31143,253 @@
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-top-m--control tooltip--control"};
+
+/***/ },
+/* 508 */,
+/* 509 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var render = __webpack_require__(2);
+	module.exports = render({
+	  "name": "tumbler",
+	  "path": "Tumbler",
+	  "data": [[{
+	    "defaultChecked": true,
+	    "name": "size-xs",
+	    "size": "xs",
+	    "value": "size-xs"
+	  }, {
+	    "disabled": true,
+	    "name": "size-xs",
+	    "size": "xs",
+	    "value": "size-xs"
+	  }], [{
+	    "name": "size-s",
+	    "size": "s",
+	    "value": "size-s"
+	  }, {
+	    "defaultChecked": true,
+	    "disabled": true,
+	    "name": "size-s",
+	    "size": "s",
+	    "value": "size-s"
+	  }], [{
+	    "name": "size-m",
+	    "size": "m",
+	    "value": "size-m"
+	  }, {
+	    "disabled": true,
+	    "name": "size-m",
+	    "size": "m",
+	    "value": "size-m"
+	  }]]
+	}, __webpack_require__(510));
+
+/***/ },
+/* 510 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _require = __webpack_require__(3);
+
+	var PropTypes = _require.PropTypes;
+
+	var Tumbler = __webpack_require__(511);
+	var simplify = __webpack_require__(370);
+
+	module.exports = simplify(Tumbler, function (styles, _ref) {
+	  var size = _ref.size;
+	  return { styles: styles[size] };
+	}, {
+	  xs: __webpack_require__(512),
+	  s: __webpack_require__(515),
+	  m: __webpack_require__(517)
+	}, {
+	  size: 'xs'
+	}, {
+	  size: PropTypes.oneOf(['xs', 's', 'm'])
+	});
+
+/***/ },
+/* 511 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var React = __webpack_require__(3);
+	var Component = React.Component;
+	var PropTypes = React.PropTypes;
+
+	var _require = __webpack_require__(393);
+
+	var bind = _require.bind;
+	var noop = _require.noop;
+
+	var _require2 = __webpack_require__(402);
+
+	var generateId = _require2.generateId;
+
+	var cssModules = __webpack_require__(171);
+
+	var Tumbler = function (_Component) {
+	  _inherits(Tumbler, _Component);
+
+	  function Tumbler(props) {
+	    _classCallCheck(this, Tumbler);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Tumbler).call(this, props));
+
+	    _this.state = {
+	      id: _this.props.id || generateId()
+	    };
+
+	    bind(_this, 'onChange');
+	    return _this;
+	  }
+
+	  _createClass(Tumbler, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({ id: nextProps.id });
+	    }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(e) {
+	      var _e$target = e.target;
+	      var checked = _e$target.checked;
+	      var value = _e$target.value;
+
+	      this.props.onChange(e, { checked: checked, value: value });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var className = _props.className;
+	      var off = _props.off;
+	      var on = _props.on;
+
+	      var o = _objectWithoutProperties(_props, ['className', 'off', 'on']);
+
+	      var id = this.state.id;
+
+	      /**
+	       * Still there is an issue about controlled and uncontrolled components,
+	       * related to the input[type="checkbox"] and input[type="radio"].
+	       * It results in the way controlled components are determined.
+	       *
+	       * @see https://github.com/facebook/react/blob/v15.1.0/src/renderers/dom/client/wrappers/ReactDOMInput.js#L171
+	       * @see https://github.com/facebook/react/issues/6779
+	       */
+
+	      return React.createElement(
+	        'div',
+	        { className: className, styleName: 'wrapper' },
+	        React.createElement('input', _extends({}, o, { id: id, styleName: 'native', onChange: this.onChange, type: 'checkbox' })),
+	        React.createElement(
+	          'label',
+	          { htmlFor: id, styleName: 'control' },
+	          React.createElement(
+	            'span',
+	            { styleName: 'label' },
+	            on
+	          ),
+	          React.createElement(
+	            'span',
+	            { styleName: 'label' },
+	            off
+	          ),
+	          React.createElement(
+	            'span',
+	            { styleName: 'delimiter' },
+	            ' '
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Tumbler;
+	}(Component);
+
+	Tumbler.defaultProps = {
+	  off: 'Off',
+	  on: 'On',
+	  onChange: noop,
+	  styles: {}
+	};
+
+	Tumbler.propTypes = {
+	  checked: PropTypes.bool,
+	  defaultChecked: PropTypes.bool,
+	  disabled: PropTypes.bool,
+	  name: PropTypes.string.isRequired,
+	  off: PropTypes.string,
+	  on: PropTypes.string,
+	  onBlur: PropTypes.func,
+	  onChange: PropTypes.func,
+	  onClick: PropTypes.func,
+	  onContextMenu: PropTypes.func,
+	  onDoubleClick: PropTypes.func,
+	  onFocus: PropTypes.func,
+	  onKeyDown: PropTypes.func,
+	  onKeyPress: PropTypes.func,
+	  onKeyUp: PropTypes.func,
+	  onMouseDown: PropTypes.func,
+	  onMouseEnter: PropTypes.func,
+	  onMouseLeave: PropTypes.func,
+	  onMouseMove: PropTypes.func,
+	  onMouseOut: PropTypes.func,
+	  onMouseOver: PropTypes.func,
+	  onMouseUp: PropTypes.func,
+	  onTouchCancel: PropTypes.func,
+	  onTouchEnd: PropTypes.func,
+	  onTouchMove: PropTypes.func,
+	  onTouchStart: PropTypes.func,
+	  styles: PropTypes.object,
+	  value: PropTypes.string.isRequired
+	};
+
+	module.exports = cssModules(Tumbler);
+
+/***/ },
+/* 512 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-xs":"13px","wrapper":"tumbler-xs--wrapper tumbler--wrapper","control":"tumbler-xs--control tumbler--control","label":"tumbler-xs--label tumbler--label","delimiter":"tumbler-xs--delimiter tumbler--delimiter","native":"tumbler-xs--native tumbler--native"};
+
+/***/ },
+/* 513 */,
+/* 514 */,
+/* 515 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-s":"13px","wrapper":"tumbler-s--wrapper tumbler--wrapper","control":"tumbler-s--control tumbler--control","label":"tumbler-s--label tumbler--label","delimiter":"tumbler-s--delimiter tumbler--delimiter","native":"tumbler-s--native tumbler--native"};
+
+/***/ },
+/* 516 */,
+/* 517 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-m":"15px","wrapper":"tumbler-m--wrapper tumbler--wrapper","control":"tumbler-m--control tumbler--control","label":"tumbler-m--label tumbler--label","delimiter":"tumbler-m--delimiter tumbler--delimiter","native":"tumbler-m--native tumbler--native"};
 
 /***/ }
 /******/ ]);
