@@ -526,9 +526,9 @@ body
   width: 100%;
 }
 
-.color-picker--control:focus
+.color-picker--clear
 {
-  z-index: 1;
+  z-index: 0;
 }
 
 .color-picker--menu

@@ -29565,7 +29565,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"container":"color-picker-xs--container color-picker--container","preview":"color-picker-xs--preview color-picker--preview","wrapper":"color-picker-xs--wrapper input-xs--wrapper input--wrapper color-picker--wrapper","control":"color-picker-xs--control input-xs--control input--control color-picker--control","clear":"color-picker-xs--clear input-xs--clear input--clear","menu":"color-picker-xs--menu color-picker--menu popup--popup","line":"color-picker-xs--line color-picker--line","item":"color-picker-xs--item color-picker--item","isClosed":"color-picker-xs--isClosed color-picker--isClosed","isOpened":"color-picker-xs--isOpened color-picker--isOpened"};
+	module.exports = {"container":"color-picker-xs--container color-picker--container","preview":"color-picker-xs--preview color-picker--preview","wrapper":"color-picker-xs--wrapper input-xs--wrapper input--wrapper color-picker--wrapper","control":"color-picker-xs--control input-xs--control input--control color-picker--control","clear":"color-picker-xs--clear input-xs--clear input--clear color-picker--clear","menu":"color-picker-xs--menu color-picker--menu popup--popup","line":"color-picker-xs--line color-picker--line","item":"color-picker-xs--item color-picker--item","isClosed":"color-picker-xs--isClosed color-picker--isClosed","isOpened":"color-picker-xs--isOpened color-picker--isOpened"};
 
 /***/ },
 /* 426 */,
@@ -29577,7 +29577,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"container":"color-picker-s--container color-picker--container","preview":"color-picker-s--preview color-picker--preview","wrapper":"color-picker-s--wrapper input-s--wrapper input--wrapper color-picker--wrapper","control":"color-picker-s--control input-s--control input--control color-picker--control","clear":"color-picker-s--clear input-s--clear input--clear","menu":"color-picker-s--menu color-picker--menu popup--popup","line":"color-picker-s--line color-picker--line","item":"color-picker-s--item color-picker--item","isClosed":"color-picker-s--isClosed color-picker--isClosed","isOpened":"color-picker-s--isOpened color-picker--isOpened"};
+	module.exports = {"container":"color-picker-s--container color-picker--container","preview":"color-picker-s--preview color-picker--preview","wrapper":"color-picker-s--wrapper input-s--wrapper input--wrapper color-picker--wrapper","control":"color-picker-s--control input-s--control input--control color-picker--control","clear":"color-picker-s--clear input-s--clear input--clear color-picker--clear","menu":"color-picker-s--menu color-picker--menu popup--popup","line":"color-picker-s--line color-picker--line","item":"color-picker-s--item color-picker--item","isClosed":"color-picker-s--isClosed color-picker--isClosed","isOpened":"color-picker-s--isOpened color-picker--isOpened"};
 
 /***/ },
 /* 432 */,
@@ -29586,7 +29586,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"container":"color-picker-m--container color-picker--container","preview":"color-picker-m--preview color-picker--preview","wrapper":"color-picker-m--wrapper input-m--wrapper input--wrapper color-picker--wrapper","control":"color-picker-m--control input-m--control input--control color-picker--control","clear":"color-picker-m--clear input-m--clear input--clear","menu":"color-picker-m--menu color-picker--menu popup--popup","line":"color-picker-m--line color-picker--line","item":"color-picker-m--item color-picker--item","isClosed":"color-picker-m--isClosed color-picker--isClosed","isOpened":"color-picker-m--isOpened color-picker--isOpened"};
+	module.exports = {"container":"color-picker-m--container color-picker--container","preview":"color-picker-m--preview color-picker--preview","wrapper":"color-picker-m--wrapper input-m--wrapper input--wrapper color-picker--wrapper","control":"color-picker-m--control input-m--control input--control color-picker--control","clear":"color-picker-m--clear input-m--clear input--clear color-picker--clear","menu":"color-picker-m--menu color-picker--menu popup--popup","line":"color-picker-m--line color-picker--line","item":"color-picker-m--item color-picker--item","isClosed":"color-picker-m--isClosed color-picker--isClosed","isOpened":"color-picker-m--isOpened color-picker--isOpened"};
 
 /***/ },
 /* 435 */,
