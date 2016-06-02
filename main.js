@@ -48,14 +48,15 @@
 	__webpack_require__(390);
 	__webpack_require__(408);
 	__webpack_require__(416);
-	__webpack_require__(433);
-	__webpack_require__(439);
-	__webpack_require__(449);
-	__webpack_require__(462);
-	__webpack_require__(476);
-	__webpack_require__(490);
-	__webpack_require__(497);
-	module.exports = __webpack_require__(509);
+	__webpack_require__(437);
+	__webpack_require__(442);
+	__webpack_require__(452);
+	__webpack_require__(459);
+	__webpack_require__(472);
+	__webpack_require__(486);
+	__webpack_require__(500);
+	__webpack_require__(507);
+	module.exports = __webpack_require__(519);
 
 
 /***/ },
@@ -27240,7 +27241,7 @@
 	  _createClass(Button, [{
 	    key: 'render',
 	    value: function render() {
-	      return React.createElement('button', _extends({}, this.props, { styleName: 'control' }));
+	      return React.createElement('button', _extends({ styleName: 'control' }, this.props));
 	    }
 	  }]);
 
@@ -27337,7 +27338,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-xs":"13px","control":"button-action-xs--control button-action--control"};
+	module.exports = {"size-xs":"13px","line-xs":"24px","control":"button-action-xs--control button-action--control"};
 
 /***/ },
 /* 372 */,
@@ -27347,7 +27348,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","control":"button-action-s--control button-action--control"};
+	module.exports = {"size-s":"13px","line-s":"28px","control":"button-action-s--control button-action--control"};
 
 /***/ },
 /* 376 */,
@@ -27355,7 +27356,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"15px","control":"button-action-m--control button-action--control"};
+	module.exports = {"size-m":"15px","line-m":"32px","control":"button-action-m--control button-action--control"};
 
 /***/ },
 /* 378 */,
@@ -27363,7 +27364,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"18px","control":"button-action-l--control button-action--control"};
+	module.exports = {"size-l":"18px","line-l":"38px","control":"button-action-l--control button-action--control"};
 
 /***/ },
 /* 380 */,
@@ -27371,7 +27372,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-xs":"13px","control":"button-normal-xs--control button-normal--control"};
+	module.exports = {"size-xs":"13px","line-xs":"24px","control":"button-normal-xs--control button-normal--control"};
 
 /***/ },
 /* 382 */,
@@ -27380,7 +27381,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","control":"button-normal-s--control button-normal--control"};
+	module.exports = {"size-s":"13px","line-s":"28px","control":"button-normal-s--control button-normal--control"};
 
 /***/ },
 /* 385 */,
@@ -27388,7 +27389,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"15px","control":"button-normal-m--control button-normal--control"};
+	module.exports = {"size-m":"15px","line-m":"32px","control":"button-normal-m--control button-normal--control"};
 
 /***/ },
 /* 387 */,
@@ -27396,7 +27397,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"18px","control":"button-normal-l--control button-normal--control"};
+	module.exports = {"size-l":"18px","line-l":"38px","control":"button-normal-l--control button-normal--control"};
 
 /***/ },
 /* 389 */,
@@ -27550,8 +27551,12 @@
 
 	  _createClass(Check, [{
 	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.setState({ id: nextProps.id });
+	    value: function componentWillReceiveProps(_ref) {
+	      var id = _ref.id;
+
+	      if (id) {
+	        this.setState({ id: id });
+	      }
 	    }
 	  }, {
 	    key: 'onChange',
@@ -27573,6 +27578,13 @@
 
 	      var id = this.state.id;
 
+
+	      var labelElement = children ? React.createElement(
+	        'label',
+	        { htmlFor: id, styleName: 'label' },
+	        children
+	      ) : null;
+
 	      /**
 	       * Still there is an issue about controlled and uncontrolled components,
 	       * related to the input[type="checkbox"] and input[type="radio"].
@@ -27585,13 +27597,13 @@
 	      return React.createElement(
 	        'div',
 	        { className: className, styleName: 'wrapper' },
-	        React.createElement('input', _extends({}, o, { id: id, styleName: 'native', onChange: this.onChange, type: 'checkbox' })),
+	        React.createElement('input', _extends({
+	          styleName: 'native'
+	        }, o, {
+	          id: id,
+	          onChange: this.onChange })),
 	        React.createElement('label', { htmlFor: id, styleName: 'control' }),
-	        React.createElement(
-	          'label',
-	          { htmlFor: id, styleName: 'label' },
-	          children
-	        )
+	        labelElement
 	      );
 	    }
 	  }]);
@@ -27601,7 +27613,8 @@
 
 	Check.defaultProps = {
 	  onChange: noop,
-	  styles: {}
+	  styles: {},
+	  type: 'checkbox'
 	};
 
 	Check.propTypes = {
@@ -27630,6 +27643,7 @@
 	  onTouchMove: PropTypes.func,
 	  onTouchStart: PropTypes.func,
 	  styles: PropTypes.object,
+	  type: PropTypes.oneOf(['checkbox', 'radio']),
 	  value: PropTypes.string.isRequired
 	};
 
@@ -28721,22 +28735,25 @@
 	  "path": "ColorPicker",
 	  "data": [[{
 	    "name": "blue water",
-	    "size": "s",
-	    "theme": "action"
+	    "size": "xs"
 	  }, {
 	    "disabled": true,
 	    "name": "blue water",
-	    "size": "s",
-	    "theme": "action"
+	    "size": "xs"
 	  }], [{
 	    "name": "blue water",
-	    "size": "m",
-	    "theme": "action"
+	    "size": "s"
 	  }, {
 	    "disabled": true,
 	    "name": "blue water",
-	    "size": "m",
-	    "theme": "action"
+	    "size": "s"
+	  }], [{
+	    "name": "blue water",
+	    "size": "m"
+	  }, {
+	    "disabled": true,
+	    "name": "blue water",
+	    "size": "m"
 	  }]]
 	}, __webpack_require__(417));
 
@@ -28757,12 +28774,13 @@
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(424),
-	  m: __webpack_require__(430)
+	  xs: __webpack_require__(425),
+	  s: __webpack_require__(431),
+	  m: __webpack_require__(434)
 	}, {
 	  size: 'm'
 	}, {
-	  size: PropTypes.oneOf(['s', 'm'])
+	  size: PropTypes.oneOf(['xs', 's', 'm'])
 	});
 
 /***/ },
@@ -28793,12 +28811,16 @@
 	var bind = _require2.bind;
 	var noop = _require2.noop;
 
-	var Input = __webpack_require__(419);
-	var Popup = __webpack_require__(420);
-	var Tile = __webpack_require__(422);
+	var _require3 = __webpack_require__(419);
+
+	var pureHex = _require3.pureHex;
+
+	var Input = __webpack_require__(420);
+	var Popup = __webpack_require__(421);
+	var Tile = __webpack_require__(423);
 	var React = __webpack_require__(3);
 	var cssModules = __webpack_require__(171);
-	var reactOutsideEvent = __webpack_require__(423);
+	var reactOutsideEvent = __webpack_require__(424);
 
 	var ColorPicker = function (_Component) {
 	  _inherits(ColorPicker, _Component);
@@ -28817,7 +28839,7 @@
 	      value: props.value || props.defaultValue || 'FFFFFF'
 	    };
 
-	    bind(_this, ['onChange', 'onPreviewClick', 'onTileClick']);
+	    bind(_this, ['onChange', 'onInputFocus', 'onKeyDown', 'onPreviewClick', 'onTileClick']);
 	    return _this;
 	  }
 
@@ -28829,18 +28851,35 @@
 	      }
 	    }
 	  }, {
-	    key: 'onChange',
-	    value: function onChange(e) {
-	      if (!this.controlled) {
-	        this.setState({ value: e.target.value });
+	    key: 'focus',
+	    value: function focus() {
+	      if (this.refs.control) {
+	        this.refs.control.focus();
 	      }
-
-	      this.props.onChange(e, { value: e.target.value });
 	    }
 	  }, {
-	    key: 'onOutsideEvent',
-	    value: function onOutsideEvent() {
+	    key: 'onChange',
+	    value: function onChange(e, data) {
+	      this.updateValue(e, data.value);
+	    }
+	  }, {
+	    key: 'onInputFocus',
+	    value: function onInputFocus() {
+	      // @todo add possibility to control focus from outside
+	      if (this.state.isOpened === false) return;
 	      this.setState({ isOpened: false });
+	    }
+	  }, {
+	    key: 'onKeyDown',
+	    value: function onKeyDown(e) {
+	      if (this.props.disabled) return;
+
+	      var preview = this.refs.preview;
+
+	      if (e.keyCode === 9 && preview && preview === e.target) {
+	        // tab
+	        this.setState({ isOpened: false });
+	      }
 	    }
 	  }, {
 	    key: 'onPreviewClick',
@@ -28848,20 +28887,25 @@
 	      this.setState({ isOpened: !this.state.isOpened });
 	    }
 	  }, {
+	    key: 'onOutsideEvent',
+	    value: function onOutsideEvent() {
+	      if (this.state.isOpened === false) return;
+	      this.setState({ isOpened: false });
+	    }
+	  }, {
 	    key: 'onTileClick',
 	    value: function onTileClick(e, color) {
+	      this.updateValue(e, pureHex(color));
+	      this.focus();
+	    }
+	  }, {
+	    key: 'updateValue',
+	    value: function updateValue(e, value) {
 	      if (!this.controlled) {
-	        this.setState({
-	          isOpened: false,
-	          value: color.replace('#', '')
-	        });
-	      } else {
-	        this.setState({
-	          isOpened: false
-	        });
+	        this.setState({ isOpened: false, value: value });
 	      }
 
-	      this.props.onChange(e, { value: color.replace('#', '') });
+	      this.props.onChange(e, { isOpened: false, value: value });
 	    }
 	  }, {
 	    key: 'render',
@@ -28871,60 +28915,77 @@
 
 	      var o = _objectWithoutProperties(_props, ['className']);
 
-	      var value = this.state.value;
-
-
 	      return React.createElement(
 	        'div',
-	        { className: className, styleName: 'wrapper' },
+	        {
+	          className: className,
+	          onKeyDown: this.onKeyDown,
+	          styleName: 'container' },
 	        this.renderPreview(),
-	        React.createElement(Input, _extends({}, o, { onChange: this.onChange, value: value })),
+	        React.createElement(Input, _extends({}, o, {
+	          defaultValue: undefined,
+	          onChange: this.onChange,
+	          onFocus: this.onInputFocus,
+	          ref: 'control',
+	          value: this.state.value })),
 	        this.renderMenu()
 	      );
 	    }
 	  }, {
 	    key: 'renderPreview',
 	    value: function renderPreview() {
-	      var disabled = this.props.disabled;
-	      var value = this.state.value;
-
-
 	      return React.createElement('button', {
-	        disabled: disabled,
+	        disabled: this.props.disabled,
 	        onClick: this.onPreviewClick,
-	        style: { background: '#' + value },
+	        ref: 'preview',
+	        style: { background: '#' + this.state.value },
 	        styleName: 'preview' });
 	    }
 	  }, {
 	    key: 'renderMenu',
 	    value: function renderMenu() {
+	      var popupMixin = this.props.styles[this.state.isOpened ? 'isOpened' : 'isClosed'];
+
+	      return React.createElement(
+	        Popup,
+	        { className: popupMixin, styleName: 'menu' },
+	        this.renderTiles()
+	      );
+	    }
+	  }, {
+	    key: 'renderTiles',
+	    value: function renderTiles() {
 	      var _this2 = this;
+
+	      if (!this.state.isOpened) {
+	        return null;
+	      }
 
 	      var _props2 = this.props;
 	      var palette = _props2.palette;
 	      var styles = _props2.styles;
-	      var isOpened = this.state.isOpened;
 
 
-	      var tiles = isOpened ? palette.map(function (row, y) {
+	      return palette.map(function (tiles, p) {
 	        return React.createElement(
 	          'div',
-	          { key: y, styleName: 'line' },
-	          row.map(function (tile, x) {
-	            return React.createElement(Tile, {
-	              color: '#' + tile,
-	              key: '_' + x + y + tile,
-	              onClick: _this2.onTileClick,
-	              styles: styles });
-	          })
+	          { key: p, styleName: 'line' },
+	          _this2.renderLine(tiles, p, styles)
 	        );
-	      }) : null;
+	      });
+	    }
+	  }, {
+	    key: 'renderLine',
+	    value: function renderLine(tiles, position, styles) {
+	      var _this3 = this;
 
-	      return React.createElement(
-	        Popup,
-	        { className: styles[isOpened ? 'isOpened' : 'isClosed'], styleName: 'menu' },
-	        tiles
-	      );
+	      return tiles.map(function (tile, i) {
+	        return React.createElement(Tile, {
+	          color: '#' + tile,
+	          key: '_' + i + position,
+	          onClick: _this3.onTileClick,
+	          styles: styles });
+	      });
 	    }
 	  }]);
 
@@ -28961,6 +29022,22 @@
 
 /***/ },
 /* 419 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.pureHex = pureHex;
+
+	/**
+	 * @param  {string} hex #cccccc
+	 * @return {string}      cccccc
+	 */
+	function pureHex(hex) {
+	  return hex.replace('#', '');
+	};
+
+/***/ },
+/* 420 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28968,6 +29045,8 @@
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -28992,21 +29071,90 @@
 	  function Input(props) {
 	    _classCallCheck(this, Input);
 
+	    // @todo add assertion for defaultValue
+
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
 
-	    bind(_this, 'onChange');
+	    _this.controlled = props.value !== undefined;
+
+	    _this.state = {
+	      value: props.value || props.defaultValue || ''
+	    };
+
+	    bind(_this, ['onChange', 'onClearClick']);
 	    return _this;
 	  }
 
 	  _createClass(Input, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (this.controlled) {
+	        this.setState({ value: nextProps.value });
+	      }
+	    }
+	  }, {
+	    key: 'focus',
+	    value: function focus() {
+	      if (this.refs.control) {
+	        this.refs.control.focus();
+	      }
+	    }
+	  }, {
 	    key: 'onChange',
 	    value: function onChange(e) {
-	      this.props.onChange(e, { value: e.target.value });
+	      this.updateValue(e, e.target.value);
+	    }
+	  }, {
+	    key: 'onClearClick',
+	    value: function onClearClick(e) {
+	      if (this.props.disabled) {
+	        return;
+	      }
+
+	      this.updateValue(e, '');
+	      this.focus();
+	    }
+	  }, {
+	    key: 'select',
+	    value: function select() {
+	      if (this.refs.control) {
+	        this.refs.control.select();
+	      }
+	    }
+	  }, {
+	    key: 'updateValue',
+	    value: function updateValue(e, value) {
+	      if (!this.controlled) {
+	        this.setState({ value: value });
+	      }
+
+	      this.props.onChange(e, { value: value });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return React.createElement('input', _extends({}, this.props, { onChange: this.onChange, styleName: 'control', type: 'text' }));
+	      var _props = this.props;
+	      var className = _props.className;
+
+	      var o = _objectWithoutProperties(_props, ['className']);
+
+	      var value = this.state.value;
+
+
+	      var clearElement = value && !this.props.disabled ? React.createElement('span', { styleName: 'clear', onClick: this.onClearClick }) : null;
+
+	      return React.createElement(
+	        'span',
+	        { className: className, styleName: 'wrapper' },
+	        React.createElement('input', _extends({
+	          styleName: 'control'
+	        }, o, {
+	          defaultValue: undefined // Cause we have a controlled input
+	          , onChange: this.onChange,
+	          ref: 'control',
+	          value: value })),
+	        clearElement
+	      );
 	    }
 	  }]);
 
@@ -29015,7 +29163,8 @@
 
 	Input.defaultProps = {
 	  onChange: noop,
-	  styles: {}
+	  styles: {},
+	  type: 'text'
 	};
 
 	Input.propTypes = {
@@ -29035,13 +29184,14 @@
 	  onSelect: PropTypes.func,
 	  placeholder: PropTypes.string,
 	  styles: PropTypes.object,
+	  type: PropTypes.oneOf(['password', 'text']),
 	  value: PropTypes.string
 	};
 
 	module.exports = cssModules(Input);
 
 /***/ },
-/* 420 */
+/* 421 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29063,7 +29213,7 @@
 
 	var React = __webpack_require__(3);
 	var cssModules = __webpack_require__(171);
-	var layer = __webpack_require__(421);
+	var layer = __webpack_require__(422);
 
 	var Popup = function (_Component) {
 	  _inherits(Popup, _Component);
@@ -29108,7 +29258,7 @@
 	module.exports = layer(cssModules(Popup));
 
 /***/ },
-/* 421 */
+/* 422 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29248,7 +29398,7 @@
 	}
 
 /***/ },
-/* 422 */
+/* 423 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29314,7 +29464,7 @@
 	module.exports = cssModules(Tile);
 
 /***/ },
-/* 423 */
+/* 424 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29411,28 +29561,37 @@
 
 
 /***/ },
-/* 424 */
+/* 425 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"color-picker-s--wrapper color-picker--wrapper","preview":"color-picker-s--preview color-picker--preview","control":"color-picker-s--control input-s--control input--control color-picker--control","menu":"color-picker-s--menu color-picker--menu popup--popup","line":"color-picker-s--line color-picker--line","item":"color-picker-s--item color-picker--item","isClosed":"color-picker-s--isClosed color-picker--isClosed","isOpened":"color-picker-s--isOpened color-picker--isOpened"};
+	module.exports = {"container":"color-picker-xs--container color-picker--container","preview":"color-picker-xs--preview color-picker--preview","wrapper":"color-picker-xs--wrapper input-xs--wrapper input--wrapper color-picker--wrapper","control":"color-picker-xs--control input-xs--control input--control color-picker--control","clear":"color-picker-xs--clear input-xs--clear input--clear","menu":"color-picker-xs--menu color-picker--menu popup--popup","line":"color-picker-xs--line color-picker--line","item":"color-picker-xs--item color-picker--item","isClosed":"color-picker-xs--isClosed color-picker--isClosed","isOpened":"color-picker-xs--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 425 */,
 /* 426 */,
 /* 427 */,
 /* 428 */,
 /* 429 */,
-/* 430 */
+/* 430 */,
+/* 431 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"color-picker-m--wrapper color-picker--wrapper","preview":"color-picker-m--preview color-picker--preview","control":"color-picker-m--control input-m--control input--control color-picker--control","menu":"color-picker-m--menu color-picker--menu popup--popup","line":"color-picker-m--line color-picker--line","item":"color-picker-m--item color-picker--item","isClosed":"color-picker-m--isClosed color-picker--isClosed","isOpened":"color-picker-m--isOpened color-picker--isOpened"};
+	module.exports = {"container":"color-picker-s--container color-picker--container","preview":"color-picker-s--preview color-picker--preview","wrapper":"color-picker-s--wrapper input-s--wrapper input--wrapper color-picker--wrapper","control":"color-picker-s--control input-s--control input--control color-picker--control","clear":"color-picker-s--clear input-s--clear input--clear","menu":"color-picker-s--menu color-picker--menu popup--popup","line":"color-picker-s--line color-picker--line","item":"color-picker-s--item color-picker--item","isClosed":"color-picker-s--isClosed color-picker--isClosed","isOpened":"color-picker-s--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 431 */,
 /* 432 */,
-/* 433 */
+/* 433 */,
+/* 434 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"container":"color-picker-m--container color-picker--container","preview":"color-picker-m--preview color-picker--preview","wrapper":"color-picker-m--wrapper input-m--wrapper input--wrapper color-picker--wrapper","control":"color-picker-m--control input-m--control input--control color-picker--control","clear":"color-picker-m--clear input-m--clear input--clear","menu":"color-picker-m--menu color-picker--menu popup--popup","line":"color-picker-m--line color-picker--line","item":"color-picker-m--item color-picker--item","isClosed":"color-picker-m--isClosed color-picker--isClosed","isOpened":"color-picker-m--isOpened color-picker--isOpened"};
+
+/***/ },
+/* 435 */,
+/* 436 */,
+/* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29475,10 +29634,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(434));
+	}, __webpack_require__(438));
 
 /***/ },
-/* 434 */
+/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29487,16 +29646,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Input = __webpack_require__(419);
+	var Input = __webpack_require__(420);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Input, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  'xs': __webpack_require__(435),
-	  's': __webpack_require__(437),
-	  'm': __webpack_require__(438)
+	  'xs': __webpack_require__(439),
+	  's': __webpack_require__(440),
+	  'm': __webpack_require__(441)
 	}, {
 	  size: 's'
 	}, {
@@ -29504,29 +29663,28 @@
 	});
 
 /***/ },
-/* 435 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"size-xs":"13px","control":"input-xs--control input--control"};
-
-/***/ },
-/* 436 */,
-/* 437 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","control":"input-s--control input--control"};
-
-/***/ },
-/* 438 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"15px","control":"input-m--control input--control"};
-
-/***/ },
 /* 439 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-xs":"13px","line-xs":"24px","wrapper":"input-xs--wrapper input--wrapper","control":"input-xs--control input--control","clear":"input-xs--clear input--clear"};
+
+/***/ },
+/* 440 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-s":"13px","line-s":"28px","wrapper":"input-s--wrapper input--wrapper","control":"input-s--control input--control","clear":"input-s--clear input--clear"};
+
+/***/ },
+/* 441 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-m":"15px","line-m":"32px","wrapper":"input-m--wrapper input--wrapper","control":"input-m--control input--control","clear":"input-m--clear input--clear"};
+
+/***/ },
+/* 442 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29548,10 +29706,10 @@
 	    "href": "#",
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(440));
+	}, __webpack_require__(443));
 
 /***/ },
-/* 440 */
+/* 443 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29560,16 +29718,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Link = __webpack_require__(441);
+	var Link = __webpack_require__(444);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Link, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  's': __webpack_require__(442),
-	  'm': __webpack_require__(445),
-	  'l': __webpack_require__(447)
+	  's': __webpack_require__(445),
+	  'm': __webpack_require__(448),
+	  'l': __webpack_require__(450)
 	}, {
 	  size: 's'
 	}, {
@@ -29577,7 +29735,7 @@
 	});
 
 /***/ },
-/* 441 */
+/* 444 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29648,32 +29806,152 @@
 	module.exports = cssModules(Link);
 
 /***/ },
-/* 442 */
+/* 445 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"link-s--control link--control"};
 
 /***/ },
-/* 443 */,
-/* 444 */,
-/* 445 */
+/* 446 */,
+/* 447 */,
+/* 448 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"link-m--control link--control"};
 
 /***/ },
-/* 446 */,
-/* 447 */
+/* 449 */,
+/* 450 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","control":"link-l--control link--control"};
 
 /***/ },
-/* 448 */,
-/* 449 */
+/* 451 */,
+/* 452 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var render = __webpack_require__(2);
+	module.exports = render({
+	  "name": "radio",
+	  "path": "Radio",
+	  "data": [[{
+	    "name": "radio-size-s-1",
+	    "size": "s",
+	    "value": "size-s"
+	  }, {
+	    "defaultChecked": true,
+	    "name": "radio-size-s-1",
+	    "size": "s",
+	    "value": "size-s"
+	  }, {
+	    "disabled": true,
+	    "name": "radio-size-s-2",
+	    "size": "s",
+	    "value": "size-s"
+	  }, {
+	    "defaultChecked": true,
+	    "disabled": true,
+	    "name": "radio-size-s-2",
+	    "size": "s",
+	    "value": "size-s"
+	  }], [{
+	    "name": "radio-size-m-3",
+	    "size": "m",
+	    "value": "size-m"
+	  }, {
+	    "defaultChecked": true,
+	    "name": "radio-size-m-3",
+	    "size": "m",
+	    "value": "size-m"
+	  }, {
+	    "disabled": true,
+	    "name": "radio-size-m-4",
+	    "size": "m",
+	    "value": "size-m"
+	  }, {
+	    "defaultChecked": true,
+	    "disabled": true,
+	    "name": "radio-size-m-4",
+	    "size": "m",
+	    "value": "size-m"
+	  }], [{
+	    "children": "Size s",
+	    "name": "radio-size-5",
+	    "size": "s",
+	    "value": "size-s"
+	  }, {
+	    "children": "Size s",
+	    "disabled": true,
+	    "name": "radio-size-5",
+	    "size": "s",
+	    "value": "size-s"
+	  }, {
+	    "children": "Size m",
+	    "name": "radio-size-5",
+	    "size": "m",
+	    "value": "size-m"
+	  }, {
+	    "children": "Size m",
+	    "disabled": true,
+	    "name": "radio-size-5",
+	    "size": "m",
+	    "value": "size-m"
+	  }]]
+	}, __webpack_require__(453));
+
+/***/ },
+/* 453 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _require = __webpack_require__(3);
+
+	var PropTypes = _require.PropTypes;
+
+	var Check = __webpack_require__(392);
+	var simplify = __webpack_require__(370);
+
+	module.exports = simplify(Check, function (styles, _ref) {
+	  var size = _ref.size;
+	  return {
+	    styles: styles[size],
+	    type: 'radio'
+	  };
+	}, {
+	  s: __webpack_require__(454),
+	  m: __webpack_require__(457)
+	}, {
+	  size: 's'
+	}, {
+	  size: PropTypes.oneOf(['s', 'm'])
+	});
+
+/***/ },
+/* 454 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-s":"13px","wrapper":"radio-s--wrapper radio--wrapper","control":"radio-s--control radio--control","native":"radio-s--native radio--native","label":"radio-s--label radio--label"};
+
+/***/ },
+/* 455 */,
+/* 456 */,
+/* 457 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-m":"15px","wrapper":"radio-m--wrapper radio--wrapper","control":"radio-m--control radio--control","native":"radio-m--native radio--native","label":"radio-m--label radio--label"};
+
+/***/ },
+/* 458 */,
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29841,10 +30119,10 @@
 	    }],
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(450));
+	}, __webpack_require__(460));
 
 /***/ },
-/* 450 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29853,7 +30131,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var RadioGroup = __webpack_require__(451);
+	var RadioGroup = __webpack_require__(461);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(RadioGroup, function (styles, _ref) {
@@ -29862,10 +30140,10 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  xs: __webpack_require__(453),
-	  s: __webpack_require__(456),
-	  m: __webpack_require__(458),
-	  l: __webpack_require__(460)
+	  xs: __webpack_require__(463),
+	  s: __webpack_require__(466),
+	  m: __webpack_require__(468),
+	  l: __webpack_require__(470)
 	}, {
 	  size: 's'
 	}, {
@@ -29873,7 +30151,7 @@
 	});
 
 /***/ },
-/* 451 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29890,7 +30168,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var RadioButton = __webpack_require__(452);
+	var RadioButton = __webpack_require__(462);
 	var React = __webpack_require__(3);
 	var Component = React.Component;
 	var PropTypes = React.PropTypes;
@@ -30019,7 +30297,7 @@
 	module.exports = cssModules(RadioGroup);
 
 /***/ },
-/* 452 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30104,40 +30382,40 @@
 	module.exports = cssModules(RadioButton);
 
 /***/ },
-/* 453 */
+/* 463 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-xs":"13px","container":"radio-group-xs--container radio-group--container","wrapper":"radio-group-xs--wrapper radio-group--wrapper","control":"radio-group-xs--control radio-group--control","native":"radio-group-xs--native radio-group--native"};
+	module.exports = {"size-xs":"13px","line-xs":"24px","container":"radio-group-xs--container radio-group--container","wrapper":"radio-group-xs--wrapper radio-group--wrapper","control":"radio-group-xs--control radio-group--control","native":"radio-group-xs--native radio-group--native"};
 
 /***/ },
-/* 454 */,
-/* 455 */,
-/* 456 */
+/* 464 */,
+/* 465 */,
+/* 466 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","container":"radio-group-s--container radio-group--container","wrapper":"radio-group-s--wrapper radio-group--wrapper","control":"radio-group-s--control radio-group--control","native":"radio-group-s--native radio-group--native"};
+	module.exports = {"size-s":"13px","line-s":"28px","container":"radio-group-s--container radio-group--container","wrapper":"radio-group-s--wrapper radio-group--wrapper","control":"radio-group-s--control radio-group--control","native":"radio-group-s--native radio-group--native"};
 
 /***/ },
-/* 457 */,
-/* 458 */
+/* 467 */,
+/* 468 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"15px","container":"radio-group-m--container radio-group--container","wrapper":"radio-group-m--wrapper radio-group--wrapper","control":"radio-group-m--control radio-group--control","native":"radio-group-m--native radio-group--native"};
+	module.exports = {"size-m":"15px","line-m":"32px","container":"radio-group-m--container radio-group--container","wrapper":"radio-group-m--wrapper radio-group--wrapper","control":"radio-group-m--control radio-group--control","native":"radio-group-m--native radio-group--native"};
 
 /***/ },
-/* 459 */,
-/* 460 */
+/* 469 */,
+/* 470 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"18px","container":"radio-group-l--container radio-group--container","wrapper":"radio-group-l--wrapper radio-group--wrapper","control":"radio-group-l--control radio-group--control","native":"radio-group-l--native radio-group--native"};
+	module.exports = {"size-l":"18px","line-l":"38px","container":"radio-group-l--container radio-group--container","wrapper":"radio-group-l--wrapper radio-group--wrapper","control":"radio-group-l--control radio-group--control","native":"radio-group-l--native radio-group--native"};
 
 /***/ },
-/* 461 */,
-/* 462 */
+/* 471 */,
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30226,10 +30504,10 @@
 	    }],
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(463));
+	}, __webpack_require__(473));
 
 /***/ },
-/* 463 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30238,7 +30516,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Select = __webpack_require__(464);
+	var Select = __webpack_require__(474);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Select, function (styles, _ref) {
@@ -30247,8 +30525,8 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  s: __webpack_require__(467),
-	  m: __webpack_require__(473)
+	  s: __webpack_require__(477),
+	  m: __webpack_require__(483)
 	}, {
 	  size: 's'
 	}, {
@@ -30256,7 +30534,7 @@
 	});
 
 /***/ },
-/* 464 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30274,8 +30552,8 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Button = __webpack_require__(369);
-	var Option = __webpack_require__(465);
-	var Popup = __webpack_require__(420);
+	var Option = __webpack_require__(475);
+	var Popup = __webpack_require__(421);
 	var React = __webpack_require__(3);
 	var Component = React.Component;
 	var PropTypes = React.PropTypes;
@@ -30289,7 +30567,7 @@
 	var noop = _require.noop;
 
 	var cssModules = __webpack_require__(171);
-	var reactOutsideEvent = __webpack_require__(423);
+	var reactOutsideEvent = __webpack_require__(424);
 
 	var Select = function (_Component) {
 	  _inherits(Select, _Component);
@@ -30533,7 +30811,7 @@
 	module.exports = reactOutsideEvent(cssModules(Select), ['click']);
 
 /***/ },
-/* 465 */
+/* 475 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30559,7 +30837,7 @@
 	var camelcase = _require.camelcase;
 	var bind = _require.bind;
 
-	var classnames = __webpack_require__(466);
+	var classnames = __webpack_require__(476);
 	var cssModules = __webpack_require__(171);
 
 	var Option = function (_Component) {
@@ -30629,7 +30907,7 @@
 	module.exports = cssModules(Option);
 
 /***/ },
-/* 466 */
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -30683,28 +30961,28 @@
 
 
 /***/ },
-/* 467 */
+/* 477 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control select--control arrow--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","is":"select-s--is","isFocused":"select-s--isFocused select--isFocused select-s--is","isSelected":"select-s--isSelected select--isSelected select-s--is","isFocusedSelected":"select-s--isFocusedSelected select--isFocusedSelected select-s--is"};
 
 /***/ },
-/* 468 */,
-/* 469 */,
-/* 470 */,
-/* 471 */,
-/* 472 */,
-/* 473 */
+/* 478 */,
+/* 479 */,
+/* 480 */,
+/* 481 */,
+/* 482 */,
+/* 483 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control select--control arrow--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","is":"select-m--is","isFocused":"select-m--isFocused select--isFocused select-m--is","isSelected":"select-m--isSelected select--isSelected select-m--is","isFocusedSelected":"select-m--isFocusedSelected select--isFocusedSelected select-m--is"};
 
 /***/ },
-/* 474 */,
-/* 475 */,
-/* 476 */
+/* 484 */,
+/* 485 */,
+/* 486 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30724,10 +31002,10 @@
 	  }, {
 	    "size": "xl"
 	  }]]
-	}, __webpack_require__(477));
+	}, __webpack_require__(487));
 
 /***/ },
-/* 477 */
+/* 487 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30736,18 +31014,18 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Spin = __webpack_require__(478);
+	var Spin = __webpack_require__(488);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Spin, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(479),
-	  s: __webpack_require__(482),
-	  m: __webpack_require__(484),
-	  l: __webpack_require__(486),
-	  xl: __webpack_require__(488)
+	  xs: __webpack_require__(489),
+	  s: __webpack_require__(492),
+	  m: __webpack_require__(494),
+	  l: __webpack_require__(496),
+	  xl: __webpack_require__(498)
 	}, {
 	  size: 's'
 	}, {
@@ -30755,7 +31033,7 @@
 	});
 
 /***/ },
-/* 478 */
+/* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30788,7 +31066,7 @@
 	  _createClass(Spin, [{
 	    key: 'render',
 	    value: function render() {
-	      return React.createElement('span', _extends({}, this.props, { styleName: 'control' }));
+	      return React.createElement('span', _extends({ styleName: 'control' }, this.props));
 	    }
 	  }]);
 
@@ -30806,48 +31084,48 @@
 	module.exports = cssModules(Spin);
 
 /***/ },
-/* 479 */
+/* 489 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xs--control spin--control"};
 
 /***/ },
-/* 480 */,
-/* 481 */,
-/* 482 */
+/* 490 */,
+/* 491 */,
+/* 492 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-s--control spin--control"};
 
 /***/ },
-/* 483 */,
-/* 484 */
+/* 493 */,
+/* 494 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-m--control spin--control"};
 
 /***/ },
-/* 485 */,
-/* 486 */
+/* 495 */,
+/* 496 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-l--control spin--control"};
 
 /***/ },
-/* 487 */,
-/* 488 */
+/* 497 */,
+/* 498 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xl--control spin--control"};
 
 /***/ },
-/* 489 */,
-/* 490 */
+/* 499 */,
+/* 500 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30879,10 +31157,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(491));
+	}, __webpack_require__(501));
 
 /***/ },
-/* 491 */
+/* 501 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30891,15 +31169,15 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Textarea = __webpack_require__(492);
+	var Textarea = __webpack_require__(502);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Textarea, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(493),
-	  m: __webpack_require__(495)
+	  s: __webpack_require__(503),
+	  m: __webpack_require__(505)
 	}, {
 	  size: 's'
 	}, {
@@ -30907,7 +31185,7 @@
 	});
 
 /***/ },
-/* 492 */
+/* 502 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30946,14 +31224,32 @@
 	  }
 
 	  _createClass(Textarea, [{
+	    key: 'focus',
+	    value: function focus() {
+	      if (this.refs.control) {
+	        this.refs.control.focus();
+	      }
+	    }
+	  }, {
 	    key: 'onChange',
 	    value: function onChange(e) {
 	      this.props.onChange(e, { value: e.target.value });
 	    }
 	  }, {
+	    key: 'select',
+	    value: function select() {
+	      if (this.refs.control) {
+	        this.refs.control.select();
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return React.createElement('textarea', _extends({}, this.props, { onChange: this.onChange, styleName: 'control' }));
+	      return React.createElement('textarea', _extends({
+	        styleName: 'control'
+	      }, this.props, {
+	        onChange: this.onChange,
+	        ref: 'control' }));
 	    }
 	  }]);
 
@@ -30993,23 +31289,23 @@
 	module.exports = cssModules(Textarea);
 
 /***/ },
-/* 493 */
+/* 503 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"textarea-s--control input--control"};
 
 /***/ },
-/* 494 */,
-/* 495 */
+/* 504 */,
+/* 505 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"textarea-m--control input--control"};
 
 /***/ },
-/* 496 */,
-/* 497 */
+/* 506 */,
+/* 507 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31036,10 +31332,10 @@
 	    "direction": "top",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(498));
+	}, __webpack_require__(508));
 
 /***/ },
-/* 498 */
+/* 508 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31048,7 +31344,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Tooltip = __webpack_require__(499);
+	var Tooltip = __webpack_require__(509);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Tooltip, function (styles, _ref) {
@@ -31058,10 +31354,10 @@
 	    styles: styles[direction + '-m']
 	  };
 	}, {
-	  'bottom-m': __webpack_require__(500),
-	  'left-m': __webpack_require__(503),
-	  'right-m': __webpack_require__(505),
-	  'top-m': __webpack_require__(507)
+	  'bottom-m': __webpack_require__(510),
+	  'left-m': __webpack_require__(513),
+	  'right-m': __webpack_require__(515),
+	  'top-m': __webpack_require__(517)
 	}, {
 	  direction: 'right',
 	  size: 'm'
@@ -31070,7 +31366,7 @@
 	});
 
 /***/ },
-/* 499 */
+/* 509 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31085,7 +31381,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Popup = __webpack_require__(420);
+	var Popup = __webpack_require__(421);
 
 	var Tooltip = function (_Popup) {
 	  _inherits(Tooltip, _Popup);
@@ -31113,40 +31409,40 @@
 	module.exports = Tooltip;
 
 /***/ },
-/* 500 */
+/* 510 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-bottom-m--control tooltip--control"};
 
 /***/ },
-/* 501 */,
-/* 502 */,
-/* 503 */
+/* 511 */,
+/* 512 */,
+/* 513 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-left-m--control tooltip--control"};
 
 /***/ },
-/* 504 */,
-/* 505 */
+/* 514 */,
+/* 515 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-right-m--control tooltip--control"};
 
 /***/ },
-/* 506 */,
-/* 507 */
+/* 516 */,
+/* 517 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-top-m--control tooltip--control"};
 
 /***/ },
-/* 508 */,
-/* 509 */
+/* 518 */,
+/* 519 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31185,10 +31481,10 @@
 	    "size": "m",
 	    "value": "size-m"
 	  }]]
-	}, __webpack_require__(510));
+	}, __webpack_require__(520));
 
 /***/ },
-/* 510 */
+/* 520 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31197,16 +31493,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Tumbler = __webpack_require__(511);
+	var Tumbler = __webpack_require__(521);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Tumbler, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(512),
-	  s: __webpack_require__(515),
-	  m: __webpack_require__(517)
+	  xs: __webpack_require__(522),
+	  s: __webpack_require__(525),
+	  m: __webpack_require__(527)
 	}, {
 	  size: 'xs'
 	}, {
@@ -31214,7 +31510,7 @@
 	});
 
 /***/ },
-/* 511 */
+/* 521 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31368,24 +31664,24 @@
 	module.exports = cssModules(Tumbler);
 
 /***/ },
-/* 512 */
+/* 522 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","wrapper":"tumbler-xs--wrapper tumbler--wrapper","control":"tumbler-xs--control tumbler--control","label":"tumbler-xs--label tumbler--label","delimiter":"tumbler-xs--delimiter tumbler--delimiter","native":"tumbler-xs--native tumbler--native"};
 
 /***/ },
-/* 513 */,
-/* 514 */,
-/* 515 */
+/* 523 */,
+/* 524 */,
+/* 525 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","wrapper":"tumbler-s--wrapper tumbler--wrapper","control":"tumbler-s--control tumbler--control","label":"tumbler-s--label tumbler--label","delimiter":"tumbler-s--delimiter tumbler--delimiter","native":"tumbler-s--native tumbler--native"};
 
 /***/ },
-/* 516 */,
-/* 517 */
+/* 526 */,
+/* 527 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
