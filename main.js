@@ -53,10 +53,10 @@
 	__webpack_require__(452);
 	__webpack_require__(460);
 	__webpack_require__(473);
-	__webpack_require__(487);
-	__webpack_require__(501);
-	__webpack_require__(508);
-	module.exports = __webpack_require__(520);
+	__webpack_require__(486);
+	__webpack_require__(500);
+	__webpack_require__(507);
+	module.exports = __webpack_require__(519);
 
 
 /***/ },
@@ -27241,9 +27241,16 @@
 	  }
 
 	  _createClass(Button, [{
+	    key: 'focus',
+	    value: function focus() {
+	      if (this.refs.control) {
+	        this.refs.control.focus();
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return React.createElement('button', _extends({ styleName: 'control' }, this.props));
+	      return React.createElement('button', _extends({ styleName: 'control' }, this.props, { ref: 'control' }));
 	    }
 	  }]);
 
@@ -30750,6 +30757,57 @@
 	  "data": [[{
 	    "name": "motorrad-1",
 	    "options": [{
+	      "text": "BMW S 1000 RR",
+	      "value": "bmw s 1000 rr"
+	    }, {
+	      "text": "BMW R 1200 RS",
+	      "value": "bmw r 1200 rs"
+	    }, {
+	      "text": "BMW F 800 GT",
+	      "value": "bmw f 800 gt"
+	    }, {
+	      "text": "BMW R 1200 RT",
+	      "value": "bmw r 1200 rt"
+	    }, {
+	      "text": "BMW K 1600 GT",
+	      "value": "bmw k 1600 gt"
+	    }, {
+	      "text": "BMW K 1600 GTL",
+	      "value": "bmw k 1600 gtl"
+	    }, {
+	      "text": "K 1600 GTL Exclusive",
+	      "value": "k 1600 gtl exclusive"
+	    }, {
+	      "text": "BMW G 310 R",
+	      "value": "bmw g 310 r"
+	    }, {
+	      "text": "BMW F 800 R",
+	      "value": "bmw f 800 r"
+	    }, {
+	      "text": "BMW S 1000 R",
+	      "value": "bmw s 1000 r"
+	    }, {
+	      "text": "BMW R 1200 R",
+	      "value": "bmw r 1200 r"
+	    }, {
+	      "text": "BMW R nineT",
+	      "value": "bmw r ninet"
+	    }, {
+	      "text": "BMW R nineT Scrambler",
+	      "value": "bmw r ninet scrambler"
+	    }, {
+	      "text": "BMW G 650 GS",
+	      "value": "bmw g 650 gs"
+	    }, {
+	      "text": "BMW F 700 GS",
+	      "value": "bmw f 700 gs"
+	    }, {
+	      "text": "BMW F 800 GS",
+	      "value": "bmw f 800 gs"
+	    }, {
+	      "text": "BMW F 800 GS Adventure",
+	      "value": "bmw f 800 gs adventure"
+	    }, {
 	      "text": "Yamaha",
 	      "value": "yamaha"
 	    }, {
@@ -30771,6 +30829,57 @@
 	    "disabled": true,
 	    "name": "motorrad-2",
 	    "options": [{
+	      "text": "BMW S 1000 RR",
+	      "value": "bmw s 1000 rr"
+	    }, {
+	      "text": "BMW R 1200 RS",
+	      "value": "bmw r 1200 rs"
+	    }, {
+	      "text": "BMW F 800 GT",
+	      "value": "bmw f 800 gt"
+	    }, {
+	      "text": "BMW R 1200 RT",
+	      "value": "bmw r 1200 rt"
+	    }, {
+	      "text": "BMW K 1600 GT",
+	      "value": "bmw k 1600 gt"
+	    }, {
+	      "text": "BMW K 1600 GTL",
+	      "value": "bmw k 1600 gtl"
+	    }, {
+	      "text": "K 1600 GTL Exclusive",
+	      "value": "k 1600 gtl exclusive"
+	    }, {
+	      "text": "BMW G 310 R",
+	      "value": "bmw g 310 r"
+	    }, {
+	      "text": "BMW F 800 R",
+	      "value": "bmw f 800 r"
+	    }, {
+	      "text": "BMW S 1000 R",
+	      "value": "bmw s 1000 r"
+	    }, {
+	      "text": "BMW R 1200 R",
+	      "value": "bmw r 1200 r"
+	    }, {
+	      "text": "BMW R nineT",
+	      "value": "bmw r ninet"
+	    }, {
+	      "text": "BMW R nineT Scrambler",
+	      "value": "bmw r ninet scrambler"
+	    }, {
+	      "text": "BMW G 650 GS",
+	      "value": "bmw g 650 gs"
+	    }, {
+	      "text": "BMW F 700 GS",
+	      "value": "bmw f 700 gs"
+	    }, {
+	      "text": "BMW F 800 GS",
+	      "value": "bmw f 800 gs"
+	    }, {
+	      "text": "BMW F 800 GS Adventure",
+	      "value": "bmw f 800 gs adventure"
+	    }, {
 	      "text": "Yamaha",
 	      "value": "yamaha"
 	    }, {
@@ -30848,8 +30957,8 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  s: __webpack_require__(478),
-	  m: __webpack_require__(484)
+	  s: __webpack_require__(477),
+	  m: __webpack_require__(483)
 	}, {
 	  size: 's'
 	}, {
@@ -30865,8 +30974,6 @@
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30887,6 +30994,17 @@
 	var findIndexByValueProp = _require2.findIndexByValueProp;
 	var noop = _require2.noop;
 
+	var _require3 = __webpack_require__(40);
+
+	var findDOMNode = _require3.findDOMNode;
+
+	var _require4 = __webpack_require__(402);
+
+	var generateId = _require4.generateId;
+	var isUnique = _require4.isUnique;
+	var mapKey = _require4.mapKey;
+	var mapKeyBasedOnPos = _require4.mapKeyBasedOnPos;
+
 	var Button = __webpack_require__(369);
 	var Option = __webpack_require__(476);
 	var Popup = __webpack_require__(421);
@@ -30900,124 +31018,230 @@
 	  function Select(props) {
 	    _classCallCheck(this, Select);
 
-	    // @todo check for single prop
+	    // @todo add assertion for defaultValue
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
-	    var value = props.defaultValue || props.value;
-	    var index = typeof value === 'string' ? findIndexByValueProp(props.options, value) : 0;
-
-	    if (index === -1) {
-	      console.error('Warning: Failed propType: Required prop `options` doesn\'t contains `value` `' + value + '` in `Select`'); // eslint-disable-line no-console
-	      index = 0;
-	    }
+	    _this.controlled = props.value !== undefined;
+	    _this.updateKeyMapper(props.options);
 
 	    _this.state = {
 	      isOpened: false,
-	      position: index,
-	      selected: index,
-	      value: props.defaultValue || props.value || props.options[index].value
+	      focused: -1,
+	      prefix: generateId(),
+	      selected: 0
 	    };
 
-	    bind(_this, ['onClick', 'onKeyDown', 'onOptionClick', 'onOptionMouseEnter']);
+	    bind(_this, ['onButtonClick', 'onKeyDown', 'onOptionFocus', 'onOptionSelect']);
 	    return _this;
 	  }
 
 	  _createClass(Select, [{
-	    key: 'onClick',
-	    value: function onClick() {
-	      this.setState({ isOpened: !this.state.isOpened });
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      // @todo scroll on keyboard shortcuts
+	      if (this.refs.menu && this.refs.selected && this.state.isOpened && !this.optionInView) {
+	        var menu = findDOMNode(this.refs.menu);
+	        var selected = findDOMNode(this.refs.selected);
+
+	        menu.scrollTop = selected.offsetTop;
+	        this.optionInView = true;
+	      } else if (!this.state.isOpened) {
+	        this.optionInView = false;
+	      }
 	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(_ref) {
+	      var options = _ref.options;
+	      var value = _ref.value;
 
-	    /**
-	     * http://facebook.github.io/react/docs/events.html#keyboard-events
-	     *
-	     * @param {object} e
-	     * @param {number} e.keyCode
-	     */
+	      if (this.controlled) {
+	        this.setState({
+	          selected: findIndexByValueProp(options, value)
+	        });
+	      }
 
+	      if (this.props.options !== options) {
+	        this.updateKeyMapper(options);
+	      }
+	    }
+	  }, {
+	    key: 'focus',
+	    value: function focus() {
+	      if (this.refs.control) {
+	        this.refs.control.focus();
+	      }
+	    }
+	  }, {
+	    key: 'onButtonClick',
+	    value: function onButtonClick() {
+	      if (this.state.isOpened) {
+	        this.setState({
+	          isOpened: false
+	        });
+	      } else {
+	        this.setState({
+	          focused: this.state.selected,
+	          isOpened: true
+	        });
+	      }
+	    }
 	  }, {
 	    key: 'onKeyDown',
 	    value: function onKeyDown(e) {
 	      if (this.props.disabled) return;
-	      if (e.keyCode === 9) return this.setState({ isOpened: false });
-	      e.preventDefault();
 
-	      var options = this.props.options;
 	      var _state = this.state;
+	      var focused = _state.focused;
 	      var isOpened = _state.isOpened;
-	      var position = _state.position;
 	      var selected = _state.selected;
 
 
 	      switch (e.keyCode) {
+	        case 27:
+	          // esc
+	          if (isOpened) {
+	            this.setState({
+	              isOpened: false
+	            });
+	          }
+
+	          this.focus();
+	          break;
+
+	        case 9:
+	          // tab
+	          if (isOpened) {
+	            this.setState({
+	              isOpened: false
+	            });
+	          }
+
+	          return;
+
 	        case 13: // enter
 	        case 32:
 	          // space
-	          this.setState({
-	            isOpened: false,
-	            selected: position,
-	            value: this.props.options[position].value
-	          });
-	          return this.props.onChange(e, { value: this.props.options[position].value });
-	        case 27:
-	          // esc
-	          return this.setState({ isOpened: false, position: selected });
+	          if (isOpened) {
+	            if (focused > -1 && focused !== selected) {
+	              this.updateValue(e, focused);
+	            } else {
+	              this.setState({
+	                isOpened: false,
+	                selected: focused > -1 ? focused : selected
+	              });
+	            }
+	          } else {
+	            this.setState({
+	              focused: selected,
+	              isOpened: true
+	            });
+	          }
+
+	          break;
+
 	        case 38:
 	          // up
-	          if (!isOpened) return this.setState({ isOpened: true });
-	          return this.setState({ position: decrement(position, options.length) });
+	          if (!isOpened) {
+	            this.setState({
+	              focused: selected,
+	              isOpened: true
+	            });
+	          } else {
+	            this.setState({
+	              focused: decrement(focused, this.props.options.length)
+	            });
+	          }
+
+	          break;
+
 	        case 40:
 	          // down
-	          if (!isOpened) return this.setState({ isOpened: true });
-	          return this.setState({ position: increment(position, options.length) });
+	          if (!isOpened) {
+	            this.setState({
+	              focused: selected,
+	              isOpened: true
+	            });
+	          } else {
+	            this.setState({
+	              focused: increment(focused, this.props.options.length)
+	            });
+	          }
+
+	          break;
+	      }
+
+	      e.preventDefault();
+	    }
+	  }, {
+	    key: 'onOptionFocus',
+	    value: function onOptionFocus(e, _, tc) {
+	      if (this.state.focused !== tc) {
+	        this.setState({
+	          focused: tc
+	        });
 	      }
 	    }
 	  }, {
-	    key: 'onOptionClick',
-	    value: function onOptionClick(e, i) {
-	      this.setState({
-	        isOpened: false,
-	        position: i,
-	        selected: i,
-	        value: this.props.options[i].value
-	      });
-
-	      this.props.onChange(e, { value: this.props.options[i].value });
-	    }
-	  }, {
-	    key: 'onOptionMouseEnter',
-	    value: function onOptionMouseEnter(e, i) {
-	      this.setState({ position: i });
+	    key: 'onOptionSelect',
+	    value: function onOptionSelect(e, _, tc) {
+	      this.updateValue(e, tc);
+	      this.focus();
 	    }
 	  }, {
 	    key: 'onOutsideEvent',
 	    value: function onOutsideEvent() {
-	      this.setState({ isOpened: false });
+	      if (this.state.isOpened) {
+	        this.setState({
+	          isOpened: false
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'updateKeyMapper',
+	    value: function updateKeyMapper(options) {
+	      this.mapKey = !isUnique(options) ? mapKeyBasedOnPos : mapKey;
+	    }
+	  }, {
+	    key: 'updateValue',
+	    value: function updateValue(e, tc) {
+	      if (!this.controlled) {
+	        this.setState({
+	          isOpened: false,
+	          selected: tc
+	        });
+	      } else {
+	        this.setState({
+	          isOpened: false
+	        });
+	      }
+
+	      this.props.onChange(e, { value: this.props.options[tc].value });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
-	      var className = _props.className;
 	      var disabled = _props.disabled;
 	      var name = _props.name;
+	      var options = _props.options;
 
-	      var o = _objectWithoutProperties(_props, ['className', 'disabled', 'name']);
-
-	      var value = this.state.value;
-
+	      var value = options[this.state.selected].value;
 
 	      return React.createElement(
 	        'div',
-	        _extends({}, o, {
-	          className: className,
-	          onKeyDown: this.onKeyDown,
+	        _extends({
 	          styleName: 'wrapper'
-	        }),
+	        }, this.props, {
+	          onKeyDown: this.onKeyDown }),
 	        this.renderButton(),
 	        this.renderPopup(),
-	        React.createElement('input', { disabled: disabled, name: name, type: 'hidden', value: value })
+	        React.createElement('input', {
+	          disabled: disabled,
+	          name: name,
+	          type: 'hidden',
+	          value: value })
 	      );
 	    }
 	  }, {
@@ -31032,14 +31256,16 @@
 	      var selected = _state2.selected;
 
 
+	      var mixin = styles[isOpened ? 'isOpened' : 'isClosed'];
+
 	      return React.createElement(
 	        Button,
 	        {
-	          className: styles[isOpened ? 'isOpened' : 'isClosed'],
+	          className: mixin,
 	          disabled: disabled,
-	          onClick: this.onClick,
-	          styles: styles
-	        },
+	          onClick: this.onButtonClick,
+	          ref: 'control',
+	          styles: styles },
 	        options[selected].text
 	      );
 	    }
@@ -31047,16 +31273,18 @@
 	    key: 'renderPopup',
 	    value: function renderPopup() {
 	      var styles = this.props.styles;
-	      var isOpened = this.state.isOpened;
 
 
-	      if (!isOpened) {
+	      if (!this.state.isOpened) {
 	        return null;
 	      }
 
 	      return React.createElement(
 	        Popup,
-	        { styleName: 'menu', styles: styles },
+	        {
+	          ref: 'menu',
+	          styleName: 'menu',
+	          styles: styles },
 	        this.renderOptions()
 	      );
 	    }
@@ -31065,29 +31293,34 @@
 	    value: function renderOptions() {
 	      var _this2 = this;
 
+	      if (!this.state.isOpened) {
+	        return null;
+	      }
+
 	      var _props3 = this.props;
 	      var options = _props3.options;
 	      var styles = _props3.styles;
 	      var _state3 = this.state;
-	      var position = _state3.position;
+	      var focused = _state3.focused;
+	      var prefix = _state3.prefix;
 	      var selected = _state3.selected;
 
 
-	      return options.map(function (_ref, i) {
-	        var text = _ref.text;
-	        var value = _ref.value;
+	      return options.map(function (_ref2, i) {
+	        var text = _ref2.text;
+	        var value = _ref2.value;
 	        return React.createElement(
 	          Option,
 	          {
-	            focused: position === i,
-	            identity: i,
-	            key: '_' + value + i,
-	            onClick: _this2.onOptionClick,
-	            onMouseEnter: _this2.onOptionMouseEnter,
-	            selected: selected === i,
+	            checked: selected === i,
+	            focused: focused === i,
+	            key: _this2.mapKey(prefix, value, i),
+	            onFocus: _this2.onOptionFocus,
+	            onSelect: _this2.onOptionSelect,
+	            ref: selected === i ? 'selected' : null,
 	            styles: styles,
-	            value: value
-	          },
+	            tc: i,
+	            value: value },
 	          text
 	        );
 	      });
@@ -31098,9 +31331,7 @@
 	}(Component);
 
 	Select.defaultProps = {
-	  onClick: noop,
 	  onChange: noop,
-	  onKeyDown: noop,
 	  styles: {}
 	};
 
@@ -31160,11 +31391,9 @@
 
 	var _require2 = __webpack_require__(393);
 
-	var camelcase = _require2.camelcase;
 	var bind = _require2.bind;
 
 	var React = __webpack_require__(3);
-	var classnames = __webpack_require__(477);
 	var cssModules = __webpack_require__(171);
 
 	var Option = function (_Component) {
@@ -31175,42 +31404,56 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Option).call(this, props));
 
-	    bind(_this, ['onClick', 'onMouseEnter']);
+	    bind(_this, ['onClick', 'onFocus', 'onMouseEnter', 'onSelect']);
 	    return _this;
 	  }
 
 	  _createClass(Option, [{
 	    key: 'onClick',
 	    value: function onClick(e) {
-	      this.props.onClick(e, this.props.identity);
+	      this.onSelect(e);
 	    }
 	  }, {
 	    key: 'onMouseEnter',
 	    value: function onMouseEnter(e) {
-	      this.props.onMouseEnter(e, this.props.identity);
+	      this.onFocus(e);
+	    }
+	  }, {
+	    key: 'onFocus',
+	    value: function onFocus(e) {
+	      if (!this.props.isFocused) {
+	        this.props.onFocus(e, null, this.props.tc);
+	      }
+	    }
+	  }, {
+	    key: 'onSelect',
+	    value: function onSelect(e) {
+	      this.props.onSelect(e, null, this.props.tc);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
+	      var checked = _props.checked;
 	      var focused = _props.focused;
-	      var onClick = _props.onClick;
-	      var // eslint-disable-line no-unused-vars
-	      onMouseEnter = _props.onMouseEnter;
-	      var // eslint-disable-line no-unused-vars
-	      selected = _props.selected;
 	      var styles = _props.styles;
 	      var value = _props.value;
 
-	      var o = _objectWithoutProperties(_props, ['focused', 'onClick', 'onMouseEnter', 'selected', 'styles', 'value']);
+	      var o = _objectWithoutProperties(_props, ['checked', 'focused', 'styles', 'value']);
 
-	      return React.createElement('span', _extends({}, o, {
-	        className: styles[camelcase(classnames('is', { focused: focused, selected: selected }))],
+	      var mixin = styles[focused ? 'isFocused' : undefined];
+
+	      var styleName = checked ? 'isCheckedItem' : 'item';
+
+	      return React.createElement('span', _extends({
 	        'data-value': value,
+	        styleName: styleName
+	      }, o, {
+	        className: mixin,
 	        onClick: this.onClick,
+	        onFocus: this.onFocus,
 	        onMouseEnter: this.onMouseEnter,
-	        styleName: 'item'
-	      }));
+	        onSelect: this.onFocus }));
 	    }
 	  }]);
 
@@ -31222,12 +31465,11 @@
 	};
 
 	Option.propTypes = {
-	  focused: PropTypes.bool,
-	  identity: PropTypes.number.isRequired,
-	  onClick: PropTypes.func.isRequired,
-	  onMouseEnter: PropTypes.func.isRequired,
-	  selected: PropTypes.bool,
+	  checked: PropTypes.bool,
+	  onFocus: PropTypes.func.isRequired,
+	  onSelect: PropTypes.func.isRequired,
 	  styles: PropTypes.object,
+	  tc: PropTypes.any,
 	  value: PropTypes.string.isRequired
 	};
 
@@ -31235,81 +31477,27 @@
 
 /***/ },
 /* 477 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-
-	(function () {
-		'use strict';
-
-		var hasOwn = {}.hasOwnProperty;
-
-		function classNames () {
-			var classes = [];
-
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-
-				var argType = typeof arg;
-
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-
-			return classes.join(' ');
-		}
-
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ },
-/* 478 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control select--control arrow--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","is":"select-s--is","isFocused":"select-s--isFocused select--isFocused select-s--is","isSelected":"select-s--isSelected select--isSelected select-s--is","isFocusedSelected":"select-s--isFocusedSelected select--isFocusedSelected select-s--is"};
+	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control select--control arrow--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","isCheckedItem":"select-s--isCheckedItem select--isCheckedItem select-s--item menu-s--item menu--item select--item","isFocused":"select-s--isFocused select--isFocused"};
 
 /***/ },
+/* 478 */,
 /* 479 */,
 /* 480 */,
 /* 481 */,
 /* 482 */,
-/* 483 */,
-/* 484 */
+/* 483 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control select--control arrow--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","is":"select-m--is","isFocused":"select-m--isFocused select--isFocused select-m--is","isSelected":"select-m--isSelected select--isSelected select-m--is","isFocusedSelected":"select-m--isFocusedSelected select--isFocusedSelected select-m--is"};
+	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control select--control arrow--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","isCheckedItem":"select-m--isCheckedItem select--isCheckedItem select-m--item menu-m--item menu--item select--item","isFocused":"select-m--isFocused select--isFocused"};
 
 /***/ },
+/* 484 */,
 /* 485 */,
-/* 486 */,
-/* 487 */
+/* 486 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31329,10 +31517,10 @@
 	  }, {
 	    "size": "xl"
 	  }]]
-	}, __webpack_require__(488));
+	}, __webpack_require__(487));
 
 /***/ },
-/* 488 */
+/* 487 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31341,18 +31529,18 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Spin = __webpack_require__(489);
+	var Spin = __webpack_require__(488);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Spin, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(490),
-	  s: __webpack_require__(493),
-	  m: __webpack_require__(495),
-	  l: __webpack_require__(497),
-	  xl: __webpack_require__(499)
+	  xs: __webpack_require__(489),
+	  s: __webpack_require__(492),
+	  m: __webpack_require__(494),
+	  l: __webpack_require__(496),
+	  xl: __webpack_require__(498)
 	}, {
 	  size: 's'
 	}, {
@@ -31360,7 +31548,7 @@
 	});
 
 /***/ },
-/* 489 */
+/* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31413,48 +31601,48 @@
 	module.exports = cssModules(Spin);
 
 /***/ },
-/* 490 */
+/* 489 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xs--control spin--control"};
 
 /***/ },
+/* 490 */,
 /* 491 */,
-/* 492 */,
-/* 493 */
+/* 492 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-s--control spin--control"};
 
 /***/ },
-/* 494 */,
-/* 495 */
+/* 493 */,
+/* 494 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-m--control spin--control"};
 
 /***/ },
-/* 496 */,
-/* 497 */
+/* 495 */,
+/* 496 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-l--control spin--control"};
 
 /***/ },
-/* 498 */,
-/* 499 */
+/* 497 */,
+/* 498 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xl--control spin--control"};
 
 /***/ },
-/* 500 */,
-/* 501 */
+/* 499 */,
+/* 500 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31486,10 +31674,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(502));
+	}, __webpack_require__(501));
 
 /***/ },
-/* 502 */
+/* 501 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31498,15 +31686,15 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Textarea = __webpack_require__(503);
+	var Textarea = __webpack_require__(502);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Textarea, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(504),
-	  m: __webpack_require__(506)
+	  s: __webpack_require__(503),
+	  m: __webpack_require__(505)
 	}, {
 	  size: 's'
 	}, {
@@ -31514,7 +31702,7 @@
 	});
 
 /***/ },
-/* 503 */
+/* 502 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31620,23 +31808,23 @@
 	module.exports = cssModules(Textarea);
 
 /***/ },
-/* 504 */
+/* 503 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"textarea-s--control input--control"};
 
 /***/ },
-/* 505 */,
-/* 506 */
+/* 504 */,
+/* 505 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"textarea-m--control input--control"};
 
 /***/ },
-/* 507 */,
-/* 508 */
+/* 506 */,
+/* 507 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31663,10 +31851,10 @@
 	    "direction": "top",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(509));
+	}, __webpack_require__(508));
 
 /***/ },
-/* 509 */
+/* 508 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31675,7 +31863,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Tooltip = __webpack_require__(510);
+	var Tooltip = __webpack_require__(509);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Tooltip, function (styles, _ref) {
@@ -31685,10 +31873,10 @@
 	    styles: styles[direction + '-m']
 	  };
 	}, {
-	  'bottom-m': __webpack_require__(511),
-	  'left-m': __webpack_require__(514),
-	  'right-m': __webpack_require__(516),
-	  'top-m': __webpack_require__(518)
+	  'bottom-m': __webpack_require__(510),
+	  'left-m': __webpack_require__(513),
+	  'right-m': __webpack_require__(515),
+	  'top-m': __webpack_require__(517)
 	}, {
 	  direction: 'right',
 	  size: 'm'
@@ -31697,7 +31885,7 @@
 	});
 
 /***/ },
-/* 510 */
+/* 509 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31740,40 +31928,40 @@
 	module.exports = Tooltip;
 
 /***/ },
-/* 511 */
+/* 510 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-bottom-m--control tooltip--control"};
 
 /***/ },
+/* 511 */,
 /* 512 */,
-/* 513 */,
-/* 514 */
+/* 513 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-left-m--control tooltip--control"};
 
 /***/ },
-/* 515 */,
-/* 516 */
+/* 514 */,
+/* 515 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-right-m--control tooltip--control"};
 
 /***/ },
-/* 517 */,
-/* 518 */
+/* 516 */,
+/* 517 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-top-m--control tooltip--control"};
 
 /***/ },
-/* 519 */,
-/* 520 */
+/* 518 */,
+/* 519 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31812,10 +32000,10 @@
 	    "size": "m",
 	    "value": "size-m"
 	  }]]
-	}, __webpack_require__(521));
+	}, __webpack_require__(520));
 
 /***/ },
-/* 521 */
+/* 520 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31824,16 +32012,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Tumbler = __webpack_require__(522);
+	var Tumbler = __webpack_require__(521);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Tumbler, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(523),
-	  s: __webpack_require__(526),
-	  m: __webpack_require__(528)
+	  xs: __webpack_require__(522),
+	  s: __webpack_require__(525),
+	  m: __webpack_require__(527)
 	}, {
 	  size: 'xs'
 	}, {
@@ -31841,7 +32029,7 @@
 	});
 
 /***/ },
-/* 522 */
+/* 521 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32006,24 +32194,24 @@
 	module.exports = cssModules(Tumbler);
 
 /***/ },
-/* 523 */
+/* 522 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","wrapper":"tumbler-xs--wrapper tumbler--wrapper","control":"tumbler-xs--control tumbler--control","label":"tumbler-xs--label tumbler--label","delimiter":"tumbler-xs--delimiter tumbler--delimiter","native":"tumbler-xs--native tumbler--native"};
 
 /***/ },
+/* 523 */,
 /* 524 */,
-/* 525 */,
-/* 526 */
+/* 525 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","wrapper":"tumbler-s--wrapper tumbler--wrapper","control":"tumbler-s--control tumbler--control","label":"tumbler-s--label tumbler--label","delimiter":"tumbler-s--delimiter tumbler--delimiter","native":"tumbler-s--native tumbler--native"};
 
 /***/ },
-/* 527 */,
-/* 528 */
+/* 526 */,
+/* 527 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
