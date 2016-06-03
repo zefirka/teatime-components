@@ -51,12 +51,12 @@
 	__webpack_require__(437);
 	__webpack_require__(442);
 	__webpack_require__(452);
-	__webpack_require__(459);
-	__webpack_require__(472);
-	__webpack_require__(486);
-	__webpack_require__(500);
-	__webpack_require__(507);
-	module.exports = __webpack_require__(519);
+	__webpack_require__(460);
+	__webpack_require__(473);
+	__webpack_require__(487);
+	__webpack_require__(501);
+	__webpack_require__(508);
+	module.exports = __webpack_require__(520);
 
 
 /***/ },
@@ -27223,10 +27223,12 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
+	var _require = __webpack_require__(3);
 
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var React = __webpack_require__(3);
 	var cssModules = __webpack_require__(171);
 
 	var Button = function (_Component) {
@@ -27518,19 +27520,21 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var _require = __webpack_require__(3);
+
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(393);
+
+	var bind = _require2.bind;
+	var noop = _require2.noop;
+
+	var _require3 = __webpack_require__(402);
+
+	var generateId = _require3.generateId;
+
 	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
-
-	var _require = __webpack_require__(393);
-
-	var bind = _require.bind;
-	var noop = _require.noop;
-
-	var _require2 = __webpack_require__(402);
-
-	var generateId = _require2.generateId;
-
 	var cssModules = __webpack_require__(171);
 
 	var Check = function (_Component) {
@@ -27565,7 +27569,7 @@
 	      var checked = _e$target.checked;
 	      var value = _e$target.value;
 
-	      this.props.onChange(e, { checked: checked, value: value });
+	      this.props.onChange(e, { checked: checked, value: value }, this.props.tc);
 	    }
 	  }, {
 	    key: 'render',
@@ -27643,6 +27647,7 @@
 	  onTouchMove: PropTypes.func,
 	  onTouchStart: PropTypes.func,
 	  styles: PropTypes.object,
+	  tc: PropTypes.any,
 	  type: PropTypes.oneOf(['checkbox', 'radio']),
 	  value: PropTypes.string.isRequired
 	};
@@ -28407,12 +28412,55 @@
 	var counter = 0;
 
 	exports.generateId = generateId;
+	exports.isUnique = isUnique;
+	exports.mapKey = mapKey;
+	exports.mapKeyBasedOnPos = mapKeyBasedOnPos;
 
 	/**
 	 * @return {string}
 	 */
 	function generateId() {
 	  return '_teatime' + ++counter;
+	}
+
+	/**
+	 * @param  {object[]} options
+	 * @return {boolean}
+	 */
+	function isUnique(options) {
+	  var cache = {};
+
+	  for (var value, i = 0; i < options.length; ++i) {
+	    value = options[i].value;
+
+	    if (!cache[value]) {
+	      cache[value] = true;
+	      continue;
+	    }
+
+	    return false;
+	  }
+
+	  return true;
+	}
+
+	/**
+	 * @param  {string} prefix
+	 * @param  {string} value
+	 * @return {string}
+	 */
+	function mapKey(prefix, value) {
+	  return '' + prefix + value;
+	}
+
+	/**
+	 * @param  {string} prefix
+	 * @param  {string} value
+	 * @param  {number} position
+	 * @return {string}
+	 */
+	function mapKeyBasedOnPos(prefix, value, position) {
+	  return '' + prefix + value + position;
 	}
 
 /***/ },
@@ -28443,7 +28491,7 @@
 	  "name": "checkGroup",
 	  "path": "CheckGroup",
 	  "data": [[{
-	    "name": "motorrad-1",
+	    "name": "check-group-motorrad-1",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -28463,7 +28511,7 @@
 	    "size": "s"
 	  }, {
 	    "disabled": true,
-	    "name": "motorrad-2",
+	    "name": "check-group-motorrad-2",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -28482,7 +28530,7 @@
 	    }],
 	    "size": "s"
 	  }], [{
-	    "name": "motorrad-3",
+	    "name": "check-group-motorrad-3",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -28502,7 +28550,7 @@
 	    "size": "m"
 	  }, {
 	    "disabled": true,
-	    "name": "motorrad-4",
+	    "name": "check-group-motorrad-4",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -28560,26 +28608,31 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var _require = __webpack_require__(3);
+
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(393);
+
+	var bind = _require2.bind;
+	var noop = _require2.noop;
+
+	var _require3 = __webpack_require__(402);
+
+	var generateId = _require3.generateId;
+	var isUnique = _require3.isUnique;
+	var mapKey = _require3.mapKey;
+	var mapKeyBasedOnPos = _require3.mapKeyBasedOnPos;
+
 	var Check = __webpack_require__(392);
 	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
-
-	var _require = __webpack_require__(393);
-
-	var bind = _require.bind;
-	var noop = _require.noop;
-
 	var cssModules = __webpack_require__(171);
 
 	var CheckGroup = function (_Component) {
@@ -28588,15 +28641,18 @@
 	  function CheckGroup(props) {
 	    _classCallCheck(this, CheckGroup);
 
-	    // @todo make assertion for one prop usage
+	    // @todo add assertion for defaultValue
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CheckGroup).call(this, props));
 
-	    var value = _this.props.value || _this.props.defaultValue;
+	    _this.controlled = props.value !== undefined;
+	    _this.updateKeyMapper(props.options);
+
+	    var value = props.value || props.defaultValue;
 
 	    _this.state = {
-	      selected: value ? [].concat(_toConsumableArray(value)) // @todo deep copy
-	      : []
+	      prefix: generateId(),
+	      values: mapValueToState(props.options, value || [])
 	    };
 
 	    bind(_this, 'onChange');
@@ -28604,31 +28660,48 @@
 	  }
 
 	  _createClass(CheckGroup, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(_ref) {
+	      var options = _ref.options;
+	      var value = _ref.value;
+
+	      if (this.controlled) {
+	        this.setState({ values: mapValueToState(options, value) });
+	      }
+
+	      if (this.props.options !== options) {
+	        this.updateKeyMapper(options);
+	      }
+	    }
+	  }, {
 	    key: 'onChange',
-	    value: function onChange(e) {
-	      var _e$target = e.target;
-	      var checked = _e$target.checked;
-	      var value = _e$target.value;
-	      var selected = this.state.selected;
+	    value: function onChange(e, _ref2, tc) {
+	      var checked = _ref2.checked;
 
-	      var newState = checked ? selected.concat(value) : selected.filter(function (stored) {
-	        return stored !== value;
+	      var values = updateValue(this.state.values, tc, checked);
+
+	      if (!this.controlled) {
+	        this.setState({ values: values });
+	      }
+
+	      this.props.onChange(e, {
+	        value: mapStateToValue(this.props.options, values)
 	      });
-
-	      this.setState({ selected: newState });
-	      this.props.onChange(e, { value: newState });
+	    }
+	  }, {
+	    key: 'updateKeyMapper',
+	    value: function updateKeyMapper(options) {
+	      this.mapKey = !isUnique(options) ? mapKeyBasedOnPos : mapKey;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var onChange = _props.onChange;
-
-	      var o = _objectWithoutProperties(_props, ['onChange']); // eslint-disable-line no-unused-vars
-
 	      return React.createElement(
 	        'div',
-	        _extends({}, o, { styleName: 'container' }),
+	        _extends({
+	          styleName: 'container'
+	        }, this.props, {
+	          onChange: undefined }),
 	        this.renderOptions()
 	      );
 	    }
@@ -28637,30 +28710,30 @@
 	    value: function renderOptions() {
 	      var _this2 = this;
 
-	      var _props2 = this.props;
-	      var defaultValue = _props2.defaultValue;
-	      var // eslint-disable-line no-unused-vars
-	      disabled = _props2.disabled;
-	      var name = _props2.name;
-	      var options = _props2.options;
-	      var styles = _props2.styles;
-	      var selected = this.state.selected;
+	      var _props = this.props;
+	      var disabled = _props.disabled;
+	      var name = _props.name;
+	      var options = _props.options;
+	      var styles = _props.styles;
+	      var _state = this.state;
+	      var prefix = _state.prefix;
+	      var values = _state.values;
 
 
-	      return options.map(function (_ref, i) {
-	        var text = _ref.text;
-	        var value = _ref.value;
+	      return options.map(function (_ref3, i) {
+	        var text = _ref3.text;
+	        var value = _ref3.value;
 	        return React.createElement(
 	          Check,
 	          {
-	            checked: selected.indexOf(value) > -1,
 	            disabled: disabled,
-	            key: '_' + value + i,
+	            checked: values[i],
+	            key: _this2.mapKey(prefix, value, i),
 	            name: name,
 	            onChange: _this2.onChange,
 	            styles: styles,
-	            value: value
-	          },
+	            tc: i,
+	            value: value },
 	          text
 	        );
 	      });
@@ -28705,6 +28778,58 @@
 	};
 
 	module.exports = cssModules(CheckGroup);
+
+	/**
+	 * @param  {object[]} options
+	 * @param  {boolean[]} values
+	 * @return {string[]}
+	 */
+	function mapStateToValue(options, values) {
+	  var selected = [];
+
+	  for (var i = 0; i < values.length; ++i) {
+	    if (!values[i]) {
+	      continue;
+	    }
+
+	    selected.push(options[i].value);
+	  }
+
+	  return selected;
+	}
+
+	/**
+	 * @param  {object[]} options
+	 * @param  {string[]} selected
+	 * @return {boolean[]}
+	 */
+	function mapValueToState(options, selected) {
+	  var length = selected.length;
+	  var i = 0;
+
+	  return options.map(function (_ref4) {
+	    var value = _ref4.value;
+
+	    if (value === selected[i] && i < length) {
+	      i++;
+	      return true;
+	    }
+
+	    return false;
+	  });
+	}
+
+	/**
+	 * @param  {boolean[]} values
+	 * @param  {number} position
+	 * @param  {boolean} target
+	 * @return {boolean[]}
+	 */
+	function updateValue(values, position, target) {
+	  return values.map(function (value, i) {
+	    return position !== i ? value : target;
+	  });
+	}
 
 /***/ },
 /* 411 */
@@ -29054,15 +29179,17 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var _require = __webpack_require__(3);
+
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(393);
+
+	var bind = _require2.bind;
+	var noop = _require2.noop;
+
 	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
-
-	var _require = __webpack_require__(393);
-
-	var bind = _require.bind;
-	var noop = _require.noop;
-
 	var cssModules = __webpack_require__(171);
 
 	var Input = function (_Component) {
@@ -29750,10 +29877,12 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
+	var _require = __webpack_require__(3);
 
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var React = __webpack_require__(3);
 	var cssModules = __webpack_require__(171);
 
 	var Link = function (_Component) {
@@ -29841,126 +29970,6 @@
 	  "name": "radio",
 	  "path": "Radio",
 	  "data": [[{
-	    "name": "radio-size-s-1",
-	    "size": "s",
-	    "value": "size-s"
-	  }, {
-	    "defaultChecked": true,
-	    "name": "radio-size-s-1",
-	    "size": "s",
-	    "value": "size-s"
-	  }, {
-	    "disabled": true,
-	    "name": "radio-size-s-2",
-	    "size": "s",
-	    "value": "size-s"
-	  }, {
-	    "defaultChecked": true,
-	    "disabled": true,
-	    "name": "radio-size-s-2",
-	    "size": "s",
-	    "value": "size-s"
-	  }], [{
-	    "name": "radio-size-m-3",
-	    "size": "m",
-	    "value": "size-m"
-	  }, {
-	    "defaultChecked": true,
-	    "name": "radio-size-m-3",
-	    "size": "m",
-	    "value": "size-m"
-	  }, {
-	    "disabled": true,
-	    "name": "radio-size-m-4",
-	    "size": "m",
-	    "value": "size-m"
-	  }, {
-	    "defaultChecked": true,
-	    "disabled": true,
-	    "name": "radio-size-m-4",
-	    "size": "m",
-	    "value": "size-m"
-	  }], [{
-	    "children": "Size s",
-	    "name": "radio-size-5",
-	    "size": "s",
-	    "value": "size-s"
-	  }, {
-	    "children": "Size s",
-	    "disabled": true,
-	    "name": "radio-size-5",
-	    "size": "s",
-	    "value": "size-s"
-	  }, {
-	    "children": "Size m",
-	    "name": "radio-size-5",
-	    "size": "m",
-	    "value": "size-m"
-	  }, {
-	    "children": "Size m",
-	    "disabled": true,
-	    "name": "radio-size-5",
-	    "size": "m",
-	    "value": "size-m"
-	  }]]
-	}, __webpack_require__(453));
-
-/***/ },
-/* 453 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _require = __webpack_require__(3);
-
-	var PropTypes = _require.PropTypes;
-
-	var Check = __webpack_require__(392);
-	var simplify = __webpack_require__(370);
-
-	module.exports = simplify(Check, function (styles, _ref) {
-	  var size = _ref.size;
-	  return {
-	    styles: styles[size],
-	    type: 'radio'
-	  };
-	}, {
-	  s: __webpack_require__(454),
-	  m: __webpack_require__(457)
-	}, {
-	  size: 's'
-	}, {
-	  size: PropTypes.oneOf(['s', 'm'])
-	});
-
-/***/ },
-/* 454 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","wrapper":"radio-s--wrapper radio--wrapper","control":"radio-s--control radio--control","native":"radio-s--native radio--native","label":"radio-s--label radio--label"};
-
-/***/ },
-/* 455 */,
-/* 456 */,
-/* 457 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"15px","wrapper":"radio-m--wrapper radio--wrapper","control":"radio-m--control radio--control","native":"radio-m--native radio--native","label":"radio-m--label radio--label"};
-
-/***/ },
-/* 458 */,
-/* 459 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var render = __webpack_require__(2);
-	module.exports = render({
-	  "name": "radioGroup",
-	  "path": "RadioGroup",
-	  "data": [[{
 	    "name": "motorrad-1",
 	    "options": [{
 	      "text": "Yamaha",
@@ -29978,8 +29987,8 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
-	    "size": "xs"
-	  }], [{
+	    "size": "s"
+	  }, {
 	    "disabled": true,
 	    "name": "motorrad-2",
 	    "options": [{
@@ -29998,7 +30007,7 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
-	    "size": "xs"
+	    "size": "s"
 	  }], [{
 	    "name": "motorrad-3",
 	    "options": [{
@@ -30017,8 +30026,8 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
-	    "size": "s"
-	  }], [{
+	    "size": "m"
+	  }, {
 	    "disabled": true,
 	    "name": "motorrad-4",
 	    "options": [{
@@ -30037,10 +30046,320 @@
 	      "text": "MZ",
 	      "value": "mz"
 	    }],
+	    "size": "m"
+	  }]]
+	}, __webpack_require__(453));
+
+/***/ },
+/* 453 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _require = __webpack_require__(3);
+
+	var PropTypes = _require.PropTypes;
+
+	var Radio = __webpack_require__(454);
+	var simplify = __webpack_require__(370);
+
+	module.exports = simplify(Radio, function (styles, _ref) {
+	  var size = _ref.size;
+	  return { styles: styles[size] };
+	}, {
+	  s: __webpack_require__(455),
+	  m: __webpack_require__(458)
+	}, {
+	  size: 's'
+	}, {
+	  size: PropTypes.oneOf(['s', 'm'])
+	});
+
+/***/ },
+/* 454 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _require = __webpack_require__(3);
+
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(393);
+
+	var bind = _require2.bind;
+	var findIndexByValueProp = _require2.findIndexByValueProp;
+	var noop = _require2.noop;
+
+	var _require3 = __webpack_require__(402);
+
+	var generateId = _require3.generateId;
+	var isUnique = _require3.isUnique;
+	var mapKey = _require3.mapKey;
+	var mapKeyBasedOnPos = _require3.mapKeyBasedOnPos;
+
+	var Check = __webpack_require__(392);
+	var React = __webpack_require__(3);
+	var cssModules = __webpack_require__(171);
+
+	var Radio = function (_Component) {
+	  _inherits(Radio, _Component);
+
+	  function Radio(props) {
+	    _classCallCheck(this, Radio);
+
+	    // @todo add assertion for defaultValue
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Radio).call(this, props));
+
+	    _this.controlled = props.value !== undefined;
+	    _this.updateKeyMapper(props.options);
+
+	    var value = props.value || props.defaultValue;
+
+	    _this.state = {
+	      prefix: generateId(),
+	      selected: findIndexByValueProp(props.options, value)
+	    };
+
+	    bind(_this, 'onChange');
+	    return _this;
+	  }
+
+	  _createClass(Radio, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(_ref) {
+	      var options = _ref.options;
+	      var value = _ref.value;
+
+	      if (this.controlled) {
+	        this.setState({ selected: findIndexByValueProp(options, value) });
+	      }
+
+	      if (this.props.options !== options) {
+	        this.updateKeyMapper(options);
+	      }
+	    }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(e, _, tc) {
+	      if (!this.controlled) {
+	        this.setState({ selected: tc });
+	      }
+
+	      this.props.onChange(e, { value: this.props.options[tc].value });
+	    }
+	  }, {
+	    key: 'updateKeyMapper',
+	    value: function updateKeyMapper(options) {
+	      this.mapKey = !isUnique(options) ? mapKeyBasedOnPos : mapKey;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return React.createElement(
+	        'div',
+	        _extends({
+	          styleName: 'container'
+	        }, this.props, {
+	          onChange: undefined }),
+	        this.renderOptions()
+	      );
+	    }
+	  }, {
+	    key: 'renderOptions',
+	    value: function renderOptions() {
+	      var _this2 = this;
+
+	      var _props = this.props;
+	      var disabled = _props.disabled;
+	      var name = _props.name;
+	      var options = _props.options;
+	      var styles = _props.styles;
+	      var _state = this.state;
+	      var prefix = _state.prefix;
+	      var selected = _state.selected;
+
+
+	      return options.map(function (_ref2, i) {
+	        var text = _ref2.text;
+	        var value = _ref2.value;
+	        return React.createElement(
+	          Check,
+	          {
+	            disabled: disabled,
+	            checked: selected === i,
+	            key: _this2.mapKey(prefix, value, i),
+	            name: name,
+	            onChange: _this2.onChange,
+	            styles: styles,
+	            tc: i,
+	            type: 'radio',
+	            value: value },
+	          text
+	        );
+	      });
+	    }
+	  }]);
+
+	  return Radio;
+	}(Component);
+
+	Radio.defaultProps = {
+	  onChange: noop,
+	  styles: {}
+	};
+
+	Radio.propTypes = {
+	  defaultValue: PropTypes.array,
+	  disabled: PropTypes.bool,
+	  name: PropTypes.string.isRequired,
+	  onBlur: PropTypes.func,
+	  onChange: PropTypes.func,
+	  onClick: PropTypes.func,
+	  onContextMenu: PropTypes.func,
+	  onDoubleClick: PropTypes.func,
+	  onFocus: PropTypes.func,
+	  onKeyDown: PropTypes.func,
+	  onKeyPress: PropTypes.func,
+	  onKeyUp: PropTypes.func,
+	  onMouseDown: PropTypes.func,
+	  onMouseEnter: PropTypes.func,
+	  onMouseLeave: PropTypes.func,
+	  onMouseMove: PropTypes.func,
+	  onMouseOut: PropTypes.func,
+	  onMouseOver: PropTypes.func,
+	  onMouseUp: PropTypes.func,
+	  onTouchCancel: PropTypes.func,
+	  onTouchEnd: PropTypes.func,
+	  onTouchMove: PropTypes.func,
+	  onTouchStart: PropTypes.func,
+	  options: PropTypes.array.isRequired,
+	  styles: PropTypes.object,
+	  value: PropTypes.string
+	};
+
+	module.exports = cssModules(Radio);
+
+/***/ },
+/* 455 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-s":"13px","container":"radio-s--container radio--container","wrapper":"radio-s--wrapper radio--wrapper","control":"radio-s--control radio--control","native":"radio-s--native radio--native","label":"radio-s--label radio--label"};
+
+/***/ },
+/* 456 */,
+/* 457 */,
+/* 458 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-m":"15px","container":"radio-m--container radio--container","wrapper":"radio-m--wrapper radio--wrapper","control":"radio-m--control radio--control","native":"radio-m--native radio--native","label":"radio-m--label radio--label"};
+
+/***/ },
+/* 459 */,
+/* 460 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var render = __webpack_require__(2);
+	module.exports = render({
+	  "name": "radioGroup",
+	  "path": "RadioGroup",
+	  "data": [[{
+	    "name": "radio-group-motorrad-1",
+	    "options": [{
+	      "text": "Yamaha",
+	      "value": "yamaha"
+	    }, {
+	      "text": "Suzuki",
+	      "value": "suzuki"
+	    }, {
+	      "text": "Kawasaki",
+	      "value": "kawasaki"
+	    }, {
+	      "text": "Vespa",
+	      "value": "vespa"
+	    }, {
+	      "text": "MZ",
+	      "value": "mz"
+	    }],
+	    "size": "xs"
+	  }], [{
+	    "disabled": true,
+	    "name": "radio-group-motorrad-2",
+	    "options": [{
+	      "text": "Yamaha",
+	      "value": "yamaha"
+	    }, {
+	      "text": "Suzuki",
+	      "value": "suzuki"
+	    }, {
+	      "text": "Kawasaki",
+	      "value": "kawasaki"
+	    }, {
+	      "text": "Vespa",
+	      "value": "vespa"
+	    }, {
+	      "text": "MZ",
+	      "value": "mz"
+	    }],
+	    "size": "xs"
+	  }], [{
+	    "name": "radio-group-motorrad-3",
+	    "options": [{
+	      "text": "Yamaha",
+	      "value": "yamaha"
+	    }, {
+	      "text": "Suzuki",
+	      "value": "suzuki"
+	    }, {
+	      "text": "Kawasaki",
+	      "value": "kawasaki"
+	    }, {
+	      "text": "Vespa",
+	      "value": "vespa"
+	    }, {
+	      "text": "MZ",
+	      "value": "mz"
+	    }],
+	    "size": "s"
+	  }], [{
+	    "disabled": true,
+	    "name": "radio-group-motorrad-4",
+	    "options": [{
+	      "text": "Yamaha",
+	      "value": "yamaha"
+	    }, {
+	      "text": "Suzuki",
+	      "value": "suzuki"
+	    }, {
+	      "text": "Kawasaki",
+	      "value": "kawasaki"
+	    }, {
+	      "text": "Vespa",
+	      "value": "vespa"
+	    }, {
+	      "text": "MZ",
+	      "value": "mz"
+	    }],
 	    "size": "s"
 	  }], [{
 	    "defaultValue": "suzuki",
-	    "name": "motorrad-5",
+	    "name": "radio-group-motorrad-5",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -30061,7 +30380,7 @@
 	  }], [{
 	    "defaultValue": "suzuki",
 	    "disabled": true,
-	    "name": "motorrad-6",
+	    "name": "radio-group-motorrad-6",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -30080,7 +30399,7 @@
 	    }],
 	    "size": "m"
 	  }], [{
-	    "name": "motorrad-7",
+	    "name": "radio-group-motorrad-7",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -30100,7 +30419,7 @@
 	    "size": "l"
 	  }], [{
 	    "disabled": true,
-	    "name": "motorrad-8",
+	    "name": "radio-group-motorrad-8",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -30119,10 +30438,10 @@
 	    }],
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(460));
+	}, __webpack_require__(461));
 
 /***/ },
-/* 460 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30131,7 +30450,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var RadioGroup = __webpack_require__(461);
+	var RadioGroup = __webpack_require__(462);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(RadioGroup, function (styles, _ref) {
@@ -30140,10 +30459,10 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  xs: __webpack_require__(463),
-	  s: __webpack_require__(466),
-	  m: __webpack_require__(468),
-	  l: __webpack_require__(470)
+	  xs: __webpack_require__(464),
+	  s: __webpack_require__(467),
+	  m: __webpack_require__(469),
+	  l: __webpack_require__(471)
 	}, {
 	  size: 's'
 	}, {
@@ -30151,7 +30470,7 @@
 	});
 
 /***/ },
-/* 461 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30168,16 +30487,18 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var RadioButton = __webpack_require__(462);
+	var _require = __webpack_require__(3);
+
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(393);
+
+	var bind = _require2.bind;
+	var noop = _require2.noop;
+
+	var RadioButton = __webpack_require__(463);
 	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
-
-	var _require = __webpack_require__(393);
-
-	var bind = _require.bind;
-	var noop = _require.noop;
-
 	var cssModules = __webpack_require__(171);
 
 	var RadioGroup = function (_Component) {
@@ -30297,7 +30618,7 @@
 	module.exports = cssModules(RadioGroup);
 
 /***/ },
-/* 462 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30314,14 +30635,16 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var _require = __webpack_require__(3);
+
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(402);
+
+	var generateId = _require2.generateId;
+
 	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
-
-	var _require = __webpack_require__(402);
-
-	var generateId = _require.generateId;
-
 	var cssModules = __webpack_require__(171);
 
 	var RadioButton = function (_Component) {
@@ -30382,40 +30705,40 @@
 	module.exports = cssModules(RadioButton);
 
 /***/ },
-/* 463 */
+/* 464 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","container":"radio-group-xs--container radio-group--container","wrapper":"radio-group-xs--wrapper radio-group--wrapper","control":"radio-group-xs--control radio-group--control","native":"radio-group-xs--native radio-group--native"};
 
 /***/ },
-/* 464 */,
 /* 465 */,
-/* 466 */
+/* 466 */,
+/* 467 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","line-s":"28px","container":"radio-group-s--container radio-group--container","wrapper":"radio-group-s--wrapper radio-group--wrapper","control":"radio-group-s--control radio-group--control","native":"radio-group-s--native radio-group--native"};
 
 /***/ },
-/* 467 */,
-/* 468 */
+/* 468 */,
+/* 469 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","line-m":"32px","container":"radio-group-m--container radio-group--container","wrapper":"radio-group-m--wrapper radio-group--wrapper","control":"radio-group-m--control radio-group--control","native":"radio-group-m--native radio-group--native"};
 
 /***/ },
-/* 469 */,
-/* 470 */
+/* 470 */,
+/* 471 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","line-l":"38px","container":"radio-group-l--container radio-group--container","wrapper":"radio-group-l--wrapper radio-group--wrapper","control":"radio-group-l--control radio-group--control","native":"radio-group-l--native radio-group--native"};
 
 /***/ },
-/* 471 */,
-/* 472 */
+/* 472 */,
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30504,10 +30827,10 @@
 	    }],
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(473));
+	}, __webpack_require__(474));
 
 /***/ },
-/* 473 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30516,7 +30839,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Select = __webpack_require__(474);
+	var Select = __webpack_require__(475);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Select, function (styles, _ref) {
@@ -30525,8 +30848,8 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  s: __webpack_require__(477),
-	  m: __webpack_require__(483)
+	  s: __webpack_require__(478),
+	  m: __webpack_require__(484)
 	}, {
 	  size: 's'
 	}, {
@@ -30534,7 +30857,7 @@
 	});
 
 /***/ },
-/* 474 */
+/* 475 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30551,21 +30874,23 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var _require = __webpack_require__(3);
+
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(393);
+
+	var bind = _require2.bind;
+	var decrement = _require2.decrement;
+	var increment = _require2.increment;
+	var findIndexByValueProp = _require2.findIndexByValueProp;
+	var noop = _require2.noop;
+
 	var Button = __webpack_require__(369);
-	var Option = __webpack_require__(475);
+	var Option = __webpack_require__(476);
 	var Popup = __webpack_require__(421);
 	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
-
-	var _require = __webpack_require__(393);
-
-	var bind = _require.bind;
-	var decrement = _require.decrement;
-	var increment = _require.increment;
-	var findIndexByValueProp = _require.findIndexByValueProp;
-	var noop = _require.noop;
-
 	var cssModules = __webpack_require__(171);
 	var reactOutsideEvent = __webpack_require__(424);
 
@@ -30811,7 +31136,7 @@
 	module.exports = reactOutsideEvent(cssModules(Select), ['click']);
 
 /***/ },
-/* 475 */
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30828,16 +31153,18 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var _require = __webpack_require__(3);
+
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(393);
+
+	var camelcase = _require2.camelcase;
+	var bind = _require2.bind;
+
 	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
-
-	var _require = __webpack_require__(393);
-
-	var camelcase = _require.camelcase;
-	var bind = _require.bind;
-
-	var classnames = __webpack_require__(476);
+	var classnames = __webpack_require__(477);
 	var cssModules = __webpack_require__(171);
 
 	var Option = function (_Component) {
@@ -30907,7 +31234,7 @@
 	module.exports = cssModules(Option);
 
 /***/ },
-/* 476 */
+/* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -30961,28 +31288,28 @@
 
 
 /***/ },
-/* 477 */
+/* 478 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control select--control arrow--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","is":"select-s--is","isFocused":"select-s--isFocused select--isFocused select-s--is","isSelected":"select-s--isSelected select--isSelected select-s--is","isFocusedSelected":"select-s--isFocusedSelected select--isFocusedSelected select-s--is"};
 
 /***/ },
-/* 478 */,
 /* 479 */,
 /* 480 */,
 /* 481 */,
 /* 482 */,
-/* 483 */
+/* 483 */,
+/* 484 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control select--control arrow--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","is":"select-m--is","isFocused":"select-m--isFocused select--isFocused select-m--is","isSelected":"select-m--isSelected select--isSelected select-m--is","isFocusedSelected":"select-m--isFocusedSelected select--isFocusedSelected select-m--is"};
 
 /***/ },
-/* 484 */,
 /* 485 */,
-/* 486 */
+/* 486 */,
+/* 487 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31002,10 +31329,10 @@
 	  }, {
 	    "size": "xl"
 	  }]]
-	}, __webpack_require__(487));
+	}, __webpack_require__(488));
 
 /***/ },
-/* 487 */
+/* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31014,18 +31341,18 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Spin = __webpack_require__(488);
+	var Spin = __webpack_require__(489);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Spin, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(489),
-	  s: __webpack_require__(492),
-	  m: __webpack_require__(494),
-	  l: __webpack_require__(496),
-	  xl: __webpack_require__(498)
+	  xs: __webpack_require__(490),
+	  s: __webpack_require__(493),
+	  m: __webpack_require__(495),
+	  l: __webpack_require__(497),
+	  xl: __webpack_require__(499)
 	}, {
 	  size: 's'
 	}, {
@@ -31033,7 +31360,7 @@
 	});
 
 /***/ },
-/* 488 */
+/* 489 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31048,10 +31375,12 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
+	var _require = __webpack_require__(3);
 
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var React = __webpack_require__(3);
 	var cssModules = __webpack_require__(171);
 
 	var Spin = function (_Component) {
@@ -31084,48 +31413,48 @@
 	module.exports = cssModules(Spin);
 
 /***/ },
-/* 489 */
+/* 490 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xs--control spin--control"};
 
 /***/ },
-/* 490 */,
 /* 491 */,
-/* 492 */
+/* 492 */,
+/* 493 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-s--control spin--control"};
 
 /***/ },
-/* 493 */,
-/* 494 */
+/* 494 */,
+/* 495 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-m--control spin--control"};
 
 /***/ },
-/* 495 */,
-/* 496 */
+/* 496 */,
+/* 497 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-l--control spin--control"};
 
 /***/ },
-/* 497 */,
-/* 498 */
+/* 498 */,
+/* 499 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xl--control spin--control"};
 
 /***/ },
-/* 499 */,
-/* 500 */
+/* 500 */,
+/* 501 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31157,10 +31486,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(501));
+	}, __webpack_require__(502));
 
 /***/ },
-/* 501 */
+/* 502 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31169,15 +31498,15 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Textarea = __webpack_require__(502);
+	var Textarea = __webpack_require__(503);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Textarea, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(503),
-	  m: __webpack_require__(505)
+	  s: __webpack_require__(504),
+	  m: __webpack_require__(506)
 	}, {
 	  size: 's'
 	}, {
@@ -31185,7 +31514,7 @@
 	});
 
 /***/ },
-/* 502 */
+/* 503 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31200,15 +31529,17 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var _require = __webpack_require__(3);
+
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(393);
+
+	var bind = _require2.bind;
+	var noop = _require2.noop;
+
 	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
-
-	var _require = __webpack_require__(393);
-
-	var bind = _require.bind;
-	var noop = _require.noop;
-
 	var cssModules = __webpack_require__(171);
 
 	var Textarea = function (_Component) {
@@ -31289,23 +31620,23 @@
 	module.exports = cssModules(Textarea);
 
 /***/ },
-/* 503 */
+/* 504 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"textarea-s--control input--control"};
 
 /***/ },
-/* 504 */,
-/* 505 */
+/* 505 */,
+/* 506 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"textarea-m--control input--control"};
 
 /***/ },
-/* 506 */,
-/* 507 */
+/* 507 */,
+/* 508 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31332,10 +31663,10 @@
 	    "direction": "top",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(508));
+	}, __webpack_require__(509));
 
 /***/ },
-/* 508 */
+/* 509 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31344,7 +31675,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Tooltip = __webpack_require__(509);
+	var Tooltip = __webpack_require__(510);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Tooltip, function (styles, _ref) {
@@ -31354,10 +31685,10 @@
 	    styles: styles[direction + '-m']
 	  };
 	}, {
-	  'bottom-m': __webpack_require__(510),
-	  'left-m': __webpack_require__(513),
-	  'right-m': __webpack_require__(515),
-	  'top-m': __webpack_require__(517)
+	  'bottom-m': __webpack_require__(511),
+	  'left-m': __webpack_require__(514),
+	  'right-m': __webpack_require__(516),
+	  'top-m': __webpack_require__(518)
 	}, {
 	  direction: 'right',
 	  size: 'm'
@@ -31366,7 +31697,7 @@
 	});
 
 /***/ },
-/* 509 */
+/* 510 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31409,40 +31740,40 @@
 	module.exports = Tooltip;
 
 /***/ },
-/* 510 */
+/* 511 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-bottom-m--control tooltip--control"};
 
 /***/ },
-/* 511 */,
 /* 512 */,
-/* 513 */
+/* 513 */,
+/* 514 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-left-m--control tooltip--control"};
 
 /***/ },
-/* 514 */,
-/* 515 */
+/* 515 */,
+/* 516 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-right-m--control tooltip--control"};
 
 /***/ },
-/* 516 */,
-/* 517 */
+/* 517 */,
+/* 518 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"tooltip-top-m--control tooltip--control"};
 
 /***/ },
-/* 518 */,
-/* 519 */
+/* 519 */,
+/* 520 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31481,10 +31812,10 @@
 	    "size": "m",
 	    "value": "size-m"
 	  }]]
-	}, __webpack_require__(520));
+	}, __webpack_require__(521));
 
 /***/ },
-/* 520 */
+/* 521 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31493,16 +31824,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Tumbler = __webpack_require__(521);
+	var Tumbler = __webpack_require__(522);
 	var simplify = __webpack_require__(370);
 
 	module.exports = simplify(Tumbler, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(522),
-	  s: __webpack_require__(525),
-	  m: __webpack_require__(527)
+	  xs: __webpack_require__(523),
+	  s: __webpack_require__(526),
+	  m: __webpack_require__(528)
 	}, {
 	  size: 'xs'
 	}, {
@@ -31510,7 +31841,7 @@
 	});
 
 /***/ },
-/* 521 */
+/* 522 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31527,19 +31858,21 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var _require = __webpack_require__(3);
+
+	var Component = _require.Component;
+	var PropTypes = _require.PropTypes;
+
+	var _require2 = __webpack_require__(393);
+
+	var bind = _require2.bind;
+	var noop = _require2.noop;
+
+	var _require3 = __webpack_require__(402);
+
+	var generateId = _require3.generateId;
+
 	var React = __webpack_require__(3);
-	var Component = React.Component;
-	var PropTypes = React.PropTypes;
-
-	var _require = __webpack_require__(393);
-
-	var bind = _require.bind;
-	var noop = _require.noop;
-
-	var _require2 = __webpack_require__(402);
-
-	var generateId = _require2.generateId;
-
 	var cssModules = __webpack_require__(171);
 
 	var Tumbler = function (_Component) {
@@ -31560,8 +31893,12 @@
 
 	  _createClass(Tumbler, [{
 	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.setState({ id: nextProps.id });
+	    value: function componentWillReceiveProps(_ref) {
+	      var id = _ref.id;
+
+	      if (id) {
+	        this.setState({ id: id });
+	      }
 	    }
 	  }, {
 	    key: 'onChange',
@@ -31596,7 +31933,12 @@
 	      return React.createElement(
 	        'div',
 	        { className: className, styleName: 'wrapper' },
-	        React.createElement('input', _extends({}, o, { id: id, styleName: 'native', onChange: this.onChange, type: 'checkbox' })),
+	        React.createElement('input', _extends({
+	          styleName: 'native',
+	          type: 'checkbox'
+	        }, o, {
+	          id: id,
+	          onChange: this.onChange })),
 	        React.createElement(
 	          'label',
 	          { htmlFor: id, styleName: 'control' },
@@ -31664,24 +32006,24 @@
 	module.exports = cssModules(Tumbler);
 
 /***/ },
-/* 522 */
+/* 523 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","wrapper":"tumbler-xs--wrapper tumbler--wrapper","control":"tumbler-xs--control tumbler--control","label":"tumbler-xs--label tumbler--label","delimiter":"tumbler-xs--delimiter tumbler--delimiter","native":"tumbler-xs--native tumbler--native"};
 
 /***/ },
-/* 523 */,
 /* 524 */,
-/* 525 */
+/* 525 */,
+/* 526 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","wrapper":"tumbler-s--wrapper tumbler--wrapper","control":"tumbler-s--control tumbler--control","label":"tumbler-s--label tumbler--label","delimiter":"tumbler-s--delimiter tumbler--delimiter","native":"tumbler-s--native tumbler--native"};
 
 /***/ },
-/* 526 */,
-/* 527 */
+/* 527 */,
+/* 528 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
