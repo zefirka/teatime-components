@@ -25793,19 +25793,18 @@
 
 	'use strict';
 
+	var validTypes = { object: true, symbol: true };
+
 	module.exports = function () {
 		var symbol;
 		if (typeof Symbol !== 'function') return false;
 		symbol = Symbol('test symbol');
 		try { String(symbol); } catch (e) { return false; }
-		if (typeof Symbol.iterator === 'symbol') return true;
 
-		// Return 'true' for polyfills
-		if (typeof Symbol.isConcatSpreadable !== 'object') return false;
-		if (typeof Symbol.iterator !== 'object') return false;
-		if (typeof Symbol.toPrimitive !== 'object') return false;
-		if (typeof Symbol.toStringTag !== 'object') return false;
-		if (typeof Symbol.unscopables !== 'object') return false;
+		// Return 'true' also for polyfills
+		if (!validTypes[typeof Symbol.iterator]) return false;
+		if (!validTypes[typeof Symbol.toPrimitive]) return false;
+		if (!validTypes[typeof Symbol.toStringTag]) return false;
 
 		return true;
 	};
@@ -25815,7 +25814,7 @@
 /* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// ES2015 Symbol polyfill for environments that do not support it (or partially support it_
+	// ES2015 Symbol polyfill for environments that do not support it (or partially support it)
 
 	'use strict';
 
@@ -25824,9 +25823,16 @@
 
 	  , create = Object.create, defineProperties = Object.defineProperties
 	  , defineProperty = Object.defineProperty, objPrototype = Object.prototype
-	  , NativeSymbol, SymbolPolyfill, HiddenSymbol, globalSymbols = create(null);
+	  , NativeSymbol, SymbolPolyfill, HiddenSymbol, globalSymbols = create(null)
+	  , isNativeSafe;
 
-	if (typeof Symbol === 'function') NativeSymbol = Symbol;
+	if (typeof Symbol === 'function') {
+		NativeSymbol = Symbol;
+		try {
+			String(NativeSymbol());
+			isNativeSafe = true;
+		} catch (ignore) {}
+	}
 
 	var generateName = (function () {
 		var created = create(null);
@@ -25862,6 +25868,7 @@
 	module.exports = SymbolPolyfill = function Symbol(description) {
 		var symbol;
 		if (this instanceof Symbol) throw new TypeError('TypeError: Symbol is not a constructor');
+		if (isNativeSafe) return NativeSymbol(description);
 		symbol = create(HiddenSymbol.prototype);
 		description = (description === undefined ? '' : String(description));
 		return defineProperties(symbol, {
@@ -25908,8 +25915,11 @@
 		toString: d(function () { return 'Symbol (' + validateSymbol(this).__description__ + ')'; }),
 		valueOf: d(function () { return validateSymbol(this); })
 	});
-	defineProperty(SymbolPolyfill.prototype, SymbolPolyfill.toPrimitive, d('',
-		function () { return validateSymbol(this); }));
+	defineProperty(SymbolPolyfill.prototype, SymbolPolyfill.toPrimitive, d('', function () {
+		var symbol = validateSymbol(this);
+		if (typeof symbol === 'symbol') return symbol;
+		return symbol.toString();
+	}));
 	defineProperty(SymbolPolyfill.prototype, SymbolPolyfill.toStringTag, d('c', 'Symbol'));
 
 	// Proper implementaton of toPrimitive and toStringTag for returned symbol instances
@@ -25945,7 +25955,11 @@
 	'use strict';
 
 	module.exports = function (x) {
-		return (x && ((typeof x === 'symbol') || (x['@@toStringTag'] === 'Symbol'))) || false;
+		if (!x) return false;
+		if (typeof x === 'symbol') return true;
+		if (!x.constructor) return false;
+		if (x.constructor.name !== 'Symbol') return false;
+		return (x[x.constructor.toStringTag] === 'Symbol');
 	};
 
 
@@ -27667,12 +27681,22 @@
 
 	'use strict';
 
+	exports.appendMixin = appendMixin;
 	exports.bind = bind;
 	exports.decrement = decrement;
 	exports.increment = increment;
 	exports.findIndexByValueProp = findIndexByValueProp;
 	exports.noop = noop;
 	exports.toArray = toArray;
+
+	/**
+	 * @param  {string} className
+	 * @param  {string} mixin
+	 * @return {string}
+	 */
+	function appendMixin(className, mixin) {
+	  return className ? className + ' ' + mixin : mixin;
+	}
 
 	/**
 	 * @param  {object} context
@@ -28040,6 +28064,7 @@
 	      var _this2 = this;
 
 	      var _props = this.props;
+	      var childClassName = _props.childClassName;
 	      var disabled = _props.disabled;
 	      var name = _props.name;
 	      var options = _props.options;
@@ -28055,6 +28080,7 @@
 	        return React.createElement(
 	          Check,
 	          {
+	            className: childClassName,
 	            disabled: disabled,
 	            checked: values[i],
 	            key: _this2.mapKey(prefix, value, i),
@@ -28078,6 +28104,7 @@
 	};
 
 	CheckGroup.propTypes = {
+	  childClassName: PropTypes.string,
 	  defaultValue: PropTypes.array,
 	  disabled: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
@@ -29512,6 +29539,7 @@
 	      var _this2 = this;
 
 	      var _props = this.props;
+	      var childClassName = _props.childClassName;
 	      var disabled = _props.disabled;
 	      var name = _props.name;
 	      var options = _props.options;
@@ -29527,6 +29555,7 @@
 	        return React.createElement(
 	          Check,
 	          {
+	            className: childClassName,
 	            disabled: disabled,
 	            checked: selected === i,
 	            key: _this2.mapKey(prefix, value, i),
@@ -29551,6 +29580,7 @@
 	};
 
 	Radio.propTypes = {
+	  childClassName: PropTypes.string,
 	  defaultValue: PropTypes.array,
 	  disabled: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
@@ -29808,8 +29838,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -29824,7 +29852,15 @@
 	var _require2 = __webpack_require__(393);
 
 	var bind = _require2.bind;
+	var findIndexByValueProp = _require2.findIndexByValueProp;
 	var noop = _require2.noop;
+
+	var _require3 = __webpack_require__(394);
+
+	var generateId = _require3.generateId;
+	var isUnique = _require3.isUnique;
+	var mapKey = _require3.mapKey;
+	var mapKeyBasedOnPos = _require3.mapKeyBasedOnPos;
 
 	var RadioButton = __webpack_require__(455);
 	var React = __webpack_require__(3);
@@ -29836,12 +29872,19 @@
 	  function RadioGroup(props) {
 	    _classCallCheck(this, RadioGroup);
 
-	    // @todo make assertion for single property
+	    // @todo add assertion for defaultValue
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RadioGroup).call(this, props));
 
+	    _this.controlled = props.value !== undefined;
+	    _this.updateKeyMapper(props.options);
+
+	    var value = props.value || props.defaultValue;
+
+	    // @todo make assertion for single property
 	    _this.state = {
-	      selected: _this.props.value || _this.props.defaultValue || ''
+	      prefix: generateId(),
+	      selected: findIndexByValueProp(props.options, value)
 	    };
 
 	    bind(_this, 'onChange');
@@ -29849,26 +29892,42 @@
 	  }
 
 	  _createClass(RadioGroup, [{
-	    key: 'onChange',
-	    value: function onChange(e) {
-	      if (e.target.value === this.state.selected) {
-	        return;
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(_ref) {
+	      var options = _ref.options;
+	      var value = _ref.value;
+
+	      if (this.controlled) {
+	        this.setState({ selected: findIndexByValueProp(options, value) });
 	      }
 
-	      this.setState({ selected: e.target.value });
-	      this.props.onChange(e, { value: e.target.value });
+	      if (this.props.options !== options) {
+	        this.updateKeyMapper(options);
+	      }
+	    }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(e, _, tc) {
+	      if (!this.controlled) {
+	        this.setState({ selected: tc });
+	      }
+
+	      this.props.onChange(e, _);
+	    }
+	  }, {
+	    key: 'updateKeyMapper',
+	    value: function updateKeyMapper(options) {
+	      this.mapKey = !isUnique(options) ? mapKeyBasedOnPos : mapKey;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var onChange = _props.onChange;
-
-	      var o = _objectWithoutProperties(_props, ['onChange']); // eslint-disable-line no-unused-vars
-
 	      return React.createElement(
 	        'div',
-	        _extends({}, o, { styleName: 'container' }),
+	        _extends({
+	          styleName: 'container'
+	        }, this.props, {
+	          onChange: undefined }),
 	        this.renderOptions()
 	      );
 	    }
@@ -29877,30 +29936,32 @@
 	    value: function renderOptions() {
 	      var _this2 = this;
 
-	      var _props2 = this.props;
-	      var defaultValue = _props2.defaultValue;
-	      var // eslint-disable-line no-unused-vars
-	      disabled = _props2.disabled;
-	      var name = _props2.name;
-	      var options = _props2.options;
-	      var styles = _props2.styles;
-	      var selected = this.state.selected;
+	      var _props = this.props;
+	      var childClassName = _props.childClassName;
+	      var disabled = _props.disabled;
+	      var name = _props.name;
+	      var options = _props.options;
+	      var styles = _props.styles;
+	      var _state = this.state;
+	      var prefix = _state.prefix;
+	      var selected = _state.selected;
 
 
-	      return options.map(function (_ref, i) {
-	        var text = _ref.text;
-	        var value = _ref.value;
+	      return options.map(function (_ref2, i) {
+	        var text = _ref2.text;
+	        var value = _ref2.value;
 	        return React.createElement(
 	          RadioButton,
 	          {
-	            checked: value === selected,
+	            className: childClassName,
+	            checked: selected === i,
 	            disabled: disabled,
-	            key: '_' + value + i,
+	            key: _this2.mapKey(prefix, value, i),
 	            name: name,
 	            onChange: _this2.onChange,
 	            styles: styles,
-	            value: value
-	          },
+	            tc: i,
+	            value: value },
 	          text
 	        );
 	      });
@@ -29916,6 +29977,7 @@
 	};
 
 	RadioGroup.propTypes = {
+	  childClassName: PropTypes.string,
 	  defaultValue: PropTypes.string,
 	  disabled: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
@@ -29969,9 +30031,14 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(394);
+	var _require2 = __webpack_require__(393);
 
-	var generateId = _require2.generateId;
+	var bind = _require2.bind;
+	var noop = _require2.noop;
+
+	var _require3 = __webpack_require__(394);
+
+	var generateId = _require3.generateId;
 
 	var React = __webpack_require__(3);
 	var cssModules = __webpack_require__(171);
@@ -29987,10 +30054,30 @@
 	    _this.state = {
 	      id: _this.props.id || generateId()
 	    };
+
+	    bind(_this, 'onChange');
 	    return _this;
 	  }
 
 	  _createClass(RadioButton, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(_ref) {
+	      var id = _ref.id;
+
+	      if (id) {
+	        this.setState({ id: id });
+	      }
+	    }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(e) {
+	      var _e$target = e.target;
+	      var checked = _e$target.checked;
+	      var value = _e$target.value;
+
+	      this.props.onChange(e, { checked: checked, value: value }, this.props.tc);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
@@ -30001,11 +30088,24 @@
 
 	      var id = this.state.id;
 
+	      /**
+	       * Still there is an issue about controlled and uncontrolled components,
+	       * related to the input[type="checkbox"] and input[type="radio"].
+	       * It results in the way controlled components are determined.
+	       *
+	       * @see https://github.com/facebook/react/blob/v15.1.0/src/renderers/dom/client/wrappers/ReactDOMInput.js#L171
+	       * @see https://github.com/facebook/react/issues/6779
+	       */
 
 	      return React.createElement(
 	        'span',
 	        { className: className, styleName: 'wrapper' },
-	        React.createElement('input', _extends({}, o, { id: id, styleName: 'native', type: 'radio' })),
+	        React.createElement('input', _extends({
+	          styleName: 'native',
+	          type: 'radio'
+	        }, o, {
+	          id: id,
+	          onChange: this.onChange })),
 	        React.createElement(
 	          'label',
 	          { htmlFor: id, styleName: 'control' },
@@ -30019,6 +30119,7 @@
 	}(Component);
 
 	RadioButton.defaultProps = {
+	  onChange: noop,
 	  styles: {}
 	};
 
@@ -30027,7 +30128,9 @@
 	  checked: PropTypes.bool,
 	  disabled: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
+	  onChange: PropTypes.func,
 	  styles: PropTypes.object,
+	  tc: PropTypes.any,
 	  value: PropTypes.string.isRequired
 	};
 
@@ -31237,10 +31340,14 @@
 
 	var PropTypes = _require.PropTypes;
 
+	var _require2 = __webpack_require__(393);
+
+	var appendMixin = _require2.appendMixin;
+
 	var Popup = __webpack_require__(413);
 	var React = __webpack_require__(3);
 
-	var styles = {
+	var baseStyles = {
 	  'normal-xs': __webpack_require__(501),
 	  'normal-s': __webpack_require__(506),
 	  'normal-m': __webpack_require__(509),
@@ -31265,15 +31372,27 @@
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
+	      var children = _props.children;
+	      var className = _props.className;
 	      var direction = _props.direction;
 	      var size = _props.size;
 	      var type = _props.type;
 
-	      var o = _objectWithoutProperties(_props, ['direction', 'size', 'type']);
+	      var o = _objectWithoutProperties(_props, ['children', 'className', 'direction', 'size', 'type']);
 
-	      return React.createElement(Popup, _extends({}, o, {
-	        styleName: direction,
-	        styles: styles[type + '-' + size] }));
+	      var styles = baseStyles[type + '-' + size];
+
+	      var mixin = children ? styles.isOpened : styles.isClosed;
+
+	      return React.createElement(
+	        Popup,
+	        _extends({}, o, {
+	          className: appendMixin(className, mixin),
+	          styleName: direction,
+	          styles: styles,
+	          type: type }),
+	        children
+	      );
 	    }
 	  }]);
 
@@ -31299,7 +31418,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-normal-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-normal--bottom","left":"tooltip-normal-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-normal--left","right":"tooltip-normal-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-normal--right","top":"tooltip-normal-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-normal--top"};
+	module.exports = {"bottom":"tooltip-normal-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-normal--bottom","left":"tooltip-normal-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-normal--left","right":"tooltip-normal-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-normal--right","top":"tooltip-normal-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-normal--top","isClosed":"tooltip-normal-xs--isClosed tooltip--isClosed","isOpened":"tooltip-normal-xs--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 502 */,
@@ -31310,7 +31429,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-normal-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-normal--bottom","left":"tooltip-normal-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-normal--left","right":"tooltip-normal-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-normal--right","top":"tooltip-normal-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-normal--top"};
+	module.exports = {"bottom":"tooltip-normal-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-normal--bottom","left":"tooltip-normal-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-normal--left","right":"tooltip-normal-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-normal--right","top":"tooltip-normal-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-normal--top","isClosed":"tooltip-normal-s--isClosed tooltip--isClosed","isOpened":"tooltip-normal-s--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 507 */,
@@ -31319,7 +31438,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-normal-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-normal--bottom","left":"tooltip-normal-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-normal--left","right":"tooltip-normal-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-normal--right","top":"tooltip-normal-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-normal--top"};
+	module.exports = {"bottom":"tooltip-normal-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-normal--bottom","left":"tooltip-normal-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-normal--left","right":"tooltip-normal-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-normal--right","top":"tooltip-normal-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-normal--top","isClosed":"tooltip-normal-m--isClosed tooltip--isClosed","isOpened":"tooltip-normal-m--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 510 */,
@@ -31328,7 +31447,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-success-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-success--bottom","left":"tooltip-success-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-success--left","right":"tooltip-success-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-success--right","top":"tooltip-success-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-success--top"};
+	module.exports = {"bottom":"tooltip-success-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-success--bottom","left":"tooltip-success-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-success--left","right":"tooltip-success-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-success--right","top":"tooltip-success-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-success--top","isClosed":"tooltip-success-xs--isClosed tooltip--isClosed","isOpened":"tooltip-success-xs--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 513 */,
@@ -31337,7 +31456,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-success-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-success--bottom","left":"tooltip-success-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-success--left","right":"tooltip-success-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-success--right","top":"tooltip-success-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-success--top"};
+	module.exports = {"bottom":"tooltip-success-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-success--bottom","left":"tooltip-success-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-success--left","right":"tooltip-success-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-success--right","top":"tooltip-success-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-success--top","isClosed":"tooltip-success-s--isClosed tooltip--isClosed","isOpened":"tooltip-success-s--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 516 */,
@@ -31345,7 +31464,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-success-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-success--bottom","left":"tooltip-success-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-success--left","right":"tooltip-success-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-success--right","top":"tooltip-success-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-success--top"};
+	module.exports = {"bottom":"tooltip-success-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-success--bottom","left":"tooltip-success-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-success--left","right":"tooltip-success-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-success--right","top":"tooltip-success-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-success--top","isClosed":"tooltip-success-m--isClosed tooltip--isClosed","isOpened":"tooltip-success-m--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 518 */,
@@ -31353,7 +31472,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-warning-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-warning--bottom","left":"tooltip-warning-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-warning--left","right":"tooltip-warning-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-warning--right","top":"tooltip-warning-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-warning--top"};
+	module.exports = {"bottom":"tooltip-warning-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-warning--bottom","left":"tooltip-warning-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-warning--left","right":"tooltip-warning-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-warning--right","top":"tooltip-warning-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-warning--top","isClosed":"tooltip-warning-xs--isClosed tooltip--isClosed","isOpened":"tooltip-warning-xs--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 520 */,
@@ -31362,7 +31481,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-warning-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-warning--bottom","left":"tooltip-warning-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-warning--left","right":"tooltip-warning-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-warning--right","top":"tooltip-warning-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-warning--top"};
+	module.exports = {"bottom":"tooltip-warning-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-warning--bottom","left":"tooltip-warning-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-warning--left","right":"tooltip-warning-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-warning--right","top":"tooltip-warning-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-warning--top","isClosed":"tooltip-warning-s--isClosed tooltip--isClosed","isOpened":"tooltip-warning-s--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 523 */,
@@ -31370,7 +31489,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-warning-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-warning--bottom","left":"tooltip-warning-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-warning--left","right":"tooltip-warning-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-warning--right","top":"tooltip-warning-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-warning--top"};
+	module.exports = {"bottom":"tooltip-warning-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-warning--bottom","left":"tooltip-warning-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-warning--left","right":"tooltip-warning-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-warning--right","top":"tooltip-warning-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-warning--top","isClosed":"tooltip-warning-m--isClosed tooltip--isClosed","isOpened":"tooltip-warning-m--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 525 */,
