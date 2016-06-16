@@ -48,15 +48,15 @@
 	__webpack_require__(404);
 	__webpack_require__(414);
 	__webpack_require__(422);
-	__webpack_require__(443);
-	__webpack_require__(448);
-	__webpack_require__(454);
-	__webpack_require__(462);
-	__webpack_require__(475);
-	__webpack_require__(488);
-	__webpack_require__(502);
-	__webpack_require__(509);
-	module.exports = __webpack_require__(536);
+	__webpack_require__(444);
+	__webpack_require__(449);
+	__webpack_require__(455);
+	__webpack_require__(463);
+	__webpack_require__(476);
+	__webpack_require__(494);
+	__webpack_require__(508);
+	__webpack_require__(515);
+	module.exports = __webpack_require__(542);
 
 
 /***/ },
@@ -27210,9 +27210,9 @@
 	var PropTypes = _require.PropTypes;
 
 	var Button = __webpack_require__(369);
-	var simplify = __webpack_require__(370);
+	var StyleComponent = __webpack_require__(370);
 
-	module.exports = simplify(Button, function (styles, _ref) {
+	module.exports = StyleComponent(Button, function (styles, _ref) {
 	  var size = _ref.size;
 	  var theme = _ref.theme;
 	  return { styles: styles[theme + '-' + size] };
@@ -27346,7 +27346,7 @@
 	 * @return {component}
 	 */
 
-	module.exports = function simplify(Target, getter, styles, defaults, types) {
+	module.exports = function StyleComponent(Target, getter, styles, defaults, types) {
 	  var Simplified = function (_Component) {
 	    _inherits(Simplified, _Component);
 
@@ -27366,6 +27366,7 @@
 	    return Simplified;
 	  }(Component);
 
+	  Simplified.displayName = 'Styled' + (Target.displayName || 'Component');
 	  Simplified.defaultProps = defaults;
 	  Simplified.propTypes = types;
 
@@ -27563,9 +27564,9 @@
 	var PropTypes = _require.PropTypes;
 
 	var Check = __webpack_require__(406);
-	var simplify = __webpack_require__(370);
+	var StyleComponent = __webpack_require__(370);
 
-	module.exports = simplify(Check, function (styles, _ref) {
+	module.exports = StyleComponent(Check, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
@@ -27652,8 +27653,10 @@
 	      var _props = this.props;
 	      var children = _props.children;
 	      var className = _props.className;
+	      var _props$styleName = _props.styleName;
+	      var styleName = _props$styleName === undefined ? 'wrapper' : _props$styleName;
 
-	      var o = _objectWithoutProperties(_props, ['children', 'className']);
+	      var o = _objectWithoutProperties(_props, ['children', 'className', 'styleName']);
 
 	      var id = this.state.id;
 
@@ -27675,7 +27678,7 @@
 
 	      return React.createElement(
 	        'div',
-	        { className: className, styleName: 'wrapper' },
+	        { className: className, styleName: styleName },
 	        React.createElement('input', _extends({
 	          styleName: 'native'
 	        }, o, {
@@ -28006,9 +28009,9 @@
 	var PropTypes = _require.PropTypes;
 
 	var CheckGroup = __webpack_require__(416);
-	var simplify = __webpack_require__(370);
+	var StyleComponent = __webpack_require__(370);
 
-	module.exports = simplify(CheckGroup, function (styles, _ref) {
+	module.exports = StyleComponent(CheckGroup, function (styles, _ref) {
 	  var size = _ref.size;
 	  return {
 	    styles: styles[size]
@@ -28355,15 +28358,15 @@
 	var PropTypes = _require.PropTypes;
 
 	var ColorPicker = __webpack_require__(424);
-	var simplify = __webpack_require__(370);
+	var StyleComponent = __webpack_require__(370);
 
-	module.exports = simplify(ColorPicker, function (styles, _ref) {
+	module.exports = StyleComponent(ColorPicker, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(431),
-	  s: __webpack_require__(437),
-	  m: __webpack_require__(440)
+	  xs: __webpack_require__(432),
+	  s: __webpack_require__(438),
+	  m: __webpack_require__(441)
 	}, {
 	  size: 'm'
 	}, {
@@ -28499,18 +28502,22 @@
 	    value: function render() {
 	      var _props = this.props;
 	      var className = _props.className;
+	      var id = _props.id;
+	      var _props$styleName = _props.styleName;
+	      var styleName = _props$styleName === undefined ? 'container' : _props$styleName;
 
-	      var o = _objectWithoutProperties(_props, ['className']);
+	      var o = _objectWithoutProperties(_props, ['className', 'id', 'styleName']);
 
 	      return React.createElement(
 	        'div',
 	        {
 	          className: className,
 	          onKeyDown: this.onKeyDown,
-	          styleName: 'container' },
+	          styleName: styleName },
 	        this.renderPreview(),
 	        React.createElement(Input, _extends({}, o, {
 	          defaultValue: undefined,
+	          id: id,
 	          onChange: this.onChange,
 	          onFocus: this.onInputFocus,
 	          ref: 'control',
@@ -28724,8 +28731,11 @@
 	    value: function render() {
 	      var _props = this.props;
 	      var className = _props.className;
+	      var id = _props.id;
+	      var _props$styleName = _props.styleName;
+	      var styleName = _props$styleName === undefined ? 'wrapper' : _props$styleName;
 
-	      var o = _objectWithoutProperties(_props, ['className']);
+	      var o = _objectWithoutProperties(_props, ['className', 'id', 'styleName']);
 
 	      var value = this.state.value;
 
@@ -28734,12 +28744,13 @@
 
 	      return React.createElement(
 	        'span',
-	        { className: className, styleName: 'wrapper' },
+	        { className: className, styleName: styleName },
 	        React.createElement('input', _extends({
 	          styleName: 'control'
 	        }, o, {
 	          defaultValue: undefined // Cause we have a controlled input
-	          , onChange: this.onChange,
+	          , id: id,
+	          onChange: this.onChange,
 	          ref: 'control',
 	          value: value })),
 	        clearElement
@@ -29058,6 +29069,25 @@
 
 	'use strict';
 
+	var reactOutsideEvent = __webpack_require__(431);
+
+	/**
+	 * @param  {component} Target
+	 * @param  {string[]} events
+	 * @return {component}
+	 */
+	module.exports = function ReactOutsideEvent(Target, events) {
+	  var WrappedComponent = reactOutsideEvent(Target, events);
+	  WrappedComponent.displayName = (Target.displayName || Target.name) + 'WithROEListener';
+	  return WrappedComponent;
+	};
+
+/***/ },
+/* 431 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -29150,37 +29180,37 @@
 
 
 /***/ },
-/* 431 */
+/* 432 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"color-picker-xs--container color-picker--container","preview":"color-picker-xs--preview color-picker--preview","wrapper":"color-picker-xs--wrapper input-xs--wrapper input--wrapper color-picker--wrapper","control":"color-picker-xs--control input-xs--control input--control color-picker--control","clear":"color-picker-xs--clear input-xs--clear input--clear color-picker--clear","menu":"color-picker-xs--menu color-picker--menu popup--popup","line":"color-picker-xs--line color-picker--line","item":"color-picker-xs--item color-picker--item","isClosed":"color-picker-xs--isClosed color-picker--isClosed","isOpened":"color-picker-xs--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 432 */,
 /* 433 */,
 /* 434 */,
 /* 435 */,
 /* 436 */,
-/* 437 */
+/* 437 */,
+/* 438 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"color-picker-s--container color-picker--container","preview":"color-picker-s--preview color-picker--preview","wrapper":"color-picker-s--wrapper input-s--wrapper input--wrapper color-picker--wrapper","control":"color-picker-s--control input-s--control input--control color-picker--control","clear":"color-picker-s--clear input-s--clear input--clear color-picker--clear","menu":"color-picker-s--menu color-picker--menu popup--popup","line":"color-picker-s--line color-picker--line","item":"color-picker-s--item color-picker--item","isClosed":"color-picker-s--isClosed color-picker--isClosed","isOpened":"color-picker-s--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 438 */,
 /* 439 */,
-/* 440 */
+/* 440 */,
+/* 441 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"color-picker-m--container color-picker--container","preview":"color-picker-m--preview color-picker--preview","wrapper":"color-picker-m--wrapper input-m--wrapper input--wrapper color-picker--wrapper","control":"color-picker-m--control input-m--control input--control color-picker--control","clear":"color-picker-m--clear input-m--clear input--clear color-picker--clear","menu":"color-picker-m--menu color-picker--menu popup--popup","line":"color-picker-m--line color-picker--line","item":"color-picker-m--item color-picker--item","isClosed":"color-picker-m--isClosed color-picker--isClosed","isOpened":"color-picker-m--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 441 */,
 /* 442 */,
-/* 443 */
+/* 443 */,
+/* 444 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29223,10 +29253,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(444));
+	}, __webpack_require__(445));
 
 /***/ },
-/* 444 */
+/* 445 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29236,15 +29266,15 @@
 	var PropTypes = _require.PropTypes;
 
 	var Input = __webpack_require__(426);
-	var simplify = __webpack_require__(370);
+	var StyleComponent = __webpack_require__(370);
 
-	module.exports = simplify(Input, function (styles, _ref) {
+	module.exports = StyleComponent(Input, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  'xs': __webpack_require__(445),
-	  's': __webpack_require__(446),
-	  'm': __webpack_require__(447)
+	  'xs': __webpack_require__(446),
+	  's': __webpack_require__(447),
+	  'm': __webpack_require__(448)
 	}, {
 	  size: 's'
 	}, {
@@ -29252,28 +29282,28 @@
 	});
 
 /***/ },
-/* 445 */
+/* 446 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","wrapper":"input-xs--wrapper input--wrapper","control":"input-xs--control input--control","clear":"input-xs--clear input--clear"};
 
 /***/ },
-/* 446 */
+/* 447 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","line-s":"28px","wrapper":"input-s--wrapper input--wrapper","control":"input-s--control input--control","clear":"input-s--clear input--clear"};
 
 /***/ },
-/* 447 */
+/* 448 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","line-m":"32px","wrapper":"input-m--wrapper input--wrapper","control":"input-m--control input--control","clear":"input-m--clear input--clear"};
 
 /***/ },
-/* 448 */
+/* 449 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29295,10 +29325,10 @@
 	    "href": "#",
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(449));
+	}, __webpack_require__(450));
 
 /***/ },
-/* 449 */
+/* 450 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29307,16 +29337,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Link = __webpack_require__(450);
-	var simplify = __webpack_require__(370);
+	var Link = __webpack_require__(451);
+	var StyleComponent = __webpack_require__(370);
 
-	module.exports = simplify(Link, function (styles, _ref) {
+	module.exports = StyleComponent(Link, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  's': __webpack_require__(451),
-	  'm': __webpack_require__(452),
-	  'l': __webpack_require__(453)
+	  's': __webpack_require__(452),
+	  'm': __webpack_require__(453),
+	  'l': __webpack_require__(454)
 	}, {
 	  size: 's'
 	}, {
@@ -29324,7 +29354,7 @@
 	});
 
 /***/ },
-/* 450 */
+/* 451 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29359,7 +29389,7 @@
 	  _createClass(Link, [{
 	    key: 'render',
 	    value: function render() {
-	      return React.createElement('a', _extends({}, this.props, { styleName: 'control' }));
+	      return React.createElement('a', _extends({ styleName: 'control' }, this.props));
 	    }
 	  }]);
 
@@ -29397,28 +29427,28 @@
 	module.exports = cssModules(Link);
 
 /***/ },
-/* 451 */
+/* 452 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"link-s--control link--control"};
 
 /***/ },
-/* 452 */
+/* 453 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"link-m--control link--control"};
 
 /***/ },
-/* 453 */
+/* 454 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","control":"link-l--control link--control"};
 
 /***/ },
-/* 454 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29506,10 +29536,10 @@
 	    }],
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(455));
+	}, __webpack_require__(456));
 
 /***/ },
-/* 455 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29518,15 +29548,15 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Radio = __webpack_require__(456);
-	var simplify = __webpack_require__(370);
+	var Radio = __webpack_require__(457);
+	var StyleComponent = __webpack_require__(370);
 
-	module.exports = simplify(Radio, function (styles, _ref) {
+	module.exports = StyleComponent(Radio, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(457),
-	  m: __webpack_require__(460)
+	  s: __webpack_require__(458),
+	  m: __webpack_require__(461)
 	}, {
 	  size: 's'
 	}, {
@@ -29534,7 +29564,7 @@
 	});
 
 /***/ },
-/* 456 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29711,24 +29741,24 @@
 	module.exports = cssModules(Radio);
 
 /***/ },
-/* 457 */
+/* 458 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","container":"radio-s--container radio--container","wrapper":"radio-s--wrapper radio--wrapper","control":"radio-s--control radio--control","native":"radio-s--native radio--native","label":"radio-s--label radio--label"};
 
 /***/ },
-/* 458 */,
 /* 459 */,
-/* 460 */
+/* 460 */,
+/* 461 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","container":"radio-m--container radio--container","wrapper":"radio-m--wrapper radio--wrapper","control":"radio-m--control radio--control","native":"radio-m--native radio--native","label":"radio-m--label radio--label"};
 
 /***/ },
-/* 461 */,
-/* 462 */
+/* 462 */,
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29896,10 +29926,10 @@
 	    }],
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(463));
+	}, __webpack_require__(464));
 
 /***/ },
-/* 463 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29908,19 +29938,19 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var RadioGroup = __webpack_require__(464);
-	var simplify = __webpack_require__(370);
+	var RadioGroup = __webpack_require__(465);
+	var StyleComponent = __webpack_require__(370);
 
-	module.exports = simplify(RadioGroup, function (styles, _ref) {
+	module.exports = StyleComponent(RadioGroup, function (styles, _ref) {
 	  var size = _ref.size;
 	  return {
 	    styles: styles[size]
 	  };
 	}, {
-	  xs: __webpack_require__(466),
-	  s: __webpack_require__(469),
-	  m: __webpack_require__(471),
-	  l: __webpack_require__(473)
+	  xs: __webpack_require__(467),
+	  s: __webpack_require__(470),
+	  m: __webpack_require__(472),
+	  l: __webpack_require__(474)
 	}, {
 	  size: 's'
 	}, {
@@ -29928,7 +29958,7 @@
 	});
 
 /***/ },
-/* 464 */
+/* 465 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29961,7 +29991,7 @@
 	var mapKey = _require3.mapKey;
 	var mapKeyBasedOnPos = _require3.mapKeyBasedOnPos;
 
-	var RadioButton = __webpack_require__(465);
+	var RadioButton = __webpack_require__(466);
 	var React = __webpack_require__(3);
 	var cssModules = __webpack_require__(171);
 
@@ -30105,7 +30135,7 @@
 	module.exports = cssModules(RadioGroup);
 
 /***/ },
-/* 465 */
+/* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30179,8 +30209,10 @@
 	      var _props = this.props;
 	      var children = _props.children;
 	      var className = _props.className;
+	      var _props$styleName = _props.styleName;
+	      var styleName = _props$styleName === undefined ? 'wrapper' : _props$styleName;
 
-	      var o = _objectWithoutProperties(_props, ['children', 'className']);
+	      var o = _objectWithoutProperties(_props, ['children', 'className', 'styleName']);
 
 	      var id = this.state.id;
 
@@ -30195,7 +30227,7 @@
 
 	      return React.createElement(
 	        'span',
-	        { className: className, styleName: 'wrapper' },
+	        { className: className, styleName: styleName },
 	        React.createElement('input', _extends({
 	          styleName: 'native',
 	          type: 'radio'
@@ -30233,40 +30265,40 @@
 	module.exports = cssModules(RadioButton);
 
 /***/ },
-/* 466 */
+/* 467 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","container":"radio-group-xs--container radio-group--container","wrapper":"radio-group-xs--wrapper radio-group--wrapper","control":"radio-group-xs--control radio-group--control","native":"radio-group-xs--native radio-group--native"};
 
 /***/ },
-/* 467 */,
 /* 468 */,
-/* 469 */
+/* 469 */,
+/* 470 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","line-s":"28px","container":"radio-group-s--container radio-group--container","wrapper":"radio-group-s--wrapper radio-group--wrapper","control":"radio-group-s--control radio-group--control","native":"radio-group-s--native radio-group--native"};
 
 /***/ },
-/* 470 */,
-/* 471 */
+/* 471 */,
+/* 472 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","line-m":"32px","container":"radio-group-m--container radio-group--container","wrapper":"radio-group-m--wrapper radio-group--wrapper","control":"radio-group-m--control radio-group--control","native":"radio-group-m--native radio-group--native"};
 
 /***/ },
-/* 472 */,
-/* 473 */
+/* 473 */,
+/* 474 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","line-l":"38px","container":"radio-group-l--container radio-group--container","wrapper":"radio-group-l--wrapper radio-group--wrapper","control":"radio-group-l--control radio-group--control","native":"radio-group-l--native radio-group--native"};
 
 /***/ },
-/* 474 */,
-/* 475 */
+/* 475 */,
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30277,6 +30309,45 @@
 	  "path": "Select",
 	  "data": [[{
 	    "name": "motorrad-1",
+	    "options": [{
+	      "text": "Yamaha",
+	      "value": "yamaha"
+	    }, {
+	      "text": "Suzuki",
+	      "value": "suzuki"
+	    }, {
+	      "text": "Kawasaki",
+	      "value": "kawasaki"
+	    }, {
+	      "text": "Vespa",
+	      "value": "vespa"
+	    }, {
+	      "text": "MZ",
+	      "value": "mz"
+	    }],
+	    "size": "xs"
+	  }, {
+	    "disabled": true,
+	    "name": "motorrad-2",
+	    "options": [{
+	      "text": "Yamaha",
+	      "value": "yamaha"
+	    }, {
+	      "text": "Suzuki",
+	      "value": "suzuki"
+	    }, {
+	      "text": "Kawasaki",
+	      "value": "kawasaki"
+	    }, {
+	      "text": "Vespa",
+	      "value": "vespa"
+	    }, {
+	      "text": "MZ",
+	      "value": "mz"
+	    }],
+	    "size": "xs"
+	  }], [{
+	    "name": "motorrad-3",
 	    "options": [{
 	      "text": "BMW S 1000 RR",
 	      "value": "bmw s 1000 rr"
@@ -30348,7 +30419,7 @@
 	  }, {
 	    "defaultValue": "mz",
 	    "disabled": true,
-	    "name": "motorrad-2",
+	    "name": "motorrad-4",
 	    "options": [{
 	      "text": "BMW S 1000 RR",
 	      "value": "bmw s 1000 rr"
@@ -30418,7 +30489,7 @@
 	    }],
 	    "size": "s"
 	  }], [{
-	    "name": "motorrad-3",
+	    "name": "motorrad-5",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -30438,7 +30509,7 @@
 	    "size": "m"
 	  }, {
 	    "disabled": true,
-	    "name": "motorrad-4",
+	    "name": "motorrad-6",
 	    "options": [{
 	      "text": "Yamaha",
 	      "value": "yamaha"
@@ -30457,10 +30528,10 @@
 	    }],
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(476));
+	}, __webpack_require__(477));
 
 /***/ },
-/* 476 */
+/* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30469,25 +30540,26 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Select = __webpack_require__(477);
-	var simplify = __webpack_require__(370);
+	var Select = __webpack_require__(478);
+	var StyleComponent = __webpack_require__(370);
 
-	module.exports = simplify(Select, function (styles, _ref) {
+	module.exports = StyleComponent(Select, function (styles, _ref) {
 	  var size = _ref.size;
 	  return {
 	    styles: styles[size]
 	  };
 	}, {
-	  s: __webpack_require__(479),
-	  m: __webpack_require__(485)
+	  xs: __webpack_require__(480),
+	  s: __webpack_require__(487),
+	  m: __webpack_require__(491)
 	}, {
 	  size: 's'
 	}, {
-	  size: PropTypes.oneOf(['s', 'm'])
+	  size: PropTypes.oneOf(['xs', 's', 'm'])
 	});
 
 /***/ },
-/* 477 */
+/* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30527,7 +30599,7 @@
 	var mapKeyBasedOnPos = _require4.mapKeyBasedOnPos;
 
 	var Button = __webpack_require__(369);
-	var Option = __webpack_require__(478);
+	var Option = __webpack_require__(479);
 	var Popup = __webpack_require__(427);
 	var React = __webpack_require__(3);
 	var cssModules = __webpack_require__(171);
@@ -30550,7 +30622,7 @@
 	      isOpened: false,
 	      focused: -1,
 	      prefix: generateId(),
-	      selected: 0
+	      selected: findIndexByValueProp(props.options, props.value)
 	    };
 
 	    bind(_this, ['onButtonClick', 'onKeyDown', 'onOptionFocus', 'onOptionSelect']);
@@ -30745,10 +30817,11 @@
 	    value: function render() {
 	      var _props = this.props;
 	      var disabled = _props.disabled;
+	      var id = _props.id;
 	      var name = _props.name;
 	      var options = _props.options;
 
-	      var value = options[this.state.selected].value;
+	      var value = options[Math.max(this.state.selected, 0)].value;
 
 	      return React.createElement(
 	        'div',
@@ -30760,6 +30833,7 @@
 	        this.renderPopup(),
 	        React.createElement('input', {
 	          disabled: disabled,
+	          id: id,
 	          name: name,
 	          type: 'hidden',
 	          value: value })
@@ -30787,7 +30861,7 @@
 	          onClick: this.onButtonClick,
 	          ref: 'control',
 	          styles: styles },
-	        options[selected].text
+	        options[Math.max(selected, 0)].text
 	      );
 	    }
 	  }, {
@@ -30888,7 +30962,7 @@
 	module.exports = reactOutsideEvent(cssModules(Select), ['click']);
 
 /***/ },
-/* 478 */
+/* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30997,28 +31071,39 @@
 	module.exports = cssModules(Option);
 
 /***/ },
-/* 479 */
+/* 480 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control select--control arrow--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","isCheckedItem":"select-s--isCheckedItem select--isCheckedItem select-s--item menu-s--item menu--item select--item","isFocused":"select-s--isFocused select--isFocused"};
+	module.exports = {"wrapper":"select-xs--wrapper select--wrapper","control":"select-xs--control button-normal-xs--control button-normal--control arrow-xs--control arrow--control select--control","menu":"select-xs--menu menu-xs--menu menu--menu select--menu popup--popup","item":"select-xs--item menu-xs--item menu--item select--item","isClosed":"select-xs--isClosed select--isClosed","isOpened":"select-xs--isOpened select--isOpened","isCheckedItem":"select-xs--isCheckedItem select--isCheckedItem select-xs--item menu-xs--item menu--item select--item","isFocused":"select-xs--isFocused select--isFocused"};
 
 /***/ },
-/* 480 */,
 /* 481 */,
 /* 482 */,
 /* 483 */,
 /* 484 */,
-/* 485 */
+/* 485 */,
+/* 486 */,
+/* 487 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control select--control arrow--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","isCheckedItem":"select-m--isCheckedItem select--isCheckedItem select-m--item menu-m--item menu--item select--item","isFocused":"select-m--isFocused select--isFocused"};
+	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","isCheckedItem":"select-s--isCheckedItem select--isCheckedItem select-s--item menu-s--item menu--item select--item","isFocused":"select-s--isFocused select--isFocused"};
 
 /***/ },
-/* 486 */,
-/* 487 */,
-/* 488 */
+/* 488 */,
+/* 489 */,
+/* 490 */,
+/* 491 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","isCheckedItem":"select-m--isCheckedItem select--isCheckedItem select-m--item menu-m--item menu--item select--item","isFocused":"select-m--isFocused select--isFocused"};
+
+/***/ },
+/* 492 */,
+/* 493 */,
+/* 494 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31038,10 +31123,10 @@
 	  }, {
 	    "size": "xl"
 	  }]]
-	}, __webpack_require__(489));
+	}, __webpack_require__(495));
 
 /***/ },
-/* 489 */
+/* 495 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31050,18 +31135,18 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Spin = __webpack_require__(490);
-	var simplify = __webpack_require__(370);
+	var Spin = __webpack_require__(496);
+	var StyleComponent = __webpack_require__(370);
 
-	module.exports = simplify(Spin, function (styles, _ref) {
+	module.exports = StyleComponent(Spin, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(491),
-	  s: __webpack_require__(494),
-	  m: __webpack_require__(496),
-	  l: __webpack_require__(498),
-	  xl: __webpack_require__(500)
+	  xs: __webpack_require__(497),
+	  s: __webpack_require__(500),
+	  m: __webpack_require__(502),
+	  l: __webpack_require__(504),
+	  xl: __webpack_require__(506)
 	}, {
 	  size: 's'
 	}, {
@@ -31069,7 +31154,7 @@
 	});
 
 /***/ },
-/* 490 */
+/* 496 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31122,48 +31207,48 @@
 	module.exports = cssModules(Spin);
 
 /***/ },
-/* 491 */
+/* 497 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xs--control spin--control"};
 
 /***/ },
-/* 492 */,
-/* 493 */,
-/* 494 */
+/* 498 */,
+/* 499 */,
+/* 500 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-s--control spin--control"};
 
 /***/ },
-/* 495 */,
-/* 496 */
+/* 501 */,
+/* 502 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-m--control spin--control"};
 
 /***/ },
-/* 497 */,
-/* 498 */
+/* 503 */,
+/* 504 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-l--control spin--control"};
 
 /***/ },
-/* 499 */,
-/* 500 */
+/* 505 */,
+/* 506 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xl--control spin--control"};
 
 /***/ },
-/* 501 */,
-/* 502 */
+/* 507 */,
+/* 508 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31195,10 +31280,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(503));
+	}, __webpack_require__(509));
 
 /***/ },
-/* 503 */
+/* 509 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31207,15 +31292,15 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Textarea = __webpack_require__(504);
-	var simplify = __webpack_require__(370);
+	var StyleComponent = __webpack_require__(370);
+	var Textarea = __webpack_require__(510);
 
-	module.exports = simplify(Textarea, function (styles, _ref) {
+	module.exports = StyleComponent(Textarea, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(505),
-	  m: __webpack_require__(507)
+	  s: __webpack_require__(511),
+	  m: __webpack_require__(513)
 	}, {
 	  size: 's'
 	}, {
@@ -31223,7 +31308,7 @@
 	});
 
 /***/ },
-/* 504 */
+/* 510 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31329,23 +31414,23 @@
 	module.exports = cssModules(Textarea);
 
 /***/ },
-/* 505 */
+/* 511 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"textarea-s--control input--control"};
 
 /***/ },
-/* 506 */,
-/* 507 */
+/* 512 */,
+/* 513 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"textarea-m--control input--control"};
 
 /***/ },
-/* 508 */,
-/* 509 */
+/* 514 */,
+/* 515 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31412,10 +31497,10 @@
 	    "size": "xs",
 	    "type": "warning"
 	  }]]
-	}, __webpack_require__(510));
+	}, __webpack_require__(516));
 
 /***/ },
-/* 510 */
+/* 516 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31444,15 +31529,15 @@
 	var React = __webpack_require__(3);
 
 	var baseStyles = {
-	  'normal-xs': __webpack_require__(511),
-	  'normal-s': __webpack_require__(516),
-	  'normal-m': __webpack_require__(519),
-	  'success-xs': __webpack_require__(522),
-	  'success-s': __webpack_require__(525),
-	  'success-m': __webpack_require__(527),
-	  'warning-xs': __webpack_require__(529),
-	  'warning-s': __webpack_require__(532),
-	  'warning-m': __webpack_require__(534)
+	  'normal-xs': __webpack_require__(517),
+	  'normal-s': __webpack_require__(522),
+	  'normal-m': __webpack_require__(525),
+	  'success-xs': __webpack_require__(528),
+	  'success-s': __webpack_require__(531),
+	  'success-m': __webpack_require__(533),
+	  'warning-xs': __webpack_require__(535),
+	  'warning-s': __webpack_require__(538),
+	  'warning-m': __webpack_require__(540)
 	};
 
 	var Tooltip = function (_Popup) {
@@ -31510,40 +31595,22 @@
 	module.exports = Tooltip;
 
 /***/ },
-/* 511 */
+/* 517 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-normal-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-normal--bottom","left":"tooltip-normal-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-normal--left","right":"tooltip-normal-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-normal--right","top":"tooltip-normal-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-normal--top","isClosed":"tooltip-normal-xs--isClosed tooltip--isClosed","isOpened":"tooltip-normal-xs--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 512 */,
-/* 513 */,
-/* 514 */,
-/* 515 */,
-/* 516 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-normal-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-normal--bottom","left":"tooltip-normal-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-normal--left","right":"tooltip-normal-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-normal--right","top":"tooltip-normal-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-normal--top","isClosed":"tooltip-normal-s--isClosed tooltip--isClosed","isOpened":"tooltip-normal-s--isOpened tooltip--isOpened"};
-
-/***/ },
-/* 517 */,
 /* 518 */,
-/* 519 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-normal-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-normal--bottom","left":"tooltip-normal-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-normal--left","right":"tooltip-normal-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-normal--right","top":"tooltip-normal-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-normal--top","isClosed":"tooltip-normal-m--isClosed tooltip--isClosed","isOpened":"tooltip-normal-m--isOpened tooltip--isOpened"};
-
-/***/ },
+/* 519 */,
 /* 520 */,
 /* 521 */,
 /* 522 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-success-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-success--bottom","left":"tooltip-success-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-success--left","right":"tooltip-success-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-success--right","top":"tooltip-success-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-success--top","isClosed":"tooltip-success-xs--isClosed tooltip--isClosed","isOpened":"tooltip-success-xs--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-normal-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-normal--bottom","left":"tooltip-normal-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-normal--left","right":"tooltip-normal-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-normal--right","top":"tooltip-normal-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-normal--top","isClosed":"tooltip-normal-s--isClosed tooltip--isClosed","isOpened":"tooltip-normal-s--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 523 */,
@@ -31552,44 +31619,62 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-success-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-success--bottom","left":"tooltip-success-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-success--left","right":"tooltip-success-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-success--right","top":"tooltip-success-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-success--top","isClosed":"tooltip-success-s--isClosed tooltip--isClosed","isOpened":"tooltip-success-s--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-normal-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-normal--bottom","left":"tooltip-normal-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-normal--left","right":"tooltip-normal-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-normal--right","top":"tooltip-normal-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-normal--top","isClosed":"tooltip-normal-m--isClosed tooltip--isClosed","isOpened":"tooltip-normal-m--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 526 */,
-/* 527 */
+/* 527 */,
+/* 528 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"bottom":"tooltip-success-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-success--bottom","left":"tooltip-success-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-success--left","right":"tooltip-success-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-success--right","top":"tooltip-success-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-success--top","isClosed":"tooltip-success-xs--isClosed tooltip--isClosed","isOpened":"tooltip-success-xs--isOpened tooltip--isOpened"};
+
+/***/ },
+/* 529 */,
+/* 530 */,
+/* 531 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"bottom":"tooltip-success-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-success--bottom","left":"tooltip-success-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-success--left","right":"tooltip-success-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-success--right","top":"tooltip-success-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-success--top","isClosed":"tooltip-success-s--isClosed tooltip--isClosed","isOpened":"tooltip-success-s--isOpened tooltip--isOpened"};
+
+/***/ },
+/* 532 */,
+/* 533 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-success-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-success--bottom","left":"tooltip-success-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-success--left","right":"tooltip-success-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-success--right","top":"tooltip-success-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-success--top","isClosed":"tooltip-success-m--isClosed tooltip--isClosed","isOpened":"tooltip-success-m--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 528 */,
-/* 529 */
+/* 534 */,
+/* 535 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-warning-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-warning--bottom","left":"tooltip-warning-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-warning--left","right":"tooltip-warning-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-warning--right","top":"tooltip-warning-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-warning--top","isClosed":"tooltip-warning-xs--isClosed tooltip--isClosed","isOpened":"tooltip-warning-xs--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 530 */,
-/* 531 */,
-/* 532 */
+/* 536 */,
+/* 537 */,
+/* 538 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-warning-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-warning--bottom","left":"tooltip-warning-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-warning--left","right":"tooltip-warning-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-warning--right","top":"tooltip-warning-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-warning--top","isClosed":"tooltip-warning-s--isClosed tooltip--isClosed","isOpened":"tooltip-warning-s--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 533 */,
-/* 534 */
+/* 539 */,
+/* 540 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-warning-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-warning--bottom","left":"tooltip-warning-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-warning--left","right":"tooltip-warning-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-warning--right","top":"tooltip-warning-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-warning--top","isClosed":"tooltip-warning-m--isClosed tooltip--isClosed","isOpened":"tooltip-warning-m--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 535 */,
-/* 536 */
+/* 541 */,
+/* 542 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31628,10 +31713,10 @@
 	    "size": "m",
 	    "value": "size-m"
 	  }]]
-	}, __webpack_require__(537));
+	}, __webpack_require__(543));
 
 /***/ },
-/* 537 */
+/* 543 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31640,16 +31725,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Tumbler = __webpack_require__(538);
-	var simplify = __webpack_require__(370);
+	var StyleComponent = __webpack_require__(370);
+	var Tumbler = __webpack_require__(544);
 
-	module.exports = simplify(Tumbler, function (styles, _ref) {
+	module.exports = StyleComponent(Tumbler, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(539),
-	  s: __webpack_require__(542),
-	  m: __webpack_require__(544)
+	  xs: __webpack_require__(545),
+	  s: __webpack_require__(548),
+	  m: __webpack_require__(550)
 	}, {
 	  size: 'xs'
 	}, {
@@ -31657,7 +31742,7 @@
 	});
 
 /***/ },
-/* 538 */
+/* 544 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31732,8 +31817,10 @@
 	      var className = _props.className;
 	      var off = _props.off;
 	      var on = _props.on;
+	      var _props$styleName = _props.styleName;
+	      var styleName = _props$styleName === undefined ? 'wrapper' : _props$styleName;
 
-	      var o = _objectWithoutProperties(_props, ['className', 'off', 'on']);
+	      var o = _objectWithoutProperties(_props, ['className', 'off', 'on', 'styleName']);
 
 	      var id = this.state.id;
 
@@ -31748,7 +31835,7 @@
 
 	      return React.createElement(
 	        'div',
-	        { className: className, styleName: 'wrapper' },
+	        { className: className, styleName: styleName },
 	        React.createElement('input', _extends({
 	          styleName: 'native',
 	          type: 'checkbox'
@@ -31822,24 +31909,24 @@
 	module.exports = cssModules(Tumbler);
 
 /***/ },
-/* 539 */
+/* 545 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","wrapper":"tumbler-xs--wrapper tumbler--wrapper","control":"tumbler-xs--control tumbler--control","label":"tumbler-xs--label tumbler--label","delimiter":"tumbler-xs--delimiter tumbler--delimiter","native":"tumbler-xs--native tumbler--native"};
 
 /***/ },
-/* 540 */,
-/* 541 */,
-/* 542 */
+/* 546 */,
+/* 547 */,
+/* 548 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","wrapper":"tumbler-s--wrapper tumbler--wrapper","control":"tumbler-s--control tumbler--control","label":"tumbler-s--label tumbler--label","delimiter":"tumbler-s--delimiter tumbler--delimiter","native":"tumbler-s--native tumbler--native"};
 
 /***/ },
-/* 543 */,
-/* 544 */
+/* 549 */,
+/* 550 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

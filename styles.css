@@ -617,7 +617,6 @@ body
   z-index: 0;
 
   box-sizing: border-box;
-  width: 100%;
 }
 
 .color-picker--clear
@@ -674,6 +673,8 @@ body
   position: relative;
 
   display: inline-block;
+
+  width: 100%;
 }
 
 .input--control
@@ -1342,25 +1343,6 @@ body
 .radio-group-l--native
 {
 }
-.arrow--control:after
-{
-  position: absolute;
-  top: 50%;
-
-  width: 11px;
-  height: 6px;
-  margin: -3px 0 0;
-
-  content: '';
-  transition: transform .1s ease-out;
-
-  background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%226%22%3E%3Cpath%20d%3D%22M10.08%200L5.5%204.36.91%200%200%20.86l5.5%205.25L11%20.86z%22%2F%3E%3C%2Fsvg%3E) 0 50% no-repeat;
-}
-
-.arrow--control:disabled:after
-{
-  opacity: .4;
-}
 .select--wrapper
 {
   position: relative;
@@ -1370,6 +1352,11 @@ body
 
 .select--control
 {
+  box-sizing: border-box;
+  width: 100%;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .select--menu
@@ -1410,6 +1397,31 @@ body
 {
   background-color: #ffeba0;
 }
+.arrow--control:after
+{
+  position: absolute;
+  top: 50%;
+
+  content: '';
+  transition: transform .1s ease-out;
+}
+
+.arrow--control:disabled:after
+{
+  opacity: .4;
+}
+.arrow-xs--control
+{
+}
+
+.arrow-xs--control:after
+{
+  width: 9px;
+  height: 5px;
+  margin: -2px 0 0;
+
+  background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%229%22%20height%3D%225%22%3E%3Cpath%20d%3D%22M8.251%200L4.5%203.572.75%200%200%20.715l3.75%203.571L4.5%205%209%20.715z%22%2F%3E%3C%2Fsvg%3E) 0 50% no-repeat;
+}
 .menu--menu
 {
   /* base */
@@ -1423,6 +1435,82 @@ body
   white-space: nowrap;
 
   font-family: arial,helvetica,sans-serif;
+}
+.menu-xs--menu
+{
+
+  padding: 3px 0;
+}
+
+.menu-xs--item
+{
+
+  padding: 0 15px 0 30px;
+
+  font-size: 13px;
+  line-height: 24px;
+}
+.select-xs--wrapper
+{
+}
+
+.select-xs--control
+{
+
+  position: relative;
+
+  padding-right: 25px;
+
+  text-align: left;
+}
+
+.select-xs--control:after
+{
+  right: 9px;
+}
+
+.select-xs--menu
+{
+
+  max-height: 200px;
+}
+
+.select-xs--item
+{
+}
+
+/* mixins */
+
+.select-xs--isClosed
+{
+}
+
+.select-xs--isOpened
+{
+}
+
+.select-xs--isCheckedItem
+{
+
+  background-image: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%3E%3Cpath%20d%3D%22M13.795%201L5.79%2012.527%202.036%208.503%201%209.773%205.917%2015%2015%202.112%2013.795%201z%22%2F%3E%3C%2Fsvg%3E);
+  background-position: 10px 50%;
+  background-size: 13px;
+}
+
+.select-xs--isFocused
+{
+}
+.arrow-s--control
+{
+}
+
+.arrow-s--control:after
+{
+  width: 11px;
+  height: 6px;
+  margin: -3px 0 0;
+
+  background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2211%22%20height%3D%226%22%3E%3Cpath%20d%3D%22M10.08%200L5.5%204.36.91%200%200%20.86l5.5%205.25L11%20.86z%22%2F%3E%3C%2Fsvg%3E) 0 50% no-repeat;
 }
 .menu-s--menu
 {
@@ -1622,7 +1710,6 @@ body
 .textarea-s--control
 {
 
-  width: auto;
   padding: 4px 6px;
 
   font-size: 13px;
@@ -1630,7 +1717,6 @@ body
 .textarea-m--control
 {
 
-  width: auto;
   padding: 6px 8px;
 
   font-size: 15px;
