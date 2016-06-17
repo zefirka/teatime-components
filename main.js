@@ -21012,24 +21012,24 @@
 	    "size": "m",
 	    "value": "size-m"
 	  }], [{
-	    "children": "Size s",
+	    "label": "Size s",
 	    "name": "size-s",
 	    "size": "s",
 	    "value": "size-s"
 	  }, {
-	    "children": "Size s",
 	    "disabled": true,
+	    "label": "Size s",
 	    "name": "size-s",
 	    "size": "s",
 	    "value": "size-s"
 	  }, {
-	    "children": "Size m",
+	    "label": "Size m",
 	    "name": "size-m",
 	    "size": "m",
 	    "value": "size-m"
 	  }, {
-	    "children": "Size m",
 	    "disabled": true,
+	    "label": "Size m",
 	    "name": "size-m",
 	    "size": "m",
 	    "value": "size-m"
@@ -21135,17 +21135,19 @@
 	    value: function render() {
 	      var _props = this.props;
 	      var children = _props.children;
+	      var label = _props.label;
 	      var styles = _props.styles;
 
-	      var o = _objectWithoutProperties(_props, ['children', 'styles']);
+	      var o = _objectWithoutProperties(_props, ['children', 'label', 'styles']);
 
 	      var id = this.state.id;
 
 
-	      var labelElement = children ? React.createElement(
+	      var content = label || children;
+	      var labelElement = content ? React.createElement(
 	        'label',
 	        { className: styles.label, htmlFor: id },
-	        children
+	        content
 	      ) : null;
 
 	      /**
@@ -21181,6 +21183,7 @@
 	};
 
 	Check.propTypes = {
+	  label: PropTypes.string,
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
 	  styleName: PropTypes.string,
@@ -21282,19 +21285,19 @@
 	    "cols": 3,
 	    "name": "check-group-motorrad-1",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "s"
@@ -21303,38 +21306,38 @@
 	    "disabled": true,
 	    "name": "check-group-motorrad-2",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "s"
 	  }], [{
 	    "name": "check-group-motorrad-3",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "m"
@@ -21342,19 +21345,19 @@
 	    "disabled": true,
 	    "name": "check-group-motorrad-4",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "m"
@@ -21551,27 +21554,14 @@
 	      var result = [];
 
 	      for (var i = start; i < options.length; i += step) {
-	        var _options$i = options[i];
-	        var className = _options$i.className;
-	        var disabled = _options$i.disabled;
-	        var text = _options$i.text;
-	        var value = _options$i.value;
-
-
-	        result.push(React.createElement(
-	          Check,
-	          {
-	            className: className,
-	            disabled: globalDisabled || disabled,
-	            checked: values[i],
-	            key: this.mapKey(prefix, value, i),
-	            name: name,
-	            onChange: this.onChange,
-	            styles: styles,
-	            tc: i,
-	            value: value },
-	          text
-	        ));
+	        result.push(React.createElement(Check, _extends({}, options[i], {
+	          disabled: globalDisabled || options[i].disabled,
+	          checked: values[i],
+	          key: this.mapKey(prefix, options[i].value, i),
+	          name: name,
+	          onChange: this.onChange,
+	          styles: styles,
+	          tc: i })));
 	      }
 
 	      return result;
@@ -22796,19 +22786,19 @@
 	  "data": [[{
 	    "name": "motorrad-1",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "s"
@@ -22816,38 +22806,38 @@
 	    "disabled": true,
 	    "name": "motorrad-2",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "s"
 	  }], [{
 	    "name": "motorrad-3",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "m"
@@ -22855,19 +22845,19 @@
 	    "disabled": true,
 	    "name": "motorrad-4",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "m"
@@ -23013,7 +23003,7 @@
 	      var _this2 = this;
 
 	      var _props = this.props;
-	      var disabled = _props.disabled;
+	      var globalDisabled = _props.disabled;
 	      var name = _props.name;
 	      var options = _props.options;
 	      var styles = _props.styles;
@@ -23022,25 +23012,16 @@
 	      var selected = _state.selected;
 
 
-	      return options.map(function (_ref2, i) {
-	        var className = _ref2.className;
-	        var text = _ref2.text;
-	        var value = _ref2.value;
-	        return React.createElement(
-	          Check,
-	          {
-	            className: className,
-	            disabled: disabled,
-	            checked: selected === i,
-	            key: _this2.mapKey(prefix, value, i),
-	            name: name,
-	            onChange: _this2.onChange,
-	            styles: styles,
-	            tc: i,
-	            type: 'radio',
-	            value: value },
-	          text
-	        );
+	      return options.map(function (option, i) {
+	        return React.createElement(Check, _extends({}, option, {
+	          disabled: globalDisabled || option.disabled,
+	          checked: selected === i,
+	          key: _this2.mapKey(prefix, option.value, i),
+	          name: name,
+	          onChange: _this2.onChange,
+	          styles: styles,
+	          tc: i,
+	          type: 'radio' }));
 	      });
 	    }
 	  }]);
@@ -23096,19 +23077,19 @@
 	  "data": [[{
 	    "name": "radio-group-motorrad-1",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "xs"
@@ -23116,38 +23097,38 @@
 	    "disabled": true,
 	    "name": "radio-group-motorrad-2",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "xs"
 	  }], [{
 	    "name": "radio-group-motorrad-3",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "s"
@@ -23155,19 +23136,19 @@
 	    "disabled": true,
 	    "name": "radio-group-motorrad-4",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "s"
@@ -23175,19 +23156,19 @@
 	    "defaultValue": "suzuki",
 	    "name": "radio-group-motorrad-5",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "m"
@@ -23196,38 +23177,38 @@
 	    "disabled": true,
 	    "name": "radio-group-motorrad-6",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "m"
 	  }], [{
 	    "name": "radio-group-motorrad-7",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "l"
@@ -23235,19 +23216,19 @@
 	    "disabled": true,
 	    "name": "radio-group-motorrad-8",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "l"
@@ -23398,7 +23379,7 @@
 	      var _this2 = this;
 
 	      var _props = this.props;
-	      var disabled = _props.disabled;
+	      var globalDisabled = _props.disabled;
 	      var name = _props.name;
 	      var options = _props.options;
 	      var styles = _props.styles;
@@ -23407,24 +23388,15 @@
 	      var selected = _state.selected;
 
 
-	      return options.map(function (_ref2, i) {
-	        var className = _ref2.className;
-	        var text = _ref2.text;
-	        var value = _ref2.value;
-	        return React.createElement(
-	          RadioButton,
-	          {
-	            className: className,
-	            checked: selected === i,
-	            disabled: disabled,
-	            key: _this2.mapKey(prefix, value, i),
-	            name: name,
-	            onChange: _this2.onChange,
-	            styles: styles,
-	            tc: i,
-	            value: value },
-	          text
-	        );
+	      return options.map(function (option, i) {
+	        return React.createElement(RadioButton, _extends({}, option, {
+	          checked: selected === i,
+	          disabled: globalDisabled || option.disabled,
+	          key: _this2.mapKey(prefix, option.value, i),
+	          name: name,
+	          onChange: _this2.onChange,
+	          styles: styles,
+	          tc: i }));
 	      });
 	    }
 	  }]);
@@ -23524,9 +23496,10 @@
 	    value: function render() {
 	      var _props = this.props;
 	      var children = _props.children;
+	      var label = _props.label;
 	      var styles = _props.styles;
 
-	      var o = _objectWithoutProperties(_props, ['children', 'styles']);
+	      var o = _objectWithoutProperties(_props, ['children', 'label', 'styles']);
 
 	      var id = this.state.id;
 
@@ -23551,7 +23524,7 @@
 	        React.createElement(
 	          'label',
 	          { className: styles.control, htmlFor: id },
-	          children
+	          label || children
 	        )
 	      );
 	    }
@@ -23622,958 +23595,958 @@
 	  "data": [[{
 	    "name": "cities",
 	    "options": [{
-	      "text": "Abakan",
+	      "label": "Abakan",
 	      "value": "abakan"
 	    }, {
-	      "text": "Achinsk",
+	      "label": "Achinsk",
 	      "value": "achinsk"
 	    }, {
-	      "text": "Aleksin",
+	      "label": "Aleksin",
 	      "value": "aleksin"
 	    }, {
-	      "text": "Alexandrov",
+	      "label": "Alexandrov",
 	      "value": "alexandrov"
 	    }, {
-	      "text": "Almetyevsk",
+	      "label": "Almetyevsk",
 	      "value": "almetyevsk"
 	    }, {
-	      "text": "Anapa",
+	      "label": "Anapa",
 	      "value": "anapa"
 	    }, {
-	      "text": "Angarsk",
+	      "label": "Angarsk",
 	      "value": "angarsk"
 	    }, {
-	      "text": "Anzhero-Sudzhensk",
+	      "label": "Anzhero-Sudzhensk",
 	      "value": "anzhero-sudzhensk"
 	    }, {
-	      "text": "Apatity",
+	      "label": "Apatity",
 	      "value": "apatity"
 	    }, {
-	      "text": "Arkhangelsk",
+	      "label": "Arkhangelsk",
 	      "value": "arkhangelsk"
 	    }, {
-	      "text": "Armavir",
+	      "label": "Armavir",
 	      "value": "armavir"
 	    }, {
-	      "text": "Arsenyev",
+	      "label": "Arsenyev",
 	      "value": "arsenyev"
 	    }, {
-	      "text": "Artyom",
+	      "label": "Artyom",
 	      "value": "artyom"
 	    }, {
-	      "text": "Arzamas",
+	      "label": "Arzamas",
 	      "value": "arzamas"
 	    }, {
-	      "text": "Asbest",
+	      "label": "Asbest",
 	      "value": "asbest"
 	    }, {
-	      "text": "Astrakhan",
+	      "label": "Astrakhan",
 	      "value": "astrakhan"
 	    }, {
-	      "text": "Azov",
+	      "label": "Azov",
 	      "value": "azov"
 	    }, {
-	      "text": "Balakhna",
+	      "label": "Balakhna",
 	      "value": "balakhna"
 	    }, {
-	      "text": "Balakovo",
+	      "label": "Balakovo",
 	      "value": "balakovo"
 	    }, {
-	      "text": "Balashikha",
+	      "label": "Balashikha",
 	      "value": "balashikha"
 	    }, {
-	      "text": "Balashov",
+	      "label": "Balashov",
 	      "value": "balashov"
 	    }, {
-	      "text": "Barnaul",
+	      "label": "Barnaul",
 	      "value": "barnaul"
 	    }, {
-	      "text": "Bataysk",
+	      "label": "Bataysk",
 	      "value": "bataysk"
 	    }, {
-	      "text": "Belebey",
+	      "label": "Belebey",
 	      "value": "belebey"
 	    }, {
-	      "text": "Belgorod",
+	      "label": "Belgorod",
 	      "value": "belgorod"
 	    }, {
-	      "text": "Belogorsk",
+	      "label": "Belogorsk",
 	      "value": "belogorsk"
 	    }, {
-	      "text": "Belorechensk",
+	      "label": "Belorechensk",
 	      "value": "belorechensk"
 	    }, {
-	      "text": "Beloretsk",
+	      "label": "Beloretsk",
 	      "value": "beloretsk"
 	    }, {
-	      "text": "Belovo",
+	      "label": "Belovo",
 	      "value": "belovo"
 	    }, {
-	      "text": "Berdsk",
+	      "label": "Berdsk",
 	      "value": "berdsk"
 	    }, {
-	      "text": "Berezniki",
+	      "label": "Berezniki",
 	      "value": "berezniki"
 	    }, {
-	      "text": "Beryozovsky",
+	      "label": "Beryozovsky",
 	      "value": "beryozovsky"
 	    }, {
-	      "text": "Birobidzhan",
+	      "label": "Birobidzhan",
 	      "value": "birobidzhan"
 	    }, {
-	      "text": "Biysk",
+	      "label": "Biysk",
 	      "value": "biysk"
 	    }, {
-	      "text": "Blagoveshchensk",
+	      "label": "Blagoveshchensk",
 	      "value": "blagoveshchensk"
 	    }, {
-	      "text": "Bor",
+	      "label": "Bor",
 	      "value": "bor"
 	    }, {
-	      "text": "Borisoglebsk",
+	      "label": "Borisoglebsk",
 	      "value": "borisoglebsk"
 	    }, {
-	      "text": "Borovichi",
+	      "label": "Borovichi",
 	      "value": "borovichi"
 	    }, {
-	      "text": "Bratsk",
+	      "label": "Bratsk",
 	      "value": "bratsk"
 	    }, {
-	      "text": "Bryansk",
+	      "label": "Bryansk",
 	      "value": "bryansk"
 	    }, {
-	      "text": "Budyonnovsk",
+	      "label": "Budyonnovsk",
 	      "value": "budyonnovsk"
 	    }, {
-	      "text": "Bugulma",
+	      "label": "Bugulma",
 	      "value": "bugulma"
 	    }, {
-	      "text": "Buynaksk",
+	      "label": "Buynaksk",
 	      "value": "buynaksk"
 	    }, {
-	      "text": "Buzuluk",
+	      "label": "Buzuluk",
 	      "value": "buzuluk"
 	    }, {
-	      "text": "Chapayevsk",
+	      "label": "Chapayevsk",
 	      "value": "chapayevsk"
 	    }, {
-	      "text": "Chaykovsky",
+	      "label": "Chaykovsky",
 	      "value": "chaykovsky"
 	    }, {
-	      "text": "Cheboksary",
+	      "label": "Cheboksary",
 	      "value": "cheboksary"
 	    }, {
-	      "text": "Chekhov",
+	      "label": "Chekhov",
 	      "value": "chekhov"
 	    }, {
-	      "text": "Chelyabinsk",
+	      "label": "Chelyabinsk",
 	      "value": "chelyabinsk"
 	    }, {
-	      "text": "Cheremkhovo",
+	      "label": "Cheremkhovo",
 	      "value": "cheremkhovo"
 	    }, {
-	      "text": "Cherepovets",
+	      "label": "Cherepovets",
 	      "value": "cherepovets"
 	    }, {
-	      "text": "Cherkessk",
+	      "label": "Cherkessk",
 	      "value": "cherkessk"
 	    }, {
-	      "text": "Chernogorsk",
+	      "label": "Chernogorsk",
 	      "value": "chernogorsk"
 	    }, {
-	      "text": "Chistopol",
+	      "label": "Chistopol",
 	      "value": "chistopol"
 	    }, {
-	      "text": "Chita",
+	      "label": "Chita",
 	      "value": "chita"
 	    }, {
-	      "text": "Derbent",
+	      "label": "Derbent",
 	      "value": "derbent"
 	    }, {
-	      "text": "Dimitrovgrad",
+	      "label": "Dimitrovgrad",
 	      "value": "dimitrovgrad"
 	    }, {
-	      "text": "Dmitrov",
+	      "label": "Dmitrov",
 	      "value": "dmitrov"
 	    }, {
-	      "text": "Dolgoprudny",
+	      "label": "Dolgoprudny",
 	      "value": "dolgoprudny"
 	    }, {
-	      "text": "Domodedovo",
+	      "label": "Domodedovo",
 	      "value": "domodedovo"
 	    }, {
-	      "text": "Donetsk",
+	      "label": "Donetsk",
 	      "value": "donetsk"
 	    }, {
-	      "text": "Donskoy",
+	      "label": "Donskoy",
 	      "value": "donskoy"
 	    }, {
-	      "text": "Dubna",
+	      "label": "Dubna",
 	      "value": "dubna"
 	    }, {
-	      "text": "Dzerzhinsk",
+	      "label": "Dzerzhinsk",
 	      "value": "dzerzhinsk"
 	    }, {
-	      "text": "Elektrostal",
+	      "label": "Elektrostal",
 	      "value": "elektrostal"
 	    }, {
-	      "text": "Elista",
+	      "label": "Elista",
 	      "value": "elista"
 	    }, {
-	      "text": "Engels",
+	      "label": "Engels",
 	      "value": "engels"
 	    }, {
-	      "text": "Fryazino",
+	      "label": "Fryazino",
 	      "value": "fryazino"
 	    }, {
-	      "text": "Gatchina",
+	      "label": "Gatchina",
 	      "value": "gatchina"
 	    }, {
-	      "text": "Gelendzhik",
+	      "label": "Gelendzhik",
 	      "value": "gelendzhik"
 	    }, {
-	      "text": "Georgiyevsk",
+	      "label": "Georgiyevsk",
 	      "value": "georgiyevsk"
 	    }, {
-	      "text": "Glazov",
+	      "label": "Glazov",
 	      "value": "glazov"
 	    }, {
-	      "text": "Gorno-Altaysk",
+	      "label": "Gorno-Altaysk",
 	      "value": "gorno-altaysk"
 	    }, {
-	      "text": "Grozny",
+	      "label": "Grozny",
 	      "value": "grozny"
 	    }, {
-	      "text": "Gubkin",
+	      "label": "Gubkin",
 	      "value": "gubkin"
 	    }, {
-	      "text": "Gukovo",
+	      "label": "Gukovo",
 	      "value": "gukovo"
 	    }, {
-	      "text": "Gus-Khrustalny",
+	      "label": "Gus-Khrustalny",
 	      "value": "gus-khrustalny"
 	    }, {
-	      "text": "Irkutsk",
+	      "label": "Irkutsk",
 	      "value": "irkutsk"
 	    }, {
-	      "text": "Ishim",
+	      "label": "Ishim",
 	      "value": "ishim"
 	    }, {
-	      "text": "Ishimbay",
+	      "label": "Ishimbay",
 	      "value": "ishimbay"
 	    }, {
-	      "text": "Iskitim",
+	      "label": "Iskitim",
 	      "value": "iskitim"
 	    }, {
-	      "text": "Ivanovo",
+	      "label": "Ivanovo",
 	      "value": "ivanovo"
 	    }, {
-	      "text": "Ivanteyevka",
+	      "label": "Ivanteyevka",
 	      "value": "ivanteyevka"
 	    }, {
-	      "text": "Izberbash",
+	      "label": "Izberbash",
 	      "value": "izberbash"
 	    }, {
-	      "text": "Izhevsk",
+	      "label": "Izhevsk",
 	      "value": "izhevsk"
 	    }, {
-	      "text": "Kaliningrad",
+	      "label": "Kaliningrad",
 	      "value": "kaliningrad"
 	    }, {
-	      "text": "Kaluga",
+	      "label": "Kaluga",
 	      "value": "kaluga"
 	    }, {
-	      "text": "Kamensk-Shakhtinsky",
+	      "label": "Kamensk-Shakhtinsky",
 	      "value": "kamensk-shakhtinsky"
 	    }, {
-	      "text": "Kamensk-Uralsky",
+	      "label": "Kamensk-Uralsky",
 	      "value": "kamensk-uralsky"
 	    }, {
-	      "text": "Kamyshin",
+	      "label": "Kamyshin",
 	      "value": "kamyshin"
 	    }, {
-	      "text": "Kansk",
+	      "label": "Kansk",
 	      "value": "kansk"
 	    }, {
-	      "text": "Kaspiysk",
+	      "label": "Kaspiysk",
 	      "value": "kaspiysk"
 	    }, {
-	      "text": "Kazan",
+	      "label": "Kazan",
 	      "value": "kazan"
 	    }, {
-	      "text": "Kemerovo",
+	      "label": "Kemerovo",
 	      "value": "kemerovo"
 	    }, {
-	      "text": "Khabarovsk",
+	      "label": "Khabarovsk",
 	      "value": "khabarovsk"
 	    }, {
-	      "text": "Khanty-Mansiysk",
+	      "label": "Khanty-Mansiysk",
 	      "value": "khanty-mansiysk"
 	    }, {
-	      "text": "Khasavyurt",
+	      "label": "Khasavyurt",
 	      "value": "khasavyurt"
 	    }, {
-	      "text": "Khimki",
+	      "label": "Khimki",
 	      "value": "khimki"
 	    }, {
-	      "text": "Kineshma",
+	      "label": "Kineshma",
 	      "value": "kineshma"
 	    }, {
-	      "text": "Kirishi",
+	      "label": "Kirishi",
 	      "value": "kirishi"
 	    }, {
-	      "text": "Kirov",
+	      "label": "Kirov",
 	      "value": "kirov"
 	    }, {
-	      "text": "Kirovo-Chepetsk",
+	      "label": "Kirovo-Chepetsk",
 	      "value": "kirovo-chepetsk"
 	    }, {
-	      "text": "Kiselyovsk",
+	      "label": "Kiselyovsk",
 	      "value": "kiselyovsk"
 	    }, {
-	      "text": "Kislovodsk",
+	      "label": "Kislovodsk",
 	      "value": "kislovodsk"
 	    }, {
-	      "text": "Klimovsk",
+	      "label": "Klimovsk",
 	      "value": "klimovsk"
 	    }, {
-	      "text": "Klin",
+	      "label": "Klin",
 	      "value": "klin"
 	    }, {
-	      "text": "Klintsy",
+	      "label": "Klintsy",
 	      "value": "klintsy"
 	    }, {
-	      "text": "Kogalym",
+	      "label": "Kogalym",
 	      "value": "kogalym"
 	    }, {
-	      "text": "Kolomna",
+	      "label": "Kolomna",
 	      "value": "kolomna"
 	    }, {
-	      "text": "Komsomolsk-on-Amur",
+	      "label": "Komsomolsk-on-Amur",
 	      "value": "komsomolsk-on-amur"
 	    }, {
-	      "text": "Kopeysk",
+	      "label": "Kopeysk",
 	      "value": "kopeysk"
 	    }, {
-	      "text": "Korolyov",
+	      "label": "Korolyov",
 	      "value": "korolyov"
 	    }, {
-	      "text": "Kostroma",
+	      "label": "Kostroma",
 	      "value": "kostroma"
 	    }, {
-	      "text": "Kotlas",
+	      "label": "Kotlas",
 	      "value": "kotlas"
 	    }, {
-	      "text": "Kovrov",
+	      "label": "Kovrov",
 	      "value": "kovrov"
 	    }, {
-	      "text": "Krasnodar",
+	      "label": "Krasnodar",
 	      "value": "krasnodar"
 	    }, {
-	      "text": "Krasnogorsk",
+	      "label": "Krasnogorsk",
 	      "value": "krasnogorsk"
 	    }, {
-	      "text": "Krasnokamensk",
+	      "label": "Krasnokamensk",
 	      "value": "krasnokamensk"
 	    }, {
-	      "text": "Krasnokamsk",
+	      "label": "Krasnokamsk",
 	      "value": "krasnokamsk"
 	    }, {
-	      "text": "Krasnoturyinsk",
+	      "label": "Krasnoturyinsk",
 	      "value": "krasnoturyinsk"
 	    }, {
-	      "text": "Krasnoyarsk",
+	      "label": "Krasnoyarsk",
 	      "value": "krasnoyarsk"
 	    }, {
-	      "text": "Kropotkin",
+	      "label": "Kropotkin",
 	      "value": "kropotkin"
 	    }, {
-	      "text": "Krymsk",
+	      "label": "Krymsk",
 	      "value": "krymsk"
 	    }, {
-	      "text": "Kstovo",
+	      "label": "Kstovo",
 	      "value": "kstovo"
 	    }, {
-	      "text": "Kumertau",
+	      "label": "Kumertau",
 	      "value": "kumertau"
 	    }, {
-	      "text": "Kungur",
+	      "label": "Kungur",
 	      "value": "kungur"
 	    }, {
-	      "text": "Kurgan",
+	      "label": "Kurgan",
 	      "value": "kurgan"
 	    }, {
-	      "text": "Kursk",
+	      "label": "Kursk",
 	      "value": "kursk"
 	    }, {
-	      "text": "Kuznetsk",
+	      "label": "Kuznetsk",
 	      "value": "kuznetsk"
 	    }, {
-	      "text": "Kyzyl",
+	      "label": "Kyzyl",
 	      "value": "kyzyl"
 	    }, {
-	      "text": "Labinsk",
+	      "label": "Labinsk",
 	      "value": "labinsk"
 	    }, {
-	      "text": "Leninogorsk",
+	      "label": "Leninogorsk",
 	      "value": "leninogorsk"
 	    }, {
-	      "text": "Leninsk-Kuznetsky",
+	      "label": "Leninsk-Kuznetsky",
 	      "value": "leninsk-kuznetsky"
 	    }, {
-	      "text": "Lesnoy",
+	      "label": "Lesnoy",
 	      "value": "lesnoy"
 	    }, {
-	      "text": "Lesosibirsk",
+	      "label": "Lesosibirsk",
 	      "value": "lesosibirsk"
 	    }, {
-	      "text": "Lipetsk",
+	      "label": "Lipetsk",
 	      "value": "lipetsk"
 	    }, {
-	      "text": "Liski",
+	      "label": "Liski",
 	      "value": "liski"
 	    }, {
-	      "text": "Livny",
+	      "label": "Livny",
 	      "value": "livny"
 	    }, {
-	      "text": "Lobnya",
+	      "label": "Lobnya",
 	      "value": "lobnya"
 	    }, {
-	      "text": "Lysva",
+	      "label": "Lysva",
 	      "value": "lysva"
 	    }, {
-	      "text": "Lytkarino",
+	      "label": "Lytkarino",
 	      "value": "lytkarino"
 	    }, {
-	      "text": "Lyubertsy",
+	      "label": "Lyubertsy",
 	      "value": "lyubertsy"
 	    }, {
-	      "text": "Magadan",
+	      "label": "Magadan",
 	      "value": "magadan"
 	    }, {
-	      "text": "Magnitogorsk",
+	      "label": "Magnitogorsk",
 	      "value": "magnitogorsk"
 	    }, {
-	      "text": "Makhachkala",
+	      "label": "Makhachkala",
 	      "value": "makhachkala"
 	    }, {
-	      "text": "Maykop",
+	      "label": "Maykop",
 	      "value": "maykop"
 	    }, {
-	      "text": "Meleuz",
+	      "label": "Meleuz",
 	      "value": "meleuz"
 	    }, {
-	      "text": "Mezhdurechensk",
+	      "label": "Mezhdurechensk",
 	      "value": "mezhdurechensk"
 	    }, {
-	      "text": "Miass",
+	      "label": "Miass",
 	      "value": "miass"
 	    }, {
-	      "text": "Michurinsk",
+	      "label": "Michurinsk",
 	      "value": "michurinsk"
 	    }, {
-	      "text": "Mikhaylovka",
+	      "label": "Mikhaylovka",
 	      "value": "mikhaylovka"
 	    }, {
-	      "text": "Mikhaylovsk",
+	      "label": "Mikhaylovsk",
 	      "value": "mikhaylovsk"
 	    }, {
-	      "text": "Mineralnye Vody",
+	      "label": "Mineralnye Vody",
 	      "value": "mineralnye vody"
 	    }, {
-	      "text": "Minusinsk",
+	      "label": "Minusinsk",
 	      "value": "minusinsk"
 	    }, {
-	      "text": "Moscow",
+	      "label": "Moscow",
 	      "value": "moscow"
 	    }, {
-	      "text": "Murmansk",
+	      "label": "Murmansk",
 	      "value": "murmansk"
 	    }, {
-	      "text": "Murom",
+	      "label": "Murom",
 	      "value": "murom"
 	    }, {
-	      "text": "Mytishchi",
+	      "label": "Mytishchi",
 	      "value": "mytishchi"
 	    }, {
-	      "text": "Naberezhnye Chelny",
+	      "label": "Naberezhnye Chelny",
 	      "value": "naberezhnye chelny"
 	    }, {
-	      "text": "Nakhodka",
+	      "label": "Nakhodka",
 	      "value": "nakhodka"
 	    }, {
-	      "text": "Nalchik",
+	      "label": "Nalchik",
 	      "value": "nalchik"
 	    }, {
-	      "text": "Naro-Fominsk",
+	      "label": "Naro-Fominsk",
 	      "value": "naro-fominsk"
 	    }, {
-	      "text": "Nazarovo",
+	      "label": "Nazarovo",
 	      "value": "nazarovo"
 	    }, {
-	      "text": "Nazran",
+	      "label": "Nazran",
 	      "value": "nazran"
 	    }, {
-	      "text": "Neftekamsk",
+	      "label": "Neftekamsk",
 	      "value": "neftekamsk"
 	    }, {
-	      "text": "Nefteyugansk",
+	      "label": "Nefteyugansk",
 	      "value": "nefteyugansk"
 	    }, {
-	      "text": "Neryungri",
+	      "label": "Neryungri",
 	      "value": "neryungri"
 	    }, {
-	      "text": "Nevinnomyssk",
+	      "label": "Nevinnomyssk",
 	      "value": "nevinnomyssk"
 	    }, {
-	      "text": "Nizhnekamsk",
+	      "label": "Nizhnekamsk",
 	      "value": "nizhnekamsk"
 	    }, {
-	      "text": "Nizhnevartovsk",
+	      "label": "Nizhnevartovsk",
 	      "value": "nizhnevartovsk"
 	    }, {
-	      "text": "Nizhny Novgorod",
+	      "label": "Nizhny Novgorod",
 	      "value": "nizhny novgorod"
 	    }, {
-	      "text": "Nizhny Tagil",
+	      "label": "Nizhny Tagil",
 	      "value": "nizhny tagil"
 	    }, {
-	      "text": "Noginsk",
+	      "label": "Noginsk",
 	      "value": "noginsk"
 	    }, {
-	      "text": "Norilsk",
+	      "label": "Norilsk",
 	      "value": "norilsk"
 	    }, {
-	      "text": "Novoaltaysk",
+	      "label": "Novoaltaysk",
 	      "value": "novoaltaysk"
 	    }, {
-	      "text": "Novocheboksarsk",
+	      "label": "Novocheboksarsk",
 	      "value": "novocheboksarsk"
 	    }, {
-	      "text": "Novocherkassk",
+	      "label": "Novocherkassk",
 	      "value": "novocherkassk"
 	    }, {
-	      "text": "Novokuybyshevsk",
+	      "label": "Novokuybyshevsk",
 	      "value": "novokuybyshevsk"
 	    }, {
-	      "text": "Novokuznetsk",
+	      "label": "Novokuznetsk",
 	      "value": "novokuznetsk"
 	    }, {
-	      "text": "Novomoskovsk",
+	      "label": "Novomoskovsk",
 	      "value": "novomoskovsk"
 	    }, {
-	      "text": "Novorossiysk",
+	      "label": "Novorossiysk",
 	      "value": "novorossiysk"
 	    }, {
-	      "text": "Novoshakhtinsk",
+	      "label": "Novoshakhtinsk",
 	      "value": "novoshakhtinsk"
 	    }, {
-	      "text": "Novosibirsk",
+	      "label": "Novosibirsk",
 	      "value": "novosibirsk"
 	    }, {
-	      "text": "Novotroitsk",
+	      "label": "Novotroitsk",
 	      "value": "novotroitsk"
 	    }, {
-	      "text": "Novouralsk",
+	      "label": "Novouralsk",
 	      "value": "novouralsk"
 	    }, {
-	      "text": "Novy Urengoy",
+	      "label": "Novy Urengoy",
 	      "value": "novy urengoy"
 	    }, {
-	      "text": "Noyabrsk",
+	      "label": "Noyabrsk",
 	      "value": "noyabrsk"
 	    }, {
-	      "text": "Nyagan",
+	      "label": "Nyagan",
 	      "value": "nyagan"
 	    }, {
-	      "text": "Obninsk",
+	      "label": "Obninsk",
 	      "value": "obninsk"
 	    }, {
-	      "text": "Odintsovo",
+	      "label": "Odintsovo",
 	      "value": "odintsovo"
 	    }, {
-	      "text": "Oktyabrsky",
+	      "label": "Oktyabrsky",
 	      "value": "oktyabrsky"
 	    }, {
-	      "text": "Omsk",
+	      "label": "Omsk",
 	      "value": "omsk"
 	    }, {
-	      "text": "Orekhovo-Zuyevo",
+	      "label": "Orekhovo-Zuyevo",
 	      "value": "orekhovo-zuyevo"
 	    }, {
-	      "text": "Orenburg",
+	      "label": "Orenburg",
 	      "value": "orenburg"
 	    }, {
-	      "text": "Orsk",
+	      "label": "Orsk",
 	      "value": "orsk"
 	    }, {
-	      "text": "Oryol",
+	      "label": "Oryol",
 	      "value": "oryol"
 	    }, {
-	      "text": "Ozyorsk",
+	      "label": "Ozyorsk",
 	      "value": "ozyorsk"
 	    }, {
-	      "text": "Pavlovo",
+	      "label": "Pavlovo",
 	      "value": "pavlovo"
 	    }, {
-	      "text": "Pavlovsky Posad",
+	      "label": "Pavlovsky Posad",
 	      "value": "pavlovsky posad"
 	    }, {
-	      "text": "Penza",
+	      "label": "Penza",
 	      "value": "penza"
 	    }, {
-	      "text": "Perm",
+	      "label": "Perm",
 	      "value": "perm"
 	    }, {
-	      "text": "Pervouralsk",
+	      "label": "Pervouralsk",
 	      "value": "pervouralsk"
 	    }, {
-	      "text": "Petropavlovsk-Kamchatsky",
+	      "label": "Petropavlovsk-Kamchatsky",
 	      "value": "petropavlovsk-kamchatsky"
 	    }, {
-	      "text": "Petrozavodsk",
+	      "label": "Petrozavodsk",
 	      "value": "petrozavodsk"
 	    }, {
-	      "text": "Podolsk",
+	      "label": "Podolsk",
 	      "value": "podolsk"
 	    }, {
-	      "text": "Polevskoy",
+	      "label": "Polevskoy",
 	      "value": "polevskoy"
 	    }, {
-	      "text": "Prokhladny",
+	      "label": "Prokhladny",
 	      "value": "prokhladny"
 	    }, {
-	      "text": "Prokopyevsk",
+	      "label": "Prokopyevsk",
 	      "value": "prokopyevsk"
 	    }, {
-	      "text": "Pskov",
+	      "label": "Pskov",
 	      "value": "pskov"
 	    }, {
-	      "text": "Pushkino",
+	      "label": "Pushkino",
 	      "value": "pushkino"
 	    }, {
-	      "text": "Pyatigorsk",
+	      "label": "Pyatigorsk",
 	      "value": "pyatigorsk"
 	    }, {
-	      "text": "Ramenskoye",
+	      "label": "Ramenskoye",
 	      "value": "ramenskoye"
 	    }, {
-	      "text": "Reutov",
+	      "label": "Reutov",
 	      "value": "reutov"
 	    }, {
-	      "text": "Revda",
+	      "label": "Revda",
 	      "value": "revda"
 	    }, {
-	      "text": "Roslavl",
+	      "label": "Roslavl",
 	      "value": "roslavl"
 	    }, {
-	      "text": "Rossosh",
+	      "label": "Rossosh",
 	      "value": "rossosh"
 	    }, {
-	      "text": "Rostov-on-Don",
+	      "label": "Rostov-on-Don",
 	      "value": "rostov-on-don"
 	    }, {
-	      "text": "Rubtsovsk",
+	      "label": "Rubtsovsk",
 	      "value": "rubtsovsk"
 	    }, {
-	      "text": "Ryazan",
+	      "label": "Ryazan",
 	      "value": "ryazan"
 	    }, {
-	      "text": "Rybinsk",
+	      "label": "Rybinsk",
 	      "value": "rybinsk"
 	    }, {
-	      "text": "Rzhev",
+	      "label": "Rzhev",
 	      "value": "rzhev"
 	    }, {
-	      "text": "Saint Petersburg",
+	      "label": "Saint Petersburg",
 	      "value": "saint petersburg"
 	    }, {
-	      "text": "Salavat",
+	      "label": "Salavat",
 	      "value": "salavat"
 	    }, {
-	      "text": "Salsk",
+	      "label": "Salsk",
 	      "value": "salsk"
 	    }, {
-	      "text": "Samara",
+	      "label": "Samara",
 	      "value": "samara"
 	    }, {
-	      "text": "Saransk",
+	      "label": "Saransk",
 	      "value": "saransk"
 	    }, {
-	      "text": "Sarapul",
+	      "label": "Sarapul",
 	      "value": "sarapul"
 	    }, {
-	      "text": "Saratov",
+	      "label": "Saratov",
 	      "value": "saratov"
 	    }, {
-	      "text": "Sarov",
+	      "label": "Sarov",
 	      "value": "sarov"
 	    }, {
-	      "text": "Sergiyev Posad",
+	      "label": "Sergiyev Posad",
 	      "value": "sergiyev posad"
 	    }, {
-	      "text": "Serov",
+	      "label": "Serov",
 	      "value": "serov"
 	    }, {
-	      "text": "Serpukhov",
+	      "label": "Serpukhov",
 	      "value": "serpukhov"
 	    }, {
-	      "text": "Severodvinsk",
+	      "label": "Severodvinsk",
 	      "value": "severodvinsk"
 	    }, {
-	      "text": "Severomorsk",
+	      "label": "Severomorsk",
 	      "value": "severomorsk"
 	    }, {
-	      "text": "Seversk",
+	      "label": "Seversk",
 	      "value": "seversk"
 	    }, {
-	      "text": "Shadrinsk",
+	      "label": "Shadrinsk",
 	      "value": "shadrinsk"
 	    }, {
-	      "text": "Shakhty",
+	      "label": "Shakhty",
 	      "value": "shakhty"
 	    }, {
-	      "text": "Shchyokino",
+	      "label": "Shchyokino",
 	      "value": "shchyokino"
 	    }, {
-	      "text": "Shchyolkovo",
+	      "label": "Shchyolkovo",
 	      "value": "shchyolkovo"
 	    }, {
-	      "text": "Shuya",
+	      "label": "Shuya",
 	      "value": "shuya"
 	    }, {
-	      "text": "Sibay",
+	      "label": "Sibay",
 	      "value": "sibay"
 	    }, {
-	      "text": "Slavyansk-na-Kubani",
+	      "label": "Slavyansk-na-Kubani",
 	      "value": "slavyansk-na-kubani"
 	    }, {
-	      "text": "Smolensk",
+	      "label": "Smolensk",
 	      "value": "smolensk"
 	    }, {
-	      "text": "Sochi",
+	      "label": "Sochi",
 	      "value": "sochi"
 	    }, {
-	      "text": "Solikamsk",
+	      "label": "Solikamsk",
 	      "value": "solikamsk"
 	    }, {
-	      "text": "Solnechnogorsk",
+	      "label": "Solnechnogorsk",
 	      "value": "solnechnogorsk"
 	    }, {
-	      "text": "Sosnovy Bor",
+	      "label": "Sosnovy Bor",
 	      "value": "sosnovy bor"
 	    }, {
-	      "text": "Stary Oskol",
+	      "label": "Stary Oskol",
 	      "value": "stary oskol"
 	    }, {
-	      "text": "Stavropol",
+	      "label": "Stavropol",
 	      "value": "stavropol"
 	    }, {
-	      "text": "Sterlitamak",
+	      "label": "Sterlitamak",
 	      "value": "sterlitamak"
 	    }, {
-	      "text": "Stupino",
+	      "label": "Stupino",
 	      "value": "stupino"
 	    }, {
-	      "text": "Surgut",
+	      "label": "Surgut",
 	      "value": "surgut"
 	    }, {
-	      "text": "Svobodny",
+	      "label": "Svobodny",
 	      "value": "svobodny"
 	    }, {
-	      "text": "Syktyvkar",
+	      "label": "Syktyvkar",
 	      "value": "syktyvkar"
 	    }, {
-	      "text": "Syzran",
+	      "label": "Syzran",
 	      "value": "syzran"
 	    }, {
-	      "text": "Taganrog",
+	      "label": "Taganrog",
 	      "value": "taganrog"
 	    }, {
-	      "text": "Tambov",
+	      "label": "Tambov",
 	      "value": "tambov"
 	    }, {
-	      "text": "Tikhoretsk",
+	      "label": "Tikhoretsk",
 	      "value": "tikhoretsk"
 	    }, {
-	      "text": "Tikhvin",
+	      "label": "Tikhvin",
 	      "value": "tikhvin"
 	    }, {
-	      "text": "Timashyovsk",
+	      "label": "Timashyovsk",
 	      "value": "timashyovsk"
 	    }, {
-	      "text": "Tobolsk",
+	      "label": "Tobolsk",
 	      "value": "tobolsk"
 	    }, {
-	      "text": "Tolyatti",
+	      "label": "Tolyatti",
 	      "value": "tolyatti"
 	    }, {
-	      "text": "Tomsk",
+	      "label": "Tomsk",
 	      "value": "tomsk"
 	    }, {
-	      "text": "Troitsk",
+	      "label": "Troitsk",
 	      "value": "troitsk"
 	    }, {
-	      "text": "Tuapse",
+	      "label": "Tuapse",
 	      "value": "tuapse"
 	    }, {
-	      "text": "Tula",
+	      "label": "Tula",
 	      "value": "tula"
 	    }, {
-	      "text": "Tuymazy",
+	      "label": "Tuymazy",
 	      "value": "tuymazy"
 	    }, {
-	      "text": "Tver",
+	      "label": "Tver",
 	      "value": "tver"
 	    }, {
-	      "text": "Tyumen",
+	      "label": "Tyumen",
 	      "value": "tyumen"
 	    }, {
-	      "text": "Ufa",
+	      "label": "Ufa",
 	      "value": "ufa"
 	    }, {
-	      "text": "Ukhta",
+	      "label": "Ukhta",
 	      "value": "ukhta"
 	    }, {
-	      "text": "Ulan-Ude",
+	      "label": "Ulan-Ude",
 	      "value": "ulan-ude"
 	    }, {
-	      "text": "Ulyanovsk",
+	      "label": "Ulyanovsk",
 	      "value": "ulyanovsk"
 	    }, {
-	      "text": "Usolye-Sibirskoye",
+	      "label": "Usolye-Sibirskoye",
 	      "value": "usolye-sibirskoye"
 	    }, {
-	      "text": "Ussuriysk",
+	      "label": "Ussuriysk",
 	      "value": "ussuriysk"
 	    }, {
-	      "text": "Ust-Ilimsk",
+	      "label": "Ust-Ilimsk",
 	      "value": "ust-ilimsk"
 	    }, {
-	      "text": "Uzlovaya",
+	      "label": "Uzlovaya",
 	      "value": "uzlovaya"
 	    }, {
-	      "text": "Velikiye Luki",
+	      "label": "Velikiye Luki",
 	      "value": "velikiye luki"
 	    }, {
-	      "text": "Veliky Novgorod",
+	      "label": "Veliky Novgorod",
 	      "value": "veliky novgorod"
 	    }, {
-	      "text": "Verkhnyaya Pyshma",
+	      "label": "Verkhnyaya Pyshma",
 	      "value": "verkhnyaya pyshma"
 	    }, {
-	      "text": "Vidnoye",
+	      "label": "Vidnoye",
 	      "value": "vidnoye"
 	    }, {
-	      "text": "Vladikavkaz",
+	      "label": "Vladikavkaz",
 	      "value": "vladikavkaz"
 	    }, {
-	      "text": "Vladimir",
+	      "label": "Vladimir",
 	      "value": "vladimir"
 	    }, {
-	      "text": "Vladivostok",
+	      "label": "Vladivostok",
 	      "value": "vladivostok"
 	    }, {
-	      "text": "Volgodonsk",
+	      "label": "Volgodonsk",
 	      "value": "volgodonsk"
 	    }, {
-	      "text": "Volgograd",
+	      "label": "Volgograd",
 	      "value": "volgograd"
 	    }, {
-	      "text": "Vologda",
+	      "label": "Vologda",
 	      "value": "vologda"
 	    }, {
-	      "text": "Volsk",
+	      "label": "Volsk",
 	      "value": "volsk"
 	    }, {
-	      "text": "Volzhsk",
+	      "label": "Volzhsk",
 	      "value": "volzhsk"
 	    }, {
-	      "text": "Volzhsky",
+	      "label": "Volzhsky",
 	      "value": "volzhsky"
 	    }, {
-	      "text": "Vorkuta",
+	      "label": "Vorkuta",
 	      "value": "vorkuta"
 	    }, {
-	      "text": "Voronezh",
+	      "label": "Voronezh",
 	      "value": "voronezh"
 	    }, {
-	      "text": "Voskresensk",
+	      "label": "Voskresensk",
 	      "value": "voskresensk"
 	    }, {
-	      "text": "Votkinsk",
+	      "label": "Votkinsk",
 	      "value": "votkinsk"
 	    }, {
-	      "text": "Vsevolozhsk",
+	      "label": "Vsevolozhsk",
 	      "value": "vsevolozhsk"
 	    }, {
-	      "text": "Vyazma",
+	      "label": "Vyazma",
 	      "value": "vyazma"
 	    }, {
-	      "text": "Vyborg",
+	      "label": "Vyborg",
 	      "value": "vyborg"
 	    }, {
-	      "text": "Vyksa",
+	      "label": "Vyksa",
 	      "value": "vyksa"
 	    }, {
-	      "text": "Vyshny Volochyok",
+	      "label": "Vyshny Volochyok",
 	      "value": "vyshny volochyok"
 	    }, {
-	      "text": "Yakutsk",
+	      "label": "Yakutsk",
 	      "value": "yakutsk"
 	    }, {
-	      "text": "Yaroslavl",
+	      "label": "Yaroslavl",
 	      "value": "yaroslavl"
 	    }, {
-	      "text": "Yegoryevsk",
+	      "label": "Yegoryevsk",
 	      "value": "yegoryevsk"
 	    }, {
-	      "text": "Yekaterinburg",
+	      "label": "Yekaterinburg",
 	      "value": "yekaterinburg"
 	    }, {
-	      "text": "Yelabuga",
+	      "label": "Yelabuga",
 	      "value": "yelabuga"
 	    }, {
-	      "text": "Yelets",
+	      "label": "Yelets",
 	      "value": "yelets"
 	    }, {
-	      "text": "Yessentuki",
+	      "label": "Yessentuki",
 	      "value": "yessentuki"
 	    }, {
-	      "text": "Yeysk",
+	      "label": "Yeysk",
 	      "value": "yeysk"
 	    }, {
-	      "text": "Yoshkar-Ola",
+	      "label": "Yoshkar-Ola",
 	      "value": "yoshkar-ola"
 	    }, {
-	      "text": "Yurga",
+	      "label": "Yurga",
 	      "value": "yurga"
 	    }, {
-	      "text": "Yuzhno-Sakhalinsk",
+	      "label": "Yuzhno-Sakhalinsk",
 	      "value": "yuzhno-sakhalinsk"
 	    }, {
-	      "text": "Zarechny",
+	      "label": "Zarechny",
 	      "value": "zarechny"
 	    }, {
-	      "text": "Zelenodolsk",
+	      "label": "Zelenodolsk",
 	      "value": "zelenodolsk"
 	    }, {
-	      "text": "Zelenogorsk",
+	      "label": "Zelenogorsk",
 	      "value": "zelenogorsk"
 	    }, {
-	      "text": "Zheleznodorozhny",
+	      "label": "Zheleznodorozhny",
 	      "value": "zheleznodorozhny"
 	    }, {
-	      "text": "Zheleznogorsk",
+	      "label": "Zheleznogorsk",
 	      "value": "zheleznogorsk"
 	    }, {
-	      "text": "Zhigulyovsk",
+	      "label": "Zhigulyovsk",
 	      "value": "zhigulyovsk"
 	    }, {
-	      "text": "Zhukovsky",
+	      "label": "Zhukovsky",
 	      "value": "zhukovsky"
 	    }, {
-	      "text": "Zlatoust",
+	      "label": "Zlatoust",
 	      "value": "zlatoust"
 	    }],
 	    "size": "xs"
@@ -24581,89 +24554,89 @@
 	    "disabled": true,
 	    "name": "motorrad-2",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "xs"
 	  }], [{
 	    "name": "motorrad-3",
 	    "options": [{
-	      "text": "BMW S 1000 RR",
+	      "label": "BMW S 1000 RR",
 	      "value": "bmw s 1000 rr"
 	    }, {
-	      "text": "BMW R 1200 RS",
+	      "label": "BMW R 1200 RS",
 	      "value": "bmw r 1200 rs"
 	    }, {
-	      "text": "BMW F 800 GT",
+	      "label": "BMW F 800 GT",
 	      "value": "bmw f 800 gt"
 	    }, {
-	      "text": "BMW R 1200 RT",
+	      "label": "BMW R 1200 RT",
 	      "value": "bmw r 1200 rt"
 	    }, {
-	      "text": "BMW K 1600 GT",
+	      "label": "BMW K 1600 GT",
 	      "value": "bmw k 1600 gt"
 	    }, {
-	      "text": "BMW K 1600 GTL",
+	      "label": "BMW K 1600 GTL",
 	      "value": "bmw k 1600 gtl"
 	    }, {
-	      "text": "K 1600 GTL Exclusive",
+	      "label": "K 1600 GTL Exclusive",
 	      "value": "k 1600 gtl exclusive"
 	    }, {
-	      "text": "BMW G 310 R",
+	      "label": "BMW G 310 R",
 	      "value": "bmw g 310 r"
 	    }, {
-	      "text": "BMW F 800 R",
+	      "label": "BMW F 800 R",
 	      "value": "bmw f 800 r"
 	    }, {
-	      "text": "BMW S 1000 R",
+	      "label": "BMW S 1000 R",
 	      "value": "bmw s 1000 r"
 	    }, {
-	      "text": "BMW R 1200 R",
+	      "label": "BMW R 1200 R",
 	      "value": "bmw r 1200 r"
 	    }, {
-	      "text": "BMW R nineT",
+	      "label": "BMW R nineT",
 	      "value": "bmw r ninet"
 	    }, {
-	      "text": "BMW R nineT Scrambler",
+	      "label": "BMW R nineT Scrambler",
 	      "value": "bmw r ninet scrambler"
 	    }, {
-	      "text": "BMW G 650 GS",
+	      "label": "BMW G 650 GS",
 	      "value": "bmw g 650 gs"
 	    }, {
-	      "text": "BMW F 700 GS",
+	      "label": "BMW F 700 GS",
 	      "value": "bmw f 700 gs"
 	    }, {
-	      "text": "BMW F 800 GS",
+	      "label": "BMW F 800 GS",
 	      "value": "bmw f 800 gs"
 	    }, {
-	      "text": "BMW F 800 GS Adventure",
+	      "label": "BMW F 800 GS Adventure",
 	      "value": "bmw f 800 gs adventure"
 	    }, {
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "s"
@@ -24672,89 +24645,89 @@
 	    "disabled": true,
 	    "name": "motorrad-4",
 	    "options": [{
-	      "text": "BMW S 1000 RR",
+	      "label": "BMW S 1000 RR",
 	      "value": "bmw s 1000 rr"
 	    }, {
-	      "text": "BMW R 1200 RS",
+	      "label": "BMW R 1200 RS",
 	      "value": "bmw r 1200 rs"
 	    }, {
-	      "text": "BMW F 800 GT",
+	      "label": "BMW F 800 GT",
 	      "value": "bmw f 800 gt"
 	    }, {
-	      "text": "BMW R 1200 RT",
+	      "label": "BMW R 1200 RT",
 	      "value": "bmw r 1200 rt"
 	    }, {
-	      "text": "BMW K 1600 GT",
+	      "label": "BMW K 1600 GT",
 	      "value": "bmw k 1600 gt"
 	    }, {
-	      "text": "BMW K 1600 GTL",
+	      "label": "BMW K 1600 GTL",
 	      "value": "bmw k 1600 gtl"
 	    }, {
-	      "text": "K 1600 GTL Exclusive",
+	      "label": "K 1600 GTL Exclusive",
 	      "value": "k 1600 gtl exclusive"
 	    }, {
-	      "text": "BMW G 310 R",
+	      "label": "BMW G 310 R",
 	      "value": "bmw g 310 r"
 	    }, {
-	      "text": "BMW F 800 R",
+	      "label": "BMW F 800 R",
 	      "value": "bmw f 800 r"
 	    }, {
-	      "text": "BMW S 1000 R",
+	      "label": "BMW S 1000 R",
 	      "value": "bmw s 1000 r"
 	    }, {
-	      "text": "BMW R 1200 R",
+	      "label": "BMW R 1200 R",
 	      "value": "bmw r 1200 r"
 	    }, {
-	      "text": "BMW R nineT",
+	      "label": "BMW R nineT",
 	      "value": "bmw r ninet"
 	    }, {
-	      "text": "BMW R nineT Scrambler",
+	      "label": "BMW R nineT Scrambler",
 	      "value": "bmw r ninet scrambler"
 	    }, {
-	      "text": "BMW G 650 GS",
+	      "label": "BMW G 650 GS",
 	      "value": "bmw g 650 gs"
 	    }, {
-	      "text": "BMW F 700 GS",
+	      "label": "BMW F 700 GS",
 	      "value": "bmw f 700 gs"
 	    }, {
-	      "text": "BMW F 800 GS",
+	      "label": "BMW F 800 GS",
 	      "value": "bmw f 800 gs"
 	    }, {
-	      "text": "BMW F 800 GS Adventure",
+	      "label": "BMW F 800 GS Adventure",
 	      "value": "bmw f 800 gs adventure"
 	    }, {
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "s"
 	  }], [{
 	    "name": "motorrad-5",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "m"
@@ -24762,19 +24735,19 @@
 	    "disabled": true,
 	    "name": "motorrad-6",
 	    "options": [{
-	      "text": "Yamaha",
+	      "label": "Yamaha",
 	      "value": "yamaha"
 	    }, {
-	      "text": "Suzuki",
+	      "label": "Suzuki",
 	      "value": "suzuki"
 	    }, {
-	      "text": "Kawasaki",
+	      "label": "Kawasaki",
 	      "value": "kawasaki"
 	    }, {
-	      "text": "Vespa",
+	      "label": "Vespa",
 	      "value": "vespa"
 	    }, {
-	      "text": "MZ",
+	      "label": "MZ",
 	      "value": "mz"
 	    }],
 	    "size": "m"
@@ -24819,6 +24792,8 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -24854,6 +24829,7 @@
 	var Option = __webpack_require__(287);
 	var Popup = __webpack_require__(235);
 	var React = __webpack_require__(3);
+	var cx = __webpack_require__(178);
 	var reactOutsideEvent = __webpack_require__(238);
 
 	var Select = function (_Component) {
@@ -24929,7 +24905,7 @@
 	      var selected = this.state.selected;
 
 
-	      return selected !== -1 ? this.props.options[selected].text : '—';
+	      return selected !== -1 ? this.props.options[selected].label : '—';
 	    }
 
 	    /**
@@ -25181,25 +25157,21 @@
 	      var selected = _state2.selected;
 
 
-	      return options.map(function (_ref2, i) {
-	        var className = _ref2.className;
-	        var text = _ref2.text;
-	        var value = _ref2.value;
-	        return React.createElement(
-	          Option,
-	          {
-	            className: className,
-	            checked: selected === i,
-	            focused: focused === i,
-	            key: _this2.mapKey(prefix, value, i),
-	            onFocus: _this2.onOptionFocus,
-	            onSelect: _this2.onOptionSelect,
-	            ref: selected === i ? 'selected' : null,
-	            styles: styles,
-	            tc: i,
-	            value: value },
-	          text
-	        );
+	      return options.map(function (option, i) {
+	        var _cx;
+
+	        var isFocused = focused === i;
+	        var isSelected = selected === i;
+	        var ref = isFocused ? 'selected' : null;
+
+	        return React.createElement(Option, _extends({}, option, {
+	          className: cx(styles.item, (_cx = {}, _defineProperty(_cx, styles.isFocused, isFocused), _defineProperty(_cx, styles.isSelected, isSelected), _cx)),
+	          isFocused: isFocused,
+	          key: _this2.mapKey(prefix, option.value, i),
+	          onFocus: _this2.onOptionFocus,
+	          onSelect: _this2.onOptionSelect,
+	          ref: ref,
+	          tc: i }));
 	      });
 	    }
 	  }]);
@@ -25233,13 +25205,7 @@
 
 	'use strict';
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -25257,7 +25223,6 @@
 	var bind = _require2.bind;
 
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(178);
 
 	var Option = function (_Component) {
 	  _inherits(Option, _Component);
@@ -25267,70 +25232,44 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Option).call(this, props));
 
-	    bind(_this, ['onClick', 'onFocus', 'onMouseEnter', 'onSelect']);
+	    bind(_this, ['onFocus', 'onSelect']);
 	    return _this;
 	  }
 
 	  _createClass(Option, [{
-	    key: 'onClick',
-	    value: function onClick(e) {
-	      this.onSelect(e);
-	    }
-	  }, {
-	    key: 'onMouseEnter',
-	    value: function onMouseEnter(e) {
-	      this.onFocus(e);
-	    }
-	  }, {
 	    key: 'onFocus',
 	    value: function onFocus(e) {
-	      if (!this.props.isFocused) {
-	        this.props.onFocus(e, null, this.props.tc);
-	      }
+	      if (this.props.isFocused) return;
+	      this.props.onFocus(e, { value: this.props.value }, this.props.tc);
 	    }
 	  }, {
 	    key: 'onSelect',
 	    value: function onSelect(e) {
-	      this.props.onSelect(e, null, this.props.tc);
+	      this.props.onSelect(e, { value: this.props.value }, this.props.tc);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var checked = _props.checked;
-	      var className = _props.className;
-	      var focused = _props.focused;
-	      var styles = _props.styles;
-	      var value = _props.value;
-
-	      var o = _objectWithoutProperties(_props, ['checked', 'className', 'focused', 'styles', 'value']);
-
-	      var styleName = checked ? 'isCheckedItem' : 'item';
-
-	      return React.createElement('span', _extends({}, o, {
-	        className: cx(className, _defineProperty({}, styles.isFocused, focused), styles[styleName]),
-	        'data-value': value,
-	        onClick: this.onClick,
-	        onFocus: this.onFocus,
-	        onMouseEnter: this.onMouseEnter,
-	        onSelect: this.onFocus }));
+	      return React.createElement(
+	        'span',
+	        {
+	          className: this.props.className,
+	          'data-value': this.props.value,
+	          onClick: this.onSelect,
+	          onMouseEnter: this.onFocus },
+	        this.props.label
+	      );
 	    }
 	  }]);
 
 	  return Option;
 	}(Component);
 
-	Option.defaultProps = {
-	  styles: {}
-	};
-
 	Option.propTypes = {
-	  checked: PropTypes.bool,
+	  isFocused: PropTypes.bool,
 	  onFocus: PropTypes.func.isRequired,
 	  onSelect: PropTypes.func.isRequired,
-	  styles: PropTypes.object,
-	  tc: PropTypes.any,
-	  value: PropTypes.string.isRequired
+	  tc: PropTypes.any
 	};
 
 	module.exports = Option;
@@ -25340,7 +25279,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-xs--wrapper select--wrapper","control":"select-xs--control button-normal-xs--control button-normal--control arrow-xs--control arrow--control select--control","menu":"select-xs--menu menu-xs--menu menu--menu select--menu popup--popup","item":"select-xs--item menu-xs--item menu--item select--item","isClosed":"select-xs--isClosed select--isClosed","isOpened":"select-xs--isOpened select--isOpened","isCheckedItem":"select-xs--isCheckedItem select--isCheckedItem select-xs--item menu-xs--item menu--item select--item","isFocused":"select-xs--isFocused select--isFocused"};
+	module.exports = {"wrapper":"select-xs--wrapper select--wrapper","control":"select-xs--control button-normal-xs--control button-normal--control arrow-xs--control arrow--control select--control","menu":"select-xs--menu menu-xs--menu menu--menu select--menu popup--popup","item":"select-xs--item menu-xs--item menu--item select--item","isClosed":"select-xs--isClosed select--isClosed","isOpened":"select-xs--isOpened select--isOpened","isFocused":"select-xs--isFocused select--isFocused","isSelected":"select-xs--isSelected select--isSelected"};
 
 /***/ },
 /* 289 */,
@@ -25353,7 +25292,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","isCheckedItem":"select-s--isCheckedItem select--isCheckedItem select-s--item menu-s--item menu--item select--item","isFocused":"select-s--isFocused select--isFocused"};
+	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","isFocused":"select-s--isFocused select--isFocused","isSelected":"select-s--isSelected select--isSelected"};
 
 /***/ },
 /* 296 */,
@@ -25363,7 +25302,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","isCheckedItem":"select-m--isCheckedItem select--isCheckedItem select-m--item menu-m--item menu--item select--item","isFocused":"select-m--isFocused select--isFocused"};
+	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","isFocused":"select-m--isFocused select--isFocused","isSelected":"select-m--isSelected select--isSelected"};
 
 /***/ },
 /* 300 */,
