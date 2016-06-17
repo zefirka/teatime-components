@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(212);
+	__webpack_require__(213);
 	__webpack_require__(222);
 	__webpack_require__(230);
 	__webpack_require__(252);
@@ -20558,25 +20558,25 @@
 	var PropTypes = _require.PropTypes;
 
 	var Button = __webpack_require__(176);
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Button, function (styles, _ref) {
 	  var size = _ref.size;
 	  var theme = _ref.theme;
 	  return { styles: styles[theme + '-' + size] };
 	}, {
-	  'action-xs': __webpack_require__(179),
-	  'action-s': __webpack_require__(183),
-	  'action-m': __webpack_require__(185),
-	  'action-l': __webpack_require__(187),
-	  'link-xs': __webpack_require__(189),
-	  'link-s': __webpack_require__(194),
-	  'link-m': __webpack_require__(197),
-	  'link-l': __webpack_require__(200),
-	  'normal-xs': __webpack_require__(203),
-	  'normal-s': __webpack_require__(206),
-	  'normal-m': __webpack_require__(208),
-	  'normal-l': __webpack_require__(210)
+	  'action-xs': __webpack_require__(180),
+	  'action-s': __webpack_require__(184),
+	  'action-m': __webpack_require__(186),
+	  'action-l': __webpack_require__(188),
+	  'link-xs': __webpack_require__(190),
+	  'link-s': __webpack_require__(195),
+	  'link-m': __webpack_require__(198),
+	  'link-l': __webpack_require__(201),
+	  'normal-xs': __webpack_require__(204),
+	  'normal-s': __webpack_require__(207),
+	  'normal-m': __webpack_require__(209),
+	  'normal-l': __webpack_require__(211)
 	}, {
 	  size: 's',
 	  theme: 'normal'
@@ -20595,8 +20595,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -20608,8 +20606,11 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
+	var _require2 = __webpack_require__(177);
+
+	var composition = _require2.composition;
+
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var Button = function (_Component) {
 	  _inherits(Button, _Component);
@@ -20630,14 +20631,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
-	      var styles = _props.styles;
-
-	      var o = _objectWithoutProperties(_props, ['className', 'styleName', 'styles']);
-
-	      return React.createElement('button', _extends({}, o, { className: cx(className, styles[styleName]), ref: 'control' }));
+	      return React.createElement('button', _extends({}, this.props, { className: composition(this.props), ref: 'control' }));
 	    }
 	  }]);
 
@@ -20658,6 +20652,103 @@
 
 /***/ },
 /* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var cx = __webpack_require__(178);
+
+	exports.bind = bind;
+	exports.composition = composition;
+	exports.decrement = decrement;
+	exports.increment = increment;
+	exports.findIndexByValueProp = findIndexByValueProp;
+	exports.mapRange = mapRange;
+	exports.noop = noop;
+	exports.toArray = toArray;
+
+	/**
+	 * @param  {object} context
+	 * @param  {string|string[]} methods
+	 * @return {object}
+	 */
+	function bind(context, methods) {
+	  toArray(methods).forEach(function (method) {
+	    return context[method] = context[method].bind(context);
+	  });
+	  return context;
+	}
+
+	/**
+	 * @param  {object} props
+	 * @return {string}
+	 */
+	function composition(props) {
+	  return cx(props.className, props.styles[props.styleName]);
+	}
+
+	/**
+	 * @param  {number} value
+	 * @param  {number} limit
+	 * @return {number}
+	 */
+	function decrement(value, limit) {
+	  return value > 0 ? value - 1 : limit - 1;
+	}
+
+	/**
+	 * @param  {number} value
+	 * @param  {number} limit
+	 * @return {number}
+	 */
+	function increment(value, limit) {
+	  return value < limit - 1 ? value + 1 : 0;
+	}
+
+	/**
+	 * @param  {object[]} collection
+	 * @param  {string} value
+	 * @return {number}
+	 */
+	function findIndexByValueProp(collection, value) {
+	  var length = collection.length;
+	  for (var i = 0; i < length; ++i) {
+	    if (collection[i].value !== value) {
+	      continue;
+	    }
+
+	    return i;
+	  }
+
+	  return -1;
+	}
+
+	/**
+	 * @param  {function} iteratee
+	 * @param  {number} steps
+	 * @return {array}
+	 */
+	function mapRange(iteratee, steps) {
+	  var collection = new Array(steps);
+	  for (var i = 0; i < steps; ++i) {
+	    collection[i] = iteratee(i, steps);
+	  }
+
+	  return collection;
+	}
+
+	function noop() {}
+
+	/**
+	 * @param  {*} a
+	 * @return {array}
+	 */
+	function toArray(a) {
+	  return a != null && !Array.isArray(a) ? [a] : a;
+	}
+
+/***/ },
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -20711,7 +20802,7 @@
 
 
 /***/ },
-/* 178 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20766,112 +20857,112 @@
 	};
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","control":"button-action-xs--control button-action--control"};
 
 /***/ },
-/* 180 */,
 /* 181 */,
 /* 182 */,
-/* 183 */
+/* 183 */,
+/* 184 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","line-s":"28px","control":"button-action-s--control button-action--control"};
 
 /***/ },
-/* 184 */,
-/* 185 */
+/* 185 */,
+/* 186 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","line-m":"32px","control":"button-action-m--control button-action--control"};
 
 /***/ },
-/* 186 */,
-/* 187 */
+/* 187 */,
+/* 188 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","line-l":"38px","control":"button-action-l--control button-action--control"};
 
 /***/ },
-/* 188 */,
-/* 189 */
+/* 189 */,
+/* 190 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"button-link-xs--control button-link--control link-xs--control link--control"};
 
 /***/ },
-/* 190 */,
 /* 191 */,
 /* 192 */,
 /* 193 */,
-/* 194 */
+/* 194 */,
+/* 195 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"button-link-s--control button-link--control link-s--control link--control"};
 
 /***/ },
-/* 195 */,
 /* 196 */,
-/* 197 */
+/* 197 */,
+/* 198 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"button-link-m--control button-link--control link-m--control link--control"};
 
 /***/ },
-/* 198 */,
 /* 199 */,
-/* 200 */
+/* 200 */,
+/* 201 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"button-link-l--control button-link--control link-l--control link--control"};
 
 /***/ },
-/* 201 */,
 /* 202 */,
-/* 203 */
+/* 203 */,
+/* 204 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","control":"button-normal-xs--control button-normal--control"};
 
 /***/ },
-/* 204 */,
 /* 205 */,
-/* 206 */
+/* 206 */,
+/* 207 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","line-s":"28px","control":"button-normal-s--control button-normal--control"};
 
 /***/ },
-/* 207 */,
-/* 208 */
+/* 208 */,
+/* 209 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","line-m":"32px","control":"button-normal-m--control button-normal--control"};
 
 /***/ },
-/* 209 */,
-/* 210 */
+/* 210 */,
+/* 211 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","line-l":"38px","control":"button-normal-l--control button-normal--control"};
 
 /***/ },
-/* 211 */,
-/* 212 */
+/* 212 */,
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20943,10 +21034,10 @@
 	    "size": "m",
 	    "value": "size-m"
 	  }]]
-	}, __webpack_require__(213));
+	}, __webpack_require__(214));
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20955,8 +21046,8 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Check = __webpack_require__(214);
-	var StyleComponent = __webpack_require__(178);
+	var Check = __webpack_require__(215);
+	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Check, function (styles, _ref) {
 	  var size = _ref.size;
@@ -20971,7 +21062,7 @@
 	});
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20993,9 +21084,10 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
+	var composition = _require2.composition;
 	var noop = _require2.noop;
 
 	var _require3 = __webpack_require__(216);
@@ -21003,7 +21095,6 @@
 	var generateId = _require3.generateId;
 
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var Check = function (_Component) {
 	  _inherits(Check, _Component);
@@ -21044,11 +21135,9 @@
 	    value: function render() {
 	      var _props = this.props;
 	      var children = _props.children;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
 	      var styles = _props.styles;
 
-	      var o = _objectWithoutProperties(_props, ['children', 'className', 'styleName', 'styles']);
+	      var o = _objectWithoutProperties(_props, ['children', 'styles']);
 
 	      var id = this.state.id;
 
@@ -21070,7 +21159,7 @@
 
 	      return React.createElement(
 	        'div',
-	        { className: cx(className, styles[styleName]) },
+	        { className: composition(this.props) },
 	        React.createElement('input', _extends({}, o, {
 	          className: styles.native,
 	          id: id,
@@ -21101,92 +21190,6 @@
 	};
 
 	module.exports = Check;
-
-/***/ },
-/* 215 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	exports.bind = bind;
-	exports.decrement = decrement;
-	exports.increment = increment;
-	exports.findIndexByValueProp = findIndexByValueProp;
-	exports.mapRange = mapRange;
-	exports.noop = noop;
-	exports.toArray = toArray;
-
-	/**
-	 * @param  {object} context
-	 * @param  {string|string[]} methods
-	 * @return {object}
-	 */
-	function bind(context, methods) {
-	  toArray(methods).forEach(function (method) {
-	    return context[method] = context[method].bind(context);
-	  });
-	  return context;
-	}
-
-	/**
-	 * @param  {number} value
-	 * @param  {number} limit
-	 * @return {number}
-	 */
-	function decrement(value, limit) {
-	  return value > 0 ? value - 1 : limit - 1;
-	}
-
-	/**
-	 * @param  {number} value
-	 * @param  {number} limit
-	 * @return {number}
-	 */
-	function increment(value, limit) {
-	  return value < limit - 1 ? value + 1 : 0;
-	}
-
-	/**
-	 * @param  {object[]} collection
-	 * @param  {string} value
-	 * @return {number}
-	 */
-	function findIndexByValueProp(collection, value) {
-	  var length = collection.length;
-	  for (var i = 0; i < length; ++i) {
-	    if (collection[i].value !== value) {
-	      continue;
-	    }
-
-	    return i;
-	  }
-
-	  return -1;
-	}
-
-	/**
-	 * @param  {function} iteratee
-	 * @param  {number} steps
-	 * @return {array}
-	 */
-	function mapRange(iteratee, steps) {
-	  var collection = new Array(steps);
-	  for (var i = 0; i < steps; ++i) {
-	    collection[i] = iteratee(i, steps);
-	  }
-
-	  return collection;
-	}
-
-	function noop() {}
-
-	/**
-	 * @param  {*} a
-	 * @return {array}
-	 */
-	function toArray(a) {
-	  return a != null && !Array.isArray(a) ? [a] : a;
-	}
 
 /***/ },
 /* 216 */
@@ -21369,7 +21372,7 @@
 	var PropTypes = _require.PropTypes;
 
 	var CheckGroup = __webpack_require__(224);
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(CheckGroup, function (styles, _ref) {
 	  var size = _ref.size;
@@ -21395,8 +21398,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -21408,9 +21409,10 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
+	var composition = _require2.composition;
 	var mapRange = _require2.mapRange;
 	var noop = _require2.noop;
 
@@ -21421,9 +21423,8 @@
 	var mapKey = _require3.mapKey;
 	var mapKeyBasedOnPos = _require3.mapKeyBasedOnPos;
 
-	var Check = __webpack_require__(214);
+	var Check = __webpack_require__(215);
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var CheckGroup = function (_Component) {
 	  _inherits(CheckGroup, _Component);
@@ -21436,7 +21437,7 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CheckGroup).call(this, props));
 
 	    _this.controlled = props.value !== undefined;
-	    _this.updateKeyMapper(props.options);
+	    _this.updateKeyMapper(props.hasUniqValues, props.options);
 
 	    var value = props.value || props.defaultValue;
 
@@ -21452,6 +21453,7 @@
 	  _createClass(CheckGroup, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(_ref) {
+	      var hasUniqValues = _ref.hasUniqValues;
 	      var options = _ref.options;
 	      var value = _ref.value;
 
@@ -21459,8 +21461,8 @@
 	        this.setState({ values: mapValueToState(options, value) });
 	      }
 
-	      if (this.props.options !== options) {
-	        this.updateKeyMapper(options);
+	      if (this.props.hasUniqValues !== hasUniqValues) {
+	        this.updateKeyMapper(hasUniqValues, options);
 	      }
 	    }
 	  }, {
@@ -21478,25 +21480,24 @@
 	        value: mapStateToValue(this.props.options, values)
 	      });
 	    }
+
+	    /**
+	     * @param {boolean} hasUniqValues
+	     * @param {object[]} options
+	     */
+
 	  }, {
 	    key: 'updateKeyMapper',
-	    value: function updateKeyMapper(options) {
-	      this.mapKey = !isUnique(options) ? mapKeyBasedOnPos : mapKey;
+	    value: function updateKeyMapper(hasUniqValues, options) {
+	      this.mapKey = !(hasUniqValues && isUnique(options)) ? mapKeyBasedOnPos : mapKey;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
-	      var styles = _props.styles;
-
-	      var o = _objectWithoutProperties(_props, ['className', 'styleName', 'styles']);
-
 	      return React.createElement(
 	        'div',
-	        _extends({}, o, {
-	          className: cx(className, styles[styleName]),
+	        _extends({}, this.props, {
+	          className: composition(this.props),
 	          onChange: undefined }),
 	        this.renderColumns()
 	      );
@@ -21506,9 +21507,9 @@
 	    value: function renderColumns() {
 	      var _this2 = this;
 
-	      var _props2 = this.props;
-	      var cols = _props2.cols;
-	      var styles = _props2.styles;
+	      var _props = this.props;
+	      var cols = _props.cols;
+	      var styles = _props.styles;
 	      var prefix = this.state.prefix;
 
 	      var rCols = Math.max(cols || 0, 1);
@@ -21537,11 +21538,11 @@
 	  }, {
 	    key: 'renderOptions',
 	    value: function renderOptions(start, step) {
-	      var _props3 = this.props;
-	      var globalDisabled = _props3.disabled;
-	      var name = _props3.name;
-	      var options = _props3.options;
-	      var styles = _props3.styles;
+	      var _props2 = this.props;
+	      var globalDisabled = _props2.disabled;
+	      var name = _props2.name;
+	      var options = _props2.options;
+	      var styles = _props2.styles;
 	      var _state = this.state;
 	      var prefix = _state.prefix;
 	      var values = _state.values;
@@ -21551,6 +21552,7 @@
 
 	      for (var i = start; i < options.length; i += step) {
 	        var _options$i = options[i];
+	        var className = _options$i.className;
 	        var disabled = _options$i.disabled;
 	        var text = _options$i.text;
 	        var value = _options$i.value;
@@ -21559,6 +21561,7 @@
 	        result.push(React.createElement(
 	          Check,
 	          {
+	            className: className,
 	            disabled: globalDisabled || disabled,
 	            checked: values[i],
 	            key: this.mapKey(prefix, value, i),
@@ -21579,6 +21582,7 @@
 	}(Component);
 
 	CheckGroup.defaultProps = {
+	  hasUniqValues: true,
 	  onChange: noop,
 	  styleName: 'container',
 	  styles: {}
@@ -21586,6 +21590,7 @@
 
 	CheckGroup.propTypes = {
 	  cols: PropTypes.number,
+	  hasUniqValues: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
 	  onContextMenu: PropTypes.func,
@@ -21710,7 +21715,7 @@
 	var PropTypes = _require.PropTypes;
 
 	var ColorPicker = __webpack_require__(232);
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(ColorPicker, function (styles, _ref) {
 	  var size = _ref.size;
@@ -21748,9 +21753,10 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
+	var composition = _require2.composition;
 	var noop = _require2.noop;
 
 	var _require3 = __webpack_require__(233);
@@ -21761,7 +21767,6 @@
 	var Popup = __webpack_require__(235);
 	var Tile = __webpack_require__(237);
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 	var reactOutsideEvent = __webpack_require__(238);
 
 	var ColorPicker = function (_Component) {
@@ -21853,25 +21858,25 @@
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
-	      var className = _props.className;
 	      var id = _props.id;
-	      var styleName = _props.styleName;
 	      var styles = _props.styles;
 
-	      var o = _objectWithoutProperties(_props, ['className', 'id', 'styleName', 'styles']);
+	      var o = _objectWithoutProperties(_props, ['id', 'styles']);
 
 	      return React.createElement(
 	        'div',
 	        {
-	          className: cx(className, styles[styleName]),
+	          className: composition(this.props),
 	          onKeyDown: this.onKeyDown },
 	        this.renderPreview(),
 	        React.createElement(Input, _extends({}, o, {
+	          className: undefined,
 	          defaultValue: undefined,
 	          id: id,
 	          onChange: this.onChange,
 	          onFocus: this.onInputFocus,
 	          ref: 'control',
+	          styleName: undefined,
 	          styles: styles,
 	          value: this.state.value })),
 	        this.renderMenu()
@@ -22001,13 +22006,13 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
+	var composition = _require2.composition;
 	var bind = _require2.bind;
 	var noop = _require2.noop;
 
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var Input = function (_Component) {
 	  _inherits(Input, _Component);
@@ -22078,12 +22083,10 @@
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
-	      var className = _props.className;
 	      var id = _props.id;
-	      var styleName = _props.styleName;
 	      var styles = _props.styles;
 
-	      var o = _objectWithoutProperties(_props, ['className', 'id', 'styleName', 'styles']);
+	      var o = _objectWithoutProperties(_props, ['id', 'styles']);
 
 	      var value = this.state.value;
 
@@ -22092,7 +22095,7 @@
 
 	      return React.createElement(
 	        'span',
-	        { className: cx(className, styles[styleName]) },
+	        { className: composition(this.props) },
 	        React.createElement('input', _extends({}, o, {
 	          className: styles.control,
 	          defaultValue: undefined // Cause we have a controlled input
@@ -22135,8 +22138,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -22148,8 +22149,11 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
+	var _require2 = __webpack_require__(177);
+
+	var composition = _require2.composition;
+
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 	var layer = __webpack_require__(236);
 
 	var Popup = function (_Component) {
@@ -22174,20 +22178,13 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
-	      var styles = _props.styles;
-
-	      var o = _objectWithoutProperties(_props, ['className', 'styleName', 'styles']);
-
 	      var zIndex = this.state.zIndex;
 
 
 	      return React.createElement('div', _extends({
 	        style: { zIndex: zIndex }
-	      }, o, {
-	        className: cx(className, styles[styleName]) }));
+	      }, this.props, {
+	        className: composition(this.props) }));
 	    }
 	  }]);
 
@@ -22356,8 +22353,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -22369,12 +22364,12 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
+	var composition = _require2.composition;
 
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var Tile = function (_Component) {
 	  _inherits(Tile, _Component);
@@ -22396,15 +22391,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
-	      var styles = _props.styles;
-
-	      var o = _objectWithoutProperties(_props, ['className', 'styleName', 'styles']);
-
-	      return React.createElement('div', _extends({}, o, {
-	        className: cx(className, styles[styleName]),
+	      return React.createElement('div', _extends({}, this.props, {
+	        className: composition(this.props),
 	        onClick: this.onClick,
 	        style: { backgroundColor: this.props.color } }));
 	    }
@@ -22628,7 +22616,7 @@
 	var PropTypes = _require.PropTypes;
 
 	var Input = __webpack_require__(234);
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Input, function (styles, _ref) {
 	  var size = _ref.size;
@@ -22700,7 +22688,7 @@
 	var PropTypes = _require.PropTypes;
 
 	var Link = __webpack_require__(259);
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Link, function (styles, _ref) {
 	  var size = _ref.size;
@@ -22725,8 +22713,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -22738,8 +22724,11 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
+	var _require2 = __webpack_require__(177);
+
+	var composition = _require2.composition;
+
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var Link = function (_Component) {
 	  _inherits(Link, _Component);
@@ -22753,14 +22742,7 @@
 	  _createClass(Link, [{
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
-	      var styles = _props.styles;
-
-	      var o = _objectWithoutProperties(_props, ['className', 'styleName', 'styles']);
-
-	      return React.createElement('a', _extends({}, o, { className: cx(className, styles[styleName]) }));
+	      return React.createElement('a', _extends({}, this.props, { className: composition(this.props) }));
 	    }
 	  }]);
 
@@ -22903,7 +22885,7 @@
 	var PropTypes = _require.PropTypes;
 
 	var Radio = __webpack_require__(265);
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Radio, function (styles, _ref) {
 	  var size = _ref.size;
@@ -22927,8 +22909,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -22940,9 +22920,10 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
+	var composition = _require2.composition;
 	var findIndexByValueProp = _require2.findIndexByValueProp;
 	var noop = _require2.noop;
 
@@ -22953,9 +22934,8 @@
 	var mapKey = _require3.mapKey;
 	var mapKeyBasedOnPos = _require3.mapKeyBasedOnPos;
 
-	var Check = __webpack_require__(214);
+	var Check = __webpack_require__(215);
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var Radio = function (_Component) {
 	  _inherits(Radio, _Component);
@@ -22968,7 +22948,7 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Radio).call(this, props));
 
 	    _this.controlled = props.value !== undefined;
-	    _this.updateKeyMapper(props.options);
+	    _this.updateKeyMapper(props.hasUniqValues, props.options);
 
 	    var value = props.value || props.defaultValue;
 
@@ -22984,6 +22964,7 @@
 	  _createClass(Radio, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(_ref) {
+	      var hasUniqValues = _ref.hasUniqValues;
 	      var options = _ref.options;
 	      var value = _ref.value;
 
@@ -22991,8 +22972,8 @@
 	        this.setState({ selected: findIndexByValueProp(options, value) });
 	      }
 
-	      if (this.props.options !== options) {
-	        this.updateKeyMapper(options);
+	      if (this.props.hasUniqValues !== hasUniqValues) {
+	        this.updateKeyMapper(hasUniqValues, options);
 	      }
 	    }
 	  }, {
@@ -23004,25 +22985,24 @@
 
 	      this.props.onChange(e, { value: this.props.options[tc].value });
 	    }
+
+	    /**
+	     * @param {boolean} hasUniqValues
+	     * @param {object[]} options
+	     */
+
 	  }, {
 	    key: 'updateKeyMapper',
-	    value: function updateKeyMapper(options) {
-	      this.mapKey = !isUnique(options) ? mapKeyBasedOnPos : mapKey;
+	    value: function updateKeyMapper(hasUniqValues, options) {
+	      this.mapKey = !(hasUniqValues && isUnique(options)) ? mapKeyBasedOnPos : mapKey;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
-	      var styles = _props.styles;
-
-	      var o = _objectWithoutProperties(_props, ['className', 'styleName', 'styles']);
-
 	      return React.createElement(
 	        'div',
-	        _extends({}, o, {
-	          className: cx(className, styles[styleName]),
+	        _extends({}, this.props, {
+	          className: composition(this.props),
 	          onChange: undefined }),
 	        this.renderOptions()
 	      );
@@ -23032,22 +23012,24 @@
 	    value: function renderOptions() {
 	      var _this2 = this;
 
-	      var _props2 = this.props;
-	      var disabled = _props2.disabled;
-	      var name = _props2.name;
-	      var options = _props2.options;
-	      var styles = _props2.styles;
+	      var _props = this.props;
+	      var disabled = _props.disabled;
+	      var name = _props.name;
+	      var options = _props.options;
+	      var styles = _props.styles;
 	      var _state = this.state;
 	      var prefix = _state.prefix;
 	      var selected = _state.selected;
 
 
 	      return options.map(function (_ref2, i) {
+	        var className = _ref2.className;
 	        var text = _ref2.text;
 	        var value = _ref2.value;
 	        return React.createElement(
 	          Check,
 	          {
+	            className: className,
 	            disabled: disabled,
 	            checked: selected === i,
 	            key: _this2.mapKey(prefix, value, i),
@@ -23067,12 +23049,14 @@
 	}(Component);
 
 	Radio.defaultProps = {
+	  hasUniqValues: true,
 	  onChange: noop,
 	  styleName: 'container',
 	  styles: {}
 	};
 
 	Radio.propTypes = {
+	  hasUniqValues: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
 	  options: PropTypes.array.isRequired,
@@ -23281,7 +23265,7 @@
 	var PropTypes = _require.PropTypes;
 
 	var RadioGroup = __webpack_require__(273);
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(RadioGroup, function (styles, _ref) {
 	  var size = _ref.size;
@@ -23309,8 +23293,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -23322,9 +23304,10 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
+	var composition = _require2.composition;
 	var findIndexByValueProp = _require2.findIndexByValueProp;
 	var noop = _require2.noop;
 
@@ -23337,7 +23320,6 @@
 
 	var RadioButton = __webpack_require__(274);
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var RadioGroup = function (_Component) {
 	  _inherits(RadioGroup, _Component);
@@ -23350,7 +23332,7 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RadioGroup).call(this, props));
 
 	    _this.controlled = props.value !== undefined;
-	    _this.updateKeyMapper(props.options);
+	    _this.updateKeyMapper(props.hasUniqValues, props.options);
 
 	    var value = props.value || props.defaultValue;
 
@@ -23367,6 +23349,7 @@
 	  _createClass(RadioGroup, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(_ref) {
+	      var hasUniqValues = _ref.hasUniqValues;
 	      var options = _ref.options;
 	      var value = _ref.value;
 
@@ -23374,8 +23357,8 @@
 	        this.setState({ selected: findIndexByValueProp(options, value) });
 	      }
 
-	      if (this.props.options !== options) {
-	        this.updateKeyMapper(options);
+	      if (this.props.hasUniqValues !== hasUniqValues) {
+	        this.updateKeyMapper(hasUniqValues, options);
 	      }
 	    }
 	  }, {
@@ -23387,25 +23370,24 @@
 
 	      this.props.onChange(e, _);
 	    }
+
+	    /**
+	     * @param {boolean} hasUniqValues
+	     * @param {object[]} options
+	     */
+
 	  }, {
 	    key: 'updateKeyMapper',
-	    value: function updateKeyMapper(options) {
-	      this.mapKey = !isUnique(options) ? mapKeyBasedOnPos : mapKey;
+	    value: function updateKeyMapper(hasUniqValues, options) {
+	      this.mapKey = !(hasUniqValues && isUnique(options)) ? mapKeyBasedOnPos : mapKey;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
-	      var styles = _props.styles;
-
-	      var o = _objectWithoutProperties(_props, ['className', 'styleName', 'styles']);
-
 	      return React.createElement(
 	        'div',
-	        _extends({}, o, {
-	          className: cx(className, styles[styleName]),
+	        _extends({}, this.props, {
+	          className: composition(this.props),
 	          onChange: undefined }),
 	        this.renderOptions()
 	      );
@@ -23415,22 +23397,24 @@
 	    value: function renderOptions() {
 	      var _this2 = this;
 
-	      var _props2 = this.props;
-	      var disabled = _props2.disabled;
-	      var name = _props2.name;
-	      var options = _props2.options;
-	      var styles = _props2.styles;
+	      var _props = this.props;
+	      var disabled = _props.disabled;
+	      var name = _props.name;
+	      var options = _props.options;
+	      var styles = _props.styles;
 	      var _state = this.state;
 	      var prefix = _state.prefix;
 	      var selected = _state.selected;
 
 
 	      return options.map(function (_ref2, i) {
+	        var className = _ref2.className;
 	        var text = _ref2.text;
 	        var value = _ref2.value;
 	        return React.createElement(
 	          RadioButton,
 	          {
+	            className: className,
 	            checked: selected === i,
 	            disabled: disabled,
 	            key: _this2.mapKey(prefix, value, i),
@@ -23449,12 +23433,14 @@
 	}(Component);
 
 	RadioGroup.defaultProps = {
+	  hasUniqValues: true,
 	  onChange: noop,
 	  styleName: 'container',
 	  styles: {}
 	};
 
 	RadioGroup.propTypes = {
+	  hasUniqValues: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
 	  options: PropTypes.array.isRequired,
@@ -23487,9 +23473,10 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
+	var composition = _require2.composition;
 	var noop = _require2.noop;
 
 	var _require3 = __webpack_require__(216);
@@ -23497,7 +23484,6 @@
 	var generateId = _require3.generateId;
 
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var RadioButton = function (_Component) {
 	  _inherits(RadioButton, _Component);
@@ -23538,11 +23524,9 @@
 	    value: function render() {
 	      var _props = this.props;
 	      var children = _props.children;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
 	      var styles = _props.styles;
 
-	      var o = _objectWithoutProperties(_props, ['children', 'className', 'styleName', 'styles']);
+	      var o = _objectWithoutProperties(_props, ['children', 'styles']);
 
 	      var id = this.state.id;
 
@@ -23557,7 +23541,7 @@
 
 	      return React.createElement(
 	        'span',
-	        { className: cx(className, styles[styleName]) },
+	        { className: composition(this.props) },
 	        React.createElement('input', _extends({
 	          type: 'radio'
 	        }, o, {
@@ -23638,785 +23622,11 @@
 	  "data": [[{
 	    "name": "cities",
 	    "options": [{
-	      "text": "Moscow",
-	      "value": "moscow"
-	    }, {
-	      "text": "Saint Petersburg",
-	      "value": "saint petersburg"
-	    }, {
-	      "text": "Novosibirsk",
-	      "value": "novosibirsk"
-	    }, {
-	      "text": "Yekaterinburg",
-	      "value": "yekaterinburg"
-	    }, {
-	      "text": "Nizhny Novgorod",
-	      "value": "nizhny novgorod"
-	    }, {
-	      "text": "Samara",
-	      "value": "samara"
-	    }, {
-	      "text": "Omsk",
-	      "value": "omsk"
-	    }, {
-	      "text": "Kazan",
-	      "value": "kazan"
-	    }, {
-	      "text": "Chelyabinsk",
-	      "value": "chelyabinsk"
-	    }, {
-	      "text": "Rostov-on-Don",
-	      "value": "rostov-on-don"
-	    }, {
-	      "text": "Ufa",
-	      "value": "ufa"
-	    }, {
-	      "text": "Volgograd",
-	      "value": "volgograd"
-	    }, {
-	      "text": "Perm",
-	      "value": "perm"
-	    }, {
-	      "text": "Krasnoyarsk",
-	      "value": "krasnoyarsk"
-	    }, {
-	      "text": "Voronezh",
-	      "value": "voronezh"
-	    }, {
-	      "text": "Saratov",
-	      "value": "saratov"
-	    }, {
-	      "text": "Krasnodar",
-	      "value": "krasnodar"
-	    }, {
-	      "text": "Tolyatti",
-	      "value": "tolyatti"
-	    }, {
-	      "text": "Izhevsk",
-	      "value": "izhevsk"
-	    }, {
-	      "text": "Ulyanovsk",
-	      "value": "ulyanovsk"
-	    }, {
-	      "text": "Barnaul",
-	      "value": "barnaul"
-	    }, {
-	      "text": "Vladivostok",
-	      "value": "vladivostok"
-	    }, {
-	      "text": "Yaroslavl",
-	      "value": "yaroslavl"
-	    }, {
-	      "text": "Irkutsk",
-	      "value": "irkutsk"
-	    }, {
-	      "text": "Tyumen",
-	      "value": "tyumen"
-	    }, {
-	      "text": "Khabarovsk",
-	      "value": "khabarovsk"
-	    }, {
-	      "text": "Makhachkala",
-	      "value": "makhachkala"
-	    }, {
-	      "text": "Orenburg",
-	      "value": "orenburg"
-	    }, {
-	      "text": "Novokuznetsk",
-	      "value": "novokuznetsk"
-	    }, {
-	      "text": "Kemerovo",
-	      "value": "kemerovo"
-	    }, {
-	      "text": "Ryazan",
-	      "value": "ryazan"
-	    }, {
-	      "text": "Tomsk",
-	      "value": "tomsk"
-	    }, {
-	      "text": "Astrakhan",
-	      "value": "astrakhan"
-	    }, {
-	      "text": "Penza",
-	      "value": "penza"
-	    }, {
-	      "text": "Naberezhnye Chelny",
-	      "value": "naberezhnye chelny"
-	    }, {
-	      "text": "Lipetsk",
-	      "value": "lipetsk"
-	    }, {
-	      "text": "Tula",
-	      "value": "tula"
-	    }, {
-	      "text": "Kirov",
-	      "value": "kirov"
-	    }, {
-	      "text": "Cheboksary",
-	      "value": "cheboksary"
-	    }, {
-	      "text": "Kaliningrad",
-	      "value": "kaliningrad"
-	    }, {
-	      "text": "Bryansk",
-	      "value": "bryansk"
-	    }, {
-	      "text": "Kursk",
-	      "value": "kursk"
-	    }, {
-	      "text": "Ivanovo",
-	      "value": "ivanovo"
-	    }, {
-	      "text": "Magnitogorsk",
-	      "value": "magnitogorsk"
-	    }, {
-	      "text": "Ulan-Ude",
-	      "value": "ulan-ude"
-	    }, {
-	      "text": "Tver",
-	      "value": "tver"
-	    }, {
-	      "text": "Stavropol",
-	      "value": "stavropol"
-	    }, {
-	      "text": "Nizhny Tagil",
-	      "value": "nizhny tagil"
-	    }, {
-	      "text": "Belgorod",
-	      "value": "belgorod"
-	    }, {
-	      "text": "Arkhangelsk",
-	      "value": "arkhangelsk"
-	    }, {
-	      "text": "Vladimir",
-	      "value": "vladimir"
-	    }, {
-	      "text": "Sochi",
-	      "value": "sochi"
-	    }, {
-	      "text": "Kurgan",
-	      "value": "kurgan"
-	    }, {
-	      "text": "Smolensk",
-	      "value": "smolensk"
-	    }, {
-	      "text": "Kaluga",
-	      "value": "kaluga"
-	    }, {
-	      "text": "Chita",
-	      "value": "chita"
-	    }, {
-	      "text": "Oryol",
-	      "value": "oryol"
-	    }, {
-	      "text": "Volzhsky",
-	      "value": "volzhsky"
-	    }, {
-	      "text": "Cherepovets",
-	      "value": "cherepovets"
-	    }, {
-	      "text": "Vladikavkaz",
-	      "value": "vladikavkaz"
-	    }, {
-	      "text": "Murmansk",
-	      "value": "murmansk"
-	    }, {
-	      "text": "Surgut",
-	      "value": "surgut"
-	    }, {
-	      "text": "Vologda",
-	      "value": "vologda"
-	    }, {
-	      "text": "Saransk",
-	      "value": "saransk"
-	    }, {
-	      "text": "Tambov",
-	      "value": "tambov"
-	    }, {
-	      "text": "Sterlitamak",
-	      "value": "sterlitamak"
-	    }, {
-	      "text": "Grozny",
-	      "value": "grozny"
-	    }, {
-	      "text": "Yakutsk",
-	      "value": "yakutsk"
-	    }, {
-	      "text": "Kostroma",
-	      "value": "kostroma"
-	    }, {
-	      "text": "Komsomolsk-on-Amur",
-	      "value": "komsomolsk-on-amur"
-	    }, {
-	      "text": "Petrozavodsk",
-	      "value": "petrozavodsk"
-	    }, {
-	      "text": "Taganrog",
-	      "value": "taganrog"
-	    }, {
-	      "text": "Nizhnevartovsk",
-	      "value": "nizhnevartovsk"
-	    }, {
-	      "text": "Yoshkar-Ola",
-	      "value": "yoshkar-ola"
-	    }, {
-	      "text": "Bratsk",
-	      "value": "bratsk"
-	    }, {
-	      "text": "Novorossiysk",
-	      "value": "novorossiysk"
-	    }, {
-	      "text": "Dzerzhinsk",
-	      "value": "dzerzhinsk"
-	    }, {
-	      "text": "Nalchik",
-	      "value": "nalchik"
-	    }, {
-	      "text": "Shakhty",
-	      "value": "shakhty"
-	    }, {
-	      "text": "Orsk",
-	      "value": "orsk"
-	    }, {
-	      "text": "Syktyvkar",
-	      "value": "syktyvkar"
-	    }, {
-	      "text": "Nizhnekamsk",
-	      "value": "nizhnekamsk"
-	    }, {
-	      "text": "Angarsk",
-	      "value": "angarsk"
-	    }, {
-	      "text": "Stary Oskol",
-	      "value": "stary oskol"
-	    }, {
-	      "text": "Veliky Novgorod",
-	      "value": "veliky novgorod"
-	    }, {
-	      "text": "Balashikha",
-	      "value": "balashikha"
-	    }, {
-	      "text": "Blagoveshchensk",
-	      "value": "blagoveshchensk"
-	    }, {
-	      "text": "Prokopyevsk",
-	      "value": "prokopyevsk"
-	    }, {
-	      "text": "Biysk",
-	      "value": "biysk"
-	    }, {
-	      "text": "Khimki",
-	      "value": "khimki"
-	    }, {
-	      "text": "Pskov",
-	      "value": "pskov"
-	    }, {
-	      "text": "Engels",
-	      "value": "engels"
-	    }, {
-	      "text": "Rybinsk",
-	      "value": "rybinsk"
-	    }, {
-	      "text": "Balakovo",
-	      "value": "balakovo"
-	    }, {
-	      "text": "Severodvinsk",
-	      "value": "severodvinsk"
-	    }, {
-	      "text": "Armavir",
-	      "value": "armavir"
-	    }, {
-	      "text": "Podolsk",
-	      "value": "podolsk"
-	    }, {
-	      "text": "Korolyov",
-	      "value": "korolyov"
-	    }, {
-	      "text": "Yuzhno-Sakhalinsk",
-	      "value": "yuzhno-sakhalinsk"
-	    }, {
-	      "text": "Petropavlovsk-Kamchatsky",
-	      "value": "petropavlovsk-kamchatsky"
-	    }, {
-	      "text": "Syzran",
-	      "value": "syzran"
-	    }, {
-	      "text": "Norilsk",
-	      "value": "norilsk"
-	    }, {
-	      "text": "Zlatoust",
-	      "value": "zlatoust"
-	    }, {
-	      "text": "Kamensk-Uralsky",
-	      "value": "kamensk-uralsky"
-	    }, {
-	      "text": "Mytishchi",
-	      "value": "mytishchi"
-	    }, {
-	      "text": "Lyubertsy",
-	      "value": "lyubertsy"
-	    }, {
-	      "text": "Volgodonsk",
-	      "value": "volgodonsk"
-	    }, {
-	      "text": "Novocherkassk",
-	      "value": "novocherkassk"
-	    }, {
 	      "text": "Abakan",
 	      "value": "abakan"
 	    }, {
-	      "text": "Nakhodka",
-	      "value": "nakhodka"
-	    }, {
-	      "text": "Ussuriysk",
-	      "value": "ussuriysk"
-	    }, {
-	      "text": "Berezniki",
-	      "value": "berezniki"
-	    }, {
-	      "text": "Salavat",
-	      "value": "salavat"
-	    }, {
-	      "text": "Elektrostal",
-	      "value": "elektrostal"
-	    }, {
-	      "text": "Miass",
-	      "value": "miass"
-	    }, {
-	      "text": "Rubtsovsk",
-	      "value": "rubtsovsk"
-	    }, {
-	      "text": "Almetyevsk",
-	      "value": "almetyevsk"
-	    }, {
-	      "text": "Kovrov",
-	      "value": "kovrov"
-	    }, {
-	      "text": "Kolomna",
-	      "value": "kolomna"
-	    }, {
-	      "text": "Maykop",
-	      "value": "maykop"
-	    }, {
-	      "text": "Pyatigorsk",
-	      "value": "pyatigorsk"
-	    }, {
-	      "text": "Odintsovo",
-	      "value": "odintsovo"
-	    }, {
-	      "text": "Kopeysk",
-	      "value": "kopeysk"
-	    }, {
-	      "text": "Novomoskovsk",
-	      "value": "novomoskovsk"
-	    }, {
-	      "text": "Zheleznodorozhny",
-	      "value": "zheleznodorozhny"
-	    }, {
-	      "text": "Khasavyurt",
-	      "value": "khasavyurt"
-	    }, {
-	      "text": "Cherkessk",
-	      "value": "cherkessk"
-	    }, {
-	      "text": "Kislovodsk",
-	      "value": "kislovodsk"
-	    }, {
-	      "text": "Serpukhov",
-	      "value": "serpukhov"
-	    }, {
-	      "text": "Pervouralsk",
-	      "value": "pervouralsk"
-	    }, {
-	      "text": "Novocheboksarsk",
-	      "value": "novocheboksarsk"
-	    }, {
-	      "text": "Nefteyugansk",
-	      "value": "nefteyugansk"
-	    }, {
-	      "text": "Dimitrovgrad",
-	      "value": "dimitrovgrad"
-	    }, {
-	      "text": "Neftekamsk",
-	      "value": "neftekamsk"
-	    }, {
-	      "text": "Orekhovo-Zuyevo",
-	      "value": "orekhovo-zuyevo"
-	    }, {
-	      "text": "Kamyshin",
-	      "value": "kamyshin"
-	    }, {
-	      "text": "Derbent",
-	      "value": "derbent"
-	    }, {
-	      "text": "Nevinnomyssk",
-	      "value": "nevinnomyssk"
-	    }, {
-	      "text": "Krasnogorsk",
-	      "value": "krasnogorsk"
-	    }, {
-	      "text": "Murom",
-	      "value": "murom"
-	    }, {
-	      "text": "Bataysk",
-	      "value": "bataysk"
-	    }, {
-	      "text": "Sergiyev Posad",
-	      "value": "sergiyev posad"
-	    }, {
-	      "text": "Novoshakhtinsk",
-	      "value": "novoshakhtinsk"
-	    }, {
-	      "text": "Noyabrsk",
-	      "value": "noyabrsk"
-	    }, {
-	      "text": "Shchyolkovo",
-	      "value": "shchyolkovo"
-	    }, {
-	      "text": "Kyzyl",
-	      "value": "kyzyl"
-	    }, {
-	      "text": "Oktyabrsky",
-	      "value": "oktyabrsky"
-	    }, {
 	      "text": "Achinsk",
 	      "value": "achinsk"
-	    }, {
-	      "text": "Seversk",
-	      "value": "seversk"
-	    }, {
-	      "text": "Novokuybyshevsk",
-	      "value": "novokuybyshevsk"
-	    }, {
-	      "text": "Yelets",
-	      "value": "yelets"
-	    }, {
-	      "text": "Arzamas",
-	      "value": "arzamas"
-	    }, {
-	      "text": "Obninsk",
-	      "value": "obninsk"
-	    }, {
-	      "text": "Zhukovsky",
-	      "value": "zhukovsky"
-	    }, {
-	      "text": "Novy Urengoy",
-	      "value": "novy urengoy"
-	    }, {
-	      "text": "Elista",
-	      "value": "elista"
-	    }, {
-	      "text": "Pushkino",
-	      "value": "pushkino"
-	    }, {
-	      "text": "Artyom",
-	      "value": "artyom"
-	    }, {
-	      "text": "Mezhdurechensk",
-	      "value": "mezhdurechensk"
-	    }, {
-	      "text": "Leninsk-Kuznetsky",
-	      "value": "leninsk-kuznetsky"
-	    }, {
-	      "text": "Sarapul",
-	      "value": "sarapul"
-	    }, {
-	      "text": "Yessentuki",
-	      "value": "yessentuki"
-	    }, {
-	      "text": "Kaspiysk",
-	      "value": "kaspiysk"
-	    }, {
-	      "text": "Noginsk",
-	      "value": "noginsk"
-	    }, {
-	      "text": "Tobolsk",
-	      "value": "tobolsk"
-	    }, {
-	      "text": "Ukhta",
-	      "value": "ukhta"
-	    }, {
-	      "text": "Serov",
-	      "value": "serov"
-	    }, {
-	      "text": "Votkinsk",
-	      "value": "votkinsk"
-	    }, {
-	      "text": "Velikiye Luki",
-	      "value": "velikiye luki"
-	    }, {
-	      "text": "Michurinsk",
-	      "value": "michurinsk"
-	    }, {
-	      "text": "Kiselyovsk",
-	      "value": "kiselyovsk"
-	    }, {
-	      "text": "Novotroitsk",
-	      "value": "novotroitsk"
-	    }, {
-	      "text": "Zelenodolsk",
-	      "value": "zelenodolsk"
-	    }, {
-	      "text": "Solikamsk",
-	      "value": "solikamsk"
-	    }, {
-	      "text": "Berdsk",
-	      "value": "berdsk"
-	    }, {
-	      "text": "Ramenskoye",
-	      "value": "ramenskoye"
-	    }, {
-	      "text": "Domodedovo",
-	      "value": "domodedovo"
-	    }, {
-	      "text": "Magadan",
-	      "value": "magadan"
-	    }, {
-	      "text": "Glazov",
-	      "value": "glazov"
-	    }, {
-	      "text": "Kamensk-Shakhtinsky",
-	      "value": "kamensk-shakhtinsky"
-	    }, {
-	      "text": "Zheleznogorsk",
-	      "value": "zheleznogorsk"
-	    }, {
-	      "text": "Kansk",
-	      "value": "kansk"
-	    }, {
-	      "text": "Nazran",
-	      "value": "nazran"
-	    }, {
-	      "text": "Gatchina",
-	      "value": "gatchina"
-	    }, {
-	      "text": "Sarov",
-	      "value": "sarov"
-	    }, {
-	      "text": "Voskresensk",
-	      "value": "voskresensk"
-	    }, {
-	      "text": "Dolgoprudny",
-	      "value": "dolgoprudny"
-	    }, {
-	      "text": "Bugulma",
-	      "value": "bugulma"
-	    }, {
-	      "text": "Kuznetsk",
-	      "value": "kuznetsk"
-	    }, {
-	      "text": "Gubkin",
-	      "value": "gubkin"
-	    }, {
-	      "text": "Kineshma",
-	      "value": "kineshma"
-	    }, {
-	      "text": "Yeysk",
-	      "value": "yeysk"
-	    }, {
-	      "text": "Reutov",
-	      "value": "reutov"
-	    }, {
-	      "text": "Ust-Ilimsk",
-	      "value": "ust-ilimsk"
-	    }, {
-	      "text": "Novouralsk",
-	      "value": "novouralsk"
-	    }, {
-	      "text": "Zheleznogorsk",
-	      "value": "zheleznogorsk"
-	    }, {
-	      "text": "Usolye-Sibirskoye",
-	      "value": "usolye-sibirskoye"
-	    }, {
-	      "text": "Azov",
-	      "value": "azov"
-	    }, {
-	      "text": "Buzuluk",
-	      "value": "buzuluk"
-	    }, {
-	      "text": "Chaykovsky",
-	      "value": "chaykovsky"
-	    }, {
-	      "text": "Balashov",
-	      "value": "balashov"
-	    }, {
-	      "text": "Ozyorsk",
-	      "value": "ozyorsk"
-	    }, {
-	      "text": "Yurga",
-	      "value": "yurga"
-	    }, {
-	      "text": "Kirovo-Chepetsk",
-	      "value": "kirovo-chepetsk"
-	    }, {
-	      "text": "Kropotkin",
-	      "value": "kropotkin"
-	    }, {
-	      "text": "Klin",
-	      "value": "klin"
-	    }, {
-	      "text": "Khanty-Mansiysk",
-	      "value": "khanty-mansiysk"
-	    }, {
-	      "text": "Vyborg",
-	      "value": "vyborg"
-	    }, {
-	      "text": "Troitsk",
-	      "value": "troitsk"
-	    }, {
-	      "text": "Bor",
-	      "value": "bor"
-	    }, {
-	      "text": "Shadrinsk",
-	      "value": "shadrinsk"
-	    }, {
-	      "text": "Belovo",
-	      "value": "belovo"
-	    }, {
-	      "text": "Mineralnye Vody",
-	      "value": "mineralnye vody"
-	    }, {
-	      "text": "Anzhero-Sudzhensk",
-	      "value": "anzhero-sudzhensk"
-	    }, {
-	      "text": "Birobidzhan",
-	      "value": "birobidzhan"
-	    }, {
-	      "text": "Lobnya",
-	      "value": "lobnya"
-	    }, {
-	      "text": "Chapayevsk",
-	      "value": "chapayevsk"
-	    }, {
-	      "text": "Georgiyevsk",
-	      "value": "georgiyevsk"
-	    }, {
-	      "text": "Chernogorsk",
-	      "value": "chernogorsk"
-	    }, {
-	      "text": "Minusinsk",
-	      "value": "minusinsk"
-	    }, {
-	      "text": "Mikhaylovsk",
-	      "value": "mikhaylovsk"
-	    }, {
-	      "text": "Yelabuga",
-	      "value": "yelabuga"
-	    }, {
-	      "text": "Dubna",
-	      "value": "dubna"
-	    }, {
-	      "text": "Vorkuta",
-	      "value": "vorkuta"
-	    }, {
-	      "text": "Novoaltaysk",
-	      "value": "novoaltaysk"
-	    }, {
-	      "text": "Yegoryevsk",
-	      "value": "yegoryevsk"
-	    }, {
-	      "text": "Asbest",
-	      "value": "asbest"
-	    }, {
-	      "text": "Beloretsk",
-	      "value": "beloretsk"
-	    }, {
-	      "text": "Belogorsk",
-	      "value": "belogorsk"
-	    }, {
-	      "text": "Gukovo",
-	      "value": "gukovo"
-	    }, {
-	      "text": "Tuymazy",
-	      "value": "tuymazy"
-	    }, {
-	      "text": "Stupino",
-	      "value": "stupino"
-	    }, {
-	      "text": "Kstovo",
-	      "value": "kstovo"
-	    }, {
-	      "text": "Volsk",
-	      "value": "volsk"
-	    }, {
-	      "text": "Ishimbay",
-	      "value": "ishimbay"
-	    }, {
-	      "text": "Kungur",
-	      "value": "kungur"
-	    }, {
-	      "text": "Zelenogorsk",
-	      "value": "zelenogorsk"
-	    }, {
-	      "text": "Lysva",
-	      "value": "lysva"
-	    }, {
-	      "text": "Sosnovy Bor",
-	      "value": "sosnovy bor"
-	    }, {
-	      "text": "Borisoglebsk",
-	      "value": "borisoglebsk"
-	    }, {
-	      "text": "Ishim",
-	      "value": "ishim"
-	    }, {
-	      "text": "Naro-Fominsk",
-	      "value": "naro-fominsk"
-	    }, {
-	      "text": "Budyonnovsk",
-	      "value": "budyonnovsk"
-	    }, {
-	      "text": "Donskoy",
-	      "value": "donskoy"
-	    }, {
-	      "text": "Polevskoy",
-	      "value": "polevskoy"
-	    }, {
-	      "text": "Leninogorsk",
-	      "value": "leninogorsk"
-	    }, {
-	      "text": "Slavyansk-na-Kubani",
-	      "value": "slavyansk-na-kubani"
-	    }, {
-	      "text": "Pavlovsky Posad",
-	      "value": "pavlovsky posad"
-	    }, {
-	      "text": "Zarechny",
-	      "value": "zarechny"
-	    }, {
-	      "text": "Tuapse",
-	      "value": "tuapse"
-	    }, {
-	      "text": "Rossosh",
-	      "value": "rossosh"
-	    }, {
-	      "text": "Labinsk",
-	      "value": "labinsk"
-	    }, {
-	      "text": "Kumertau",
-	      "value": "kumertau"
-	    }, {
-	      "text": "Sibay",
-	      "value": "sibay"
-	    }, {
-	      "text": "Buynaksk",
-	      "value": "buynaksk"
-	    }, {
-	      "text": "Klintsy",
-	      "value": "klintsy"
-	    }, {
-	      "text": "Rzhev",
-	      "value": "rzhev"
-	    }, {
-	      "text": "Revda",
-	      "value": "revda"
-	    }, {
-	      "text": "Tikhoretsk",
-	      "value": "tikhoretsk"
-	    }, {
-	      "text": "Neryungri",
-	      "value": "neryungri"
 	    }, {
 	      "text": "Aleksin",
 	      "value": "aleksin"
@@ -24424,176 +23634,947 @@
 	      "text": "Alexandrov",
 	      "value": "alexandrov"
 	    }, {
-	      "text": "Meleuz",
-	      "value": "meleuz"
-	    }, {
-	      "text": "Salsk",
-	      "value": "salsk"
-	    }, {
-	      "text": "Dmitrov",
-	      "value": "dmitrov"
-	    }, {
-	      "text": "Lesosibirsk",
-	      "value": "lesosibirsk"
-	    }, {
-	      "text": "Gus-Khrustalny",
-	      "value": "gus-khrustalny"
-	    }, {
-	      "text": "Chistopol",
-	      "value": "chistopol"
-	    }, {
-	      "text": "Chekhov",
-	      "value": "chekhov"
-	    }, {
-	      "text": "Pavlovo",
-	      "value": "pavlovo"
-	    }, {
-	      "text": "Kotlas",
-	      "value": "kotlas"
-	    }, {
-	      "text": "Belebey",
-	      "value": "belebey"
-	    }, {
-	      "text": "Iskitim",
-	      "value": "iskitim"
-	    }, {
-	      "text": "Verkhnyaya Pyshma",
-	      "value": "verkhnyaya pyshma"
-	    }, {
-	      "text": "Vsevolozhsk",
-	      "value": "vsevolozhsk"
-	    }, {
-	      "text": "Apatity",
-	      "value": "apatity"
-	    }, {
-	      "text": "Krasnoturyinsk",
-	      "value": "krasnoturyinsk"
-	    }, {
-	      "text": "Prokhladny",
-	      "value": "prokhladny"
-	    }, {
-	      "text": "Mikhaylovka",
-	      "value": "mikhaylovka"
+	      "text": "Almetyevsk",
+	      "value": "almetyevsk"
 	    }, {
 	      "text": "Anapa",
 	      "value": "anapa"
 	    }, {
-	      "text": "Svobodny",
-	      "value": "svobodny"
+	      "text": "Angarsk",
+	      "value": "angarsk"
 	    }, {
-	      "text": "Ivanteyevka",
-	      "value": "ivanteyevka"
+	      "text": "Anzhero-Sudzhensk",
+	      "value": "anzhero-sudzhensk"
 	    }, {
-	      "text": "Shuya",
-	      "value": "shuya"
+	      "text": "Apatity",
+	      "value": "apatity"
 	    }, {
-	      "text": "Tikhvin",
-	      "value": "tikhvin"
+	      "text": "Arkhangelsk",
+	      "value": "arkhangelsk"
 	    }, {
-	      "text": "Kogalym",
-	      "value": "kogalym"
-	    }, {
-	      "text": "Shchyokino",
-	      "value": "shchyokino"
-	    }, {
-	      "text": "Krymsk",
-	      "value": "krymsk"
-	    }, {
-	      "text": "Vyazma",
-	      "value": "vyazma"
-	    }, {
-	      "text": "Gorno-Altaysk",
-	      "value": "gorno-altaysk"
-	    }, {
-	      "text": "Vidnoye",
-	      "value": "vidnoye"
+	      "text": "Armavir",
+	      "value": "armavir"
 	    }, {
 	      "text": "Arsenyev",
 	      "value": "arsenyev"
 	    }, {
-	      "text": "Vyksa",
-	      "value": "vyksa"
+	      "text": "Artyom",
+	      "value": "artyom"
 	    }, {
-	      "text": "Klimovsk",
-	      "value": "klimovsk"
+	      "text": "Arzamas",
+	      "value": "arzamas"
 	    }, {
-	      "text": "Liski",
-	      "value": "liski"
+	      "text": "Asbest",
+	      "value": "asbest"
 	    }, {
-	      "text": "Krasnokamensk",
-	      "value": "krasnokamensk"
+	      "text": "Astrakhan",
+	      "value": "astrakhan"
 	    }, {
-	      "text": "Volzhsk",
-	      "value": "volzhsk"
-	    }, {
-	      "text": "Izberbash",
-	      "value": "izberbash"
-	    }, {
-	      "text": "Zhigulyovsk",
-	      "value": "zhigulyovsk"
-	    }, {
-	      "text": "Fryazino",
-	      "value": "fryazino"
-	    }, {
-	      "text": "Uzlovaya",
-	      "value": "uzlovaya"
-	    }, {
-	      "text": "Lytkarino",
-	      "value": "lytkarino"
-	    }, {
-	      "text": "Gelendzhik",
-	      "value": "gelendzhik"
-	    }, {
-	      "text": "Roslavl",
-	      "value": "roslavl"
-	    }, {
-	      "text": "Nyagan",
-	      "value": "nyagan"
-	    }, {
-	      "text": "Timashyovsk",
-	      "value": "timashyovsk"
-	    }, {
-	      "text": "Belorechensk",
-	      "value": "belorechensk"
-	    }, {
-	      "text": "Borovichi",
-	      "value": "borovichi"
-	    }, {
-	      "text": "Solnechnogorsk",
-	      "value": "solnechnogorsk"
-	    }, {
-	      "text": "Nazarovo",
-	      "value": "nazarovo"
-	    }, {
-	      "text": "Cheremkhovo",
-	      "value": "cheremkhovo"
-	    }, {
-	      "text": "Vyshny Volochyok",
-	      "value": "vyshny volochyok"
-	    }, {
-	      "text": "Kirishi",
-	      "value": "kirishi"
-	    }, {
-	      "text": "Krasnokamsk",
-	      "value": "krasnokamsk"
-	    }, {
-	      "text": "Beryozovsky",
-	      "value": "beryozovsky"
+	      "text": "Azov",
+	      "value": "azov"
 	    }, {
 	      "text": "Balakhna",
 	      "value": "balakhna"
 	    }, {
-	      "text": "Lesnoy",
-	      "value": "lesnoy"
+	      "text": "Balakovo",
+	      "value": "balakovo"
 	    }, {
-	      "text": "Livny",
-	      "value": "livny"
+	      "text": "Balashikha",
+	      "value": "balashikha"
+	    }, {
+	      "text": "Balashov",
+	      "value": "balashov"
+	    }, {
+	      "text": "Barnaul",
+	      "value": "barnaul"
+	    }, {
+	      "text": "Bataysk",
+	      "value": "bataysk"
+	    }, {
+	      "text": "Belebey",
+	      "value": "belebey"
+	    }, {
+	      "text": "Belgorod",
+	      "value": "belgorod"
+	    }, {
+	      "text": "Belogorsk",
+	      "value": "belogorsk"
+	    }, {
+	      "text": "Belorechensk",
+	      "value": "belorechensk"
+	    }, {
+	      "text": "Beloretsk",
+	      "value": "beloretsk"
+	    }, {
+	      "text": "Belovo",
+	      "value": "belovo"
+	    }, {
+	      "text": "Berdsk",
+	      "value": "berdsk"
+	    }, {
+	      "text": "Berezniki",
+	      "value": "berezniki"
+	    }, {
+	      "text": "Beryozovsky",
+	      "value": "beryozovsky"
+	    }, {
+	      "text": "Birobidzhan",
+	      "value": "birobidzhan"
+	    }, {
+	      "text": "Biysk",
+	      "value": "biysk"
+	    }, {
+	      "text": "Blagoveshchensk",
+	      "value": "blagoveshchensk"
+	    }, {
+	      "text": "Bor",
+	      "value": "bor"
+	    }, {
+	      "text": "Borisoglebsk",
+	      "value": "borisoglebsk"
+	    }, {
+	      "text": "Borovichi",
+	      "value": "borovichi"
+	    }, {
+	      "text": "Bratsk",
+	      "value": "bratsk"
+	    }, {
+	      "text": "Bryansk",
+	      "value": "bryansk"
+	    }, {
+	      "text": "Budyonnovsk",
+	      "value": "budyonnovsk"
+	    }, {
+	      "text": "Bugulma",
+	      "value": "bugulma"
+	    }, {
+	      "text": "Buynaksk",
+	      "value": "buynaksk"
+	    }, {
+	      "text": "Buzuluk",
+	      "value": "buzuluk"
+	    }, {
+	      "text": "Chapayevsk",
+	      "value": "chapayevsk"
+	    }, {
+	      "text": "Chaykovsky",
+	      "value": "chaykovsky"
+	    }, {
+	      "text": "Cheboksary",
+	      "value": "cheboksary"
+	    }, {
+	      "text": "Chekhov",
+	      "value": "chekhov"
+	    }, {
+	      "text": "Chelyabinsk",
+	      "value": "chelyabinsk"
+	    }, {
+	      "text": "Cheremkhovo",
+	      "value": "cheremkhovo"
+	    }, {
+	      "text": "Cherepovets",
+	      "value": "cherepovets"
+	    }, {
+	      "text": "Cherkessk",
+	      "value": "cherkessk"
+	    }, {
+	      "text": "Chernogorsk",
+	      "value": "chernogorsk"
+	    }, {
+	      "text": "Chistopol",
+	      "value": "chistopol"
+	    }, {
+	      "text": "Chita",
+	      "value": "chita"
+	    }, {
+	      "text": "Derbent",
+	      "value": "derbent"
+	    }, {
+	      "text": "Dimitrovgrad",
+	      "value": "dimitrovgrad"
+	    }, {
+	      "text": "Dmitrov",
+	      "value": "dmitrov"
+	    }, {
+	      "text": "Dolgoprudny",
+	      "value": "dolgoprudny"
+	    }, {
+	      "text": "Domodedovo",
+	      "value": "domodedovo"
 	    }, {
 	      "text": "Donetsk",
 	      "value": "donetsk"
 	    }, {
+	      "text": "Donskoy",
+	      "value": "donskoy"
+	    }, {
+	      "text": "Dubna",
+	      "value": "dubna"
+	    }, {
+	      "text": "Dzerzhinsk",
+	      "value": "dzerzhinsk"
+	    }, {
+	      "text": "Elektrostal",
+	      "value": "elektrostal"
+	    }, {
+	      "text": "Elista",
+	      "value": "elista"
+	    }, {
+	      "text": "Engels",
+	      "value": "engels"
+	    }, {
+	      "text": "Fryazino",
+	      "value": "fryazino"
+	    }, {
+	      "text": "Gatchina",
+	      "value": "gatchina"
+	    }, {
+	      "text": "Gelendzhik",
+	      "value": "gelendzhik"
+	    }, {
+	      "text": "Georgiyevsk",
+	      "value": "georgiyevsk"
+	    }, {
+	      "text": "Glazov",
+	      "value": "glazov"
+	    }, {
+	      "text": "Gorno-Altaysk",
+	      "value": "gorno-altaysk"
+	    }, {
+	      "text": "Grozny",
+	      "value": "grozny"
+	    }, {
+	      "text": "Gubkin",
+	      "value": "gubkin"
+	    }, {
+	      "text": "Gukovo",
+	      "value": "gukovo"
+	    }, {
+	      "text": "Gus-Khrustalny",
+	      "value": "gus-khrustalny"
+	    }, {
+	      "text": "Irkutsk",
+	      "value": "irkutsk"
+	    }, {
+	      "text": "Ishim",
+	      "value": "ishim"
+	    }, {
+	      "text": "Ishimbay",
+	      "value": "ishimbay"
+	    }, {
+	      "text": "Iskitim",
+	      "value": "iskitim"
+	    }, {
+	      "text": "Ivanovo",
+	      "value": "ivanovo"
+	    }, {
+	      "text": "Ivanteyevka",
+	      "value": "ivanteyevka"
+	    }, {
+	      "text": "Izberbash",
+	      "value": "izberbash"
+	    }, {
+	      "text": "Izhevsk",
+	      "value": "izhevsk"
+	    }, {
+	      "text": "Kaliningrad",
+	      "value": "kaliningrad"
+	    }, {
+	      "text": "Kaluga",
+	      "value": "kaluga"
+	    }, {
+	      "text": "Kamensk-Shakhtinsky",
+	      "value": "kamensk-shakhtinsky"
+	    }, {
+	      "text": "Kamensk-Uralsky",
+	      "value": "kamensk-uralsky"
+	    }, {
+	      "text": "Kamyshin",
+	      "value": "kamyshin"
+	    }, {
+	      "text": "Kansk",
+	      "value": "kansk"
+	    }, {
+	      "text": "Kaspiysk",
+	      "value": "kaspiysk"
+	    }, {
+	      "text": "Kazan",
+	      "value": "kazan"
+	    }, {
+	      "text": "Kemerovo",
+	      "value": "kemerovo"
+	    }, {
+	      "text": "Khabarovsk",
+	      "value": "khabarovsk"
+	    }, {
+	      "text": "Khanty-Mansiysk",
+	      "value": "khanty-mansiysk"
+	    }, {
+	      "text": "Khasavyurt",
+	      "value": "khasavyurt"
+	    }, {
+	      "text": "Khimki",
+	      "value": "khimki"
+	    }, {
+	      "text": "Kineshma",
+	      "value": "kineshma"
+	    }, {
+	      "text": "Kirishi",
+	      "value": "kirishi"
+	    }, {
+	      "text": "Kirov",
+	      "value": "kirov"
+	    }, {
+	      "text": "Kirovo-Chepetsk",
+	      "value": "kirovo-chepetsk"
+	    }, {
+	      "text": "Kiselyovsk",
+	      "value": "kiselyovsk"
+	    }, {
+	      "text": "Kislovodsk",
+	      "value": "kislovodsk"
+	    }, {
+	      "text": "Klimovsk",
+	      "value": "klimovsk"
+	    }, {
+	      "text": "Klin",
+	      "value": "klin"
+	    }, {
+	      "text": "Klintsy",
+	      "value": "klintsy"
+	    }, {
+	      "text": "Kogalym",
+	      "value": "kogalym"
+	    }, {
+	      "text": "Kolomna",
+	      "value": "kolomna"
+	    }, {
+	      "text": "Komsomolsk-on-Amur",
+	      "value": "komsomolsk-on-amur"
+	    }, {
+	      "text": "Kopeysk",
+	      "value": "kopeysk"
+	    }, {
+	      "text": "Korolyov",
+	      "value": "korolyov"
+	    }, {
+	      "text": "Kostroma",
+	      "value": "kostroma"
+	    }, {
+	      "text": "Kotlas",
+	      "value": "kotlas"
+	    }, {
+	      "text": "Kovrov",
+	      "value": "kovrov"
+	    }, {
+	      "text": "Krasnodar",
+	      "value": "krasnodar"
+	    }, {
+	      "text": "Krasnogorsk",
+	      "value": "krasnogorsk"
+	    }, {
+	      "text": "Krasnokamensk",
+	      "value": "krasnokamensk"
+	    }, {
+	      "text": "Krasnokamsk",
+	      "value": "krasnokamsk"
+	    }, {
+	      "text": "Krasnoturyinsk",
+	      "value": "krasnoturyinsk"
+	    }, {
+	      "text": "Krasnoyarsk",
+	      "value": "krasnoyarsk"
+	    }, {
+	      "text": "Kropotkin",
+	      "value": "kropotkin"
+	    }, {
+	      "text": "Krymsk",
+	      "value": "krymsk"
+	    }, {
+	      "text": "Kstovo",
+	      "value": "kstovo"
+	    }, {
+	      "text": "Kumertau",
+	      "value": "kumertau"
+	    }, {
+	      "text": "Kungur",
+	      "value": "kungur"
+	    }, {
+	      "text": "Kurgan",
+	      "value": "kurgan"
+	    }, {
+	      "text": "Kursk",
+	      "value": "kursk"
+	    }, {
+	      "text": "Kuznetsk",
+	      "value": "kuznetsk"
+	    }, {
+	      "text": "Kyzyl",
+	      "value": "kyzyl"
+	    }, {
+	      "text": "Labinsk",
+	      "value": "labinsk"
+	    }, {
+	      "text": "Leninogorsk",
+	      "value": "leninogorsk"
+	    }, {
+	      "text": "Leninsk-Kuznetsky",
+	      "value": "leninsk-kuznetsky"
+	    }, {
+	      "text": "Lesnoy",
+	      "value": "lesnoy"
+	    }, {
+	      "text": "Lesosibirsk",
+	      "value": "lesosibirsk"
+	    }, {
+	      "text": "Lipetsk",
+	      "value": "lipetsk"
+	    }, {
+	      "text": "Liski",
+	      "value": "liski"
+	    }, {
+	      "text": "Livny",
+	      "value": "livny"
+	    }, {
+	      "text": "Lobnya",
+	      "value": "lobnya"
+	    }, {
+	      "text": "Lysva",
+	      "value": "lysva"
+	    }, {
+	      "text": "Lytkarino",
+	      "value": "lytkarino"
+	    }, {
+	      "text": "Lyubertsy",
+	      "value": "lyubertsy"
+	    }, {
+	      "text": "Magadan",
+	      "value": "magadan"
+	    }, {
+	      "text": "Magnitogorsk",
+	      "value": "magnitogorsk"
+	    }, {
+	      "text": "Makhachkala",
+	      "value": "makhachkala"
+	    }, {
+	      "text": "Maykop",
+	      "value": "maykop"
+	    }, {
+	      "text": "Meleuz",
+	      "value": "meleuz"
+	    }, {
+	      "text": "Mezhdurechensk",
+	      "value": "mezhdurechensk"
+	    }, {
+	      "text": "Miass",
+	      "value": "miass"
+	    }, {
+	      "text": "Michurinsk",
+	      "value": "michurinsk"
+	    }, {
+	      "text": "Mikhaylovka",
+	      "value": "mikhaylovka"
+	    }, {
+	      "text": "Mikhaylovsk",
+	      "value": "mikhaylovsk"
+	    }, {
+	      "text": "Mineralnye Vody",
+	      "value": "mineralnye vody"
+	    }, {
+	      "text": "Minusinsk",
+	      "value": "minusinsk"
+	    }, {
+	      "text": "Moscow",
+	      "value": "moscow"
+	    }, {
+	      "text": "Murmansk",
+	      "value": "murmansk"
+	    }, {
+	      "text": "Murom",
+	      "value": "murom"
+	    }, {
+	      "text": "Mytishchi",
+	      "value": "mytishchi"
+	    }, {
+	      "text": "Naberezhnye Chelny",
+	      "value": "naberezhnye chelny"
+	    }, {
+	      "text": "Nakhodka",
+	      "value": "nakhodka"
+	    }, {
+	      "text": "Nalchik",
+	      "value": "nalchik"
+	    }, {
+	      "text": "Naro-Fominsk",
+	      "value": "naro-fominsk"
+	    }, {
+	      "text": "Nazarovo",
+	      "value": "nazarovo"
+	    }, {
+	      "text": "Nazran",
+	      "value": "nazran"
+	    }, {
+	      "text": "Neftekamsk",
+	      "value": "neftekamsk"
+	    }, {
+	      "text": "Nefteyugansk",
+	      "value": "nefteyugansk"
+	    }, {
+	      "text": "Neryungri",
+	      "value": "neryungri"
+	    }, {
+	      "text": "Nevinnomyssk",
+	      "value": "nevinnomyssk"
+	    }, {
+	      "text": "Nizhnekamsk",
+	      "value": "nizhnekamsk"
+	    }, {
+	      "text": "Nizhnevartovsk",
+	      "value": "nizhnevartovsk"
+	    }, {
+	      "text": "Nizhny Novgorod",
+	      "value": "nizhny novgorod"
+	    }, {
+	      "text": "Nizhny Tagil",
+	      "value": "nizhny tagil"
+	    }, {
+	      "text": "Noginsk",
+	      "value": "noginsk"
+	    }, {
+	      "text": "Norilsk",
+	      "value": "norilsk"
+	    }, {
+	      "text": "Novoaltaysk",
+	      "value": "novoaltaysk"
+	    }, {
+	      "text": "Novocheboksarsk",
+	      "value": "novocheboksarsk"
+	    }, {
+	      "text": "Novocherkassk",
+	      "value": "novocherkassk"
+	    }, {
+	      "text": "Novokuybyshevsk",
+	      "value": "novokuybyshevsk"
+	    }, {
+	      "text": "Novokuznetsk",
+	      "value": "novokuznetsk"
+	    }, {
+	      "text": "Novomoskovsk",
+	      "value": "novomoskovsk"
+	    }, {
+	      "text": "Novorossiysk",
+	      "value": "novorossiysk"
+	    }, {
+	      "text": "Novoshakhtinsk",
+	      "value": "novoshakhtinsk"
+	    }, {
+	      "text": "Novosibirsk",
+	      "value": "novosibirsk"
+	    }, {
+	      "text": "Novotroitsk",
+	      "value": "novotroitsk"
+	    }, {
+	      "text": "Novouralsk",
+	      "value": "novouralsk"
+	    }, {
+	      "text": "Novy Urengoy",
+	      "value": "novy urengoy"
+	    }, {
+	      "text": "Noyabrsk",
+	      "value": "noyabrsk"
+	    }, {
+	      "text": "Nyagan",
+	      "value": "nyagan"
+	    }, {
+	      "text": "Obninsk",
+	      "value": "obninsk"
+	    }, {
+	      "text": "Odintsovo",
+	      "value": "odintsovo"
+	    }, {
+	      "text": "Oktyabrsky",
+	      "value": "oktyabrsky"
+	    }, {
+	      "text": "Omsk",
+	      "value": "omsk"
+	    }, {
+	      "text": "Orekhovo-Zuyevo",
+	      "value": "orekhovo-zuyevo"
+	    }, {
+	      "text": "Orenburg",
+	      "value": "orenburg"
+	    }, {
+	      "text": "Orsk",
+	      "value": "orsk"
+	    }, {
+	      "text": "Oryol",
+	      "value": "oryol"
+	    }, {
+	      "text": "Ozyorsk",
+	      "value": "ozyorsk"
+	    }, {
+	      "text": "Pavlovo",
+	      "value": "pavlovo"
+	    }, {
+	      "text": "Pavlovsky Posad",
+	      "value": "pavlovsky posad"
+	    }, {
+	      "text": "Penza",
+	      "value": "penza"
+	    }, {
+	      "text": "Perm",
+	      "value": "perm"
+	    }, {
+	      "text": "Pervouralsk",
+	      "value": "pervouralsk"
+	    }, {
+	      "text": "Petropavlovsk-Kamchatsky",
+	      "value": "petropavlovsk-kamchatsky"
+	    }, {
+	      "text": "Petrozavodsk",
+	      "value": "petrozavodsk"
+	    }, {
+	      "text": "Podolsk",
+	      "value": "podolsk"
+	    }, {
+	      "text": "Polevskoy",
+	      "value": "polevskoy"
+	    }, {
+	      "text": "Prokhladny",
+	      "value": "prokhladny"
+	    }, {
+	      "text": "Prokopyevsk",
+	      "value": "prokopyevsk"
+	    }, {
+	      "text": "Pskov",
+	      "value": "pskov"
+	    }, {
+	      "text": "Pushkino",
+	      "value": "pushkino"
+	    }, {
+	      "text": "Pyatigorsk",
+	      "value": "pyatigorsk"
+	    }, {
+	      "text": "Ramenskoye",
+	      "value": "ramenskoye"
+	    }, {
+	      "text": "Reutov",
+	      "value": "reutov"
+	    }, {
+	      "text": "Revda",
+	      "value": "revda"
+	    }, {
+	      "text": "Roslavl",
+	      "value": "roslavl"
+	    }, {
+	      "text": "Rossosh",
+	      "value": "rossosh"
+	    }, {
+	      "text": "Rostov-on-Don",
+	      "value": "rostov-on-don"
+	    }, {
+	      "text": "Rubtsovsk",
+	      "value": "rubtsovsk"
+	    }, {
+	      "text": "Ryazan",
+	      "value": "ryazan"
+	    }, {
+	      "text": "Rybinsk",
+	      "value": "rybinsk"
+	    }, {
+	      "text": "Rzhev",
+	      "value": "rzhev"
+	    }, {
+	      "text": "Saint Petersburg",
+	      "value": "saint petersburg"
+	    }, {
+	      "text": "Salavat",
+	      "value": "salavat"
+	    }, {
+	      "text": "Salsk",
+	      "value": "salsk"
+	    }, {
+	      "text": "Samara",
+	      "value": "samara"
+	    }, {
+	      "text": "Saransk",
+	      "value": "saransk"
+	    }, {
+	      "text": "Sarapul",
+	      "value": "sarapul"
+	    }, {
+	      "text": "Saratov",
+	      "value": "saratov"
+	    }, {
+	      "text": "Sarov",
+	      "value": "sarov"
+	    }, {
+	      "text": "Sergiyev Posad",
+	      "value": "sergiyev posad"
+	    }, {
+	      "text": "Serov",
+	      "value": "serov"
+	    }, {
+	      "text": "Serpukhov",
+	      "value": "serpukhov"
+	    }, {
+	      "text": "Severodvinsk",
+	      "value": "severodvinsk"
+	    }, {
 	      "text": "Severomorsk",
 	      "value": "severomorsk"
+	    }, {
+	      "text": "Seversk",
+	      "value": "seversk"
+	    }, {
+	      "text": "Shadrinsk",
+	      "value": "shadrinsk"
+	    }, {
+	      "text": "Shakhty",
+	      "value": "shakhty"
+	    }, {
+	      "text": "Shchyokino",
+	      "value": "shchyokino"
+	    }, {
+	      "text": "Shchyolkovo",
+	      "value": "shchyolkovo"
+	    }, {
+	      "text": "Shuya",
+	      "value": "shuya"
+	    }, {
+	      "text": "Sibay",
+	      "value": "sibay"
+	    }, {
+	      "text": "Slavyansk-na-Kubani",
+	      "value": "slavyansk-na-kubani"
+	    }, {
+	      "text": "Smolensk",
+	      "value": "smolensk"
+	    }, {
+	      "text": "Sochi",
+	      "value": "sochi"
+	    }, {
+	      "text": "Solikamsk",
+	      "value": "solikamsk"
+	    }, {
+	      "text": "Solnechnogorsk",
+	      "value": "solnechnogorsk"
+	    }, {
+	      "text": "Sosnovy Bor",
+	      "value": "sosnovy bor"
+	    }, {
+	      "text": "Stary Oskol",
+	      "value": "stary oskol"
+	    }, {
+	      "text": "Stavropol",
+	      "value": "stavropol"
+	    }, {
+	      "text": "Sterlitamak",
+	      "value": "sterlitamak"
+	    }, {
+	      "text": "Stupino",
+	      "value": "stupino"
+	    }, {
+	      "text": "Surgut",
+	      "value": "surgut"
+	    }, {
+	      "text": "Svobodny",
+	      "value": "svobodny"
+	    }, {
+	      "text": "Syktyvkar",
+	      "value": "syktyvkar"
+	    }, {
+	      "text": "Syzran",
+	      "value": "syzran"
+	    }, {
+	      "text": "Taganrog",
+	      "value": "taganrog"
+	    }, {
+	      "text": "Tambov",
+	      "value": "tambov"
+	    }, {
+	      "text": "Tikhoretsk",
+	      "value": "tikhoretsk"
+	    }, {
+	      "text": "Tikhvin",
+	      "value": "tikhvin"
+	    }, {
+	      "text": "Timashyovsk",
+	      "value": "timashyovsk"
+	    }, {
+	      "text": "Tobolsk",
+	      "value": "tobolsk"
+	    }, {
+	      "text": "Tolyatti",
+	      "value": "tolyatti"
+	    }, {
+	      "text": "Tomsk",
+	      "value": "tomsk"
+	    }, {
+	      "text": "Troitsk",
+	      "value": "troitsk"
+	    }, {
+	      "text": "Tuapse",
+	      "value": "tuapse"
+	    }, {
+	      "text": "Tula",
+	      "value": "tula"
+	    }, {
+	      "text": "Tuymazy",
+	      "value": "tuymazy"
+	    }, {
+	      "text": "Tver",
+	      "value": "tver"
+	    }, {
+	      "text": "Tyumen",
+	      "value": "tyumen"
+	    }, {
+	      "text": "Ufa",
+	      "value": "ufa"
+	    }, {
+	      "text": "Ukhta",
+	      "value": "ukhta"
+	    }, {
+	      "text": "Ulan-Ude",
+	      "value": "ulan-ude"
+	    }, {
+	      "text": "Ulyanovsk",
+	      "value": "ulyanovsk"
+	    }, {
+	      "text": "Usolye-Sibirskoye",
+	      "value": "usolye-sibirskoye"
+	    }, {
+	      "text": "Ussuriysk",
+	      "value": "ussuriysk"
+	    }, {
+	      "text": "Ust-Ilimsk",
+	      "value": "ust-ilimsk"
+	    }, {
+	      "text": "Uzlovaya",
+	      "value": "uzlovaya"
+	    }, {
+	      "text": "Velikiye Luki",
+	      "value": "velikiye luki"
+	    }, {
+	      "text": "Veliky Novgorod",
+	      "value": "veliky novgorod"
+	    }, {
+	      "text": "Verkhnyaya Pyshma",
+	      "value": "verkhnyaya pyshma"
+	    }, {
+	      "text": "Vidnoye",
+	      "value": "vidnoye"
+	    }, {
+	      "text": "Vladikavkaz",
+	      "value": "vladikavkaz"
+	    }, {
+	      "text": "Vladimir",
+	      "value": "vladimir"
+	    }, {
+	      "text": "Vladivostok",
+	      "value": "vladivostok"
+	    }, {
+	      "text": "Volgodonsk",
+	      "value": "volgodonsk"
+	    }, {
+	      "text": "Volgograd",
+	      "value": "volgograd"
+	    }, {
+	      "text": "Vologda",
+	      "value": "vologda"
+	    }, {
+	      "text": "Volsk",
+	      "value": "volsk"
+	    }, {
+	      "text": "Volzhsk",
+	      "value": "volzhsk"
+	    }, {
+	      "text": "Volzhsky",
+	      "value": "volzhsky"
+	    }, {
+	      "text": "Vorkuta",
+	      "value": "vorkuta"
+	    }, {
+	      "text": "Voronezh",
+	      "value": "voronezh"
+	    }, {
+	      "text": "Voskresensk",
+	      "value": "voskresensk"
+	    }, {
+	      "text": "Votkinsk",
+	      "value": "votkinsk"
+	    }, {
+	      "text": "Vsevolozhsk",
+	      "value": "vsevolozhsk"
+	    }, {
+	      "text": "Vyazma",
+	      "value": "vyazma"
+	    }, {
+	      "text": "Vyborg",
+	      "value": "vyborg"
+	    }, {
+	      "text": "Vyksa",
+	      "value": "vyksa"
+	    }, {
+	      "text": "Vyshny Volochyok",
+	      "value": "vyshny volochyok"
+	    }, {
+	      "text": "Yakutsk",
+	      "value": "yakutsk"
+	    }, {
+	      "text": "Yaroslavl",
+	      "value": "yaroslavl"
+	    }, {
+	      "text": "Yegoryevsk",
+	      "value": "yegoryevsk"
+	    }, {
+	      "text": "Yekaterinburg",
+	      "value": "yekaterinburg"
+	    }, {
+	      "text": "Yelabuga",
+	      "value": "yelabuga"
+	    }, {
+	      "text": "Yelets",
+	      "value": "yelets"
+	    }, {
+	      "text": "Yessentuki",
+	      "value": "yessentuki"
+	    }, {
+	      "text": "Yeysk",
+	      "value": "yeysk"
+	    }, {
+	      "text": "Yoshkar-Ola",
+	      "value": "yoshkar-ola"
+	    }, {
+	      "text": "Yurga",
+	      "value": "yurga"
+	    }, {
+	      "text": "Yuzhno-Sakhalinsk",
+	      "value": "yuzhno-sakhalinsk"
+	    }, {
+	      "text": "Zarechny",
+	      "value": "zarechny"
+	    }, {
+	      "text": "Zelenodolsk",
+	      "value": "zelenodolsk"
+	    }, {
+	      "text": "Zelenogorsk",
+	      "value": "zelenogorsk"
+	    }, {
+	      "text": "Zheleznodorozhny",
+	      "value": "zheleznodorozhny"
+	    }, {
+	      "text": "Zheleznogorsk",
+	      "value": "zheleznogorsk"
+	    }, {
+	      "text": "Zhigulyovsk",
+	      "value": "zhigulyovsk"
+	    }, {
+	      "text": "Zhukovsky",
+	      "value": "zhukovsky"
+	    }, {
+	      "text": "Zlatoust",
+	      "value": "zlatoust"
 	    }],
 	    "size": "xs"
 	  }, {
@@ -24811,7 +24792,7 @@
 	var PropTypes = _require.PropTypes;
 
 	var Select = __webpack_require__(286);
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Select, function (styles, _ref) {
 	  var size = _ref.size;
@@ -24849,9 +24830,10 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
+	var composition = _require2.composition;
 	var decrement = _require2.decrement;
 	var increment = _require2.increment;
 	var findIndexByValueProp = _require2.findIndexByValueProp;
@@ -24872,7 +24854,6 @@
 	var Option = __webpack_require__(287);
 	var Popup = __webpack_require__(235);
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 	var reactOutsideEvent = __webpack_require__(238);
 
 	var Select = function (_Component) {
@@ -24886,13 +24867,13 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
 	    _this.controlled = props.value !== undefined;
-	    _this.updateKeyMapper(props.options);
+	    _this.updateKeyMapper(props.hasUniqValues, props.options);
 
 	    _this.state = {
 	      isOpened: false,
 	      focused: -1,
 	      prefix: generateId(),
-	      selected: findIndexByValueProp(props.options, props.value)
+	      selected: _this.getSelectedOption(props.options, props.value)
 	    };
 
 	    bind(_this, ['onButtonClick', 'onKeyDown', 'onOptionFocus', 'onOptionSelect']);
@@ -24916,17 +24897,18 @@
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(_ref) {
+	      var hasUniqValues = _ref.hasUniqValues;
 	      var options = _ref.options;
 	      var value = _ref.value;
 
 	      if (this.controlled) {
 	        this.setState({
-	          selected: findIndexByValueProp(options, value)
+	          selected: this.getSelectedOption(options, value)
 	        });
 	      }
 
-	      if (this.props.options !== options) {
-	        this.updateKeyMapper(options);
+	      if (this.props.hasUniqValues !== hasUniqValues) {
+	        this.updateKeyMapper(hasUniqValues, options);
 	      }
 	    }
 	  }, {
@@ -24935,6 +24917,33 @@
 	      if (this.refs.control) {
 	        this.refs.control.focus();
 	      }
+	    }
+
+	    /**
+	     * @return {string}
+	     */
+
+	  }, {
+	    key: 'getSelectedLabel',
+	    value: function getSelectedLabel() {
+	      var selected = this.state.selected;
+
+
+	      return selected !== -1 ? this.props.options[selected].text : '—';
+	    }
+
+	    /**
+	     * @todo add exception for unexisting values
+	     * @param  {object[]} options
+	     * @param  {string} value
+	     * @return {number}
+	     */
+
+	  }, {
+	    key: 'getSelectedOption',
+	    value: function getSelectedOption(options, value) {
+	      var selected = findIndexByValueProp(options, value);
+	      return !this.props.hasEmptyValue ? Math.max(selected, 0) : selected;
 	    }
 	  }, {
 	    key: 'onButtonClick',
@@ -25061,10 +25070,16 @@
 	        });
 	      }
 	    }
+
+	    /**
+	     * @param {boolean} hasUniqValues
+	     * @param {object[]} options
+	     */
+
 	  }, {
 	    key: 'updateKeyMapper',
-	    value: function updateKeyMapper(options) {
-	      this.mapKey = !isUnique(options) ? mapKeyBasedOnPos : mapKey;
+	    value: function updateKeyMapper(hasUniqValues, options) {
+	      this.mapKey = !(hasUniqValues && isUnique(options)) ? mapKeyBasedOnPos : mapKey;
 	    }
 	  }, {
 	    key: 'updateValue',
@@ -25086,20 +25101,17 @@
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
-	      var className = _props.className;
 	      var disabled = _props.disabled;
 	      var id = _props.id;
 	      var name = _props.name;
 	      var options = _props.options;
-	      var styleName = _props.styleName;
-	      var styles = _props.styles;
 
 	      var value = options[Math.max(this.state.selected, 0)].value;
 
 	      return React.createElement(
 	        'div',
 	        _extends({}, this.props, {
-	          className: cx(className, styles[styleName]),
+	          className: composition(this.props),
 	          onKeyDown: this.onKeyDown }),
 	        this.renderButton(),
 	        this.renderPopup(),
@@ -25116,14 +25128,10 @@
 	    value: function renderButton() {
 	      var _props2 = this.props;
 	      var disabled = _props2.disabled;
-	      var options = _props2.options;
 	      var styles = _props2.styles;
-	      var _state2 = this.state;
-	      var isOpened = _state2.isOpened;
-	      var selected = _state2.selected;
 
 
-	      var mixin = styles[isOpened ? 'isOpened' : 'isClosed'];
+	      var mixin = styles[this.state.isOpened ? 'isOpened' : 'isClosed'];
 
 	      return React.createElement(
 	        Button,
@@ -25133,7 +25141,7 @@
 	          onClick: this.onButtonClick,
 	          ref: 'control',
 	          styles: styles },
-	        options[Math.max(selected, 0)].text
+	        this.getSelectedLabel()
 	      );
 	    }
 	  }, {
@@ -25167,18 +25175,20 @@
 	      var _props3 = this.props;
 	      var options = _props3.options;
 	      var styles = _props3.styles;
-	      var _state3 = this.state;
-	      var focused = _state3.focused;
-	      var prefix = _state3.prefix;
-	      var selected = _state3.selected;
+	      var _state2 = this.state;
+	      var focused = _state2.focused;
+	      var prefix = _state2.prefix;
+	      var selected = _state2.selected;
 
 
 	      return options.map(function (_ref2, i) {
+	        var className = _ref2.className;
 	        var text = _ref2.text;
 	        var value = _ref2.value;
 	        return React.createElement(
 	          Option,
 	          {
+	            className: className,
 	            checked: selected === i,
 	            focused: focused === i,
 	            key: _this2.mapKey(prefix, value, i),
@@ -25198,12 +25208,16 @@
 	}(Component);
 
 	Select.defaultProps = {
+	  hasEmptyValue: false,
+	  hasUniqValues: true,
 	  onChange: noop,
 	  styleName: 'wrapper',
 	  styles: {}
 	};
 
 	Select.propTypes = {
+	  hasEmptyValue: PropTypes.bool,
+	  hasUniqValues: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
 	  options: PropTypes.array,
@@ -25238,12 +25252,12 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
 
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
+	var cx = __webpack_require__(178);
 
 	var Option = function (_Component) {
 	  _inherits(Option, _Component);
@@ -25387,7 +25401,7 @@
 	var PropTypes = _require.PropTypes;
 
 	var Spin = __webpack_require__(304);
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Spin, function (styles, _ref) {
 	  var size = _ref.size;
@@ -25414,8 +25428,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -25427,8 +25439,11 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
+	var _require2 = __webpack_require__(177);
+
+	var composition = _require2.composition;
+
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var Spin = function (_Component) {
 	  _inherits(Spin, _Component);
@@ -25442,14 +25457,7 @@
 	  _createClass(Spin, [{
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
-	      var styles = _props.styles;
-
-	      var o = _objectWithoutProperties(_props, ['className', 'styleName', 'styles']);
-
-	      return React.createElement('span', _extends({}, o, { className: cx(className, styles[styleName]) }));
+	      return React.createElement('span', _extends({}, this.props, { className: composition(this.props) }));
 	    }
 	  }]);
 
@@ -25554,7 +25562,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 	var Textarea = __webpack_require__(318);
 
 	module.exports = StyleComponent(Textarea, function (styles, _ref) {
@@ -25579,8 +25587,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -25592,13 +25598,13 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
+	var composition = _require2.composition;
 	var noop = _require2.noop;
 
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var Textarea = function (_Component) {
 	  _inherits(Textarea, _Component);
@@ -25634,15 +25640,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var className = _props.className;
-	      var styleName = _props.styleName;
-	      var styles = _props.styles;
-
-	      var o = _objectWithoutProperties(_props, ['className', 'styleName', 'styles']);
-
-	      return React.createElement('textarea', _extends({}, o, {
-	        className: cx(className, styles[styleName]),
+	      return React.createElement('textarea', _extends({}, this.props, {
+	        className: composition(this.props),
 	        onChange: this.onChange,
 	        ref: 'control' }));
 	    }
@@ -25779,7 +25778,7 @@
 
 	var Popup = __webpack_require__(235);
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
+	var cx = __webpack_require__(178);
 
 	var baseStyles = {
 	  'normal-xs': __webpack_require__(325),
@@ -25978,7 +25977,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var StyleComponent = __webpack_require__(178);
+	var StyleComponent = __webpack_require__(179);
 	var Tumbler = __webpack_require__(352);
 
 	module.exports = StyleComponent(Tumbler, function (styles, _ref) {
@@ -26017,9 +26016,10 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(215);
+	var _require2 = __webpack_require__(177);
 
 	var bind = _require2.bind;
+	var composition = _require2.composition;
 	var noop = _require2.noop;
 
 	var _require3 = __webpack_require__(216);
@@ -26027,7 +26027,6 @@
 	var generateId = _require3.generateId;
 
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(177);
 
 	var Tumbler = function (_Component) {
 	  _inherits(Tumbler, _Component);
@@ -26067,13 +26066,11 @@
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
-	      var className = _props.className;
 	      var off = _props.off;
 	      var on = _props.on;
-	      var styleName = _props.styleName;
 	      var styles = _props.styles;
 
-	      var o = _objectWithoutProperties(_props, ['className', 'off', 'on', 'styleName', 'styles']);
+	      var o = _objectWithoutProperties(_props, ['off', 'on', 'styles']);
 
 	      var id = this.state.id;
 
@@ -26088,7 +26085,7 @@
 
 	      return React.createElement(
 	        'div',
-	        { className: cx(className, styles[styleName]) },
+	        { className: composition(this.props) },
 	        React.createElement('input', _extends({
 	          type: 'checkbox'
 	        }, o, {
