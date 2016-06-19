@@ -1069,6 +1069,11 @@ body
   opacity: 1;
 }
 
+.radio--native:focus + .radio--control
+{
+  box-shadow: inset 0 0 0 2px #ffdb4d;
+}
+
 .radio--native:disabled + .radio--control
 {
   cursor: default;

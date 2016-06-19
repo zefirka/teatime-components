@@ -53,10 +53,10 @@
 	__webpack_require__(263);
 	__webpack_require__(271);
 	__webpack_require__(284);
-	__webpack_require__(302);
-	__webpack_require__(316);
-	__webpack_require__(323);
-	module.exports = __webpack_require__(350);
+	__webpack_require__(306);
+	__webpack_require__(320);
+	__webpack_require__(327);
+	module.exports = __webpack_require__(354);
 
 
 /***/ },
@@ -20645,7 +20645,9 @@
 
 	Button.propTypes = {
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object
+	  styles: PropTypes.shape({
+	    control: PropTypes.string
+	  })
 	};
 
 	module.exports = Button;
@@ -21187,7 +21189,12 @@
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object,
+	  styles: PropTypes.shape({
+	    control: PropTypes.string.isRequired,
+	    label: PropTypes.string.isRequired,
+	    native: PropTypes.string.isRequired,
+	    wrapper: PropTypes.string
+	  }),
 	  tc: PropTypes.any,
 	  type: PropTypes.oneOf(['checkbox', 'radio'])
 	};
@@ -21586,7 +21593,14 @@
 	  onContextMenu: PropTypes.func,
 	  options: PropTypes.array.isRequired,
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object
+	  styles: PropTypes.shape({
+	    column: PropTypes.string,
+	    container: PropTypes.string,
+	    control: PropTypes.string.isRequired,
+	    label: PropTypes.string.isRequired,
+	    native: PropTypes.string.isRequired,
+	    wrapper: PropTypes.string.isRequired
+	  })
 	};
 
 	module.exports = CheckGroup;
@@ -21971,7 +21985,7 @@
 	 */
 	function pureHex(hex) {
 	  return hex.replace('#', '');
-	};
+	}
 
 /***/ },
 /* 234 */
@@ -22112,7 +22126,11 @@
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object,
+	  styles: PropTypes.shape({
+	    clear: PropTypes.string.isRequired,
+	    control: PropTypes.string.isRequired,
+	    wrapper: PropTypes.string
+	  }),
 	  type: PropTypes.oneOf(['password', 'text'])
 	};
 
@@ -22747,7 +22765,9 @@
 	Link.propTypes = {
 	  href: PropTypes.string.isRequired,
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object
+	  styles: PropTypes.shape({
+	    control: PropTypes.string
+	  })
 	};
 
 	module.exports = Link;
@@ -23042,7 +23062,13 @@
 	  onChange: PropTypes.func,
 	  options: PropTypes.array.isRequired,
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object
+	  styles: PropTypes.shape({
+	    container: PropTypes.string,
+	    control: PropTypes.string.isRequired,
+	    label: PropTypes.string.isRequired,
+	    native: PropTypes.string.isRequired,
+	    wrapper: PropTypes.string.isRequired
+	  })
 	};
 
 	module.exports = Radio;
@@ -23417,7 +23443,12 @@
 	  onChange: PropTypes.func,
 	  options: PropTypes.array.isRequired,
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object
+	  styles: PropTypes.shape({
+	    container: PropTypes.string,
+	    control: PropTypes.string.isRequired,
+	    native: PropTypes.string.isRequired,
+	    wrapper: PropTypes.string.isRequired
+	  })
 	};
 
 	module.exports = RadioGroup;
@@ -23543,7 +23574,11 @@
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object,
+	  styles: PropTypes.shape({
+	    control: PropTypes.string.isRequired,
+	    native: PropTypes.string.isRequired,
+	    wrapper: PropTypes.string
+	  }),
 	  tc: PropTypes.any
 	};
 
@@ -24713,6 +24748,7 @@
 	    }],
 	    "size": "s"
 	  }], [{
+	    "defaultValue": null,
 	    "name": "motorrad-5",
 	    "options": [{
 	      "label": "Yamaha",
@@ -24773,9 +24809,9 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  xs: __webpack_require__(288),
-	  s: __webpack_require__(295),
-	  m: __webpack_require__(299)
+	  xs: __webpack_require__(292),
+	  s: __webpack_require__(299),
+	  m: __webpack_require__(303)
 	}, {
 	  size: 's'
 	}, {
@@ -24805,31 +24841,36 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(177);
+	var _require2 = __webpack_require__(287);
 
 	var bind = _require2.bind;
-	var composition = _require2.composition;
-	var decrement = _require2.decrement;
-	var increment = _require2.increment;
-	var findIndexByValueProp = _require2.findIndexByValueProp;
-	var noop = _require2.noop;
+	var hasValueProp = _require2.hasValueProp;
+	var indexOf = _require2.indexOf;
 
-	var _require3 = __webpack_require__(40);
+	var _require3 = __webpack_require__(288);
 
-	var findDOMNode = _require3.findDOMNode;
+	var classNames = _require3.classNames;
+	var composition = _require3.composition;
 
-	var _require4 = __webpack_require__(216);
+	var _require4 = __webpack_require__(40);
 
-	var generateId = _require4.generateId;
-	var isUnique = _require4.isUnique;
-	var mapKey = _require4.mapKey;
-	var mapKeyBasedOnPos = _require4.mapKeyBasedOnPos;
+	var findDOMNode = _require4.findDOMNode;
+
+	var _require5 = __webpack_require__(289);
+
+	var generateId = _require5.generateId;
+	var hasUniqueValues = _require5.hasUniqueValues;
+	var mapKey = _require5.mapKey;
+	var mapKeyBasedOnPos = _require5.mapKeyBasedOnPos;
+
+	var _require6 = __webpack_require__(290);
+
+	var noop = _require6.noop;
 
 	var Button = __webpack_require__(176);
-	var Option = __webpack_require__(287);
+	var Option = __webpack_require__(291);
 	var Popup = __webpack_require__(235);
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(178);
 	var reactOutsideEvent = __webpack_require__(238);
 
 	var Select = function (_Component) {
@@ -24838,36 +24879,48 @@
 	  function Select(props) {
 	    _classCallCheck(this, Select);
 
-	    // @todo add assertion for defaultValue
-
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
-	    _this.controlled = props.value !== undefined;
+	    bind(_this, ['onKeyDown', 'onMenuToggle', 'onOptionFocus', 'onOptionSelect']);
+
+	    _this.controlled = hasValueProp(props);
 	    _this.updateKeyMapper(props.hasUniqValues, props.options);
 
-	    _this.state = {
-	      isOpened: false,
-	      focused: -1,
-	      prefix: generateId(),
-	      selected: _this.getSelectedOption(props.options, props.value)
-	    };
+	    var value = props.value || props.defaultValue;
+	    var selected = value !== undefined ? indexOf(props.options, value) : 0; // in case of uncontrolled component
 
-	    bind(_this, ['onButtonClick', 'onKeyDown', 'onOptionFocus', 'onOptionSelect']);
+	    _this.state = {
+	      focused: -1,
+	      isOpened: false,
+	      prefix: generateId(),
+	      selected: selected
+	    };
 	    return _this;
 	  }
 
 	  _createClass(Select, [{
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
-	      // @todo scroll on keyboard shortcuts
-	      if (this.refs.menu && this.refs.selected && this.state.isOpened && !this.optionInView) {
+	      if (this.refs.menu && this.refs.selected && this.state.isOpened && !this.wereOptionsShown) {
+	        this.wereOptionsShown = true;
+
 	        var menu = findDOMNode(this.refs.menu);
 	        var selected = findDOMNode(this.refs.selected);
-
 	        menu.scrollTop = selected.offsetTop;
-	        this.optionInView = true;
 	      } else if (!this.state.isOpened) {
-	        this.optionInView = false;
+	        this.wereOptionsShown = false;
+	      }
+
+	      if (this.wasKeyPressed && this.refs.menu && this.refs.selected) {
+	        this.wasKeyPressed = false;
+
+	        var _menu = findDOMNode(this.refs.menu);
+	        var _selected = findDOMNode(this.refs.selected);
+	        var menuRect = _menu.getBoundingClientRect();
+	        var selectedRect = _selected.getBoundingClientRect();
+	        if (selectedRect.bottom > menuRect.bottom || selectedRect.top < menuRect.top) {
+	          _menu.scrollTop = _selected.offsetTop + _selected.clientHeight - _menu.offsetHeight;
+	        }
 	      }
 	    }
 	  }, {
@@ -24879,7 +24932,7 @@
 
 	      if (this.controlled) {
 	        this.setState({
-	          selected: this.getSelectedOption(options, value)
+	          selected: indexOf(options, value)
 	        });
 	      }
 
@@ -24888,103 +24941,101 @@
 	      }
 	    }
 	  }, {
+	    key: 'closeMenu',
+	    value: function closeMenu() {
+	      this.setState({
+	        isOpened: false,
+	        focused: -1
+	      });
+	    }
+	  }, {
+	    key: 'openMenu',
+	    value: function openMenu() {
+	      this.setState({
+	        isOpened: true,
+	        focused: this.state.selected
+	      });
+	    }
+	  }, {
 	    key: 'focus',
 	    value: function focus() {
-	      if (this.refs.control) {
-	        this.refs.control.focus();
+	      if (this.refs.label) {
+	        this.refs.label.focus();
 	      }
+	    }
+	  }, {
+	    key: 'focusNextOption',
+	    value: function focusNextOption() {
+	      var nextFocused = this.state.focused + 1;
+	      if (nextFocused === this.props.options.length) return;
+	      this.wasKeyPressed = true;
+	      this.setState({ focused: nextFocused });
+	    }
+	  }, {
+	    key: 'focusPreviousOption',
+	    value: function focusPreviousOption() {
+	      var focused = this.state.focused;
+
+	      if (focused === 0) return;
+	      this.wasKeyPressed = true;
+	      this.setState({ focused: focused === -1 ? this.props.options.length - 1 : focused - 1 });
 	    }
 
 	    /**
+	     * @param  {number} selected
 	     * @return {string}
 	     */
 
 	  }, {
 	    key: 'getSelectedLabel',
-	    value: function getSelectedLabel() {
-	      var selected = this.state.selected;
-
-
-	      return selected !== -1 ? this.props.options[selected].label : '—';
+	    value: function getSelectedLabel(selected) {
+	      return selected !== -1 ? this.props.options[selected].label : this.props.placeholder;
 	    }
 
 	    /**
-	     * @todo add exception for unexisting values
-	     * @param  {object[]} options
-	     * @param  {string} value
-	     * @return {number}
+	     * @param  {number} selected
+	     * @return {string}
 	     */
 
 	  }, {
-	    key: 'getSelectedOption',
-	    value: function getSelectedOption(options, value) {
-	      var selected = findIndexByValueProp(options, value);
-	      return !this.props.hasEmptyValue ? Math.max(selected, 0) : selected;
-	    }
-	  }, {
-	    key: 'onButtonClick',
-	    value: function onButtonClick() {
-	      if (this.state.isOpened) {
-	        this.setState({
-	          isOpened: false
-	        });
-	      } else {
-	        this.setState({
-	          focused: this.state.selected,
-	          isOpened: true
-	        });
-	      }
+	    key: 'getSelectedValue',
+	    value: function getSelectedValue(selected) {
+	      return selected !== -1 ? this.props.options[selected].value : '';
 	    }
 	  }, {
 	    key: 'onKeyDown',
 	    value: function onKeyDown(e) {
 	      if (this.props.disabled) return;
 
-	      var _state = this.state;
-	      var focused = _state.focused;
-	      var isOpened = _state.isOpened;
-	      var selected = _state.selected;
+	      var isOpened = this.state.isOpened;
 
 
 	      switch (e.keyCode) {
+	        case 9:
+	          // tab
+	          if (!isOpened) return;
+	          return void this.closeMenu();
+
+	        case 13:
+	          // enter
+	          if (!isOpened) return;
+	          e.stopPropagation();
+	          this.updateValue(e, this.state.focused);
+	          break;
+
 	        case 27:
 	          // esc
-	          if (isOpened) {
-	            this.setState({
-	              isOpened: false
-	            });
-	          }
-
+	          if (!isOpened) return;
+	          this.closeMenu();
 	          this.focus();
 	          break;
 
-	        case 9:
-	          // tab
-	          if (isOpened) {
-	            this.setState({
-	              isOpened: false
-	            });
-	          }
-
-	          return;
-
-	        case 13: // enter
 	        case 32:
 	          // space
-	          if (isOpened) {
-	            if (focused > -1 && focused !== selected) {
-	              this.updateValue(e, focused);
-	            } else {
-	              this.setState({
-	                isOpened: false,
-	                selected: focused > -1 ? focused : selected
-	              });
-	            }
+	          if (!isOpened) {
+	            this.openMenu();
 	          } else {
-	            this.setState({
-	              focused: selected,
-	              isOpened: true
-	            });
+	            this.updateValue(e, this.state.focused);
 	          }
 
 	          break;
@@ -24992,14 +25043,9 @@
 	        case 38:
 	          // up
 	          if (!isOpened) {
-	            this.setState({
-	              focused: selected,
-	              isOpened: true
-	            });
+	            this.openMenu();
 	          } else {
-	            this.setState({
-	              focused: decrement(focused, this.props.options.length)
-	            });
+	            this.focusPreviousOption();
 	          }
 
 	          break;
@@ -25007,29 +25053,33 @@
 	        case 40:
 	          // down
 	          if (!isOpened) {
-	            this.setState({
-	              focused: selected,
-	              isOpened: true
-	            });
+	            this.openMenu();
 	          } else {
-	            this.setState({
-	              focused: increment(focused, this.props.options.length)
-	            });
+	            this.focusNextOption();
 	          }
 
 	          break;
+
+	        default:
+	          return;
 	      }
 
 	      e.preventDefault();
 	    }
 	  }, {
+	    key: 'onMenuToggle',
+	    value: function onMenuToggle() {
+	      if (this.state.isOpened) {
+	        return void this.closeMenu();
+	      }
+
+	      return void this.openMenu();
+	    }
+	  }, {
 	    key: 'onOptionFocus',
 	    value: function onOptionFocus(e, _, tc) {
-	      if (this.state.focused !== tc) {
-	        this.setState({
-	          focused: tc
-	        });
-	      }
+	      if (this.state.focused === tc) return;
+	      this.setState({ focused: tc });
 	    }
 	  }, {
 	    key: 'onOptionSelect',
@@ -25040,11 +25090,30 @@
 	  }, {
 	    key: 'onOutsideEvent',
 	    value: function onOutsideEvent() {
-	      if (this.state.isOpened) {
-	        this.setState({
-	          isOpened: false
-	        });
+	      if (!this.state.isOpened) return;
+	      this.closeMenu();
+	    }
+
+	    /**
+	     * @param  {object} e
+	     * @param  {number} nextSelected
+	     */
+
+	  }, {
+	    key: 'updateValue',
+	    value: function updateValue(e, nextSelected) {
+	      var nextState = { isOpened: false };
+
+	      if (nextSelected === -1 || nextSelected === this.state.selected) {
+	        return void this.setState(nextState);
 	      }
+
+	      if (!this.controlled) {
+	        nextState.selected = nextSelected;
+	      }
+
+	      this.setState(nextState);
+	      this.props.onChange(e, { value: this.props.options[nextSelected].value });
 	    }
 
 	    /**
@@ -25055,74 +25124,42 @@
 	  }, {
 	    key: 'updateKeyMapper',
 	    value: function updateKeyMapper(hasUniqValues, options) {
-	      this.mapKey = !(hasUniqValues && isUnique(options)) ? mapKeyBasedOnPos : mapKey;
-	    }
-	  }, {
-	    key: 'updateValue',
-	    value: function updateValue(e, tc) {
-	      if (!this.controlled) {
-	        this.setState({
-	          isOpened: false,
-	          selected: tc
-	        });
-	      } else {
-	        this.setState({
-	          isOpened: false
-	        });
-	      }
-
-	      this.props.onChange(e, { value: this.props.options[tc].value });
+	      this.mapKey = !(hasUniqValues && hasUniqueValues(options)) ? mapKeyBasedOnPos : mapKey;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var disabled = _props.disabled;
-	      var id = _props.id;
-	      var name = _props.name;
-	      var options = _props.options;
-
-	      var value = options[Math.max(this.state.selected, 0)].value;
-
 	      return React.createElement(
 	        'div',
 	        _extends({}, this.props, {
 	          className: composition(this.props),
 	          onKeyDown: this.onKeyDown }),
-	        this.renderButton(),
-	        this.renderPopup(),
+	        this.renderLabel(),
+	        this.renderMenu(),
 	        React.createElement('input', {
-	          disabled: disabled,
-	          id: id,
-	          name: name,
+	          disabled: this.props.disabled,
+	          name: this.props.name,
 	          type: 'hidden',
-	          value: value })
+	          value: this.getSelectedValue(this.state.selected) })
 	      );
 	    }
 	  }, {
-	    key: 'renderButton',
-	    value: function renderButton() {
-	      var _props2 = this.props;
-	      var disabled = _props2.disabled;
-	      var styles = _props2.styles;
-
-
-	      var mixin = styles[this.state.isOpened ? 'isOpened' : 'isClosed'];
-
+	    key: 'renderLabel',
+	    value: function renderLabel() {
 	      return React.createElement(
 	        Button,
 	        {
-	          className: mixin,
-	          disabled: disabled,
-	          onClick: this.onButtonClick,
-	          ref: 'control',
-	          styles: styles },
-	        this.getSelectedLabel()
+	          className: this.props.styles[this.state.isOpened ? 'isOpened' : 'isClosed'],
+	          disabled: this.props.disabled,
+	          onClick: this.onMenuToggle,
+	          ref: 'label',
+	          styles: this.props.styles },
+	        this.getSelectedLabel(this.state.selected)
 	      );
 	    }
 	  }, {
-	    key: 'renderPopup',
-	    value: function renderPopup() {
+	    key: 'renderMenu',
+	    value: function renderMenu() {
 	      var styles = this.props.styles;
 
 
@@ -25139,6 +25176,17 @@
 	        this.renderOptions()
 	      );
 	    }
+
+	    /**
+	     * @param  {option} option
+	     * @return {string}
+	     */
+
+	  }, {
+	    key: 'renderOption',
+	    value: function renderOption(option) {
+	      return option.label;
+	    }
 	  }, {
 	    key: 'renderOptions',
 	    value: function renderOptions() {
@@ -25148,30 +25196,35 @@
 	        return null;
 	      }
 
-	      var _props3 = this.props;
-	      var options = _props3.options;
-	      var styles = _props3.styles;
-	      var _state2 = this.state;
-	      var focused = _state2.focused;
-	      var prefix = _state2.prefix;
-	      var selected = _state2.selected;
+	      var _props = this.props;
+	      var options = _props.options;
+	      var styles = _props.styles;
+	      var _state = this.state;
+	      var focused = _state.focused;
+	      var prefix = _state.prefix;
+	      var selected = _state.selected;
 
+	      var renderOption = this.props.renderOption || this.renderOption;
 
 	      return options.map(function (option, i) {
-	        var _cx;
+	        var _classNames;
 
 	        var isFocused = focused === i;
 	        var isSelected = selected === i;
 	        var ref = isFocused ? 'selected' : null;
 
-	        return React.createElement(Option, _extends({}, option, {
-	          className: cx(styles.item, (_cx = {}, _defineProperty(_cx, styles.isFocused, isFocused), _defineProperty(_cx, styles.isSelected, isSelected), _cx)),
-	          isFocused: isFocused,
-	          key: _this2.mapKey(prefix, option.value, i),
-	          onFocus: _this2.onOptionFocus,
-	          onSelect: _this2.onOptionSelect,
-	          ref: ref,
-	          tc: i }));
+	        return React.createElement(
+	          Option,
+	          _extends({}, option, {
+	            className: classNames(styles.item, (_classNames = {}, _defineProperty(_classNames, styles.isFocused, isFocused), _defineProperty(_classNames, styles.isSelected, isSelected), _classNames)),
+	            isFocused: isFocused,
+	            key: _this2.mapKey(prefix, option.value, i),
+	            onFocus: _this2.onOptionFocus,
+	            onSelect: _this2.onOptionSelect,
+	            ref: ref,
+	            tc: i }),
+	          renderOption(option)
+	        );
 	      });
 	    }
 	  }]);
@@ -25180,27 +25233,192 @@
 	}(Component);
 
 	Select.defaultProps = {
-	  hasEmptyValue: false,
 	  hasUniqValues: true,
 	  onChange: noop,
+	  placeholder: '—',
 	  styleName: 'wrapper',
 	  styles: {}
 	};
 
 	Select.propTypes = {
-	  hasEmptyValue: PropTypes.bool,
 	  hasUniqValues: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
 	  options: PropTypes.array,
+	  placeholder: PropTypes.string,
+	  renderOption: PropTypes.func,
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object
+	  styles: PropTypes.shape({
+	    control: PropTypes.string.isRequired,
+	    isClosed: PropTypes.string.isRequired,
+	    isFocused: PropTypes.string.isRequired,
+	    isOpened: PropTypes.string.isRequired,
+	    isSelected: PropTypes.string.isRequired,
+	    item: PropTypes.string.isRequired,
+	    menu: PropTypes.string.isRequired,
+	    wrapper: PropTypes.string
+	  })
 	};
 
 	module.exports = reactOutsideEvent(Select, ['click']);
 
 /***/ },
 /* 287 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.bind = bind;
+	exports.hasCheckedProp = hasCheckedProp;
+	exports.hasValueProp = hasValueProp;
+	exports.indexOf = indexOf;
+
+	/**
+	 * @param  {object} context
+	 * @param  {string|string[]} methodNames
+	 */
+	function bind(context, methodNames) {
+	  var methods = !Array.isArray(methodNames) ? [methodNames] : methodNames;
+
+	  var length = methods.length;
+	  for (var method, i = 0; i < length; ++i) {
+	    method = methods[i];
+	    context[method] = context[method].bind(context);
+	  }
+	}
+
+	/**
+	 * @see    https://facebook.github.io/react/docs/forms.html#controlled-components
+	 * @param  {object}  props
+	 * @return {boolean}
+	 */
+	function hasCheckedProp(props) {
+	  // @todo add assertion for defaultValue
+	  return props.checked !== undefined;
+	}
+
+	/**
+	 * @see    https://facebook.github.io/react/docs/forms.html#controlled-components
+	 * @param  {object}  props
+	 * @return {boolean}
+	 */
+	function hasValueProp(props) {
+	  // @todo add assertion for defaultValue
+	  return props.value !== undefined;
+	}
+
+	/**
+	 * @param  {object[]} collection
+	 * @param  {string} value
+	 * @return {number}
+	 */
+	function indexOf(collection, value) {
+	  var length = collection.length;
+	  for (var i = 0; i < length; ++i) {
+	    if (collection[i].value !== value) {
+	      continue;
+	    }
+
+	    return i;
+	  }
+
+	  return -1;
+	}
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var classNames = __webpack_require__(178);
+
+	exports.classNames = classNames;
+	exports.composition = composition;
+
+	/**
+	 * @param  {object} props
+	 * @param  {string} props.className
+	 * @param  {string} props.styleName
+	 * @param  {object} props.styles
+	 * @return {string}
+	 */
+	function composition(props) {
+	  return classNames(props.className, props.styles[props.styleName]);
+	}
+
+/***/ },
+/* 289 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var counter = 0;
+
+	exports.generateId = generateId;
+	exports.hasUniqueValues = hasUniqueValues;
+	exports.mapKey = mapKey;
+	exports.mapKeyBasedOnPos = mapKeyBasedOnPos;
+
+	/**
+	 * @return {string}
+	 */
+	function generateId() {
+	  return '_teatime' + ++counter;
+	}
+
+	/**
+	 * @param  {object[]} options
+	 * @return {boolean}
+	 */
+	function hasUniqueValues(options) {
+	  var cache = {};
+
+	  for (var value, i = 0; i < options.length; ++i) {
+	    value = options[i].value;
+
+	    if (!cache[value]) {
+	      cache[value] = true;
+	      continue;
+	    }
+
+	    return false;
+	  }
+
+	  return true;
+	}
+
+	/**
+	 * @param  {string} prefix
+	 * @param  {string} value
+	 * @return {string}
+	 */
+	function mapKey(prefix, value) {
+	  return '' + prefix + value;
+	}
+
+	/**
+	 * @param  {string} prefix
+	 * @param  {string} value
+	 * @param  {number} position
+	 * @return {string}
+	 */
+	function mapKeyBasedOnPos(prefix, value, position) {
+	  return '' + prefix + value + position;
+	}
+
+/***/ },
+/* 290 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.noop = noop;
+
+	function noop() {}
+
+/***/ },
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25257,7 +25475,7 @@
 	          'data-value': this.props.value,
 	          onClick: this.onSelect,
 	          onMouseEnter: this.onFocus },
-	        this.props.label
+	        this.props.children
 	      );
 	    }
 	  }]);
@@ -25275,26 +25493,16 @@
 	module.exports = Option;
 
 /***/ },
-/* 288 */
+/* 292 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"wrapper":"select-xs--wrapper select--wrapper","control":"select-xs--control button-normal-xs--control button-normal--control arrow-xs--control arrow--control select--control","menu":"select-xs--menu menu-xs--menu menu--menu select--menu popup--popup","item":"select-xs--item menu-xs--item menu--item select--item","isClosed":"select-xs--isClosed select--isClosed","isOpened":"select-xs--isOpened select--isOpened","isFocused":"select-xs--isFocused select--isFocused","isSelected":"select-xs--isSelected select--isSelected"};
 
 /***/ },
-/* 289 */,
-/* 290 */,
-/* 291 */,
-/* 292 */,
 /* 293 */,
 /* 294 */,
-/* 295 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","isFocused":"select-s--isFocused select--isFocused","isSelected":"select-s--isSelected select--isSelected"};
-
-/***/ },
+/* 295 */,
 /* 296 */,
 /* 297 */,
 /* 298 */,
@@ -25302,12 +25510,22 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","isFocused":"select-m--isFocused select--isFocused","isSelected":"select-m--isSelected select--isSelected"};
+	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","isFocused":"select-s--isFocused select--isFocused","isSelected":"select-s--isSelected select--isSelected"};
 
 /***/ },
 /* 300 */,
 /* 301 */,
-/* 302 */
+/* 302 */,
+/* 303 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","isFocused":"select-m--isFocused select--isFocused","isSelected":"select-m--isSelected select--isSelected"};
+
+/***/ },
+/* 304 */,
+/* 305 */,
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25327,10 +25545,10 @@
 	  }, {
 	    "size": "xl"
 	  }]]
-	}, __webpack_require__(303));
+	}, __webpack_require__(307));
 
 /***/ },
-/* 303 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25339,18 +25557,18 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Spin = __webpack_require__(304);
+	var Spin = __webpack_require__(308);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Spin, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(305),
-	  s: __webpack_require__(308),
-	  m: __webpack_require__(310),
-	  l: __webpack_require__(312),
-	  xl: __webpack_require__(314)
+	  xs: __webpack_require__(309),
+	  s: __webpack_require__(312),
+	  m: __webpack_require__(314),
+	  l: __webpack_require__(316),
+	  xl: __webpack_require__(318)
 	}, {
 	  size: 's'
 	}, {
@@ -25358,7 +25576,7 @@
 	});
 
 /***/ },
-/* 304 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25410,42 +25628,28 @@
 
 	Spin.propTypes = {
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object
+	  styles: PropTypes.shape({
+	    control: PropTypes.string
+	  })
 	};
 
 	module.exports = Spin;
 
 /***/ },
-/* 305 */
+/* 309 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xs--control spin--control"};
 
 /***/ },
-/* 306 */,
-/* 307 */,
-/* 308 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"control":"spin-s--control spin--control"};
-
-/***/ },
-/* 309 */,
-/* 310 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"control":"spin-m--control spin--control"};
-
-/***/ },
+/* 310 */,
 /* 311 */,
 /* 312 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"control":"spin-l--control spin--control"};
+	module.exports = {"control":"spin-s--control spin--control"};
 
 /***/ },
 /* 313 */,
@@ -25453,11 +25657,27 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"control":"spin-xl--control spin--control"};
+	module.exports = {"control":"spin-m--control spin--control"};
 
 /***/ },
 /* 315 */,
 /* 316 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"control":"spin-l--control spin--control"};
+
+/***/ },
+/* 317 */,
+/* 318 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"control":"spin-xl--control spin--control"};
+
+/***/ },
+/* 319 */,
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25489,10 +25709,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(317));
+	}, __webpack_require__(321));
 
 /***/ },
-/* 317 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25502,14 +25722,14 @@
 	var PropTypes = _require.PropTypes;
 
 	var StyleComponent = __webpack_require__(179);
-	var Textarea = __webpack_require__(318);
+	var Textarea = __webpack_require__(322);
 
 	module.exports = StyleComponent(Textarea, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(319),
-	  m: __webpack_require__(321)
+	  s: __webpack_require__(323),
+	  m: __webpack_require__(325)
 	}, {
 	  size: 's'
 	}, {
@@ -25517,7 +25737,7 @@
 	});
 
 /***/ },
-/* 318 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25602,29 +25822,31 @@
 	  onChange: PropTypes.func,
 	  rows: PropTypes.number,
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object
+	  styles: PropTypes.shape({
+	    control: PropTypes.string
+	  })
 	};
 
 	module.exports = Textarea;
 
 /***/ },
-/* 319 */
+/* 323 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"textarea-s--control input--control"};
 
 /***/ },
-/* 320 */,
-/* 321 */
+/* 324 */,
+/* 325 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"textarea-m--control input--control"};
 
 /***/ },
-/* 322 */,
-/* 323 */
+/* 326 */,
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25691,10 +25913,10 @@
 	    "size": "xs",
 	    "type": "warning"
 	  }]]
-	}, __webpack_require__(324));
+	}, __webpack_require__(328));
 
 /***/ },
-/* 324 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25720,15 +25942,15 @@
 	var cx = __webpack_require__(178);
 
 	var baseStyles = {
-	  'normal-xs': __webpack_require__(325),
-	  'normal-s': __webpack_require__(330),
-	  'normal-m': __webpack_require__(333),
-	  'success-xs': __webpack_require__(336),
-	  'success-s': __webpack_require__(339),
-	  'success-m': __webpack_require__(341),
-	  'warning-xs': __webpack_require__(343),
-	  'warning-s': __webpack_require__(346),
-	  'warning-m': __webpack_require__(348)
+	  'normal-xs': __webpack_require__(329),
+	  'normal-s': __webpack_require__(334),
+	  'normal-m': __webpack_require__(337),
+	  'success-xs': __webpack_require__(340),
+	  'success-s': __webpack_require__(343),
+	  'success-m': __webpack_require__(345),
+	  'warning-xs': __webpack_require__(347),
+	  'warning-s': __webpack_require__(350),
+	  'warning-m': __webpack_require__(352)
 	};
 
 	var Tooltip = function (_Popup) {
@@ -25786,86 +26008,86 @@
 	module.exports = Tooltip;
 
 /***/ },
-/* 325 */
+/* 329 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-normal-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-normal--bottom","left":"tooltip-normal-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-normal--left","right":"tooltip-normal-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-normal--right","top":"tooltip-normal-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-normal--top","isClosed":"tooltip-normal-xs--isClosed tooltip--isClosed","isOpened":"tooltip-normal-xs--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 326 */,
-/* 327 */,
-/* 328 */,
-/* 329 */,
-/* 330 */
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-normal-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-normal--bottom","left":"tooltip-normal-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-normal--left","right":"tooltip-normal-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-normal--right","top":"tooltip-normal-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-normal--top","isClosed":"tooltip-normal-s--isClosed tooltip--isClosed","isOpened":"tooltip-normal-s--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 331 */,
-/* 332 */,
-/* 333 */
+/* 335 */,
+/* 336 */,
+/* 337 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-normal-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-normal--bottom","left":"tooltip-normal-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-normal--left","right":"tooltip-normal-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-normal--right","top":"tooltip-normal-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-normal--top","isClosed":"tooltip-normal-m--isClosed tooltip--isClosed","isOpened":"tooltip-normal-m--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 334 */,
-/* 335 */,
-/* 336 */
+/* 338 */,
+/* 339 */,
+/* 340 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-success-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-success--bottom","left":"tooltip-success-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-success--left","right":"tooltip-success-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-success--right","top":"tooltip-success-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-success--top","isClosed":"tooltip-success-xs--isClosed tooltip--isClosed","isOpened":"tooltip-success-xs--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 337 */,
-/* 338 */,
-/* 339 */
+/* 341 */,
+/* 342 */,
+/* 343 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-success-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-success--bottom","left":"tooltip-success-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-success--left","right":"tooltip-success-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-success--right","top":"tooltip-success-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-success--top","isClosed":"tooltip-success-s--isClosed tooltip--isClosed","isOpened":"tooltip-success-s--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 340 */,
-/* 341 */
+/* 344 */,
+/* 345 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-success-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-success--bottom","left":"tooltip-success-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-success--left","right":"tooltip-success-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-success--right","top":"tooltip-success-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-success--top","isClosed":"tooltip-success-m--isClosed tooltip--isClosed","isOpened":"tooltip-success-m--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 342 */,
-/* 343 */
+/* 346 */,
+/* 347 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-warning-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-warning--bottom","left":"tooltip-warning-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-warning--left","right":"tooltip-warning-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-warning--right","top":"tooltip-warning-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-warning--top","isClosed":"tooltip-warning-xs--isClosed tooltip--isClosed","isOpened":"tooltip-warning-xs--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 344 */,
-/* 345 */,
-/* 346 */
+/* 348 */,
+/* 349 */,
+/* 350 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-warning-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-warning--bottom","left":"tooltip-warning-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-warning--left","right":"tooltip-warning-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-warning--right","top":"tooltip-warning-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-warning--top","isClosed":"tooltip-warning-s--isClosed tooltip--isClosed","isOpened":"tooltip-warning-s--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 347 */,
-/* 348 */
+/* 351 */,
+/* 352 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-warning-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-warning--bottom","left":"tooltip-warning-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-warning--left","right":"tooltip-warning-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-warning--right","top":"tooltip-warning-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-warning--top","isClosed":"tooltip-warning-m--isClosed tooltip--isClosed","isOpened":"tooltip-warning-m--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 349 */,
-/* 350 */
+/* 353 */,
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25904,10 +26126,10 @@
 	    "size": "m",
 	    "value": "size-m"
 	  }]]
-	}, __webpack_require__(351));
+	}, __webpack_require__(355));
 
 /***/ },
-/* 351 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25917,15 +26139,15 @@
 	var PropTypes = _require.PropTypes;
 
 	var StyleComponent = __webpack_require__(179);
-	var Tumbler = __webpack_require__(352);
+	var Tumbler = __webpack_require__(356);
 
 	module.exports = StyleComponent(Tumbler, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(353),
-	  s: __webpack_require__(356),
-	  m: __webpack_require__(358)
+	  xs: __webpack_require__(357),
+	  s: __webpack_require__(360),
+	  m: __webpack_require__(362)
 	}, {
 	  size: 'xs'
 	}, {
@@ -25933,7 +26155,7 @@
 	});
 
 /***/ },
-/* 352 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26071,30 +26293,36 @@
 	  on: PropTypes.string,
 	  onChange: PropTypes.func,
 	  styleName: PropTypes.string,
-	  styles: PropTypes.object
+	  styles: PropTypes.shape({
+	    control: PropTypes.string.isRequired,
+	    delimiter: PropTypes.string.isRequired,
+	    label: PropTypes.string.isRequired,
+	    native: PropTypes.string.isRequired,
+	    wrapper: PropTypes.string
+	  })
 	};
 
 	module.exports = Tumbler;
 
 /***/ },
-/* 353 */
+/* 357 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","wrapper":"tumbler-xs--wrapper tumbler--wrapper","control":"tumbler-xs--control tumbler--control","label":"tumbler-xs--label tumbler--label","delimiter":"tumbler-xs--delimiter tumbler--delimiter","native":"tumbler-xs--native tumbler--native"};
 
 /***/ },
-/* 354 */,
-/* 355 */,
-/* 356 */
+/* 358 */,
+/* 359 */,
+/* 360 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","wrapper":"tumbler-s--wrapper tumbler--wrapper","control":"tumbler-s--control tumbler--control","label":"tumbler-s--label tumbler--label","delimiter":"tumbler-s--delimiter tumbler--delimiter","native":"tumbler-s--native tumbler--native"};
 
 /***/ },
-/* 357 */,
-/* 358 */
+/* 361 */,
+/* 362 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
