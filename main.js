@@ -48,15 +48,15 @@
 	__webpack_require__(213);
 	__webpack_require__(222);
 	__webpack_require__(230);
-	__webpack_require__(252);
-	__webpack_require__(257);
-	__webpack_require__(263);
-	__webpack_require__(271);
-	__webpack_require__(284);
-	__webpack_require__(306);
-	__webpack_require__(320);
-	__webpack_require__(327);
-	module.exports = __webpack_require__(354);
+	__webpack_require__(256);
+	__webpack_require__(261);
+	__webpack_require__(267);
+	__webpack_require__(275);
+	__webpack_require__(288);
+	__webpack_require__(307);
+	__webpack_require__(321);
+	__webpack_require__(329);
+	module.exports = __webpack_require__(356);
 
 
 /***/ },
@@ -21725,9 +21725,9 @@
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(240),
-	  s: __webpack_require__(246),
-	  m: __webpack_require__(249)
+	  xs: __webpack_require__(244),
+	  s: __webpack_require__(250),
+	  m: __webpack_require__(253)
 	}, {
 	  size: 'm'
 	}, {
@@ -21738,7 +21738,7 @@
 /* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -21757,21 +21757,31 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(177);
+	var _require2 = __webpack_require__(233);
 
 	var bind = _require2.bind;
-	var composition = _require2.composition;
-	var noop = _require2.noop;
+	var hasValueProp = _require2.hasValueProp;
 
-	var _require3 = __webpack_require__(233);
+	var _require3 = __webpack_require__(234);
 
-	var pureHex = _require3.pureHex;
+	var composition = _require3.composition;
 
-	var Input = __webpack_require__(234);
-	var Popup = __webpack_require__(235);
-	var Tile = __webpack_require__(237);
+	var _require4 = __webpack_require__(235);
+
+	var noop = _require4.noop;
+
+	var _require5 = __webpack_require__(236);
+
+	var pureHex = _require5.pureHex;
+
+	var Input = __webpack_require__(237);
+	var Popup = __webpack_require__(239);
+	var Tile = __webpack_require__(241);
 	var React = __webpack_require__(3);
-	var reactOutsideEvent = __webpack_require__(238);
+	var reactOutsideEvent = __webpack_require__(242);
+	var warning = __webpack_require__(238);
+
+	var didWarnForDefaultValue = false;
 
 	var ColorPicker = function (_Component) {
 	  _inherits(ColorPicker, _Component);
@@ -21779,11 +21789,16 @@
 	  function ColorPicker(props) {
 	    _classCallCheck(this, ColorPicker);
 
-	    // @todo add assertion for defaultValue
-
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ColorPicker).call(this, props));
 
-	    _this.controlled = props.value !== undefined;
+	    _this.controlled = hasValueProp(props);
+
+	    if (process.env.NODE_ENV !== 'production' && _this.controlled && !didWarnForDefaultValue) {
+	      // eslint-disable-line no-undef
+	      warning(typeof props.defaultValue === 'undefined', 'ColorPicker contains an input of type text with both value and defaultValue props. ' + 'Input elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled input ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components');
+
+	      didWarnForDefaultValue = true;
+	    }
 
 	    _this.state = {
 	      isOpened: false,
@@ -21970,9 +21985,103 @@
 	};
 
 	module.exports = reactOutsideEvent(ColorPicker, ['click']);
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 /* 233 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.bind = bind;
+	exports.hasCheckedProp = hasCheckedProp;
+	exports.hasValueProp = hasValueProp;
+	exports.indexOf = indexOf;
+
+	/**
+	 * @param  {object} context
+	 * @param  {string|string[]} methodNames
+	 */
+	function bind(context, methodNames) {
+	  var methods = !Array.isArray(methodNames) ? [methodNames] : methodNames;
+
+	  var length = methods.length;
+	  for (var method, i = 0; i < length; ++i) {
+	    method = methods[i];
+	    context[method] = context[method].bind(context);
+	  }
+	}
+
+	/**
+	 * @see    https://facebook.github.io/react/docs/forms.html#controlled-components
+	 * @param  {object}  props
+	 * @return {boolean}
+	 */
+	function hasCheckedProp(props) {
+	  return props.checked !== undefined;
+	}
+
+	/**
+	 * @see    https://facebook.github.io/react/docs/forms.html#controlled-components
+	 * @param  {object}  props
+	 * @return {boolean}
+	 */
+	function hasValueProp(props) {
+	  return props.value !== undefined;
+	}
+
+	/**
+	 * @param  {object[]} collection
+	 * @param  {string} value
+	 * @return {number}
+	 */
+	function indexOf(collection, value) {
+	  var length = collection.length;
+	  for (var i = 0; i < length; ++i) {
+	    if (collection[i].value !== value) {
+	      continue;
+	    }
+
+	    return i;
+	  }
+
+	  return -1;
+	}
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var classNames = __webpack_require__(178);
+
+	exports.classNames = classNames;
+	exports.composition = composition;
+
+	/**
+	 * @param  {object} props
+	 * @param  {string} props.className
+	 * @param  {string} props.styleName
+	 * @param  {object} props.styles
+	 * @return {string}
+	 */
+	function composition(props) {
+	  return classNames(props.className, props.styles[props.styleName]);
+	}
+
+/***/ },
+/* 235 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.noop = noop;
+
+	function noop() {}
+
+/***/ },
+/* 236 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21988,10 +22097,10 @@
 	}
 
 /***/ },
-/* 234 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -22010,13 +22119,23 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(177);
+	var _require2 = __webpack_require__(233);
 
-	var composition = _require2.composition;
 	var bind = _require2.bind;
-	var noop = _require2.noop;
+	var hasValueProp = _require2.hasValueProp;
+
+	var _require3 = __webpack_require__(234);
+
+	var composition = _require3.composition;
+
+	var _require4 = __webpack_require__(235);
+
+	var noop = _require4.noop;
 
 	var React = __webpack_require__(3);
+	var warning = __webpack_require__(238);
+
+	var didWarnForDefaultValue = false;
 
 	var Input = function (_Component) {
 	  _inherits(Input, _Component);
@@ -22024,11 +22143,16 @@
 	  function Input(props) {
 	    _classCallCheck(this, Input);
 
-	    // @todo add assertion for defaultValue
-
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
 
-	    _this.controlled = props.value !== undefined;
+	    _this.controlled = hasValueProp(props);
+
+	    if (process.env.NODE_ENV !== 'production' && _this.controlled && !didWarnForDefaultValue) {
+	      // eslint-disable-line no-undef
+	      warning(typeof props.defaultValue === 'undefined', 'Input contains an input of type %s with both value and defaultValue props. ' + 'Input elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled input ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components', props.type);
+
+	      didWarnForDefaultValue = true;
+	    }
 
 	    _this.state = {
 	      value: props.value || props.defaultValue || ''
@@ -22135,9 +22259,70 @@
 	};
 
 	module.exports = Input;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 235 */
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	var _require = __webpack_require__(235);
+
+	var noop = _require.noop;
+
+
+	var warning = noop;
+
+	if (process.env.NODE_ENV !== 'production') {
+	  // eslint-disable-line no-undef
+	  /**
+	   * Copy of React's warning function
+	   *
+	   * @param  {boolean}   condition
+	   * @param  {string}    format
+	   * @param  {...string} args
+	   */
+	  warning = function warning(condition, format) {
+	    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+	      args[_key - 2] = arguments[_key];
+	    }
+
+	    if (typeof format === 'undefined') {
+	      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	    }
+
+	    if (format.indexOf('Failed Composite propType: ') === 0) {
+	      return; // Ignore CompositeComponent proptype check.
+	    }
+
+	    if (condition) {
+	      return;
+	    }
+
+	    var argIndex = 0;
+	    var message = 'Warning: ' + format.replace(/%s/g, function () {
+	      return args[argIndex++];
+	    });
+
+	    if (typeof console !== 'undefined') {
+	      console.error(message); // eslint-disable-line no-console
+	    }
+
+	    try {
+	      // --- Welcome to debugging React ---
+	      // This error was thrown as a convenience so that you can use this stack
+	      // to find the callsite that caused this warning to fire.
+	      throw new Error(message);
+	    } catch (x) {} // eslint-disable-line no-empty
+	  };
+	}
+
+	module.exports = warning;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22162,7 +22347,7 @@
 	var composition = _require2.composition;
 
 	var React = __webpack_require__(3);
-	var layer = __webpack_require__(236);
+	var layer = __webpack_require__(240);
 
 	var Popup = function (_Component) {
 	  _inherits(Popup, _Component);
@@ -22212,7 +22397,7 @@
 	module.exports = layer(Popup);
 
 /***/ },
-/* 236 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22352,7 +22537,7 @@
 	}
 
 /***/ },
-/* 237 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22422,12 +22607,12 @@
 	module.exports = Tile;
 
 /***/ },
-/* 238 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var reactOutsideEvent = __webpack_require__(239);
+	var reactOutsideEvent = __webpack_require__(243);
 
 	/**
 	 * @param  {component} Target
@@ -22441,7 +22626,7 @@
 	};
 
 /***/ },
-/* 239 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22538,37 +22723,37 @@
 
 
 /***/ },
-/* 240 */
+/* 244 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"color-picker-xs--container color-picker--container","preview":"color-picker-xs--preview color-picker--preview","wrapper":"color-picker-xs--wrapper input-xs--wrapper input--wrapper color-picker--wrapper","control":"color-picker-xs--control input-xs--control input--control color-picker--control","clear":"color-picker-xs--clear input-xs--clear input--clear color-picker--clear","menu":"color-picker-xs--menu color-picker--menu popup--popup","line":"color-picker-xs--line color-picker--line","item":"color-picker-xs--item color-picker--item","isClosed":"color-picker-xs--isClosed color-picker--isClosed","isOpened":"color-picker-xs--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
 /* 245 */,
-/* 246 */
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"color-picker-s--container color-picker--container","preview":"color-picker-s--preview color-picker--preview","wrapper":"color-picker-s--wrapper input-s--wrapper input--wrapper color-picker--wrapper","control":"color-picker-s--control input-s--control input--control color-picker--control","clear":"color-picker-s--clear input-s--clear input--clear color-picker--clear","menu":"color-picker-s--menu color-picker--menu popup--popup","line":"color-picker-s--line color-picker--line","item":"color-picker-s--item color-picker--item","isClosed":"color-picker-s--isClosed color-picker--isClosed","isOpened":"color-picker-s--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 247 */,
-/* 248 */,
-/* 249 */
+/* 251 */,
+/* 252 */,
+/* 253 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"color-picker-m--container color-picker--container","preview":"color-picker-m--preview color-picker--preview","wrapper":"color-picker-m--wrapper input-m--wrapper input--wrapper color-picker--wrapper","control":"color-picker-m--control input-m--control input--control color-picker--control","clear":"color-picker-m--clear input-m--clear input--clear color-picker--clear","menu":"color-picker-m--menu color-picker--menu popup--popup","line":"color-picker-m--line color-picker--line","item":"color-picker-m--item color-picker--item","isClosed":"color-picker-m--isClosed color-picker--isClosed","isOpened":"color-picker-m--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 250 */,
-/* 251 */,
-/* 252 */
+/* 254 */,
+/* 255 */,
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22611,10 +22796,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(253));
+	}, __webpack_require__(257));
 
 /***/ },
-/* 253 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22623,16 +22808,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Input = __webpack_require__(234);
+	var Input = __webpack_require__(237);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Input, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  'xs': __webpack_require__(254),
-	  's': __webpack_require__(255),
-	  'm': __webpack_require__(256)
+	  'xs': __webpack_require__(258),
+	  's': __webpack_require__(259),
+	  'm': __webpack_require__(260)
 	}, {
 	  size: 's'
 	}, {
@@ -22640,28 +22825,28 @@
 	});
 
 /***/ },
-/* 254 */
+/* 258 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","wrapper":"input-xs--wrapper input--wrapper","control":"input-xs--control input--control","clear":"input-xs--clear input--clear"};
 
 /***/ },
-/* 255 */
+/* 259 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","line-s":"28px","wrapper":"input-s--wrapper input--wrapper","control":"input-s--control input--control","clear":"input-s--clear input--clear"};
 
 /***/ },
-/* 256 */
+/* 260 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","line-m":"32px","wrapper":"input-m--wrapper input--wrapper","control":"input-m--control input--control","clear":"input-m--clear input--clear"};
 
 /***/ },
-/* 257 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22683,10 +22868,10 @@
 	    "href": "#",
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(258));
+	}, __webpack_require__(262));
 
 /***/ },
-/* 258 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22695,16 +22880,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Link = __webpack_require__(259);
+	var Link = __webpack_require__(263);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Link, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  's': __webpack_require__(260),
-	  'm': __webpack_require__(261),
-	  'l': __webpack_require__(262)
+	  's': __webpack_require__(264),
+	  'm': __webpack_require__(265),
+	  'l': __webpack_require__(266)
 	}, {
 	  size: 's'
 	}, {
@@ -22712,7 +22897,7 @@
 	});
 
 /***/ },
-/* 259 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22773,28 +22958,28 @@
 	module.exports = Link;
 
 /***/ },
-/* 260 */
+/* 264 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"link-s--control link--control"};
 
 /***/ },
-/* 261 */
+/* 265 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"link-m--control link--control"};
 
 /***/ },
-/* 262 */
+/* 266 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","control":"link-l--control link--control"};
 
 /***/ },
-/* 263 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22882,10 +23067,10 @@
 	    }],
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(264));
+	}, __webpack_require__(268));
 
 /***/ },
-/* 264 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22894,15 +23079,15 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Radio = __webpack_require__(265);
+	var Radio = __webpack_require__(269);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Radio, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(266),
-	  m: __webpack_require__(269)
+	  s: __webpack_require__(270),
+	  m: __webpack_require__(273)
 	}, {
 	  size: 's'
 	}, {
@@ -22910,7 +23095,7 @@
 	});
 
 /***/ },
-/* 265 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23074,24 +23259,24 @@
 	module.exports = Radio;
 
 /***/ },
-/* 266 */
+/* 270 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","container":"radio-s--container radio--container","wrapper":"radio-s--wrapper radio--wrapper","control":"radio-s--control radio--control","native":"radio-s--native radio--native","label":"radio-s--label radio--label"};
 
 /***/ },
-/* 267 */,
-/* 268 */,
-/* 269 */
+/* 271 */,
+/* 272 */,
+/* 273 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","container":"radio-m--container radio--container","wrapper":"radio-m--wrapper radio--wrapper","control":"radio-m--control radio--control","native":"radio-m--native radio--native","label":"radio-m--label radio--label"};
 
 /***/ },
-/* 270 */,
-/* 271 */
+/* 274 */,
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23259,10 +23444,10 @@
 	    }],
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(272));
+	}, __webpack_require__(276));
 
 /***/ },
-/* 272 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23271,7 +23456,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var RadioGroup = __webpack_require__(273);
+	var RadioGroup = __webpack_require__(277);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(RadioGroup, function (styles, _ref) {
@@ -23280,10 +23465,10 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  xs: __webpack_require__(275),
-	  s: __webpack_require__(278),
-	  m: __webpack_require__(280),
-	  l: __webpack_require__(282)
+	  xs: __webpack_require__(279),
+	  s: __webpack_require__(282),
+	  m: __webpack_require__(284),
+	  l: __webpack_require__(286)
 	}, {
 	  size: 's'
 	}, {
@@ -23291,7 +23476,7 @@
 	});
 
 /***/ },
-/* 273 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23325,7 +23510,7 @@
 	var mapKey = _require3.mapKey;
 	var mapKeyBasedOnPos = _require3.mapKeyBasedOnPos;
 
-	var RadioButton = __webpack_require__(274);
+	var RadioButton = __webpack_require__(278);
 	var React = __webpack_require__(3);
 
 	var RadioGroup = function (_Component) {
@@ -23454,7 +23639,7 @@
 	module.exports = RadioGroup;
 
 /***/ },
-/* 274 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23585,40 +23770,40 @@
 	module.exports = RadioButton;
 
 /***/ },
-/* 275 */
+/* 279 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","container":"radio-group-xs--container radio-group--container","wrapper":"radio-group-xs--wrapper radio-group--wrapper","control":"radio-group-xs--control radio-group--control","native":"radio-group-xs--native radio-group--native"};
 
 /***/ },
-/* 276 */,
-/* 277 */,
-/* 278 */
+/* 280 */,
+/* 281 */,
+/* 282 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","line-s":"28px","container":"radio-group-s--container radio-group--container","wrapper":"radio-group-s--wrapper radio-group--wrapper","control":"radio-group-s--control radio-group--control","native":"radio-group-s--native radio-group--native"};
 
 /***/ },
-/* 279 */,
-/* 280 */
+/* 283 */,
+/* 284 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","line-m":"32px","container":"radio-group-m--container radio-group--container","wrapper":"radio-group-m--wrapper radio-group--wrapper","control":"radio-group-m--control radio-group--control","native":"radio-group-m--native radio-group--native"};
 
 /***/ },
-/* 281 */,
-/* 282 */
+/* 285 */,
+/* 286 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","line-l":"38px","container":"radio-group-l--container radio-group--container","wrapper":"radio-group-l--wrapper radio-group--wrapper","control":"radio-group-l--control radio-group--control","native":"radio-group-l--native radio-group--native"};
 
 /***/ },
-/* 283 */,
-/* 284 */
+/* 287 */,
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24788,10 +24973,10 @@
 	    }],
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(285));
+	}, __webpack_require__(289));
 
 /***/ },
-/* 285 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24800,7 +24985,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Select = __webpack_require__(286);
+	var Select = __webpack_require__(290);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Select, function (styles, _ref) {
@@ -24809,9 +24994,9 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  xs: __webpack_require__(292),
-	  s: __webpack_require__(299),
-	  m: __webpack_require__(303)
+	  xs: __webpack_require__(293),
+	  s: __webpack_require__(300),
+	  m: __webpack_require__(304)
 	}, {
 	  size: 's'
 	}, {
@@ -24819,10 +25004,10 @@
 	});
 
 /***/ },
-/* 286 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -24841,13 +25026,13 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(287);
+	var _require2 = __webpack_require__(233);
 
 	var bind = _require2.bind;
 	var hasValueProp = _require2.hasValueProp;
 	var indexOf = _require2.indexOf;
 
-	var _require3 = __webpack_require__(288);
+	var _require3 = __webpack_require__(234);
 
 	var classNames = _require3.classNames;
 	var composition = _require3.composition;
@@ -24856,22 +25041,25 @@
 
 	var findDOMNode = _require4.findDOMNode;
 
-	var _require5 = __webpack_require__(289);
+	var _require5 = __webpack_require__(291);
 
 	var generateId = _require5.generateId;
 	var hasUniqueValues = _require5.hasUniqueValues;
 	var mapKey = _require5.mapKey;
 	var mapKeyBasedOnPos = _require5.mapKeyBasedOnPos;
 
-	var _require6 = __webpack_require__(290);
+	var _require6 = __webpack_require__(235);
 
 	var noop = _require6.noop;
 
 	var Button = __webpack_require__(176);
-	var Option = __webpack_require__(291);
-	var Popup = __webpack_require__(235);
+	var Option = __webpack_require__(292);
+	var Popup = __webpack_require__(239);
 	var React = __webpack_require__(3);
-	var reactOutsideEvent = __webpack_require__(238);
+	var reactOutsideEvent = __webpack_require__(242);
+	var warning = __webpack_require__(238);
+
+	var didWarnForDefaultValue = false;
 
 	var Select = function (_Component) {
 	  _inherits(Select, _Component);
@@ -24884,6 +25072,14 @@
 	    bind(_this, ['onKeyDown', 'onMenuToggle', 'onOptionFocus', 'onOptionSelect']);
 
 	    _this.controlled = hasValueProp(props);
+
+	    if (process.env.NODE_ENV !== 'production' && _this.controlled && !didWarnForDefaultValue) {
+	      // eslint-disable-line no-undef
+	      warning(typeof props.defaultValue === 'undefined', 'Select elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled select ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components');
+
+	      didWarnForDefaultValue = true;
+	    }
+
 	    _this.updateKeyMapper(props.hasUniqValues, props.options);
 
 	    var value = props.value || props.defaultValue;
@@ -25261,94 +25457,10 @@
 	};
 
 	module.exports = reactOutsideEvent(Select, ['click']);
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 287 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	exports.bind = bind;
-	exports.hasCheckedProp = hasCheckedProp;
-	exports.hasValueProp = hasValueProp;
-	exports.indexOf = indexOf;
-
-	/**
-	 * @param  {object} context
-	 * @param  {string|string[]} methodNames
-	 */
-	function bind(context, methodNames) {
-	  var methods = !Array.isArray(methodNames) ? [methodNames] : methodNames;
-
-	  var length = methods.length;
-	  for (var method, i = 0; i < length; ++i) {
-	    method = methods[i];
-	    context[method] = context[method].bind(context);
-	  }
-	}
-
-	/**
-	 * @see    https://facebook.github.io/react/docs/forms.html#controlled-components
-	 * @param  {object}  props
-	 * @return {boolean}
-	 */
-	function hasCheckedProp(props) {
-	  // @todo add assertion for defaultValue
-	  return props.checked !== undefined;
-	}
-
-	/**
-	 * @see    https://facebook.github.io/react/docs/forms.html#controlled-components
-	 * @param  {object}  props
-	 * @return {boolean}
-	 */
-	function hasValueProp(props) {
-	  // @todo add assertion for defaultValue
-	  return props.value !== undefined;
-	}
-
-	/**
-	 * @param  {object[]} collection
-	 * @param  {string} value
-	 * @return {number}
-	 */
-	function indexOf(collection, value) {
-	  var length = collection.length;
-	  for (var i = 0; i < length; ++i) {
-	    if (collection[i].value !== value) {
-	      continue;
-	    }
-
-	    return i;
-	  }
-
-	  return -1;
-	}
-
-/***/ },
-/* 288 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var classNames = __webpack_require__(178);
-
-	exports.classNames = classNames;
-	exports.composition = composition;
-
-	/**
-	 * @param  {object} props
-	 * @param  {string} props.className
-	 * @param  {string} props.styleName
-	 * @param  {object} props.styles
-	 * @return {string}
-	 */
-	function composition(props) {
-	  return classNames(props.className, props.styles[props.styleName]);
-	}
-
-/***/ },
-/* 289 */
+/* 291 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25408,17 +25520,7 @@
 	}
 
 /***/ },
-/* 290 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	exports.noop = noop;
-
-	function noop() {}
-
-/***/ },
-/* 291 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25493,39 +25595,39 @@
 	module.exports = Option;
 
 /***/ },
-/* 292 */
+/* 293 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"wrapper":"select-xs--wrapper select--wrapper","control":"select-xs--control button-normal-xs--control button-normal--control arrow-xs--control arrow--control select--control","menu":"select-xs--menu menu-xs--menu menu--menu select--menu popup--popup","item":"select-xs--item menu-xs--item menu--item select--item","isClosed":"select-xs--isClosed select--isClosed","isOpened":"select-xs--isOpened select--isOpened","isFocused":"select-xs--isFocused select--isFocused","isSelected":"select-xs--isSelected select--isSelected"};
 
 /***/ },
-/* 293 */,
 /* 294 */,
 /* 295 */,
 /* 296 */,
 /* 297 */,
 /* 298 */,
-/* 299 */
+/* 299 */,
+/* 300 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","isFocused":"select-s--isFocused select--isFocused","isSelected":"select-s--isSelected select--isSelected"};
 
 /***/ },
-/* 300 */,
 /* 301 */,
 /* 302 */,
-/* 303 */
+/* 303 */,
+/* 304 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","isFocused":"select-m--isFocused select--isFocused","isSelected":"select-m--isSelected select--isSelected"};
 
 /***/ },
-/* 304 */,
 /* 305 */,
-/* 306 */
+/* 306 */,
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25545,10 +25647,10 @@
 	  }, {
 	    "size": "xl"
 	  }]]
-	}, __webpack_require__(307));
+	}, __webpack_require__(308));
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25557,18 +25659,18 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Spin = __webpack_require__(308);
+	var Spin = __webpack_require__(309);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Spin, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(309),
-	  s: __webpack_require__(312),
-	  m: __webpack_require__(314),
-	  l: __webpack_require__(316),
-	  xl: __webpack_require__(318)
+	  xs: __webpack_require__(310),
+	  s: __webpack_require__(313),
+	  m: __webpack_require__(315),
+	  l: __webpack_require__(317),
+	  xl: __webpack_require__(319)
 	}, {
 	  size: 's'
 	}, {
@@ -25576,7 +25678,7 @@
 	});
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25636,48 +25738,48 @@
 	module.exports = Spin;
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xs--control spin--control"};
 
 /***/ },
-/* 310 */,
 /* 311 */,
-/* 312 */
+/* 312 */,
+/* 313 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-s--control spin--control"};
 
 /***/ },
-/* 313 */,
-/* 314 */
+/* 314 */,
+/* 315 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-m--control spin--control"};
 
 /***/ },
-/* 315 */,
-/* 316 */
+/* 316 */,
+/* 317 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-l--control spin--control"};
 
 /***/ },
-/* 317 */,
-/* 318 */
+/* 318 */,
+/* 319 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xl--control spin--control"};
 
 /***/ },
-/* 319 */,
-/* 320 */
+/* 320 */,
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25709,10 +25811,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(321));
+	}, __webpack_require__(322));
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25722,14 +25824,14 @@
 	var PropTypes = _require.PropTypes;
 
 	var StyleComponent = __webpack_require__(179);
-	var Textarea = __webpack_require__(322);
+	var Textarea = __webpack_require__(323);
 
 	module.exports = StyleComponent(Textarea, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(323),
-	  m: __webpack_require__(325)
+	  s: __webpack_require__(324),
+	  m: __webpack_require__(327)
 	}, {
 	  size: 's'
 	}, {
@@ -25737,7 +25839,7 @@
 	});
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25830,23 +25932,24 @@
 	module.exports = Textarea;
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","control":"textarea-s--control input--control"};
+	module.exports = {"size-s":"13px","control":"textarea-s--control input--control textarea--control"};
 
 /***/ },
-/* 324 */,
-/* 325 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"15px","control":"textarea-m--control input--control"};
-
-/***/ },
+/* 325 */,
 /* 326 */,
 /* 327 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-m":"15px","control":"textarea-m--control input--control textarea--control"};
+
+/***/ },
+/* 328 */,
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25913,10 +26016,10 @@
 	    "size": "xs",
 	    "type": "warning"
 	  }]]
-	}, __webpack_require__(328));
+	}, __webpack_require__(330));
 
 /***/ },
-/* 328 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25937,20 +26040,20 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Popup = __webpack_require__(235);
+	var Popup = __webpack_require__(239);
 	var React = __webpack_require__(3);
 	var cx = __webpack_require__(178);
 
 	var baseStyles = {
-	  'normal-xs': __webpack_require__(329),
-	  'normal-s': __webpack_require__(334),
-	  'normal-m': __webpack_require__(337),
-	  'success-xs': __webpack_require__(340),
-	  'success-s': __webpack_require__(343),
-	  'success-m': __webpack_require__(345),
-	  'warning-xs': __webpack_require__(347),
-	  'warning-s': __webpack_require__(350),
-	  'warning-m': __webpack_require__(352)
+	  'normal-xs': __webpack_require__(331),
+	  'normal-s': __webpack_require__(336),
+	  'normal-m': __webpack_require__(339),
+	  'success-xs': __webpack_require__(342),
+	  'success-s': __webpack_require__(345),
+	  'success-m': __webpack_require__(347),
+	  'warning-xs': __webpack_require__(349),
+	  'warning-s': __webpack_require__(352),
+	  'warning-m': __webpack_require__(354)
 	};
 
 	var Tooltip = function (_Popup) {
@@ -26008,57 +26111,49 @@
 	module.exports = Tooltip;
 
 /***/ },
-/* 329 */
+/* 331 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-normal-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-normal--bottom","left":"tooltip-normal-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-normal--left","right":"tooltip-normal-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-normal--right","top":"tooltip-normal-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-normal--top","isClosed":"tooltip-normal-xs--isClosed tooltip--isClosed","isOpened":"tooltip-normal-xs--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 330 */,
-/* 331 */,
 /* 332 */,
 /* 333 */,
-/* 334 */
+/* 334 */,
+/* 335 */,
+/* 336 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-normal-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-normal--bottom","left":"tooltip-normal-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-normal--left","right":"tooltip-normal-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-normal--right","top":"tooltip-normal-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-normal--top","isClosed":"tooltip-normal-s--isClosed tooltip--isClosed","isOpened":"tooltip-normal-s--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 335 */,
-/* 336 */,
-/* 337 */
+/* 337 */,
+/* 338 */,
+/* 339 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-normal-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-normal--bottom","left":"tooltip-normal-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-normal--left","right":"tooltip-normal-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-normal--right","top":"tooltip-normal-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-normal--top","isClosed":"tooltip-normal-m--isClosed tooltip--isClosed","isOpened":"tooltip-normal-m--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 338 */,
-/* 339 */,
-/* 340 */
+/* 340 */,
+/* 341 */,
+/* 342 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-success-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-success--bottom","left":"tooltip-success-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-success--left","right":"tooltip-success-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-success--right","top":"tooltip-success-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-success--top","isClosed":"tooltip-success-xs--isClosed tooltip--isClosed","isOpened":"tooltip-success-xs--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 341 */,
-/* 342 */,
-/* 343 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-success-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-success--bottom","left":"tooltip-success-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-success--left","right":"tooltip-success-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-success--right","top":"tooltip-success-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-success--top","isClosed":"tooltip-success-s--isClosed tooltip--isClosed","isOpened":"tooltip-success-s--isOpened tooltip--isOpened"};
-
-/***/ },
+/* 343 */,
 /* 344 */,
 /* 345 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-success-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-success--bottom","left":"tooltip-success-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-success--left","right":"tooltip-success-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-success--right","top":"tooltip-success-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-success--top","isClosed":"tooltip-success-m--isClosed tooltip--isClosed","isOpened":"tooltip-success-m--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-success-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-success--bottom","left":"tooltip-success-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-success--left","right":"tooltip-success-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-success--right","top":"tooltip-success-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-success--top","isClosed":"tooltip-success-s--isClosed tooltip--isClosed","isOpened":"tooltip-success-s--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 346 */,
@@ -26066,28 +26161,36 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-warning-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-warning--bottom","left":"tooltip-warning-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-warning--left","right":"tooltip-warning-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-warning--right","top":"tooltip-warning-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-warning--top","isClosed":"tooltip-warning-xs--isClosed tooltip--isClosed","isOpened":"tooltip-warning-xs--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-success-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-success--bottom","left":"tooltip-success-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-success--left","right":"tooltip-success-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-success--right","top":"tooltip-success-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-success--top","isClosed":"tooltip-success-m--isClosed tooltip--isClosed","isOpened":"tooltip-success-m--isOpened tooltip--isOpened"};
 
 /***/ },
 /* 348 */,
-/* 349 */,
-/* 350 */
+/* 349 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"bottom":"tooltip-warning-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-warning--bottom","left":"tooltip-warning-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-warning--left","right":"tooltip-warning-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-warning--right","top":"tooltip-warning-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-warning--top","isClosed":"tooltip-warning-xs--isClosed tooltip--isClosed","isOpened":"tooltip-warning-xs--isOpened tooltip--isOpened"};
+
+/***/ },
+/* 350 */,
+/* 351 */,
+/* 352 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-warning-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-warning--bottom","left":"tooltip-warning-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-warning--left","right":"tooltip-warning-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-warning--right","top":"tooltip-warning-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-warning--top","isClosed":"tooltip-warning-s--isClosed tooltip--isClosed","isOpened":"tooltip-warning-s--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 351 */,
-/* 352 */
+/* 353 */,
+/* 354 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"bottom":"tooltip-warning-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-warning--bottom","left":"tooltip-warning-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-warning--left","right":"tooltip-warning-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-warning--right","top":"tooltip-warning-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-warning--top","isClosed":"tooltip-warning-m--isClosed tooltip--isClosed","isOpened":"tooltip-warning-m--isOpened tooltip--isOpened"};
 
 /***/ },
-/* 353 */,
-/* 354 */
+/* 355 */,
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26126,10 +26229,10 @@
 	    "size": "m",
 	    "value": "size-m"
 	  }]]
-	}, __webpack_require__(355));
+	}, __webpack_require__(357));
 
 /***/ },
-/* 355 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26139,15 +26242,15 @@
 	var PropTypes = _require.PropTypes;
 
 	var StyleComponent = __webpack_require__(179);
-	var Tumbler = __webpack_require__(356);
+	var Tumbler = __webpack_require__(358);
 
 	module.exports = StyleComponent(Tumbler, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(357),
-	  s: __webpack_require__(360),
-	  m: __webpack_require__(362)
+	  xs: __webpack_require__(359),
+	  s: __webpack_require__(362),
+	  m: __webpack_require__(364)
 	}, {
 	  size: 'xs'
 	}, {
@@ -26155,7 +26258,7 @@
 	});
 
 /***/ },
-/* 356 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26305,24 +26408,24 @@
 	module.exports = Tumbler;
 
 /***/ },
-/* 357 */
+/* 359 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","wrapper":"tumbler-xs--wrapper tumbler--wrapper","control":"tumbler-xs--control tumbler--control","label":"tumbler-xs--label tumbler--label","delimiter":"tumbler-xs--delimiter tumbler--delimiter","native":"tumbler-xs--native tumbler--native"};
 
 /***/ },
-/* 358 */,
-/* 359 */,
-/* 360 */
+/* 360 */,
+/* 361 */,
+/* 362 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","wrapper":"tumbler-s--wrapper tumbler--wrapper","control":"tumbler-s--control tumbler--control","label":"tumbler-s--label tumbler--label","delimiter":"tumbler-s--delimiter tumbler--delimiter","native":"tumbler-s--native tumbler--native"};
 
 /***/ },
-/* 361 */,
-/* 362 */
+/* 363 */,
+/* 364 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

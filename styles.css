@@ -675,6 +675,8 @@ body
   display: inline-block;
 
   width: 100%;
+
+  font-family: arial,sans-serif;
 }
 
 .input--control
@@ -690,7 +692,6 @@ body
   box-shadow: inset 0 0 0 1px #ccc;
 
   font-family: arial,sans-serif;
-  line-height: normal;
 
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
@@ -740,15 +741,18 @@ body
 }
 .input-xs--wrapper
 {
+
+  font-size: 13px;
+  line-height: 24px;
 }
 
 .input-xs--control
 {
 
-  height: 24px;
   padding: 0 24px 0 7px;
 
   font-size: 13px;
+  line-height: 24px;
 }
 
 .input-xs--clear
@@ -818,15 +822,18 @@ body
 }
 .input-s--wrapper
 {
+
+  font-size: 13px;
+  line-height: 28px;
 }
 
 .input-s--control
 {
 
-  height: 28px;
   padding: 0 28px 0 8px;
 
   font-size: 13px;
+  line-height: 28px;
 }
 
 .input-s--clear
@@ -896,15 +903,18 @@ body
 }
 .input-m--wrapper
 {
+
+  font-size: 15px;
+  line-height: 32px;
 }
 
 .input-m--control
 {
 
-  height: 32px;
   padding: 0 32px 0 10px;
 
   font-size: 15px;
+  line-height: 32px;
 }
 
 .input-m--clear
@@ -1713,6 +1723,10 @@ body
   height: 38px;
 
   line-height: 38px;
+}
+.textarea--control
+{
+  line-height: normal;
 }
 .textarea-s--control
 {
