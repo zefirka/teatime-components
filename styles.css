@@ -503,6 +503,11 @@ body
   margin: 0 0 14px;
 }
 
+.check-group-s--wrapper:last-child
+{
+  margin: 0;
+}
+
 .check-group-s--control
 {
 }
@@ -530,6 +535,11 @@ body
   display: block;
 
   margin: 0 0 15px;
+}
+
+.check-group-m--wrapper:last-child
+{
+  margin: 0;
 }
 
 .check-group-m--control
@@ -1109,6 +1119,11 @@ body
   font-size: 13px;
 }
 
+.radio-s--wrapper:last-child
+{
+  margin: 0;
+}
+
 .radio-s--control
 {
 
@@ -1144,6 +1159,11 @@ body
   margin: 0 0 15px;
 
   font-size: 15px;
+}
+
+.radio-m--wrapper:last-child
+{
+  margin: 0;
 }
 
 .radio-m--control
