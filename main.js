@@ -48,11 +48,11 @@
 	__webpack_require__(213);
 	__webpack_require__(222);
 	__webpack_require__(230);
-	__webpack_require__(256);
-	__webpack_require__(261);
-	__webpack_require__(267);
-	__webpack_require__(275);
-	__webpack_require__(288);
+	__webpack_require__(257);
+	__webpack_require__(262);
+	__webpack_require__(268);
+	__webpack_require__(276);
+	__webpack_require__(289);
 	__webpack_require__(307);
 	__webpack_require__(321);
 	__webpack_require__(329);
@@ -21725,9 +21725,9 @@
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(244),
-	  s: __webpack_require__(250),
-	  m: __webpack_require__(253)
+	  xs: __webpack_require__(245),
+	  s: __webpack_require__(251),
+	  m: __webpack_require__(254)
 	}, {
 	  size: 'm'
 	}, {
@@ -21764,6 +21764,7 @@
 
 	var _require3 = __webpack_require__(234);
 
+	var classNames = _require3.classNames;
 	var composition = _require3.composition;
 
 	var _require4 = __webpack_require__(235);
@@ -21775,10 +21776,10 @@
 	var pureHex = _require5.pureHex;
 
 	var Input = __webpack_require__(237);
-	var Popup = __webpack_require__(239);
-	var Tile = __webpack_require__(241);
+	var Overlay = __webpack_require__(239);
+	var Tile = __webpack_require__(242);
 	var React = __webpack_require__(3);
-	var reactOutsideEvent = __webpack_require__(242);
+	var reactOutsideEvent = __webpack_require__(243);
 	var warning = __webpack_require__(238);
 
 	var didWarnForDefaultValue = false;
@@ -21924,8 +21925,8 @@
 	      var popupMixin = styles[this.state.isOpened ? 'isOpened' : 'isClosed'];
 
 	      return React.createElement(
-	        Popup,
-	        { className: popupMixin, styleName: 'menu', styles: styles },
+	        Overlay,
+	        { className: classNames(popupMixin, styles.menu) },
 	        this.renderTiles()
 	      );
 	    }
@@ -22033,12 +22034,15 @@
 	/**
 	 * @param  {object[]} collection
 	 * @param  {string} value
+	 * @param  {string} [prop]
 	 * @return {number}
 	 */
 	function indexOf(collection, value) {
+	  var prop = arguments.length <= 2 || arguments[2] === undefined ? 'value' : arguments[2];
+
 	  var length = collection.length;
 	  for (var i = 0; i < length; ++i) {
-	    if (collection[i].value !== value) {
+	    if (collection[i][prop] !== value) {
 	      continue;
 	    }
 
@@ -22076,7 +22080,38 @@
 
 	'use strict';
 
+	exports.isEqual = isEqual;
+	exports.isUndefined = isUndefined;
 	exports.noop = noop;
+
+	/**
+	 * Simple object comparison
+	 *
+	 * @param  {object}  source
+	 * @param  {object}  target
+	 * @return {boolean}
+	 */
+	function isEqual(source, target) {
+	  if (Object.keys(source).length !== Object.keys(target).length) {
+	    return false;
+	  }
+
+	  for (var key in source) {
+	    if (source[key] !== target[key]) {
+	      return false;
+	    }
+	  }
+
+	  return true;
+	}
+
+	/**
+	 * @param  {*} a
+	 * @return {boolean}
+	 */
+	function isUndefined(a) {
+	  return void 0 === a;
+	}
 
 	function noop() {}
 
@@ -22130,6 +22165,7 @@
 
 	var _require4 = __webpack_require__(235);
 
+	var isUndefined = _require4.isUndefined;
 	var noop = _require4.noop;
 
 	var React = __webpack_require__(3);
@@ -22149,13 +22185,15 @@
 
 	    if (process.env.NODE_ENV !== 'production' && _this.controlled && !didWarnForDefaultValue) {
 	      // eslint-disable-line no-undef
-	      warning(typeof props.defaultValue === 'undefined', 'Input contains an input of type %s with both value and defaultValue props. ' + 'Input elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled input ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components', props.type);
+	      warning(isUndefined(props.defaultValue), 'Input contains an input of type %s with both value and defaultValue props. ' + 'Input elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled input ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components', props.type);
 
 	      didWarnForDefaultValue = true;
 	    }
 
+	    var value = _this.controlled ? props.value : props.defaultValue;
+
 	    _this.state = {
-	      value: props.value || props.defaultValue || ''
+	      value: !isUndefined(value) ? value : ''
 	    };
 
 	    bind(_this, ['onChange', 'onClearClick']);
@@ -22342,188 +22380,146 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(177);
+	var _require2 = __webpack_require__(240);
 
-	var composition = _require2.composition;
+	var forget = _require2.forget;
+	var observe = _require2.observe;
+	var update = _require2.update;
+
+	var _require3 = __webpack_require__(241);
+
+	var generateId = _require3.generateId;
+
+	var _require4 = __webpack_require__(235);
+
+	var noop = _require4.noop;
 
 	var React = __webpack_require__(3);
-	var layer = __webpack_require__(240);
 
-	var Popup = function (_Component) {
-	  _inherits(Popup, _Component);
+	var Overlay = function (_Component) {
+	  _inherits(Overlay, _Component);
 
-	  function Popup(props) {
-	    _classCallCheck(this, Popup);
+	  function Overlay(props) {
+	    _classCallCheck(this, Overlay);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Popup).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Overlay).call(this, props));
 
 	    _this.state = {
-	      zIndex: 100
+	      id: generateId()
 	    };
 	    return _this;
 	  }
 
-	  _createClass(Popup, [{
-	    key: 'onLayersUpdate',
-	    value: function onLayersUpdate(zIndex) {
-	      this.setState({ zIndex: zIndex });
+	  _createClass(Overlay, [{
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      update(this, this.state.id);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      observe(this, this.state.id);
+	      update();
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      forget(this, this.state.id);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var zIndex = this.state.zIndex;
-
-
-	      return React.createElement('div', _extends({
-	        style: { zIndex: zIndex }
-	      }, this.props, {
-	        className: composition(this.props) }));
+	      return React.createElement('div', _extends({}, this.props, { ref: 'overlay' }));
 	    }
 	  }]);
 
-	  return Popup;
+	  return Overlay;
 	}(Component);
 
-	Popup.defaultProps = {
-	  styleName: 'popup',
-	  styles: {}
+	Overlay.defaultProps = {
+	  onUpdate: noop
 	};
 
-	Popup.propTypes = {
-	  styleName: PropTypes.string,
-	  styles: PropTypes.object
+	Overlay.propTypes = {
+	  onUpdate: PropTypes.func
 	};
 
-	module.exports = layer(Popup);
+	module.exports = Overlay;
 
 /***/ },
 /* 240 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	var LAYERS = {};
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var pendingUpdate;
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _require = __webpack_require__(3);
-
-	var Component = _require.Component;
-
-	var _require2 = __webpack_require__(40);
-
-	var findDOMNode = _require2.findDOMNode;
-
-	var _require3 = __webpack_require__(216);
-
-	var generateId = _require3.generateId;
-
-	var React = __webpack_require__(3);
-
-	var layers = {};
+	exports.forget = forget;
+	exports.observe = observe;
+	exports.update = update;
 
 	/**
-	 * @param  {component} Target
-	 * @return {component}
+	 * @param {component} component
+	 * @param {number} id
 	 */
-	module.exports = function (Target) {
-	  var Layer = function (_Component) {
-	    _inherits(Layer, _Component);
+	function forget(component, id) {
+	  delete LAYERS[id];
+	}
 
-	    function Layer() {
-	      _classCallCheck(this, Layer);
+	/**
+	 * @param {component} component
+	 * @param {number} id
+	 */
+	function observe(component, id) {
+	  var ref = component.refs.overlay;
 
-	      return _possibleConstructorReturn(this, Object.getPrototypeOf(Layer).apply(this, arguments));
-	    }
+	  LAYERS[id] = {
+	    component: component,
+	    rect: ref && ref.getBoundingClientRect()
+	  };
+	}
 
-	    _createClass(Layer, [{
-	      key: 'componentDidMount',
-	      value: function componentDidMount() {
-	        subscribeTo(this);
-	        updateLayers();
-	      }
-	    }, {
-	      key: 'componentDidUpdate',
-	      value: function componentDidUpdate() {
-	        updateLayers();
-	      }
-	    }, {
-	      key: 'componentWillUnmount',
-	      value: function componentWillUnmount() {
-	        unsubscribeFrom(this);
-	      }
-	    }, {
-	      key: 'render',
-	      value: function render() {
-	        return React.createElement(Target, _extends({ ref: 'target' }, this.props));
-	      }
-	    }]);
+	/**
+	 * @param {component} component
+	 * @param {number} id
+	 */
+	function update() {
+	  clearTimeout(pendingUpdate);
+	  pendingUpdate = setTimeout(updateComponents);
+	}
 
-	    return Layer;
-	  }(Component);
-
-	  return Layer;
-	};
-
-	function updateLayers() {
+	function updateComponents() {
 	  var positions = [];
-	  var target;
 
-	  for (var id in layers) {
-	    var layer = layers[id];
-	    if (!layer) {
+	  for (var id in LAYERS) {
+	    var target = LAYERS[id];
+
+	    var ref = target.component.refs.overlay;
+	    if (!ref) {
 	      continue;
 	    }
 
-	    target = layer.refs.target;
-	    if (!target) {
-	      continue;
-	    }
-
-	    target = findDOMNode(target);
-	    if (!target) {
-	      continue;
-	    }
+	    var rect = ref.getBoundingClientRect();
+	    target.rect = rect;
 
 	    positions.push({
-	      layer: layer,
-	      position: calcPosition(target.getBoundingClientRect())
+	      component: target.component,
+	      pos: calcPos(rect),
+	      rect: rect,
+	      ref: ref
 	    });
 	  }
 
-	  positions.sort(function (a, b) {
-	    return b.position - a.position;
-	  });
+	  positions.sort(byPos);
 
 	  var length = positions.length;
 	  while (length--) {
-	    target = positions[length].layer.refs.target;
-	    if (typeof target.onLayersUpdate === 'function') {
-	      target.onLayersUpdate(length + 100);
-	    }
+	    var _target = positions[length];
+	    _target.ref.style.zIndex = 100 + length;
+	    _target.component.props.onUpdate(_target.rect, _target.ref);
 	  }
-	}
-
-	/**
-	 * @param {reactClass} component
-	 */
-	function subscribeTo(component) {
-	  var id = component._id = generateId();
-	  layers[id] = component;
-	}
-
-	/**
-	 * @param {reactClass} component
-	 */
-	function unsubscribeFrom(component) {
-	  layers[component._id] = null;
-	  component._id = null;
 	}
 
 	/**
@@ -22532,12 +22528,89 @@
 	 * @param  {number} rect.left
 	 * @return {number}
 	 */
-	function calcPosition(clientRect) {
-	  return clientRect.top + Number('.' + Math.round(clientRect.left));
+	function calcPos(rect) {
+	  return rect.top + float(rect.left);
+	}
+
+	/**
+	 * @param  {number} int
+	 * @return {number}
+	 */
+	function float(int) {
+	  return Number('.' + Math.round(int));
+	}
+
+	/**
+	 * @param  {object} a
+	 * @param  {object} b
+	 * @return {number}
+	 */
+	function byPos(a, b) {
+	  return b.pos - a.pos;
 	}
 
 /***/ },
 /* 241 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var counter = 0;
+
+	exports.generateId = generateId;
+	exports.hasUniqueValues = hasUniqueValues;
+	exports.mapKey = mapKey;
+	exports.mapKeyBasedOnPos = mapKeyBasedOnPos;
+
+	/**
+	 * @return {string}
+	 */
+	function generateId() {
+	  return '_teatime' + ++counter;
+	}
+
+	/**
+	 * @param  {object[]} options
+	 * @return {boolean}
+	 */
+	function hasUniqueValues(options) {
+	  var cache = {};
+
+	  for (var value, i = 0; i < options.length; ++i) {
+	    value = options[i].value;
+
+	    if (!cache[value]) {
+	      cache[value] = true;
+	      continue;
+	    }
+
+	    return false;
+	  }
+
+	  return true;
+	}
+
+	/**
+	 * @param  {string} prefix
+	 * @param  {string} value
+	 * @return {string}
+	 */
+	function mapKey(prefix, value) {
+	  return '' + prefix + value;
+	}
+
+	/**
+	 * @param  {string} prefix
+	 * @param  {string} value
+	 * @param  {number} position
+	 * @return {string}
+	 */
+	function mapKeyBasedOnPos(prefix, value, position) {
+	  return '' + prefix + value + position;
+	}
+
+/***/ },
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22607,12 +22680,12 @@
 	module.exports = Tile;
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var reactOutsideEvent = __webpack_require__(243);
+	var reactOutsideEvent = __webpack_require__(244);
 
 	/**
 	 * @param  {component} Target
@@ -22626,7 +22699,7 @@
 	};
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22723,37 +22796,37 @@
 
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"color-picker-xs--container color-picker--container","preview":"color-picker-xs--preview color-picker--preview","wrapper":"color-picker-xs--wrapper input-xs--wrapper input--wrapper color-picker--wrapper","control":"color-picker-xs--control input-xs--control input--control color-picker--control","clear":"color-picker-xs--clear input-xs--clear input--clear color-picker--clear","menu":"color-picker-xs--menu color-picker--menu popup--popup","line":"color-picker-xs--line color-picker--line","item":"color-picker-xs--item color-picker--item","isClosed":"color-picker-xs--isClosed color-picker--isClosed","isOpened":"color-picker-xs--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 245 */,
 /* 246 */,
 /* 247 */,
 /* 248 */,
 /* 249 */,
-/* 250 */
+/* 250 */,
+/* 251 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"color-picker-s--container color-picker--container","preview":"color-picker-s--preview color-picker--preview","wrapper":"color-picker-s--wrapper input-s--wrapper input--wrapper color-picker--wrapper","control":"color-picker-s--control input-s--control input--control color-picker--control","clear":"color-picker-s--clear input-s--clear input--clear color-picker--clear","menu":"color-picker-s--menu color-picker--menu popup--popup","line":"color-picker-s--line color-picker--line","item":"color-picker-s--item color-picker--item","isClosed":"color-picker-s--isClosed color-picker--isClosed","isOpened":"color-picker-s--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 251 */,
 /* 252 */,
-/* 253 */
+/* 253 */,
+/* 254 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"color-picker-m--container color-picker--container","preview":"color-picker-m--preview color-picker--preview","wrapper":"color-picker-m--wrapper input-m--wrapper input--wrapper color-picker--wrapper","control":"color-picker-m--control input-m--control input--control color-picker--control","clear":"color-picker-m--clear input-m--clear input--clear color-picker--clear","menu":"color-picker-m--menu color-picker--menu popup--popup","line":"color-picker-m--line color-picker--line","item":"color-picker-m--item color-picker--item","isClosed":"color-picker-m--isClosed color-picker--isClosed","isOpened":"color-picker-m--isOpened color-picker--isOpened"};
 
 /***/ },
-/* 254 */,
 /* 255 */,
-/* 256 */
+/* 256 */,
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22796,10 +22869,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(257));
+	}, __webpack_require__(258));
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22815,9 +22888,9 @@
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  'xs': __webpack_require__(258),
-	  's': __webpack_require__(259),
-	  'm': __webpack_require__(260)
+	  'xs': __webpack_require__(259),
+	  's': __webpack_require__(260),
+	  'm': __webpack_require__(261)
 	}, {
 	  size: 's'
 	}, {
@@ -22825,28 +22898,28 @@
 	});
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","wrapper":"input-xs--wrapper input--wrapper","control":"input-xs--control input--control","clear":"input-xs--clear input--clear"};
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","line-s":"28px","wrapper":"input-s--wrapper input--wrapper","control":"input-s--control input--control","clear":"input-s--clear input--clear"};
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","line-m":"32px","wrapper":"input-m--wrapper input--wrapper","control":"input-m--control input--control","clear":"input-m--clear input--clear"};
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22868,10 +22941,10 @@
 	    "href": "#",
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(262));
+	}, __webpack_require__(263));
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22880,16 +22953,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Link = __webpack_require__(263);
+	var Link = __webpack_require__(264);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Link, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  's': __webpack_require__(264),
-	  'm': __webpack_require__(265),
-	  'l': __webpack_require__(266)
+	  's': __webpack_require__(265),
+	  'm': __webpack_require__(266),
+	  'l': __webpack_require__(267)
 	}, {
 	  size: 's'
 	}, {
@@ -22897,7 +22970,7 @@
 	});
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22958,28 +23031,28 @@
 	module.exports = Link;
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"link-s--control link--control"};
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"link-m--control link--control"};
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","control":"link-l--control link--control"};
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23067,10 +23140,10 @@
 	    }],
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(268));
+	}, __webpack_require__(269));
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23079,15 +23152,15 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Radio = __webpack_require__(269);
+	var Radio = __webpack_require__(270);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Radio, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(270),
-	  m: __webpack_require__(273)
+	  s: __webpack_require__(271),
+	  m: __webpack_require__(274)
 	}, {
 	  size: 's'
 	}, {
@@ -23095,7 +23168,7 @@
 	});
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23259,24 +23332,24 @@
 	module.exports = Radio;
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","container":"radio-s--container radio--container","wrapper":"radio-s--wrapper radio--wrapper","control":"radio-s--control radio--control","native":"radio-s--native radio--native","label":"radio-s--label radio--label"};
 
 /***/ },
-/* 271 */,
 /* 272 */,
-/* 273 */
+/* 273 */,
+/* 274 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","container":"radio-m--container radio--container","wrapper":"radio-m--wrapper radio--wrapper","control":"radio-m--control radio--control","native":"radio-m--native radio--native","label":"radio-m--label radio--label"};
 
 /***/ },
-/* 274 */,
-/* 275 */
+/* 275 */,
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23444,10 +23517,10 @@
 	    }],
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(276));
+	}, __webpack_require__(277));
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23456,7 +23529,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var RadioGroup = __webpack_require__(277);
+	var RadioGroup = __webpack_require__(278);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(RadioGroup, function (styles, _ref) {
@@ -23465,10 +23538,10 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  xs: __webpack_require__(279),
-	  s: __webpack_require__(282),
-	  m: __webpack_require__(284),
-	  l: __webpack_require__(286)
+	  xs: __webpack_require__(280),
+	  s: __webpack_require__(283),
+	  m: __webpack_require__(285),
+	  l: __webpack_require__(287)
 	}, {
 	  size: 's'
 	}, {
@@ -23476,7 +23549,7 @@
 	});
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23510,7 +23583,7 @@
 	var mapKey = _require3.mapKey;
 	var mapKeyBasedOnPos = _require3.mapKeyBasedOnPos;
 
-	var RadioButton = __webpack_require__(278);
+	var RadioButton = __webpack_require__(279);
 	var React = __webpack_require__(3);
 
 	var RadioGroup = function (_Component) {
@@ -23639,7 +23712,7 @@
 	module.exports = RadioGroup;
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23770,40 +23843,40 @@
 	module.exports = RadioButton;
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","container":"radio-group-xs--container radio-group--container","wrapper":"radio-group-xs--wrapper radio-group--wrapper","control":"radio-group-xs--control radio-group--control","native":"radio-group-xs--native radio-group--native"};
 
 /***/ },
-/* 280 */,
 /* 281 */,
-/* 282 */
+/* 282 */,
+/* 283 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","line-s":"28px","container":"radio-group-s--container radio-group--container","wrapper":"radio-group-s--wrapper radio-group--wrapper","control":"radio-group-s--control radio-group--control","native":"radio-group-s--native radio-group--native"};
 
 /***/ },
-/* 283 */,
-/* 284 */
+/* 284 */,
+/* 285 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","line-m":"32px","container":"radio-group-m--container radio-group--container","wrapper":"radio-group-m--wrapper radio-group--wrapper","control":"radio-group-m--control radio-group--control","native":"radio-group-m--native radio-group--native"};
 
 /***/ },
-/* 285 */,
-/* 286 */
+/* 286 */,
+/* 287 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","line-l":"38px","container":"radio-group-l--container radio-group--container","wrapper":"radio-group-l--wrapper radio-group--wrapper","control":"radio-group-l--control radio-group--control","native":"radio-group-l--native radio-group--native"};
 
 /***/ },
-/* 287 */,
-/* 288 */
+/* 288 */,
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24973,10 +25046,10 @@
 	    }],
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(289));
+	}, __webpack_require__(290));
 
 /***/ },
-/* 289 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24985,7 +25058,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Select = __webpack_require__(290);
+	var Select = __webpack_require__(291);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Select, function (styles, _ref) {
@@ -25004,7 +25077,7 @@
 	});
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -25041,7 +25114,7 @@
 
 	var findDOMNode = _require4.findDOMNode;
 
-	var _require5 = __webpack_require__(291);
+	var _require5 = __webpack_require__(241);
 
 	var generateId = _require5.generateId;
 	var hasUniqueValues = _require5.hasUniqueValues;
@@ -25050,13 +25123,14 @@
 
 	var _require6 = __webpack_require__(235);
 
+	var isUndefined = _require6.isUndefined;
 	var noop = _require6.noop;
 
 	var Button = __webpack_require__(176);
 	var Option = __webpack_require__(292);
-	var Popup = __webpack_require__(239);
+	var Overlay = __webpack_require__(239);
 	var React = __webpack_require__(3);
-	var reactOutsideEvent = __webpack_require__(242);
+	var reactOutsideEvent = __webpack_require__(243);
 	var warning = __webpack_require__(238);
 
 	var didWarnForDefaultValue = false;
@@ -25075,15 +25149,16 @@
 
 	    if (process.env.NODE_ENV !== 'production' && _this.controlled && !didWarnForDefaultValue) {
 	      // eslint-disable-line no-undef
-	      warning(typeof props.defaultValue === 'undefined', 'Select elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled select ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components');
+	      warning(isUndefined(props.defaultValue), 'Select elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled select ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components');
 
 	      didWarnForDefaultValue = true;
 	    }
 
 	    _this.updateKeyMapper(props.hasUniqValues, props.options);
 
-	    var value = props.value || props.defaultValue;
-	    var selected = value !== undefined ? indexOf(props.options, value) : 0; // in case of uncontrolled component
+	    var value = _this.controlled ? props.value : props.defaultValue;
+
+	    var selected = !isUndefined(value) ? indexOf(props.options, value) : 0; // in case of uncontrolled component
 
 	    _this.state = {
 	      focused: -1,
@@ -25364,11 +25439,10 @@
 	      }
 
 	      return React.createElement(
-	        Popup,
+	        Overlay,
 	        {
-	          ref: 'menu',
-	          styleName: 'menu',
-	          styles: styles },
+	          className: styles.menu,
+	          ref: 'menu' },
 	        this.renderOptions()
 	      );
 	    }
@@ -25458,66 +25532,6 @@
 
 	module.exports = reactOutsideEvent(Select, ['click']);
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 291 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var counter = 0;
-
-	exports.generateId = generateId;
-	exports.hasUniqueValues = hasUniqueValues;
-	exports.mapKey = mapKey;
-	exports.mapKeyBasedOnPos = mapKeyBasedOnPos;
-
-	/**
-	 * @return {string}
-	 */
-	function generateId() {
-	  return '_teatime' + ++counter;
-	}
-
-	/**
-	 * @param  {object[]} options
-	 * @return {boolean}
-	 */
-	function hasUniqueValues(options) {
-	  var cache = {};
-
-	  for (var value, i = 0; i < options.length; ++i) {
-	    value = options[i].value;
-
-	    if (!cache[value]) {
-	      cache[value] = true;
-	      continue;
-	    }
-
-	    return false;
-	  }
-
-	  return true;
-	}
-
-	/**
-	 * @param  {string} prefix
-	 * @param  {string} value
-	 * @return {string}
-	 */
-	function mapKey(prefix, value) {
-	  return '' + prefix + value;
-	}
-
-	/**
-	 * @param  {string} prefix
-	 * @param  {string} value
-	 * @param  {number} position
-	 * @return {string}
-	 */
-	function mapKeyBasedOnPos(prefix, value, position) {
-	  return '' + prefix + value + position;
-	}
 
 /***/ },
 /* 292 */
@@ -26006,7 +26020,7 @@
 	    "size": "xs",
 	    "type": "warning"
 	  }, {
-	    "children": "right",
+	    "children": "Any development starts with pain and frustration. The pain is a reason to improve the product or create a new one.",
 	    "direction": "right",
 	    "size": "xs",
 	    "type": "warning"
@@ -26038,9 +26052,14 @@
 
 	var _require = __webpack_require__(3);
 
+	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var Popup = __webpack_require__(239);
+	var _require2 = __webpack_require__(233);
+
+	var bind = _require2.bind;
+
+	var Overlay = __webpack_require__(239);
 	var React = __webpack_require__(3);
 	var cx = __webpack_require__(178);
 
@@ -26056,16 +26075,42 @@
 	  'warning-m': __webpack_require__(354)
 	};
 
-	var Tooltip = function (_Popup) {
-	  _inherits(Tooltip, _Popup);
+	var Tooltip = function (_Component) {
+	  _inherits(Tooltip, _Component);
 
-	  function Tooltip() {
+	  function Tooltip(props) {
 	    _classCallCheck(this, Tooltip);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Tooltip).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Tooltip).call(this, props));
+
+	    _this.state = {
+	      multiline: false
+	    };
+
+	    bind(_this, 'handleOverlayUpdate');
+	    return _this;
 	  }
 
 	  _createClass(Tooltip, [{
+	    key: 'handleOverlayUpdate',
+	    value: function handleOverlayUpdate(rect, ref) {
+	      var isMultiline = rect.width * rect.height / this.props.maxWidth > 26;
+
+	      if (this._isMultiline === isMultiline) {
+	        return;
+	      }
+
+	      if (isMultiline) {
+	        ref.style.width = this.props.maxWidth + 'px';
+	        ref.style.whiteSpace = 'normal';
+	      } else {
+	        ref.style.width = 'auto';
+	        ref.style.whiteSpace = 'nowrap';
+	      }
+
+	      this._isMultiline = isMultiline;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
@@ -26082,9 +26127,10 @@
 	      var mixin = children ? styles.isOpened : styles.isClosed;
 
 	      return React.createElement(
-	        Popup,
+	        Overlay,
 	        _extends({}, o, {
-	          className: cx(className, mixin),
+	          className: cx(className, mixin, styles[direction]),
+	          onUpdate: this.handleOverlayUpdate,
 	          styleName: direction,
 	          styles: styles,
 	          type: type }),
@@ -26094,16 +26140,18 @@
 	  }]);
 
 	  return Tooltip;
-	}(Popup);
+	}(Component);
 
 	Tooltip.defaultProps = {
 	  direction: 'right',
+	  maxWidth: 300,
 	  size: 's',
 	  type: 'normal'
 	};
 
 	Tooltip.propTypes = {
 	  direction: PropTypes.oneOf(['bottom', 'left', 'right', 'top']),
+	  maxWidth: PropTypes.number,
 	  size: PropTypes.oneOf(['xs', 's', 'm']),
 	  type: PropTypes.oneOf(['normal', 'success', 'warning'])
 	};
