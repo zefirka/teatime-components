@@ -47,7 +47,7 @@
 	__webpack_require__(1);
 	__webpack_require__(213);
 	__webpack_require__(222);
-	__webpack_require__(230);
+	__webpack_require__(235);
 	__webpack_require__(257);
 	__webpack_require__(262);
 	__webpack_require__(268);
@@ -21390,8 +21390,8 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  s: __webpack_require__(225),
-	  m: __webpack_require__(228)
+	  s: __webpack_require__(230),
+	  m: __webpack_require__(233)
 	}, {
 	  size: 's'
 	}, {
@@ -21402,7 +21402,7 @@
 /* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -21419,22 +21419,33 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(177);
+	var _require2 = __webpack_require__(225);
 
 	var bind = _require2.bind;
-	var composition = _require2.composition;
-	var mapRange = _require2.mapRange;
-	var noop = _require2.noop;
+	var hasValueProp = _require2.hasValueProp;
 
-	var _require3 = __webpack_require__(216);
+	var _require3 = __webpack_require__(226);
 
-	var generateId = _require3.generateId;
-	var isUnique = _require3.isUnique;
-	var mapKey = _require3.mapKey;
-	var mapKeyBasedOnPos = _require3.mapKeyBasedOnPos;
+	var composition = _require3.composition;
+
+	var _require4 = __webpack_require__(227);
+
+	var generateId = _require4.generateId;
+	var hasUniqueValues = _require4.hasUniqueValues;
+	var mapKey = _require4.mapKey;
+	var mapKeyBasedOnPos = _require4.mapKeyBasedOnPos;
+
+	var _require5 = __webpack_require__(228);
+
+	var isUndefined = _require5.isUndefined;
+	var mapRange = _require5.mapRange;
+	var noop = _require5.noop;
 
 	var Check = __webpack_require__(215);
 	var React = __webpack_require__(3);
+	var warning = __webpack_require__(229);
+
+	var didWarnForDefaultValue = false;
 
 	var CheckGroup = function (_Component) {
 	  _inherits(CheckGroup, _Component);
@@ -21442,21 +21453,27 @@
 	  function CheckGroup(props) {
 	    _classCallCheck(this, CheckGroup);
 
-	    // @todo add assertion for defaultValue
-
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CheckGroup).call(this, props));
 
-	    _this.controlled = props.value !== undefined;
+	    bind(_this, 'onChange');
+
+	    _this.controlled = hasValueProp(props);
+
+	    if (process.env.NODE_ENV !== 'production' && _this.controlled && !didWarnForDefaultValue) {
+	      // eslint-disable-line no-undef
+	      warning(isUndefined(props.defaultValue), 'CheckGroup elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled select ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components');
+
+	      didWarnForDefaultValue = true;
+	    }
+
 	    _this.updateKeyMapper(props.hasUniqValues, props.options);
 
-	    var value = props.value || props.defaultValue;
+	    var value = _this.controlled ? props.value : props.defaultValue;
 
 	    _this.state = {
 	      prefix: generateId(),
 	      values: mapValueToState(props.options, value || [])
 	    };
-
-	    bind(_this, 'onChange');
 	    return _this;
 	  }
 
@@ -21499,7 +21516,7 @@
 	  }, {
 	    key: 'updateKeyMapper',
 	    value: function updateKeyMapper(hasUniqValues, options) {
-	      this.mapKey = !(hasUniqValues && isUnique(options)) ? mapKeyBasedOnPos : mapKey;
+	      this.mapKey = !(hasUniqValues && hasUniqueValues(options)) ? mapKeyBasedOnPos : mapKey;
 	    }
 	  }, {
 	    key: 'render',
@@ -21587,6 +21604,7 @@
 
 	CheckGroup.propTypes = {
 	  cols: PropTypes.number,
+	  defaultValue: PropTypes.arrayOf(PropTypes.string),
 	  hasUniqValues: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
@@ -21600,7 +21618,8 @@
 	    label: PropTypes.string.isRequired,
 	    native: PropTypes.string.isRequired,
 	    wrapper: PropTypes.string.isRequired
-	  })
+	  }),
+	  value: PropTypes.arrayOf(PropTypes.string)
 	};
 
 	module.exports = CheckGroup;
@@ -21630,18 +21649,16 @@
 	 * @return {boolean[]}
 	 */
 	function mapValueToState(options, selected) {
+	  var selectedMap = {};
+
 	  var length = selected.length;
-	  var i = 0;
+	  while (length--) {
+	    selectedMap[selected[length]] = null;
+	  }
 
 	  return options.map(function (_ref3) {
 	    var value = _ref3.value;
-
-	    if (value === selected[i] && i < length) {
-	      i++;
-	      return true;
-	    }
-
-	    return false;
+	    return value in selectedMap;
 	  });
 	}
 
@@ -21656,26 +21673,289 @@
 	    return position !== i ? value : target;
 	  });
 	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 /* 225 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.bind = bind;
+	exports.hasCheckedProp = hasCheckedProp;
+	exports.hasValueProp = hasValueProp;
+	exports.indexOf = indexOf;
+
+	/**
+	 * @param  {object} context
+	 * @param  {string|string[]} methodNames
+	 */
+	function bind(context, methodNames) {
+	  var methods = !Array.isArray(methodNames) ? [methodNames] : methodNames;
+
+	  var length = methods.length;
+	  for (var method, i = 0; i < length; ++i) {
+	    method = methods[i];
+	    context[method] = context[method].bind(context);
+	  }
+	}
+
+	/**
+	 * @see    https://facebook.github.io/react/docs/forms.html#controlled-components
+	 * @param  {object}  props
+	 * @return {boolean}
+	 */
+	function hasCheckedProp(props) {
+	  return props.checked !== undefined;
+	}
+
+	/**
+	 * @see    https://facebook.github.io/react/docs/forms.html#controlled-components
+	 * @param  {object}  props
+	 * @return {boolean}
+	 */
+	function hasValueProp(props) {
+	  return props.value !== undefined;
+	}
+
+	/**
+	 * @param  {object[]} collection
+	 * @param  {string} value
+	 * @param  {string} [prop]
+	 * @return {number}
+	 */
+	function indexOf(collection, value) {
+	  var prop = arguments.length <= 2 || arguments[2] === undefined ? 'value' : arguments[2];
+
+	  var length = collection.length;
+	  for (var i = 0; i < length; ++i) {
+	    if (collection[i][prop] !== value) {
+	      continue;
+	    }
+
+	    return i;
+	  }
+
+	  return -1;
+	}
+
+/***/ },
+/* 226 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var classNames = __webpack_require__(178);
+
+	exports.classNames = classNames;
+	exports.composition = composition;
+
+	/**
+	 * @param  {object} props
+	 * @param  {string} props.className
+	 * @param  {string} props.styleName
+	 * @param  {object} props.styles
+	 * @return {string}
+	 */
+	function composition(props) {
+	  return classNames(props.className, props.styles[props.styleName]);
+	}
+
+/***/ },
+/* 227 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var counter = 0;
+
+	exports.generateId = generateId;
+	exports.hasUniqueValues = hasUniqueValues;
+	exports.mapKey = mapKey;
+	exports.mapKeyBasedOnPos = mapKeyBasedOnPos;
+
+	/**
+	 * @return {string}
+	 */
+	function generateId() {
+	  return '_teatime' + ++counter;
+	}
+
+	/**
+	 * @param  {object[]} options
+	 * @return {boolean}
+	 */
+	function hasUniqueValues(options) {
+	  var cache = {};
+
+	  for (var value, i = 0; i < options.length; ++i) {
+	    value = options[i].value;
+
+	    if (!cache[value]) {
+	      cache[value] = true;
+	      continue;
+	    }
+
+	    return false;
+	  }
+
+	  return true;
+	}
+
+	/**
+	 * @param  {string} prefix
+	 * @param  {string} value
+	 * @return {string}
+	 */
+	function mapKey(prefix, value) {
+	  return '' + prefix + value;
+	}
+
+	/**
+	 * @param  {string} prefix
+	 * @param  {string} value
+	 * @param  {number} position
+	 * @return {string}
+	 */
+	function mapKeyBasedOnPos(prefix, value, position) {
+	  return '' + prefix + value + position;
+	}
+
+/***/ },
+/* 228 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.isEqual = isEqual;
+	exports.isUndefined = isUndefined;
+	exports.mapRange = mapRange;
+	exports.noop = noop;
+
+	/**
+	 * Simple object comparison
+	 *
+	 * @param  {object}  source
+	 * @param  {object}  target
+	 * @return {boolean}
+	 */
+	function isEqual(source, target) {
+	  if (Object.keys(source).length !== Object.keys(target).length) {
+	    return false;
+	  }
+
+	  for (var key in source) {
+	    if (source[key] !== target[key]) {
+	      return false;
+	    }
+	  }
+
+	  return true;
+	}
+
+	/**
+	 * @param  {*} a
+	 * @return {boolean}
+	 */
+	function isUndefined(a) {
+	  return void 0 === a;
+	}
+
+	/**
+	 * @param  {function} iteratee
+	 * @param  {number} steps
+	 * @return {array}
+	 */
+	function mapRange(iteratee, steps) {
+	  var collection = new Array(steps);
+	  for (var i = 0; i < steps; ++i) {
+	    collection[i] = iteratee(i, steps);
+	  }
+
+	  return collection;
+	}
+
+	function noop() {}
+
+/***/ },
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	var _require = __webpack_require__(228);
+
+	var noop = _require.noop;
+
+
+	var warning = noop;
+
+	if (process.env.NODE_ENV !== 'production') {
+	  // eslint-disable-line no-undef
+	  /**
+	   * Copy of React's warning function
+	   *
+	   * @param  {boolean}   condition
+	   * @param  {string}    format
+	   * @param  {...string} args
+	   */
+	  warning = function warning(condition, format) {
+	    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+	      args[_key - 2] = arguments[_key];
+	    }
+
+	    if (typeof format === 'undefined') {
+	      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	    }
+
+	    if (format.indexOf('Failed Composite propType: ') === 0) {
+	      return; // Ignore CompositeComponent proptype check.
+	    }
+
+	    if (condition) {
+	      return;
+	    }
+
+	    var argIndex = 0;
+	    var message = 'Warning: ' + format.replace(/%s/g, function () {
+	      return args[argIndex++];
+	    });
+
+	    if (typeof console !== 'undefined') {
+	      console.error(message); // eslint-disable-line no-console
+	    }
+
+	    try {
+	      // --- Welcome to debugging React ---
+	      // This error was thrown as a convenience so that you can use this stack
+	      // to find the callsite that caused this warning to fire.
+	      throw new Error(message);
+	    } catch (x) {} // eslint-disable-line no-empty
+	  };
+	}
+
+	module.exports = warning;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 230 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"check-group-s--container check-group--container","column":"check-group-s--column check-group--column","wrapper":"check-group-s--wrapper check-s--wrapper check--wrapper","control":"check-group-s--control check-s--control check--control","native":"check-group-s--native check-s--native check--native","label":"check-group-s--label check-s--label check--label"};
 
 /***/ },
-/* 226 */,
-/* 227 */,
-/* 228 */
+/* 231 */,
+/* 232 */,
+/* 233 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"container":"check-group-m--container check-group--container","column":"check-group-m--column check-group--column","wrapper":"check-group-m--wrapper check-m--wrapper check--wrapper","control":"check-group-m--control check-m--control check--control","native":"check-group-m--native check-m--native check--native","label":"check-group-m--label check-m--label check--label"};
 
 /***/ },
-/* 229 */,
-/* 230 */
+/* 234 */,
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21706,10 +21986,10 @@
 	    "name": "blue water",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(231));
+	}, __webpack_require__(236));
 
 /***/ },
-/* 231 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21718,7 +21998,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var ColorPicker = __webpack_require__(232);
+	var ColorPicker = __webpack_require__(237);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(ColorPicker, function (styles, _ref) {
@@ -21735,7 +22015,7 @@
 	});
 
 /***/ },
-/* 232 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -21757,30 +22037,30 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(233);
+	var _require2 = __webpack_require__(225);
 
 	var bind = _require2.bind;
 	var hasValueProp = _require2.hasValueProp;
 
-	var _require3 = __webpack_require__(234);
+	var _require3 = __webpack_require__(226);
 
 	var classNames = _require3.classNames;
 	var composition = _require3.composition;
 
-	var _require4 = __webpack_require__(235);
+	var _require4 = __webpack_require__(228);
 
 	var noop = _require4.noop;
 
-	var _require5 = __webpack_require__(236);
+	var _require5 = __webpack_require__(238);
 
 	var pureHex = _require5.pureHex;
 
-	var Input = __webpack_require__(237);
-	var Overlay = __webpack_require__(239);
+	var Input = __webpack_require__(239);
+	var Overlay = __webpack_require__(240);
 	var Tile = __webpack_require__(242);
 	var React = __webpack_require__(3);
 	var reactOutsideEvent = __webpack_require__(243);
-	var warning = __webpack_require__(238);
+	var warning = __webpack_require__(229);
 
 	var didWarnForDefaultValue = false;
 
@@ -21989,134 +22269,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 233 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	exports.bind = bind;
-	exports.hasCheckedProp = hasCheckedProp;
-	exports.hasValueProp = hasValueProp;
-	exports.indexOf = indexOf;
-
-	/**
-	 * @param  {object} context
-	 * @param  {string|string[]} methodNames
-	 */
-	function bind(context, methodNames) {
-	  var methods = !Array.isArray(methodNames) ? [methodNames] : methodNames;
-
-	  var length = methods.length;
-	  for (var method, i = 0; i < length; ++i) {
-	    method = methods[i];
-	    context[method] = context[method].bind(context);
-	  }
-	}
-
-	/**
-	 * @see    https://facebook.github.io/react/docs/forms.html#controlled-components
-	 * @param  {object}  props
-	 * @return {boolean}
-	 */
-	function hasCheckedProp(props) {
-	  return props.checked !== undefined;
-	}
-
-	/**
-	 * @see    https://facebook.github.io/react/docs/forms.html#controlled-components
-	 * @param  {object}  props
-	 * @return {boolean}
-	 */
-	function hasValueProp(props) {
-	  return props.value !== undefined;
-	}
-
-	/**
-	 * @param  {object[]} collection
-	 * @param  {string} value
-	 * @param  {string} [prop]
-	 * @return {number}
-	 */
-	function indexOf(collection, value) {
-	  var prop = arguments.length <= 2 || arguments[2] === undefined ? 'value' : arguments[2];
-
-	  var length = collection.length;
-	  for (var i = 0; i < length; ++i) {
-	    if (collection[i][prop] !== value) {
-	      continue;
-	    }
-
-	    return i;
-	  }
-
-	  return -1;
-	}
-
-/***/ },
-/* 234 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var classNames = __webpack_require__(178);
-
-	exports.classNames = classNames;
-	exports.composition = composition;
-
-	/**
-	 * @param  {object} props
-	 * @param  {string} props.className
-	 * @param  {string} props.styleName
-	 * @param  {object} props.styles
-	 * @return {string}
-	 */
-	function composition(props) {
-	  return classNames(props.className, props.styles[props.styleName]);
-	}
-
-/***/ },
-/* 235 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	exports.isEqual = isEqual;
-	exports.isUndefined = isUndefined;
-	exports.noop = noop;
-
-	/**
-	 * Simple object comparison
-	 *
-	 * @param  {object}  source
-	 * @param  {object}  target
-	 * @return {boolean}
-	 */
-	function isEqual(source, target) {
-	  if (Object.keys(source).length !== Object.keys(target).length) {
-	    return false;
-	  }
-
-	  for (var key in source) {
-	    if (source[key] !== target[key]) {
-	      return false;
-	    }
-	  }
-
-	  return true;
-	}
-
-	/**
-	 * @param  {*} a
-	 * @return {boolean}
-	 */
-	function isUndefined(a) {
-	  return void 0 === a;
-	}
-
-	function noop() {}
-
-/***/ },
-/* 236 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22132,7 +22285,7 @@
 	}
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22154,22 +22307,22 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(233);
+	var _require2 = __webpack_require__(225);
 
 	var bind = _require2.bind;
 	var hasValueProp = _require2.hasValueProp;
 
-	var _require3 = __webpack_require__(234);
+	var _require3 = __webpack_require__(226);
 
 	var composition = _require3.composition;
 
-	var _require4 = __webpack_require__(235);
+	var _require4 = __webpack_require__(228);
 
 	var isUndefined = _require4.isUndefined;
 	var noop = _require4.noop;
 
 	var React = __webpack_require__(3);
-	var warning = __webpack_require__(238);
+	var warning = __webpack_require__(229);
 
 	var didWarnForDefaultValue = false;
 
@@ -22300,67 +22453,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 238 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-
-	var _require = __webpack_require__(235);
-
-	var noop = _require.noop;
-
-
-	var warning = noop;
-
-	if (process.env.NODE_ENV !== 'production') {
-	  // eslint-disable-line no-undef
-	  /**
-	   * Copy of React's warning function
-	   *
-	   * @param  {boolean}   condition
-	   * @param  {string}    format
-	   * @param  {...string} args
-	   */
-	  warning = function warning(condition, format) {
-	    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-	      args[_key - 2] = arguments[_key];
-	    }
-
-	    if (typeof format === 'undefined') {
-	      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	    }
-
-	    if (format.indexOf('Failed Composite propType: ') === 0) {
-	      return; // Ignore CompositeComponent proptype check.
-	    }
-
-	    if (condition) {
-	      return;
-	    }
-
-	    var argIndex = 0;
-	    var message = 'Warning: ' + format.replace(/%s/g, function () {
-	      return args[argIndex++];
-	    });
-
-	    if (typeof console !== 'undefined') {
-	      console.error(message); // eslint-disable-line no-console
-	    }
-
-	    try {
-	      // --- Welcome to debugging React ---
-	      // This error was thrown as a convenience so that you can use this stack
-	      // to find the callsite that caused this warning to fire.
-	      throw new Error(message);
-	    } catch (x) {} // eslint-disable-line no-empty
-	  };
-	}
-
-	module.exports = warning;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22380,17 +22473,17 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(240);
+	var _require2 = __webpack_require__(241);
 
 	var forget = _require2.forget;
 	var observe = _require2.observe;
 	var update = _require2.update;
 
-	var _require3 = __webpack_require__(241);
+	var _require3 = __webpack_require__(227);
 
 	var generateId = _require3.generateId;
 
-	var _require4 = __webpack_require__(235);
+	var _require4 = __webpack_require__(228);
 
 	var noop = _require4.noop;
 
@@ -22447,7 +22540,7 @@
 	module.exports = Overlay;
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22547,66 +22640,6 @@
 	 */
 	function byPos(a, b) {
 	  return b.pos - a.pos;
-	}
-
-/***/ },
-/* 241 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var counter = 0;
-
-	exports.generateId = generateId;
-	exports.hasUniqueValues = hasUniqueValues;
-	exports.mapKey = mapKey;
-	exports.mapKeyBasedOnPos = mapKeyBasedOnPos;
-
-	/**
-	 * @return {string}
-	 */
-	function generateId() {
-	  return '_teatime' + ++counter;
-	}
-
-	/**
-	 * @param  {object[]} options
-	 * @return {boolean}
-	 */
-	function hasUniqueValues(options) {
-	  var cache = {};
-
-	  for (var value, i = 0; i < options.length; ++i) {
-	    value = options[i].value;
-
-	    if (!cache[value]) {
-	      cache[value] = true;
-	      continue;
-	    }
-
-	    return false;
-	  }
-
-	  return true;
-	}
-
-	/**
-	 * @param  {string} prefix
-	 * @param  {string} value
-	 * @return {string}
-	 */
-	function mapKey(prefix, value) {
-	  return '' + prefix + value;
-	}
-
-	/**
-	 * @param  {string} prefix
-	 * @param  {string} value
-	 * @param  {number} position
-	 * @return {string}
-	 */
-	function mapKeyBasedOnPos(prefix, value, position) {
-	  return '' + prefix + value + position;
 	}
 
 /***/ },
@@ -22881,7 +22914,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Input = __webpack_require__(237);
+	var Input = __webpack_require__(239);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Input, function (styles, _ref) {
@@ -25099,13 +25132,13 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(233);
+	var _require2 = __webpack_require__(225);
 
 	var bind = _require2.bind;
 	var hasValueProp = _require2.hasValueProp;
 	var indexOf = _require2.indexOf;
 
-	var _require3 = __webpack_require__(234);
+	var _require3 = __webpack_require__(226);
 
 	var classNames = _require3.classNames;
 	var composition = _require3.composition;
@@ -25114,24 +25147,24 @@
 
 	var findDOMNode = _require4.findDOMNode;
 
-	var _require5 = __webpack_require__(241);
+	var _require5 = __webpack_require__(227);
 
 	var generateId = _require5.generateId;
 	var hasUniqueValues = _require5.hasUniqueValues;
 	var mapKey = _require5.mapKey;
 	var mapKeyBasedOnPos = _require5.mapKeyBasedOnPos;
 
-	var _require6 = __webpack_require__(235);
+	var _require6 = __webpack_require__(228);
 
 	var isUndefined = _require6.isUndefined;
 	var noop = _require6.noop;
 
 	var Button = __webpack_require__(176);
 	var Option = __webpack_require__(292);
-	var Overlay = __webpack_require__(239);
+	var Overlay = __webpack_require__(240);
 	var React = __webpack_require__(3);
 	var reactOutsideEvent = __webpack_require__(243);
-	var warning = __webpack_require__(238);
+	var warning = __webpack_require__(229);
 
 	var didWarnForDefaultValue = false;
 
@@ -26055,11 +26088,11 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(233);
+	var _require2 = __webpack_require__(225);
 
 	var bind = _require2.bind;
 
-	var Overlay = __webpack_require__(239);
+	var Overlay = __webpack_require__(240);
 	var React = __webpack_require__(3);
 	var cx = __webpack_require__(178);
 
