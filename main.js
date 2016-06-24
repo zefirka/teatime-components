@@ -48,15 +48,15 @@
 	__webpack_require__(213);
 	__webpack_require__(222);
 	__webpack_require__(235);
-	__webpack_require__(257);
-	__webpack_require__(262);
-	__webpack_require__(268);
-	__webpack_require__(276);
-	__webpack_require__(289);
-	__webpack_require__(307);
-	__webpack_require__(321);
-	__webpack_require__(329);
-	module.exports = __webpack_require__(356);
+	__webpack_require__(255);
+	__webpack_require__(260);
+	__webpack_require__(266);
+	__webpack_require__(274);
+	__webpack_require__(287);
+	__webpack_require__(303);
+	__webpack_require__(317);
+	__webpack_require__(325);
+	module.exports = __webpack_require__(352);
 
 
 /***/ },
@@ -21761,6 +21761,9 @@
 	  return classNames(props.className, props.styles[props.styleName]);
 	}
 
+	// @todo add helper to build state based on styles,
+	//       like c(styles, {isOpened: true});
+
 /***/ },
 /* 227 */
 /***/ function(module, exports) {
@@ -21827,10 +21830,21 @@
 
 	'use strict';
 
+	exports.constant = constant;
 	exports.isEqual = isEqual;
 	exports.isUndefined = isUndefined;
 	exports.mapRange = mapRange;
 	exports.noop = noop;
+
+	/**
+	 * @param  {*} a
+	 * @return {function}
+	 */
+	function constant(a) {
+	  return function constantly() {
+	    return a;
+	  };
+	}
 
 	/**
 	 * Simple object comparison
@@ -22005,9 +22019,9 @@
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(245),
-	  s: __webpack_require__(251),
-	  m: __webpack_require__(254)
+	  xs: __webpack_require__(244),
+	  s: __webpack_require__(249),
+	  m: __webpack_require__(252)
 	}, {
 	  size: 'm'
 	}, {
@@ -22023,6 +22037,8 @@
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
@@ -22057,9 +22073,9 @@
 
 	var Input = __webpack_require__(239);
 	var Overlay = __webpack_require__(240);
-	var Tile = __webpack_require__(242);
+	var Tile = __webpack_require__(241);
 	var React = __webpack_require__(3);
-	var reactOutsideEvent = __webpack_require__(243);
+	var reactOutsideEvent = __webpack_require__(242);
 	var warning = __webpack_require__(229);
 
 	var didWarnForDefaultValue = false;
@@ -22200,21 +22216,20 @@
 	  }, {
 	    key: 'renderMenu',
 	    value: function renderMenu() {
+	      var _classNames;
+
 	      var styles = this.props.styles;
 
-	      var popupMixin = styles[this.state.isOpened ? 'isOpened' : 'isClosed'];
 
 	      return React.createElement(
 	        Overlay,
-	        { className: classNames(popupMixin, styles.menu) },
+	        { className: classNames(styles.menu, (_classNames = {}, _defineProperty(_classNames, styles.isClosedMenu, !this.state.isOpened), _defineProperty(_classNames, styles.isOpenedMenu, this.state.isOpened), _defineProperty(_classNames, styles.isFixedMenu, this.props.isFixed), _classNames)) },
 	        this.renderTiles()
 	      );
 	    }
 	  }, {
 	    key: 'renderTiles',
 	    value: function renderTiles() {
-	      var _this2 = this;
-
 	      if (!this.state.isOpened) {
 	        return null;
 	      }
@@ -22223,27 +22238,19 @@
 	      var palette = _props3.palette;
 	      var styles = _props3.styles;
 
+	      var tiles = [];
 
-	      return palette.map(function (tiles, p) {
-	        return React.createElement(
-	          'div',
-	          { className: styles.line, key: p },
-	          _this2.renderLine(tiles, p, styles)
-	        );
-	      });
-	    }
-	  }, {
-	    key: 'renderLine',
-	    value: function renderLine(tiles, position, styles) {
-	      var _this3 = this;
+	      for (var length = palette.length, i = 0; i < length; ++i) {
+	        var tile = palette[i];
 
-	      return tiles.map(function (tile, i) {
-	        return React.createElement(Tile, {
+	        tiles.push(React.createElement(Tile, {
 	          color: '#' + tile,
-	          key: '_' + i + position,
-	          onClick: _this3.onTileClick,
-	          styles: styles });
-	      });
+	          key: '_' + tile,
+	          onClick: this.onTileClick,
+	          styles: styles }));
+	      }
+
+	      return tiles;
 	    }
 	  }]);
 
@@ -22251,13 +22258,15 @@
 	}(Component);
 
 	ColorPicker.defaultProps = {
+	  isFixed: true,
 	  onChange: noop,
-	  palette: [['000000', 'CC0000', 'CC6600', 'CCCC00', '66CC00', '00CC00', '00CC66', '00CCCC', '0066CC', '0000CC', '6600CC', 'CC00CC', 'CC0066'], ['333333', 'FF0000', 'FF8000', 'FFFF00', '80FF00', '00FF00', '00FF80', '00FFFF', '007FFF', '0000FF', '7F00FF', 'FF00FF', 'FF0080'], ['666666', 'FF3333', 'FF9933', 'FFFF33', '99FF33', '33FF33', '33FF99', '33FFFF', '3399FF', '3333FF', '9933FF', 'FF33FF', 'FF3399'], ['999999', 'FF6666', 'FFB366', 'FFFF66', 'B3FF66', '66FF66', '66FFB3', '66FFFF', '66B2FF', '6666FF', 'B266FF', 'FF66FF', 'FF66B3'], ['CCCCCC', 'FF9999', 'FFCC99', 'FFFF99', 'CCFF99', '99FF99', '99FFCC', '99FFFF', '99CCFF', '9999FF', 'CC99FF', 'FF99FF', 'FF99CC'], ['FFFFFF', 'FFCCCC', 'FFE6CC', 'FFFFCC', 'E6FFCC', 'CCFFCC', 'CCFFE6', 'CCFFFF', 'CCE5FF', 'CCCCFF', 'E5CCFF', 'FFCCFF', 'FFCCE6']],
+	  palette: ['000000', 'CC0000', 'CC6600', 'CCCC00', '66CC00', '00CC00', '00CC66', '00CCCC', '0066CC', '0000CC', '6600CC', 'CC00CC', 'CC0066', '333333', 'FF0000', 'FF8000', 'FFFF00', '80FF00', '00FF00', '00FF80', '00FFFF', '007FFF', '0000FF', '7F00FF', 'FF00FF', 'FF0080', '666666', 'FF3333', 'FF9933', 'FFFF33', '99FF33', '33FF33', '33FF99', '33FFFF', '3399FF', '3333FF', '9933FF', 'FF33FF', 'FF3399', '999999', 'FF6666', 'FFB366', 'FFFF66', 'B3FF66', '66FF66', '66FFB3', '66FFFF', '66B2FF', '6666FF', 'B266FF', 'FF66FF', 'FF66B3', 'CCCCCC', 'FF9999', 'FFCC99', 'FFFF99', 'CCFF99', '99FF99', '99FFCC', '99FFFF', '99CCFF', '9999FF', 'CC99FF', 'FF99FF', 'FF99CC', 'FFFFFF', 'FFCCCC', 'FFE6CC', 'FFFFCC', 'E6FFCC', 'CCFFCC', 'CCFFE6', 'CCFFFF', 'CCE5FF', 'CCCCFF', 'E5CCFF', 'FFCCFF', 'FFCCE6'],
 	  styleName: 'container'
 	};
 
 	// @todo add color validation for value prop
 	ColorPicker.propTypes = {
+	  isFixed: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
 	  onChange: PropTypes.func,
 	  palette: PropTypes.array,
@@ -22473,21 +22482,19 @@
 	var Component = _require.Component;
 	var PropTypes = _require.PropTypes;
 
-	var _require2 = __webpack_require__(241);
+	var _require2 = __webpack_require__(227);
 
-	var forget = _require2.forget;
-	var observe = _require2.observe;
-	var update = _require2.update;
+	var generateId = _require2.generateId;
 
-	var _require3 = __webpack_require__(227);
+	var _require3 = __webpack_require__(228);
 
-	var generateId = _require3.generateId;
-
-	var _require4 = __webpack_require__(228);
-
-	var noop = _require4.noop;
+	var noop = _require3.noop;
 
 	var React = __webpack_require__(3);
+
+	var MOUNTED_OVERLAYS = {};
+
+	var pendingUpdate;
 
 	var Overlay = function (_Component) {
 	  _inherits(Overlay, _Component);
@@ -22504,20 +22511,22 @@
 	  }
 
 	  _createClass(Overlay, [{
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      update(this, this.state.id);
-	    }
-	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      observe(this, this.state.id);
-	      update();
+	      MOUNTED_OVERLAYS[this.state.id] = this;
+	      debouncedUpdate();
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps, prevState) {
+	      if (this.props.shouldComponentUpdatePosition(prevProps, prevState)) {
+	        updateOverlays();
+	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      forget(this, this.state.id);
+	      delete MOUNTED_OVERLAYS[this.state.id];
 	    }
 	  }, {
 	    key: 'render',
@@ -22530,112 +22539,78 @@
 	}(Component);
 
 	Overlay.defaultProps = {
-	  onUpdate: noop
+	  calculatePosition: calculatePosition,
+	  onPositionUpdate: noop,
+	  shouldComponentUpdatePosition: noop
 	};
 
 	Overlay.propTypes = {
-	  onUpdate: PropTypes.func
+	  calculatePosition: PropTypes.func,
+	  onPositionUpdate: PropTypes.func,
+	  shouldComponentUpdatePosition: PropTypes.func
 	};
 
 	module.exports = Overlay;
 
-/***/ },
-/* 241 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var LAYERS = {};
-
-	var pendingUpdate;
-
-	exports.forget = forget;
-	exports.observe = observe;
-	exports.update = update;
-
 	/**
-	 * @param {component} component
-	 * @param {number} id
+	 * @param  {object} rect
+	 * @param  {number} rect.left
+	 * @param  {number} rect.top
+	 * @return {number}
 	 */
-	function forget(component, id) {
-	  delete LAYERS[id];
+	function calculatePosition(rect) {
+	  return rect.top + rect.left / 10000;
 	}
 
-	/**
-	 * @param {component} component
-	 * @param {number} id
-	 */
-	function observe(component, id) {
-	  var ref = component.refs.overlay;
-
-	  LAYERS[id] = {
-	    component: component,
-	    rect: ref && ref.getBoundingClientRect()
-	  };
-	}
-
-	/**
-	 * @param {component} component
-	 * @param {number} id
-	 */
-	function update() {
+	function debouncedUpdate() {
 	  clearTimeout(pendingUpdate);
-	  pendingUpdate = setTimeout(updateComponents);
+	  pendingUpdate = setTimeout(updateOverlays);
 	}
 
-	function updateComponents() {
-	  var positions = [];
+	function updateOverlays() {
+	  clearTimeout(pendingUpdate);
 
-	  for (var id in LAYERS) {
-	    var target = LAYERS[id];
+	  var layers = [];
 
-	    var ref = target.component.refs.overlay;
-	    if (!ref) {
+	  var component;
+	  var rect;
+	  var ref;
+
+	  for (var id in MOUNTED_OVERLAYS) {
+	    component = MOUNTED_OVERLAYS[id];
+
+	    if (!component.refs.overlay) {
 	      continue;
 	    }
 
-	    var rect = ref.getBoundingClientRect();
-	    target.rect = rect;
+	    ref = component.refs.overlay;
+	    rect = ref.getBoundingClientRect();
 
-	    positions.push({
-	      component: target.component,
-	      pos: calcPos(rect),
+	    layers.push({
+	      component: component,
+	      pos: component.props.calculatePosition(rect),
 	      rect: rect,
 	      ref: ref
 	    });
 	  }
 
-	  positions.sort(byPos);
+	  layers.sort(byPos);
 
-	  var length = positions.length;
-	  while (length--) {
-	    var _target = positions[length];
-	    _target.ref.style.zIndex = 100 + length;
-	    _target.component.props.onUpdate(_target.rect, _target.ref);
+	  var index = layers.length;
+	  var target;
+
+	  while (index--) {
+	    target = layers[index];
+	    target.ref.style.zIndex = 100 + index;
+	    target.component.props.onPositionUpdate(target.rect, target.ref);
 	  }
 	}
 
 	/**
-	 * @param  {object} rect
-	 * @param  {number} rect.top
-	 * @param  {number} rect.left
-	 * @return {number}
-	 */
-	function calcPos(rect) {
-	  return rect.top + float(rect.left);
-	}
-
-	/**
-	 * @param  {number} int
-	 * @return {number}
-	 */
-	function float(int) {
-	  return Number('.' + Math.round(int));
-	}
-
-	/**
 	 * @param  {object} a
+	 * @param  {number} a.pos
 	 * @param  {object} b
+	 * @param  {number} b.pos
 	 * @return {number}
 	 */
 	function byPos(a, b) {
@@ -22643,7 +22618,7 @@
 	}
 
 /***/ },
-/* 242 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22713,12 +22688,12 @@
 	module.exports = Tile;
 
 /***/ },
-/* 243 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var reactOutsideEvent = __webpack_require__(244);
+	var reactOutsideEvent = __webpack_require__(243);
 
 	/**
 	 * @param  {component} Target
@@ -22732,7 +22707,7 @@
 	};
 
 /***/ },
-/* 244 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22829,37 +22804,36 @@
 
 
 /***/ },
-/* 245 */
+/* 244 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"container":"color-picker-xs--container color-picker--container","preview":"color-picker-xs--preview color-picker--preview","wrapper":"color-picker-xs--wrapper input-xs--wrapper input--wrapper color-picker--wrapper","control":"color-picker-xs--control input-xs--control input--control color-picker--control","clear":"color-picker-xs--clear input-xs--clear input--clear color-picker--clear","menu":"color-picker-xs--menu color-picker--menu popup--popup","line":"color-picker-xs--line color-picker--line","item":"color-picker-xs--item color-picker--item","isClosed":"color-picker-xs--isClosed color-picker--isClosed","isOpened":"color-picker-xs--isOpened color-picker--isOpened"};
+	module.exports = {"container":"color-picker-xs--container color-picker--container","preview":"color-picker-xs--preview color-picker--preview","wrapper":"color-picker-xs--wrapper input-xs--wrapper input--wrapper color-picker--wrapper","control":"color-picker-xs--control input-xs--control input--control color-picker--control","clear":"color-picker-xs--clear input-xs--clear input--clear color-picker--clear","menu":"color-picker-xs--menu color-picker--menu","line":"color-picker-xs--line undefined","item":"color-picker-xs--item color-picker--item","isClosedMenu":"color-picker-xs--isClosedMenu color-picker--isClosedMenu","isOpenedMenu":"color-picker-xs--isOpenedMenu color-picker--isOpenedMenu","isFixedMenu":"color-picker-xs--isFixedMenu color-picker--isFixedMenu"};
 
 /***/ },
+/* 245 */,
 /* 246 */,
 /* 247 */,
 /* 248 */,
-/* 249 */,
+/* 249 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"container":"color-picker-s--container color-picker--container","preview":"color-picker-s--preview color-picker--preview","wrapper":"color-picker-s--wrapper input-s--wrapper input--wrapper color-picker--wrapper","control":"color-picker-s--control input-s--control input--control color-picker--control","clear":"color-picker-s--clear input-s--clear input--clear color-picker--clear","menu":"color-picker-s--menu color-picker--menu","line":"color-picker-s--line undefined","item":"color-picker-s--item color-picker--item","isClosedMenu":"color-picker-s--isClosedMenu color-picker--isClosedMenu","isOpenedMenu":"color-picker-s--isOpenedMenu color-picker--isOpenedMenu","isFixedMenu":"color-picker-s--isFixedMenu color-picker--isFixedMenu"};
+
+/***/ },
 /* 250 */,
-/* 251 */
+/* 251 */,
+/* 252 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"container":"color-picker-s--container color-picker--container","preview":"color-picker-s--preview color-picker--preview","wrapper":"color-picker-s--wrapper input-s--wrapper input--wrapper color-picker--wrapper","control":"color-picker-s--control input-s--control input--control color-picker--control","clear":"color-picker-s--clear input-s--clear input--clear color-picker--clear","menu":"color-picker-s--menu color-picker--menu popup--popup","line":"color-picker-s--line color-picker--line","item":"color-picker-s--item color-picker--item","isClosed":"color-picker-s--isClosed color-picker--isClosed","isOpened":"color-picker-s--isOpened color-picker--isOpened"};
+	module.exports = {"container":"color-picker-m--container color-picker--container","preview":"color-picker-m--preview color-picker--preview","wrapper":"color-picker-m--wrapper input-m--wrapper input--wrapper color-picker--wrapper","control":"color-picker-m--control input-m--control input--control color-picker--control","clear":"color-picker-m--clear input-m--clear input--clear color-picker--clear","menu":"color-picker-m--menu color-picker--menu","line":"color-picker-m--line undefined","item":"color-picker-m--item color-picker--item","isClosedMenu":"color-picker-m--isClosedMenu color-picker--isClosedMenu","isOpenedMenu":"color-picker-m--isOpenedMenu color-picker--isOpenedMenu","isFixedMenu":"color-picker-m--isFixedMenu color-picker--isFixedMenu"};
 
 /***/ },
-/* 252 */,
 /* 253 */,
-/* 254 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"container":"color-picker-m--container color-picker--container","preview":"color-picker-m--preview color-picker--preview","wrapper":"color-picker-m--wrapper input-m--wrapper input--wrapper color-picker--wrapper","control":"color-picker-m--control input-m--control input--control color-picker--control","clear":"color-picker-m--clear input-m--clear input--clear color-picker--clear","menu":"color-picker-m--menu color-picker--menu popup--popup","line":"color-picker-m--line color-picker--line","item":"color-picker-m--item color-picker--item","isClosed":"color-picker-m--isClosed color-picker--isClosed","isOpened":"color-picker-m--isOpened color-picker--isOpened"};
-
-/***/ },
-/* 255 */,
-/* 256 */,
-/* 257 */
+/* 254 */,
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22902,10 +22876,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(258));
+	}, __webpack_require__(256));
 
 /***/ },
-/* 258 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22921,9 +22895,9 @@
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  'xs': __webpack_require__(259),
-	  's': __webpack_require__(260),
-	  'm': __webpack_require__(261)
+	  'xs': __webpack_require__(257),
+	  's': __webpack_require__(258),
+	  'm': __webpack_require__(259)
 	}, {
 	  size: 's'
 	}, {
@@ -22931,28 +22905,28 @@
 	});
 
 /***/ },
-/* 259 */
+/* 257 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","wrapper":"input-xs--wrapper input--wrapper","control":"input-xs--control input--control","clear":"input-xs--clear input--clear"};
 
 /***/ },
-/* 260 */
+/* 258 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","line-s":"28px","wrapper":"input-s--wrapper input--wrapper","control":"input-s--control input--control","clear":"input-s--clear input--clear"};
 
 /***/ },
-/* 261 */
+/* 259 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","line-m":"32px","wrapper":"input-m--wrapper input--wrapper","control":"input-m--control input--control","clear":"input-m--clear input--clear"};
 
 /***/ },
-/* 262 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22974,10 +22948,10 @@
 	    "href": "#",
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(263));
+	}, __webpack_require__(261));
 
 /***/ },
-/* 263 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22986,16 +22960,16 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Link = __webpack_require__(264);
+	var Link = __webpack_require__(262);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Link, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  's': __webpack_require__(265),
-	  'm': __webpack_require__(266),
-	  'l': __webpack_require__(267)
+	  's': __webpack_require__(263),
+	  'm': __webpack_require__(264),
+	  'l': __webpack_require__(265)
 	}, {
 	  size: 's'
 	}, {
@@ -23003,7 +22977,7 @@
 	});
 
 /***/ },
-/* 264 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23064,28 +23038,28 @@
 	module.exports = Link;
 
 /***/ },
-/* 265 */
+/* 263 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"link-s--control link--control"};
 
 /***/ },
-/* 266 */
+/* 264 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"link-m--control link--control"};
 
 /***/ },
-/* 267 */
+/* 265 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-l":"18px","control":"link-l--control link--control"};
 
 /***/ },
-/* 268 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23173,10 +23147,10 @@
 	    }],
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(269));
+	}, __webpack_require__(267));
 
 /***/ },
-/* 269 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23185,15 +23159,15 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Radio = __webpack_require__(270);
+	var Radio = __webpack_require__(268);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Radio, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(271),
-	  m: __webpack_require__(274)
+	  s: __webpack_require__(269),
+	  m: __webpack_require__(272)
 	}, {
 	  size: 's'
 	}, {
@@ -23201,7 +23175,7 @@
 	});
 
 /***/ },
-/* 270 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23365,24 +23339,24 @@
 	module.exports = Radio;
 
 /***/ },
-/* 271 */
+/* 269 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","container":"radio-s--container radio--container","wrapper":"radio-s--wrapper radio--wrapper","control":"radio-s--control radio--control","native":"radio-s--native radio--native","label":"radio-s--label radio--label"};
 
 /***/ },
-/* 272 */,
-/* 273 */,
-/* 274 */
+/* 270 */,
+/* 271 */,
+/* 272 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","container":"radio-m--container radio--container","wrapper":"radio-m--wrapper radio--wrapper","control":"radio-m--control radio--control","native":"radio-m--native radio--native","label":"radio-m--label radio--label"};
 
 /***/ },
-/* 275 */,
-/* 276 */
+/* 273 */,
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23550,10 +23524,10 @@
 	    }],
 	    "size": "l"
 	  }]]
-	}, __webpack_require__(277));
+	}, __webpack_require__(275));
 
 /***/ },
-/* 277 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23562,7 +23536,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var RadioGroup = __webpack_require__(278);
+	var RadioGroup = __webpack_require__(276);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(RadioGroup, function (styles, _ref) {
@@ -23571,10 +23545,10 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  xs: __webpack_require__(280),
-	  s: __webpack_require__(283),
-	  m: __webpack_require__(285),
-	  l: __webpack_require__(287)
+	  xs: __webpack_require__(278),
+	  s: __webpack_require__(281),
+	  m: __webpack_require__(283),
+	  l: __webpack_require__(285)
 	}, {
 	  size: 's'
 	}, {
@@ -23582,7 +23556,7 @@
 	});
 
 /***/ },
-/* 278 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23616,7 +23590,7 @@
 	var mapKey = _require3.mapKey;
 	var mapKeyBasedOnPos = _require3.mapKeyBasedOnPos;
 
-	var RadioButton = __webpack_require__(279);
+	var RadioButton = __webpack_require__(277);
 	var React = __webpack_require__(3);
 
 	var RadioGroup = function (_Component) {
@@ -23745,7 +23719,7 @@
 	module.exports = RadioGroup;
 
 /***/ },
-/* 279 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23876,20 +23850,28 @@
 	module.exports = RadioButton;
 
 /***/ },
-/* 280 */
+/* 278 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","line-xs":"24px","container":"radio-group-xs--container radio-group--container","wrapper":"radio-group-xs--wrapper radio-group--wrapper","control":"radio-group-xs--control radio-group--control","native":"radio-group-xs--native radio-group--native"};
 
 /***/ },
-/* 281 */,
+/* 279 */,
+/* 280 */,
+/* 281 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-s":"13px","line-s":"28px","container":"radio-group-s--container radio-group--container","wrapper":"radio-group-s--wrapper radio-group--wrapper","control":"radio-group-s--control radio-group--control","native":"radio-group-s--native radio-group--native"};
+
+/***/ },
 /* 282 */,
 /* 283 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","line-s":"28px","container":"radio-group-s--container radio-group--container","wrapper":"radio-group-s--wrapper radio-group--wrapper","control":"radio-group-s--control radio-group--control","native":"radio-group-s--native radio-group--native"};
+	module.exports = {"size-m":"15px","line-m":"32px","container":"radio-group-m--container radio-group--container","wrapper":"radio-group-m--wrapper radio-group--wrapper","control":"radio-group-m--control radio-group--control","native":"radio-group-m--native radio-group--native"};
 
 /***/ },
 /* 284 */,
@@ -23897,19 +23879,11 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"15px","line-m":"32px","container":"radio-group-m--container radio-group--container","wrapper":"radio-group-m--wrapper radio-group--wrapper","control":"radio-group-m--control radio-group--control","native":"radio-group-m--native radio-group--native"};
+	module.exports = {"size-l":"18px","line-l":"38px","container":"radio-group-l--container radio-group--container","wrapper":"radio-group-l--wrapper radio-group--wrapper","control":"radio-group-l--control radio-group--control","native":"radio-group-l--native radio-group--native"};
 
 /***/ },
 /* 286 */,
 /* 287 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"size-l":"18px","line-l":"38px","container":"radio-group-l--container radio-group--container","wrapper":"radio-group-l--wrapper radio-group--wrapper","control":"radio-group-l--control radio-group--control","native":"radio-group-l--native radio-group--native"};
-
-/***/ },
-/* 288 */,
-/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24897,6 +24871,986 @@
 	    }],
 	    "size": "xs"
 	  }], [{
+	    "isSearchable": true,
+	    "name": "cities2",
+	    "options": [{
+	      "label": "Abakan",
+	      "value": "abakan"
+	    }, {
+	      "label": "Achinsk",
+	      "value": "achinsk"
+	    }, {
+	      "label": "Aleksin",
+	      "value": "aleksin"
+	    }, {
+	      "label": "Alexandrov",
+	      "value": "alexandrov"
+	    }, {
+	      "label": "Almetyevsk",
+	      "value": "almetyevsk"
+	    }, {
+	      "label": "Anapa",
+	      "value": "anapa"
+	    }, {
+	      "label": "Angarsk",
+	      "value": "angarsk"
+	    }, {
+	      "label": "Anzhero-Sudzhensk",
+	      "value": "anzhero-sudzhensk"
+	    }, {
+	      "label": "Apatity",
+	      "value": "apatity"
+	    }, {
+	      "label": "Arkhangelsk",
+	      "value": "arkhangelsk"
+	    }, {
+	      "label": "Armavir",
+	      "value": "armavir"
+	    }, {
+	      "label": "Arsenyev",
+	      "value": "arsenyev"
+	    }, {
+	      "label": "Artyom",
+	      "value": "artyom"
+	    }, {
+	      "label": "Arzamas",
+	      "value": "arzamas"
+	    }, {
+	      "label": "Asbest",
+	      "value": "asbest"
+	    }, {
+	      "label": "Astrakhan",
+	      "value": "astrakhan"
+	    }, {
+	      "label": "Azov",
+	      "value": "azov"
+	    }, {
+	      "label": "Balakhna",
+	      "value": "balakhna"
+	    }, {
+	      "label": "Balakovo",
+	      "value": "balakovo"
+	    }, {
+	      "label": "Balashikha",
+	      "value": "balashikha"
+	    }, {
+	      "label": "Balashov",
+	      "value": "balashov"
+	    }, {
+	      "label": "Barnaul",
+	      "value": "barnaul"
+	    }, {
+	      "label": "Bataysk",
+	      "value": "bataysk"
+	    }, {
+	      "label": "Belebey",
+	      "value": "belebey"
+	    }, {
+	      "label": "Belgorod",
+	      "value": "belgorod"
+	    }, {
+	      "label": "Belogorsk",
+	      "value": "belogorsk"
+	    }, {
+	      "label": "Belorechensk",
+	      "value": "belorechensk"
+	    }, {
+	      "label": "Beloretsk",
+	      "value": "beloretsk"
+	    }, {
+	      "label": "Belovo",
+	      "value": "belovo"
+	    }, {
+	      "label": "Berdsk",
+	      "value": "berdsk"
+	    }, {
+	      "label": "Berezniki",
+	      "value": "berezniki"
+	    }, {
+	      "label": "Beryozovsky",
+	      "value": "beryozovsky"
+	    }, {
+	      "label": "Birobidzhan",
+	      "value": "birobidzhan"
+	    }, {
+	      "label": "Biysk",
+	      "value": "biysk"
+	    }, {
+	      "label": "Blagoveshchensk",
+	      "value": "blagoveshchensk"
+	    }, {
+	      "label": "Bor",
+	      "value": "bor"
+	    }, {
+	      "label": "Borisoglebsk",
+	      "value": "borisoglebsk"
+	    }, {
+	      "label": "Borovichi",
+	      "value": "borovichi"
+	    }, {
+	      "label": "Bratsk",
+	      "value": "bratsk"
+	    }, {
+	      "label": "Bryansk",
+	      "value": "bryansk"
+	    }, {
+	      "label": "Budyonnovsk",
+	      "value": "budyonnovsk"
+	    }, {
+	      "label": "Bugulma",
+	      "value": "bugulma"
+	    }, {
+	      "label": "Buynaksk",
+	      "value": "buynaksk"
+	    }, {
+	      "label": "Buzuluk",
+	      "value": "buzuluk"
+	    }, {
+	      "label": "Chapayevsk",
+	      "value": "chapayevsk"
+	    }, {
+	      "label": "Chaykovsky",
+	      "value": "chaykovsky"
+	    }, {
+	      "label": "Cheboksary",
+	      "value": "cheboksary"
+	    }, {
+	      "label": "Chekhov",
+	      "value": "chekhov"
+	    }, {
+	      "label": "Chelyabinsk",
+	      "value": "chelyabinsk"
+	    }, {
+	      "label": "Cheremkhovo",
+	      "value": "cheremkhovo"
+	    }, {
+	      "label": "Cherepovets",
+	      "value": "cherepovets"
+	    }, {
+	      "label": "Cherkessk",
+	      "value": "cherkessk"
+	    }, {
+	      "label": "Chernogorsk",
+	      "value": "chernogorsk"
+	    }, {
+	      "label": "Chistopol",
+	      "value": "chistopol"
+	    }, {
+	      "label": "Chita",
+	      "value": "chita"
+	    }, {
+	      "label": "Derbent",
+	      "value": "derbent"
+	    }, {
+	      "label": "Dimitrovgrad",
+	      "value": "dimitrovgrad"
+	    }, {
+	      "label": "Dmitrov",
+	      "value": "dmitrov"
+	    }, {
+	      "label": "Dolgoprudny",
+	      "value": "dolgoprudny"
+	    }, {
+	      "label": "Domodedovo",
+	      "value": "domodedovo"
+	    }, {
+	      "label": "Donetsk",
+	      "value": "donetsk"
+	    }, {
+	      "label": "Donskoy",
+	      "value": "donskoy"
+	    }, {
+	      "label": "Dubna",
+	      "value": "dubna"
+	    }, {
+	      "label": "Dzerzhinsk",
+	      "value": "dzerzhinsk"
+	    }, {
+	      "label": "Elektrostal",
+	      "value": "elektrostal"
+	    }, {
+	      "label": "Elista",
+	      "value": "elista"
+	    }, {
+	      "label": "Engels",
+	      "value": "engels"
+	    }, {
+	      "label": "Fryazino",
+	      "value": "fryazino"
+	    }, {
+	      "label": "Gatchina",
+	      "value": "gatchina"
+	    }, {
+	      "label": "Gelendzhik",
+	      "value": "gelendzhik"
+	    }, {
+	      "label": "Georgiyevsk",
+	      "value": "georgiyevsk"
+	    }, {
+	      "label": "Glazov",
+	      "value": "glazov"
+	    }, {
+	      "label": "Gorno-Altaysk",
+	      "value": "gorno-altaysk"
+	    }, {
+	      "label": "Grozny",
+	      "value": "grozny"
+	    }, {
+	      "label": "Gubkin",
+	      "value": "gubkin"
+	    }, {
+	      "label": "Gukovo",
+	      "value": "gukovo"
+	    }, {
+	      "label": "Gus-Khrustalny",
+	      "value": "gus-khrustalny"
+	    }, {
+	      "label": "Irkutsk",
+	      "value": "irkutsk"
+	    }, {
+	      "label": "Ishim",
+	      "value": "ishim"
+	    }, {
+	      "label": "Ishimbay",
+	      "value": "ishimbay"
+	    }, {
+	      "label": "Iskitim",
+	      "value": "iskitim"
+	    }, {
+	      "label": "Ivanovo",
+	      "value": "ivanovo"
+	    }, {
+	      "label": "Ivanteyevka",
+	      "value": "ivanteyevka"
+	    }, {
+	      "label": "Izberbash",
+	      "value": "izberbash"
+	    }, {
+	      "label": "Izhevsk",
+	      "value": "izhevsk"
+	    }, {
+	      "label": "Kaliningrad",
+	      "value": "kaliningrad"
+	    }, {
+	      "label": "Kaluga",
+	      "value": "kaluga"
+	    }, {
+	      "label": "Kamensk-Shakhtinsky",
+	      "value": "kamensk-shakhtinsky"
+	    }, {
+	      "label": "Kamensk-Uralsky",
+	      "value": "kamensk-uralsky"
+	    }, {
+	      "label": "Kamyshin",
+	      "value": "kamyshin"
+	    }, {
+	      "label": "Kansk",
+	      "value": "kansk"
+	    }, {
+	      "label": "Kaspiysk",
+	      "value": "kaspiysk"
+	    }, {
+	      "label": "Kazan",
+	      "value": "kazan"
+	    }, {
+	      "label": "Kemerovo",
+	      "value": "kemerovo"
+	    }, {
+	      "label": "Khabarovsk",
+	      "value": "khabarovsk"
+	    }, {
+	      "label": "Khanty-Mansiysk",
+	      "value": "khanty-mansiysk"
+	    }, {
+	      "label": "Khasavyurt",
+	      "value": "khasavyurt"
+	    }, {
+	      "label": "Khimki",
+	      "value": "khimki"
+	    }, {
+	      "label": "Kineshma",
+	      "value": "kineshma"
+	    }, {
+	      "label": "Kirishi",
+	      "value": "kirishi"
+	    }, {
+	      "label": "Kirov",
+	      "value": "kirov"
+	    }, {
+	      "label": "Kirovo-Chepetsk",
+	      "value": "kirovo-chepetsk"
+	    }, {
+	      "label": "Kiselyovsk",
+	      "value": "kiselyovsk"
+	    }, {
+	      "label": "Kislovodsk",
+	      "value": "kislovodsk"
+	    }, {
+	      "label": "Klimovsk",
+	      "value": "klimovsk"
+	    }, {
+	      "label": "Klin",
+	      "value": "klin"
+	    }, {
+	      "label": "Klintsy",
+	      "value": "klintsy"
+	    }, {
+	      "label": "Kogalym",
+	      "value": "kogalym"
+	    }, {
+	      "label": "Kolomna",
+	      "value": "kolomna"
+	    }, {
+	      "label": "Komsomolsk-on-Amur",
+	      "value": "komsomolsk-on-amur"
+	    }, {
+	      "label": "Kopeysk",
+	      "value": "kopeysk"
+	    }, {
+	      "label": "Korolyov",
+	      "value": "korolyov"
+	    }, {
+	      "label": "Kostroma",
+	      "value": "kostroma"
+	    }, {
+	      "label": "Kotlas",
+	      "value": "kotlas"
+	    }, {
+	      "label": "Kovrov",
+	      "value": "kovrov"
+	    }, {
+	      "label": "Krasnodar",
+	      "value": "krasnodar"
+	    }, {
+	      "label": "Krasnogorsk",
+	      "value": "krasnogorsk"
+	    }, {
+	      "label": "Krasnokamensk",
+	      "value": "krasnokamensk"
+	    }, {
+	      "label": "Krasnokamsk",
+	      "value": "krasnokamsk"
+	    }, {
+	      "label": "Krasnoturyinsk",
+	      "value": "krasnoturyinsk"
+	    }, {
+	      "label": "Krasnoyarsk",
+	      "value": "krasnoyarsk"
+	    }, {
+	      "label": "Kropotkin",
+	      "value": "kropotkin"
+	    }, {
+	      "label": "Krymsk",
+	      "value": "krymsk"
+	    }, {
+	      "label": "Kstovo",
+	      "value": "kstovo"
+	    }, {
+	      "label": "Kumertau",
+	      "value": "kumertau"
+	    }, {
+	      "label": "Kungur",
+	      "value": "kungur"
+	    }, {
+	      "label": "Kurgan",
+	      "value": "kurgan"
+	    }, {
+	      "label": "Kursk",
+	      "value": "kursk"
+	    }, {
+	      "label": "Kuznetsk",
+	      "value": "kuznetsk"
+	    }, {
+	      "label": "Kyzyl",
+	      "value": "kyzyl"
+	    }, {
+	      "label": "Labinsk",
+	      "value": "labinsk"
+	    }, {
+	      "label": "Leninogorsk",
+	      "value": "leninogorsk"
+	    }, {
+	      "label": "Leninsk-Kuznetsky",
+	      "value": "leninsk-kuznetsky"
+	    }, {
+	      "label": "Lesnoy",
+	      "value": "lesnoy"
+	    }, {
+	      "label": "Lesosibirsk",
+	      "value": "lesosibirsk"
+	    }, {
+	      "label": "Lipetsk",
+	      "value": "lipetsk"
+	    }, {
+	      "label": "Liski",
+	      "value": "liski"
+	    }, {
+	      "label": "Livny",
+	      "value": "livny"
+	    }, {
+	      "label": "Lobnya",
+	      "value": "lobnya"
+	    }, {
+	      "label": "Lysva",
+	      "value": "lysva"
+	    }, {
+	      "label": "Lytkarino",
+	      "value": "lytkarino"
+	    }, {
+	      "label": "Lyubertsy",
+	      "value": "lyubertsy"
+	    }, {
+	      "label": "Magadan",
+	      "value": "magadan"
+	    }, {
+	      "label": "Magnitogorsk",
+	      "value": "magnitogorsk"
+	    }, {
+	      "label": "Makhachkala",
+	      "value": "makhachkala"
+	    }, {
+	      "label": "Maykop",
+	      "value": "maykop"
+	    }, {
+	      "label": "Meleuz",
+	      "value": "meleuz"
+	    }, {
+	      "label": "Mezhdurechensk",
+	      "value": "mezhdurechensk"
+	    }, {
+	      "label": "Miass",
+	      "value": "miass"
+	    }, {
+	      "label": "Michurinsk",
+	      "value": "michurinsk"
+	    }, {
+	      "label": "Mikhaylovka",
+	      "value": "mikhaylovka"
+	    }, {
+	      "label": "Mikhaylovsk",
+	      "value": "mikhaylovsk"
+	    }, {
+	      "label": "Mineralnye Vody",
+	      "value": "mineralnye vody"
+	    }, {
+	      "label": "Minusinsk",
+	      "value": "minusinsk"
+	    }, {
+	      "label": "Moscow",
+	      "value": "moscow"
+	    }, {
+	      "label": "Murmansk",
+	      "value": "murmansk"
+	    }, {
+	      "label": "Murom",
+	      "value": "murom"
+	    }, {
+	      "label": "Mytishchi",
+	      "value": "mytishchi"
+	    }, {
+	      "label": "Naberezhnye Chelny",
+	      "value": "naberezhnye chelny"
+	    }, {
+	      "label": "Nakhodka",
+	      "value": "nakhodka"
+	    }, {
+	      "label": "Nalchik",
+	      "value": "nalchik"
+	    }, {
+	      "label": "Naro-Fominsk",
+	      "value": "naro-fominsk"
+	    }, {
+	      "label": "Nazarovo",
+	      "value": "nazarovo"
+	    }, {
+	      "label": "Nazran",
+	      "value": "nazran"
+	    }, {
+	      "label": "Neftekamsk",
+	      "value": "neftekamsk"
+	    }, {
+	      "label": "Nefteyugansk",
+	      "value": "nefteyugansk"
+	    }, {
+	      "label": "Neryungri",
+	      "value": "neryungri"
+	    }, {
+	      "label": "Nevinnomyssk",
+	      "value": "nevinnomyssk"
+	    }, {
+	      "label": "Nizhnekamsk",
+	      "value": "nizhnekamsk"
+	    }, {
+	      "label": "Nizhnevartovsk",
+	      "value": "nizhnevartovsk"
+	    }, {
+	      "label": "Nizhny Novgorod",
+	      "value": "nizhny novgorod"
+	    }, {
+	      "label": "Nizhny Tagil",
+	      "value": "nizhny tagil"
+	    }, {
+	      "label": "Noginsk",
+	      "value": "noginsk"
+	    }, {
+	      "label": "Norilsk",
+	      "value": "norilsk"
+	    }, {
+	      "label": "Novoaltaysk",
+	      "value": "novoaltaysk"
+	    }, {
+	      "label": "Novocheboksarsk",
+	      "value": "novocheboksarsk"
+	    }, {
+	      "label": "Novocherkassk",
+	      "value": "novocherkassk"
+	    }, {
+	      "label": "Novokuybyshevsk",
+	      "value": "novokuybyshevsk"
+	    }, {
+	      "label": "Novokuznetsk",
+	      "value": "novokuznetsk"
+	    }, {
+	      "label": "Novomoskovsk",
+	      "value": "novomoskovsk"
+	    }, {
+	      "label": "Novorossiysk",
+	      "value": "novorossiysk"
+	    }, {
+	      "label": "Novoshakhtinsk",
+	      "value": "novoshakhtinsk"
+	    }, {
+	      "label": "Novosibirsk",
+	      "value": "novosibirsk"
+	    }, {
+	      "label": "Novotroitsk",
+	      "value": "novotroitsk"
+	    }, {
+	      "label": "Novouralsk",
+	      "value": "novouralsk"
+	    }, {
+	      "label": "Novy Urengoy",
+	      "value": "novy urengoy"
+	    }, {
+	      "label": "Noyabrsk",
+	      "value": "noyabrsk"
+	    }, {
+	      "label": "Nyagan",
+	      "value": "nyagan"
+	    }, {
+	      "label": "Obninsk",
+	      "value": "obninsk"
+	    }, {
+	      "label": "Odintsovo",
+	      "value": "odintsovo"
+	    }, {
+	      "label": "Oktyabrsky",
+	      "value": "oktyabrsky"
+	    }, {
+	      "label": "Omsk",
+	      "value": "omsk"
+	    }, {
+	      "label": "Orekhovo-Zuyevo",
+	      "value": "orekhovo-zuyevo"
+	    }, {
+	      "label": "Orenburg",
+	      "value": "orenburg"
+	    }, {
+	      "label": "Orsk",
+	      "value": "orsk"
+	    }, {
+	      "label": "Oryol",
+	      "value": "oryol"
+	    }, {
+	      "label": "Ozyorsk",
+	      "value": "ozyorsk"
+	    }, {
+	      "label": "Pavlovo",
+	      "value": "pavlovo"
+	    }, {
+	      "label": "Pavlovsky Posad",
+	      "value": "pavlovsky posad"
+	    }, {
+	      "label": "Penza",
+	      "value": "penza"
+	    }, {
+	      "label": "Perm",
+	      "value": "perm"
+	    }, {
+	      "label": "Pervouralsk",
+	      "value": "pervouralsk"
+	    }, {
+	      "label": "Petropavlovsk-Kamchatsky",
+	      "value": "petropavlovsk-kamchatsky"
+	    }, {
+	      "label": "Petrozavodsk",
+	      "value": "petrozavodsk"
+	    }, {
+	      "label": "Podolsk",
+	      "value": "podolsk"
+	    }, {
+	      "label": "Polevskoy",
+	      "value": "polevskoy"
+	    }, {
+	      "label": "Prokhladny",
+	      "value": "prokhladny"
+	    }, {
+	      "label": "Prokopyevsk",
+	      "value": "prokopyevsk"
+	    }, {
+	      "label": "Pskov",
+	      "value": "pskov"
+	    }, {
+	      "label": "Pushkino",
+	      "value": "pushkino"
+	    }, {
+	      "label": "Pyatigorsk",
+	      "value": "pyatigorsk"
+	    }, {
+	      "label": "Ramenskoye",
+	      "value": "ramenskoye"
+	    }, {
+	      "label": "Reutov",
+	      "value": "reutov"
+	    }, {
+	      "label": "Revda",
+	      "value": "revda"
+	    }, {
+	      "label": "Roslavl",
+	      "value": "roslavl"
+	    }, {
+	      "label": "Rossosh",
+	      "value": "rossosh"
+	    }, {
+	      "label": "Rostov-on-Don",
+	      "value": "rostov-on-don"
+	    }, {
+	      "label": "Rubtsovsk",
+	      "value": "rubtsovsk"
+	    }, {
+	      "label": "Ryazan",
+	      "value": "ryazan"
+	    }, {
+	      "label": "Rybinsk",
+	      "value": "rybinsk"
+	    }, {
+	      "label": "Rzhev",
+	      "value": "rzhev"
+	    }, {
+	      "label": "Saint Petersburg",
+	      "value": "saint petersburg"
+	    }, {
+	      "label": "Salavat",
+	      "value": "salavat"
+	    }, {
+	      "label": "Salsk",
+	      "value": "salsk"
+	    }, {
+	      "label": "Samara",
+	      "value": "samara"
+	    }, {
+	      "label": "Saransk",
+	      "value": "saransk"
+	    }, {
+	      "label": "Sarapul",
+	      "value": "sarapul"
+	    }, {
+	      "label": "Saratov",
+	      "value": "saratov"
+	    }, {
+	      "label": "Sarov",
+	      "value": "sarov"
+	    }, {
+	      "label": "Sergiyev Posad",
+	      "value": "sergiyev posad"
+	    }, {
+	      "label": "Serov",
+	      "value": "serov"
+	    }, {
+	      "label": "Serpukhov",
+	      "value": "serpukhov"
+	    }, {
+	      "label": "Severodvinsk",
+	      "value": "severodvinsk"
+	    }, {
+	      "label": "Severomorsk",
+	      "value": "severomorsk"
+	    }, {
+	      "label": "Seversk",
+	      "value": "seversk"
+	    }, {
+	      "label": "Shadrinsk",
+	      "value": "shadrinsk"
+	    }, {
+	      "label": "Shakhty",
+	      "value": "shakhty"
+	    }, {
+	      "label": "Shchyokino",
+	      "value": "shchyokino"
+	    }, {
+	      "label": "Shchyolkovo",
+	      "value": "shchyolkovo"
+	    }, {
+	      "label": "Shuya",
+	      "value": "shuya"
+	    }, {
+	      "label": "Sibay",
+	      "value": "sibay"
+	    }, {
+	      "label": "Slavyansk-na-Kubani",
+	      "value": "slavyansk-na-kubani"
+	    }, {
+	      "label": "Smolensk",
+	      "value": "smolensk"
+	    }, {
+	      "label": "Sochi",
+	      "value": "sochi"
+	    }, {
+	      "label": "Solikamsk",
+	      "value": "solikamsk"
+	    }, {
+	      "label": "Solnechnogorsk",
+	      "value": "solnechnogorsk"
+	    }, {
+	      "label": "Sosnovy Bor",
+	      "value": "sosnovy bor"
+	    }, {
+	      "label": "Stary Oskol",
+	      "value": "stary oskol"
+	    }, {
+	      "label": "Stavropol",
+	      "value": "stavropol"
+	    }, {
+	      "label": "Sterlitamak",
+	      "value": "sterlitamak"
+	    }, {
+	      "label": "Stupino",
+	      "value": "stupino"
+	    }, {
+	      "label": "Surgut",
+	      "value": "surgut"
+	    }, {
+	      "label": "Svobodny",
+	      "value": "svobodny"
+	    }, {
+	      "label": "Syktyvkar",
+	      "value": "syktyvkar"
+	    }, {
+	      "label": "Syzran",
+	      "value": "syzran"
+	    }, {
+	      "label": "Taganrog",
+	      "value": "taganrog"
+	    }, {
+	      "label": "Tambov",
+	      "value": "tambov"
+	    }, {
+	      "label": "Tikhoretsk",
+	      "value": "tikhoretsk"
+	    }, {
+	      "label": "Tikhvin",
+	      "value": "tikhvin"
+	    }, {
+	      "label": "Timashyovsk",
+	      "value": "timashyovsk"
+	    }, {
+	      "label": "Tobolsk",
+	      "value": "tobolsk"
+	    }, {
+	      "label": "Tolyatti",
+	      "value": "tolyatti"
+	    }, {
+	      "label": "Tomsk",
+	      "value": "tomsk"
+	    }, {
+	      "label": "Troitsk",
+	      "value": "troitsk"
+	    }, {
+	      "label": "Tuapse",
+	      "value": "tuapse"
+	    }, {
+	      "label": "Tula",
+	      "value": "tula"
+	    }, {
+	      "label": "Tuymazy",
+	      "value": "tuymazy"
+	    }, {
+	      "label": "Tver",
+	      "value": "tver"
+	    }, {
+	      "label": "Tyumen",
+	      "value": "tyumen"
+	    }, {
+	      "label": "Ufa",
+	      "value": "ufa"
+	    }, {
+	      "label": "Ukhta",
+	      "value": "ukhta"
+	    }, {
+	      "label": "Ulan-Ude",
+	      "value": "ulan-ude"
+	    }, {
+	      "label": "Ulyanovsk",
+	      "value": "ulyanovsk"
+	    }, {
+	      "label": "Usolye-Sibirskoye",
+	      "value": "usolye-sibirskoye"
+	    }, {
+	      "label": "Ussuriysk",
+	      "value": "ussuriysk"
+	    }, {
+	      "label": "Ust-Ilimsk",
+	      "value": "ust-ilimsk"
+	    }, {
+	      "label": "Uzlovaya",
+	      "value": "uzlovaya"
+	    }, {
+	      "label": "Velikiye Luki",
+	      "value": "velikiye luki"
+	    }, {
+	      "label": "Veliky Novgorod",
+	      "value": "veliky novgorod"
+	    }, {
+	      "label": "Verkhnyaya Pyshma",
+	      "value": "verkhnyaya pyshma"
+	    }, {
+	      "label": "Vidnoye",
+	      "value": "vidnoye"
+	    }, {
+	      "label": "Vladikavkaz",
+	      "value": "vladikavkaz"
+	    }, {
+	      "label": "Vladimir",
+	      "value": "vladimir"
+	    }, {
+	      "label": "Vladivostok",
+	      "value": "vladivostok"
+	    }, {
+	      "label": "Volgodonsk",
+	      "value": "volgodonsk"
+	    }, {
+	      "label": "Volgograd",
+	      "value": "volgograd"
+	    }, {
+	      "label": "Vologda",
+	      "value": "vologda"
+	    }, {
+	      "label": "Volsk",
+	      "value": "volsk"
+	    }, {
+	      "label": "Volzhsk",
+	      "value": "volzhsk"
+	    }, {
+	      "label": "Volzhsky",
+	      "value": "volzhsky"
+	    }, {
+	      "label": "Vorkuta",
+	      "value": "vorkuta"
+	    }, {
+	      "label": "Voronezh",
+	      "value": "voronezh"
+	    }, {
+	      "label": "Voskresensk",
+	      "value": "voskresensk"
+	    }, {
+	      "label": "Votkinsk",
+	      "value": "votkinsk"
+	    }, {
+	      "label": "Vsevolozhsk",
+	      "value": "vsevolozhsk"
+	    }, {
+	      "label": "Vyazma",
+	      "value": "vyazma"
+	    }, {
+	      "label": "Vyborg",
+	      "value": "vyborg"
+	    }, {
+	      "label": "Vyksa",
+	      "value": "vyksa"
+	    }, {
+	      "label": "Vyshny Volochyok",
+	      "value": "vyshny volochyok"
+	    }, {
+	      "label": "Yakutsk",
+	      "value": "yakutsk"
+	    }, {
+	      "label": "Yaroslavl",
+	      "value": "yaroslavl"
+	    }, {
+	      "label": "Yegoryevsk",
+	      "value": "yegoryevsk"
+	    }, {
+	      "label": "Yekaterinburg",
+	      "value": "yekaterinburg"
+	    }, {
+	      "label": "Yelabuga",
+	      "value": "yelabuga"
+	    }, {
+	      "label": "Yelets",
+	      "value": "yelets"
+	    }, {
+	      "label": "Yessentuki",
+	      "value": "yessentuki"
+	    }, {
+	      "label": "Yeysk",
+	      "value": "yeysk"
+	    }, {
+	      "label": "Yoshkar-Ola",
+	      "value": "yoshkar-ola"
+	    }, {
+	      "label": "Yurga",
+	      "value": "yurga"
+	    }, {
+	      "label": "Yuzhno-Sakhalinsk",
+	      "value": "yuzhno-sakhalinsk"
+	    }, {
+	      "label": "Zarechny",
+	      "value": "zarechny"
+	    }, {
+	      "label": "Zelenodolsk",
+	      "value": "zelenodolsk"
+	    }, {
+	      "label": "Zelenogorsk",
+	      "value": "zelenogorsk"
+	    }, {
+	      "label": "Zheleznodorozhny",
+	      "value": "zheleznodorozhny"
+	    }, {
+	      "label": "Zheleznogorsk",
+	      "value": "zheleznogorsk"
+	    }, {
+	      "label": "Zhigulyovsk",
+	      "value": "zhigulyovsk"
+	    }, {
+	      "label": "Zhukovsky",
+	      "value": "zhukovsky"
+	    }, {
+	      "label": "Zlatoust",
+	      "value": "zlatoust"
+	    }],
+	    "size": "xs"
+	  }, {
+	    "disabled": true,
+	    "isSearchable": true,
+	    "name": "cities3",
+	    "options": [{
+	      "label": "Abakan",
+	      "value": "abakan"
+	    }, {
+	      "label": "Achinsk",
+	      "value": "achinsk"
+	    }, {
+	      "label": "Aleksin",
+	      "value": "aleksin"
+	    }, {
+	      "label": "Alexandrov",
+	      "value": "alexandrov"
+	    }, {
+	      "label": "Saransk",
+	      "value": "saransk"
+	    }],
+	    "size": "xs"
+	  }], [{
 	    "name": "motorrad-3",
 	    "options": [{
 	      "label": "BMW S 1000 RR",
@@ -25079,10 +26033,10 @@
 	    }],
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(290));
+	}, __webpack_require__(288));
 
 /***/ },
-/* 290 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25091,7 +26045,7 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Select = __webpack_require__(291);
+	var Select = __webpack_require__(289);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Select, function (styles, _ref) {
@@ -25100,9 +26054,9 @@
 	    styles: styles[size]
 	  };
 	}, {
-	  xs: __webpack_require__(293),
-	  s: __webpack_require__(300),
-	  m: __webpack_require__(304)
+	  xs: __webpack_require__(292),
+	  s: __webpack_require__(297),
+	  m: __webpack_require__(300)
 	}, {
 	  size: 's'
 	}, {
@@ -25110,7 +26064,7 @@
 	});
 
 /***/ },
-/* 291 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -25143,27 +26097,31 @@
 	var classNames = _require3.classNames;
 	var composition = _require3.composition;
 
-	var _require4 = __webpack_require__(40);
+	var _require4 = __webpack_require__(228);
 
-	var findDOMNode = _require4.findDOMNode;
+	var constant = _require4.constant;
 
-	var _require5 = __webpack_require__(227);
+	var _require5 = __webpack_require__(40);
 
-	var generateId = _require5.generateId;
-	var hasUniqueValues = _require5.hasUniqueValues;
-	var mapKey = _require5.mapKey;
-	var mapKeyBasedOnPos = _require5.mapKeyBasedOnPos;
+	var findDOMNode = _require5.findDOMNode;
 
-	var _require6 = __webpack_require__(228);
+	var _require6 = __webpack_require__(227);
 
-	var isUndefined = _require6.isUndefined;
-	var noop = _require6.noop;
+	var generateId = _require6.generateId;
+	var hasUniqueValues = _require6.hasUniqueValues;
+	var mapKey = _require6.mapKey;
+	var mapKeyBasedOnPos = _require6.mapKeyBasedOnPos;
 
-	var Button = __webpack_require__(176);
-	var Option = __webpack_require__(292);
+	var _require7 = __webpack_require__(228);
+
+	var isUndefined = _require7.isUndefined;
+	var noop = _require7.noop;
+
+	var Option = __webpack_require__(290);
 	var Overlay = __webpack_require__(240);
 	var React = __webpack_require__(3);
-	var reactOutsideEvent = __webpack_require__(243);
+	var fuzzysearch = __webpack_require__(291);
+	var reactOutsideEvent = __webpack_require__(242);
 	var warning = __webpack_require__(229);
 
 	var didWarnForDefaultValue = false;
@@ -25176,7 +26134,7 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Select).call(this, props));
 
-	    bind(_this, ['onKeyDown', 'onMenuToggle', 'onOptionFocus', 'onOptionSelect']);
+	    bind(_this, ['onControlBlur', 'onControlFocus', 'onInputChange', 'onKeyDown', 'onMenuToggle', 'onOptionFocus', 'onOptionSelect']);
 
 	    _this.controlled = hasValueProp(props);
 
@@ -25195,6 +26153,8 @@
 
 	    _this.state = {
 	      focused: -1,
+	      inFocus: false,
+	      inputValue: '',
 	      isOpened: false,
 	      prefix: generateId(),
 	      selected: selected
@@ -25203,6 +26163,23 @@
 	  }
 
 	  _createClass(Select, [{
+	    key: 'closeMenu',
+	    value: function closeMenu() {
+	      this.setState({
+	        isOpened: false,
+	        focused: -1,
+	        inputValue: ''
+	      });
+	    }
+	  }, {
+	    key: 'openMenu',
+	    value: function openMenu() {
+	      this.setState({
+	        isOpened: true,
+	        focused: this.state.selected
+	      });
+	    }
+	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
 	      if (this.refs.menu && this.refs.selected && this.state.isOpened && !this.wereOptionsShown) {
@@ -25245,22 +26222,6 @@
 	      }
 	    }
 	  }, {
-	    key: 'closeMenu',
-	    value: function closeMenu() {
-	      this.setState({
-	        isOpened: false,
-	        focused: -1
-	      });
-	    }
-	  }, {
-	    key: 'openMenu',
-	    value: function openMenu() {
-	      this.setState({
-	        isOpened: true,
-	        focused: this.state.selected
-	      });
-	    }
-	  }, {
 	    key: 'focus',
 	    value: function focus() {
 	      if (this.refs.label) {
@@ -25286,6 +26247,18 @@
 	    }
 
 	    /**
+	     * @param  {object} option
+	     * @param  {string} option.label
+	     * @return {string}
+	     */
+
+	  }, {
+	    key: 'getHaystack',
+	    value: function getHaystack(option) {
+	      return option.label;
+	    }
+
+	    /**
 	     * @param  {number} selected
 	     * @return {string}
 	     */
@@ -25305,6 +26278,28 @@
 	    key: 'getSelectedValue',
 	    value: function getSelectedValue(selected) {
 	      return selected !== -1 ? this.props.options[selected].value : '';
+	    }
+	  }, {
+	    key: 'onControlBlur',
+	    value: function onControlBlur() {}
+	  }, {
+	    key: 'onControlFocus',
+	    value: function onControlFocus() {
+	      if (this._openAfterFocus !== false) {
+	        return void this.setState({
+	          isOpened: true
+	        });
+	      }
+
+	      this.__openAfterFocus = true;
+	    }
+	  }, {
+	    key: 'onInputChange',
+	    value: function onInputChange(e) {
+	      this.setState({
+	        inputValue: e.target.value,
+	        isOpened: true
+	      });
 	    }
 	  }, {
 	    key: 'onKeyDown',
@@ -25336,6 +26331,8 @@
 
 	        case 32:
 	          // space
+	          if (this.props.isSearchable) return;
+
 	          if (!isOpened) {
 	            this.openMenu();
 	          } else {
@@ -25379,28 +26376,55 @@
 
 	      return void this.openMenu();
 	    }
+
+	    /**
+	     * @param {object} e
+	     * @param {*} _
+	     * @param {number} tc
+	     */
+
 	  }, {
 	    key: 'onOptionFocus',
 	    value: function onOptionFocus(e, _, tc) {
 	      if (this.state.focused === tc) return;
 	      this.setState({ focused: tc });
 	    }
+
+	    /**
+	     * @param {object} e
+	     * @param {*} _
+	     * @param {number} tc
+	     */
+
 	  }, {
 	    key: 'onOptionSelect',
 	    value: function onOptionSelect(e, _, tc) {
+	      this._openAfterFocus = false;
 	      this.updateValue(e, tc);
 	      this.focus();
 	    }
 	  }, {
 	    key: 'onOutsideEvent',
 	    value: function onOutsideEvent() {
+	      this._openAfterFocus = true;
 	      if (!this.state.isOpened) return;
 	      this.closeMenu();
 	    }
 
 	    /**
-	     * @param  {object} e
-	     * @param  {number} nextSelected
+	     * @param {boolean} hasUniqValues
+	     * @param {object[]} options
+	     */
+
+	  }, {
+	    key: 'updateKeyMapper',
+	    value: function updateKeyMapper(hasUniqValues, options) {
+	      this.mapKey = !(hasUniqValues && hasUniqueValues(options)) ? mapKeyBasedOnPos : mapKey;
+	    }
+
+	    /**
+	     * @param {object} e
+	     * @param {number} nextSelected
 	     */
 
 	  }, {
@@ -25416,65 +26440,78 @@
 	        nextState.selected = nextSelected;
 	      }
 
+	      if (this.props.isSearchable) {
+	        nextState.inputValue = '';
+	      }
+
 	      this.setState(nextState);
 	      this.props.onChange(e, { value: this.props.options[nextSelected].value });
-	    }
-
-	    /**
-	     * @param {boolean} hasUniqValues
-	     * @param {object[]} options
-	     */
-
-	  }, {
-	    key: 'updateKeyMapper',
-	    value: function updateKeyMapper(hasUniqValues, options) {
-	      this.mapKey = !(hasUniqValues && hasUniqueValues(options)) ? mapKeyBasedOnPos : mapKey;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return React.createElement(
 	        'div',
-	        _extends({}, this.props, {
-	          className: composition(this.props),
-	          onKeyDown: this.onKeyDown }),
+	        { className: composition(this.props) },
+	        this.renderValue(),
 	        this.renderLabel(),
-	        this.renderMenu(),
-	        React.createElement('input', {
-	          disabled: this.props.disabled,
-	          name: this.props.name,
-	          type: 'hidden',
-	          value: this.getSelectedValue(this.state.selected) })
+	        this.renderMenu()
 	      );
 	    }
 	  }, {
 	    key: 'renderLabel',
 	    value: function renderLabel() {
+	      var _classNames2;
+
+	      var styles = this.props.styles;
+
+
+	      if (!this.props.isSearchable) {
+	        var _classNames;
+
+	        return React.createElement(
+	          'button',
+	          {
+	            className: classNames(styles.control, (_classNames = {}, _defineProperty(_classNames, styles.isClosedControl, !this.state.isOpened), _defineProperty(_classNames, styles.isOpenedControl, this.state.isOpened), _classNames)),
+	            disabled: this.props.disabled,
+	            onClick: this.onMenuToggle,
+	            onKeyDown: this.onKeyDown,
+	            ref: 'label',
+	            tabIndex: this.props.tabIndex || 0 },
+	          this.getSelectedLabel(this.state.selected)
+	        );
+	      }
+
 	      return React.createElement(
-	        Button,
+	        'span',
 	        {
-	          className: this.props.styles[this.state.isOpened ? 'isOpened' : 'isClosed'],
+	          className: classNames(styles.control, (_classNames2 = {}, _defineProperty(_classNames2, styles.isClosedControl, !this.state.isOpened), _defineProperty(_classNames2, styles.isOpenedControl, this.state.isOpened), _classNames2)) },
+	        this.state.inputValue ? '' : this.getSelectedLabel(this.state.selected),
+	        React.createElement('input', {
+	          className: this.props.styles.input,
 	          disabled: this.props.disabled,
-	          onClick: this.onMenuToggle,
+	          onBlur: this.onControlBlur,
+	          onChange: this.onInputChange,
+	          onFocus: this.onControlFocus,
+	          onKeyDown: this.onKeyDown,
 	          ref: 'label',
-	          styles: this.props.styles },
-	        this.getSelectedLabel(this.state.selected)
+	          tabIndex: this.props.tabIndex || 0,
+	          type: 'text',
+	          value: this.state.inputValue })
 	      );
 	    }
 	  }, {
 	    key: 'renderMenu',
 	    value: function renderMenu() {
+	      var _classNames3;
+
 	      var styles = this.props.styles;
 
-
-	      if (!this.state.isOpened) {
-	        return null;
-	      }
 
 	      return React.createElement(
 	        Overlay,
 	        {
-	          className: styles.menu,
+	          className: classNames(styles.menu, (_classNames3 = {}, _defineProperty(_classNames3, styles.isFixedMenu, this.props.isFixed), _defineProperty(_classNames3, styles.isClosedMenu, !this.state.isOpened), _defineProperty(_classNames3, styles.isOpenedMenu, this.state.isOpened), _classNames3)),
 	          ref: 'menu' },
 	        this.renderOptions()
 	      );
@@ -25493,13 +26530,13 @@
 	  }, {
 	    key: 'renderOptions',
 	    value: function renderOptions() {
-	      var _this2 = this;
-
 	      if (!this.state.isOpened) {
 	        return null;
 	      }
 
 	      var _props = this.props;
+	      var isFixed = _props.isFixed;
+	      var isSearchable = _props.isSearchable;
 	      var options = _props.options;
 	      var styles = _props.styles;
 	      var _state = this.state;
@@ -25507,28 +26544,60 @@
 	      var prefix = _state.prefix;
 	      var selected = _state.selected;
 
-	      var renderOption = this.props.renderOption || this.renderOption;
+	      var inputValue = this.state.inputValue.toLowerCase();
+	      var filter = isSearchable ? fuzzysearch : constant(true);
 
-	      return options.map(function (option, i) {
-	        var _classNames;
+	      var getHaystack = this.props.getHaystack || this.getHaystack;
+	      var renderOption = this.props.renderOption || this.renderOption;
+	      var list = [];
+
+	      for (var length = options.length, i = 0; i < length; ++i) {
+	        var _classNames4;
+
+	        var option = options[i];
+
+	        if (!filter(inputValue, getHaystack(option).toLowerCase())) {
+	          continue;
+	        }
 
 	        var isFocused = focused === i;
 	        var isSelected = selected === i;
 	        var ref = isFocused ? 'selected' : null;
 
-	        return React.createElement(
+	        list.push(React.createElement(
 	          Option,
 	          _extends({}, option, {
-	            className: classNames(styles.item, (_classNames = {}, _defineProperty(_classNames, styles.isFocused, isFocused), _defineProperty(_classNames, styles.isSelected, isSelected), _classNames)),
+	            className: classNames(styles.item, (_classNames4 = {}, _defineProperty(_classNames4, styles.isFixedItem, isFixed), _defineProperty(_classNames4, styles.isFocusedItem, isFocused), _defineProperty(_classNames4, styles.isSelectedItem, isSelected), _classNames4)),
 	            isFocused: isFocused,
-	            key: _this2.mapKey(prefix, option.value, i),
-	            onFocus: _this2.onOptionFocus,
-	            onSelect: _this2.onOptionSelect,
+	            key: this.mapKey(prefix, option.value, i),
+	            onFocus: this.onOptionFocus,
+	            onSelect: this.onOptionSelect,
 	            ref: ref,
 	            tc: i }),
 	          renderOption(option)
-	        );
-	      });
+	        ));
+	      }
+
+	      if (isSearchable && list.length === 0) {
+	        list.push(React.createElement(
+	          Option,
+	          {
+	            className: styles.empty },
+	          this.props.noResults
+	        ));
+	      }
+
+	      return list;
+	    }
+	  }, {
+	    key: 'renderValue',
+	    value: function renderValue() {
+	      return React.createElement('input', {
+	        className: this.props.styles.native,
+	        disabled: this.props.disabled,
+	        name: this.props.name,
+	        type: 'hidden',
+	        value: this.getSelectedValue(this.state.selected) });
 	    }
 	  }]);
 
@@ -25537,6 +26606,9 @@
 
 	Select.defaultProps = {
 	  hasUniqValues: true,
+	  isFixed: true,
+	  isSearchable: false,
+	  noResults: 'No results found',
 	  onChange: noop,
 	  placeholder: '—',
 	  styleName: 'wrapper',
@@ -25544,8 +26616,12 @@
 	};
 
 	Select.propTypes = {
+	  getHaystack: PropTypes.func,
 	  hasUniqValues: PropTypes.bool,
+	  isFixed: PropTypes.bool,
+	  isSearchable: PropTypes.bool,
 	  name: PropTypes.string.isRequired,
+	  noResults: PropTypes.string,
 	  onChange: PropTypes.func,
 	  options: PropTypes.array,
 	  placeholder: PropTypes.string,
@@ -25553,10 +26629,15 @@
 	  styleName: PropTypes.string,
 	  styles: PropTypes.shape({
 	    control: PropTypes.string.isRequired,
-	    isClosed: PropTypes.string.isRequired,
-	    isFocused: PropTypes.string.isRequired,
-	    isOpened: PropTypes.string.isRequired,
-	    isSelected: PropTypes.string.isRequired,
+	    input: PropTypes.string.isRequired,
+	    isClosedControl: PropTypes.string.isRequired,
+	    isClosedMenu: PropTypes.string.isRequired,
+	    isFixedItem: PropTypes.string.isRequired,
+	    isFixedMenu: PropTypes.string.isRequired,
+	    isFocusedItem: PropTypes.string.isRequired,
+	    isOpenedControl: PropTypes.string.isRequired,
+	    isOpenedMenu: PropTypes.string.isRequired,
+	    isSelectedItem: PropTypes.string.isRequired,
 	    item: PropTypes.string.isRequired,
 	    menu: PropTypes.string.isRequired,
 	    wrapper: PropTypes.string
@@ -25567,7 +26648,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 292 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25642,39 +26723,66 @@
 	module.exports = Option;
 
 /***/ },
-/* 293 */
+/* 291 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	function fuzzysearch (needle, haystack) {
+	  var tlen = haystack.length;
+	  var qlen = needle.length;
+	  if (qlen > tlen) {
+	    return false;
+	  }
+	  if (qlen === tlen) {
+	    return needle === haystack;
+	  }
+	  outer: for (var i = 0, j = 0; i < qlen; i++) {
+	    var nch = needle.charCodeAt(i);
+	    while (j < tlen) {
+	      if (haystack.charCodeAt(j++) === nch) {
+	        continue outer;
+	      }
+	    }
+	    return false;
+	  }
+	  return true;
+	}
+
+	module.exports = fuzzysearch;
+
+
+/***/ },
+/* 292 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-xs--wrapper select--wrapper","control":"select-xs--control button-normal-xs--control button-normal--control arrow-xs--control arrow--control select--control","menu":"select-xs--menu menu-xs--menu menu--menu select--menu popup--popup","item":"select-xs--item menu-xs--item menu--item select--item","isClosed":"select-xs--isClosed select--isClosed","isOpened":"select-xs--isOpened select--isOpened","isFocused":"select-xs--isFocused select--isFocused","isSelected":"select-xs--isSelected select--isSelected"};
+	module.exports = {"size-xs":"13px","line-xs":"24px","wrapper":"select-xs--wrapper select--wrapper","native":"select-xs--native select--native","control":"select-xs--control button-normal-xs--control button-normal--control select--control","input":"select-xs--input select--input","menu":"select-xs--menu menu-xs--menu menu--menu select--menu","item":"select-xs--item menu-xs--item menu--item select--item","empty":"select-xs--empty select--empty","isClosedControl":"select-xs--isClosedControl select--isClosedControl","isOpenedControl":"select-xs--isOpenedControl select--isOpenedControl","isClosedMenu":"select-xs--isClosedMenu select--isClosedMenu","isOpenedMenu":"select-xs--isOpenedMenu select--isOpenedMenu","isFixedMenu":"select-xs--isFixedMenu select--isFixedMenu","isFixedItem":"select-xs--isFixedItem select--isFixedItem","isFocusedItem":"select-xs--isFocusedItem select--isFocusedItem","isSelectedItem":"select-xs--isSelectedItem select--isSelectedItem"};
 
 /***/ },
+/* 293 */,
 /* 294 */,
 /* 295 */,
 /* 296 */,
-/* 297 */,
+/* 297 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"size-s":"13px","line-s":"28px","wrapper":"select-s--wrapper select--wrapper","native":"select-s--native select--native","control":"select-s--control button-normal-s--control button-normal--control select--control","input":"select-s--input select--input","menu":"select-s--menu menu-s--menu menu--menu select--menu","item":"select-s--item menu-s--item menu--item select--item","empty":"select-s--empty select--empty","isClosedControl":"select-s--isClosedControl select--isClosedControl","isOpenedControl":"select-s--isOpenedControl select--isOpenedControl","isClosedMenu":"select-s--isClosedMenu select--isClosedMenu","isOpenedMenu":"select-s--isOpenedMenu select--isOpenedMenu","isFixedMenu":"select-s--isFixedMenu select--isFixedMenu","isFixedItem":"select-s--isFixedItem select--isFixedItem","isFocusedItem":"select-s--isFocusedItem select--isFocusedItem","isSelectedItem":"select-s--isSelectedItem select--isSelectedItem"};
+
+/***/ },
 /* 298 */,
 /* 299 */,
 /* 300 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-s--wrapper select--wrapper","control":"select-s--control button-normal-s--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-s--menu menu-s--menu menu--menu select--menu popup--popup","item":"select-s--item menu-s--item menu--item select--item","isClosed":"select-s--isClosed select--isClosed","isOpened":"select-s--isOpened select--isOpened","isFocused":"select-s--isFocused select--isFocused","isSelected":"select-s--isSelected select--isSelected"};
+	module.exports = {"size-m":"15px","line-m":"32px","wrapper":"select-m--wrapper select--wrapper","native":"select-m--native select--native","control":"select-m--control button-normal-m--control button-normal--control select--control","input":"select-m--input select--input","menu":"select-m--menu menu-m--menu menu--menu select--menu","item":"select-m--item menu-m--item menu--item select--item","empty":"select-m--empty select--empty","isClosedControl":"select-m--isClosedControl select--isClosedControl","isOpenedControl":"select-m--isOpenedControl select--isOpenedControl","isClosedMenu":"select-m--isClosedMenu select--isClosedMenu","isOpenedMenu":"select-m--isOpenedMenu select--isOpenedMenu","isFixedMenu":"select-m--isFixedMenu select--isFixedMenu","isFixedItem":"select-m--isFixedItem select--isFixedItem","isFocusedItem":"select-m--isFocusedItem select--isFocusedItem","isSelectedItem":"select-m--isSelectedItem select--isSelectedItem"};
 
 /***/ },
 /* 301 */,
 /* 302 */,
-/* 303 */,
-/* 304 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"wrapper":"select-m--wrapper select--wrapper","control":"select-m--control button-normal-m--control button-normal--control arrow-s--control arrow--control select--control","menu":"select-m--menu menu-m--menu menu--menu select--menu popup--popup","item":"select-m--item menu-m--item menu--item select--item","isClosed":"select-m--isClosed select--isClosed","isOpened":"select-m--isOpened select--isOpened","isFocused":"select-m--isFocused select--isFocused","isSelected":"select-m--isSelected select--isSelected"};
-
-/***/ },
-/* 305 */,
-/* 306 */,
-/* 307 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25694,10 +26802,10 @@
 	  }, {
 	    "size": "xl"
 	  }]]
-	}, __webpack_require__(308));
+	}, __webpack_require__(304));
 
 /***/ },
-/* 308 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25706,18 +26814,18 @@
 
 	var PropTypes = _require.PropTypes;
 
-	var Spin = __webpack_require__(309);
+	var Spin = __webpack_require__(305);
 	var StyleComponent = __webpack_require__(179);
 
 	module.exports = StyleComponent(Spin, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(310),
-	  s: __webpack_require__(313),
-	  m: __webpack_require__(315),
-	  l: __webpack_require__(317),
-	  xl: __webpack_require__(319)
+	  xs: __webpack_require__(306),
+	  s: __webpack_require__(309),
+	  m: __webpack_require__(311),
+	  l: __webpack_require__(313),
+	  xl: __webpack_require__(315)
 	}, {
 	  size: 's'
 	}, {
@@ -25725,7 +26833,7 @@
 	});
 
 /***/ },
-/* 309 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25785,20 +26893,36 @@
 	module.exports = Spin;
 
 /***/ },
-/* 310 */
+/* 306 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"control":"spin-xs--control spin--control"};
 
 /***/ },
-/* 311 */,
+/* 307 */,
+/* 308 */,
+/* 309 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"control":"spin-s--control spin--control"};
+
+/***/ },
+/* 310 */,
+/* 311 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"control":"spin-m--control spin--control"};
+
+/***/ },
 /* 312 */,
 /* 313 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"control":"spin-s--control spin--control"};
+	module.exports = {"control":"spin-l--control spin--control"};
 
 /***/ },
 /* 314 */,
@@ -25806,27 +26930,11 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"control":"spin-m--control spin--control"};
+	module.exports = {"control":"spin-xl--control spin--control"};
 
 /***/ },
 /* 316 */,
 /* 317 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"control":"spin-l--control spin--control"};
-
-/***/ },
-/* 318 */,
-/* 319 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"control":"spin-xl--control spin--control"};
-
-/***/ },
-/* 320 */,
-/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25858,10 +26966,10 @@
 	    "placeholder": "size m",
 	    "size": "m"
 	  }]]
-	}, __webpack_require__(322));
+	}, __webpack_require__(318));
 
 /***/ },
-/* 322 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25871,14 +26979,14 @@
 	var PropTypes = _require.PropTypes;
 
 	var StyleComponent = __webpack_require__(179);
-	var Textarea = __webpack_require__(323);
+	var Textarea = __webpack_require__(319);
 
 	module.exports = StyleComponent(Textarea, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  s: __webpack_require__(324),
-	  m: __webpack_require__(327)
+	  s: __webpack_require__(320),
+	  m: __webpack_require__(323)
 	}, {
 	  size: 's'
 	}, {
@@ -25886,7 +26994,7 @@
 	});
 
 /***/ },
-/* 323 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25979,24 +27087,24 @@
 	module.exports = Textarea;
 
 /***/ },
-/* 324 */
+/* 320 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","control":"textarea-s--control input--control textarea--control"};
 
 /***/ },
-/* 325 */,
-/* 326 */,
-/* 327 */
+/* 321 */,
+/* 322 */,
+/* 323 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-m":"15px","control":"textarea-m--control input--control textarea--control"};
 
 /***/ },
-/* 328 */,
-/* 329 */
+/* 324 */,
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26063,19 +27171,17 @@
 	    "size": "xs",
 	    "type": "warning"
 	  }]]
-	}, __webpack_require__(330));
+	}, __webpack_require__(326));
 
 /***/ },
-/* 330 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -26092,20 +27198,29 @@
 
 	var bind = _require2.bind;
 
+	var _require3 = __webpack_require__(226);
+
+	var classNames = _require3.classNames;
+
 	var Overlay = __webpack_require__(240);
 	var React = __webpack_require__(3);
-	var cx = __webpack_require__(178);
 
 	var baseStyles = {
-	  'normal-xs': __webpack_require__(331),
-	  'normal-s': __webpack_require__(336),
-	  'normal-m': __webpack_require__(339),
-	  'success-xs': __webpack_require__(342),
-	  'success-s': __webpack_require__(345),
-	  'success-m': __webpack_require__(347),
-	  'warning-xs': __webpack_require__(349),
-	  'warning-s': __webpack_require__(352),
-	  'warning-m': __webpack_require__(354)
+	  'normal-xs': __webpack_require__(327),
+	  'normal-s': __webpack_require__(332),
+	  'normal-m': __webpack_require__(335),
+	  'success-xs': __webpack_require__(338),
+	  'success-s': __webpack_require__(341),
+	  'success-m': __webpack_require__(343),
+	  'warning-xs': __webpack_require__(345),
+	  'warning-s': __webpack_require__(348),
+	  'warning-m': __webpack_require__(350)
+	};
+
+	var height = {
+	  xs: 24,
+	  s: 28,
+	  m: 32
 	};
 
 	var Tooltip = function (_Component) {
@@ -26116,36 +27231,72 @@
 
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Tooltip).call(this, props));
 
-	    _this.state = {
-	      multiline: false
-	    };
+	    bind(_this, ['calculatePosition', 'onPositionUpdate', 'shouldComponentUpdatePosition']);
 
-	    bind(_this, 'handleOverlayUpdate');
+	    _this.state = {
+	      isMultiline: false
+	    };
 	    return _this;
 	  }
 
+	  /**
+	   * @param  {object} rect
+	   * @param  {number} rect.height
+	   * @param  {number} rect.left
+	   * @param  {number} rect.top
+	   * @param  {number} rect.width
+	   * @return {number}
+	   */
+
+
 	  _createClass(Tooltip, [{
-	    key: 'handleOverlayUpdate',
-	    value: function handleOverlayUpdate(rect, ref) {
-	      var isMultiline = rect.width * rect.height / this.props.maxWidth > 26;
-
-	      if (this._isMultiline === isMultiline) {
-	        return;
+	    key: 'calculatePosition',
+	    value: function calculatePosition(rect) {
+	      if (this.props.direction === 'bottom' || this.props.direction === 'top') {
+	        return rect.top + (rect.left - rect.width / 2) / 10000;
 	      }
 
-	      if (isMultiline) {
-	        ref.style.width = this.props.maxWidth + 'px';
-	        ref.style.whiteSpace = 'normal';
-	      } else {
-	        ref.style.width = 'auto';
-	        ref.style.whiteSpace = 'nowrap';
-	      }
+	      return rect.top - rect.height / 2 + rect.left / 10000;
+	    }
 
-	      this._isMultiline = isMultiline;
+	    /**
+	     * @param  {object}  rect
+	     * @param  {number}  rect.height
+	     * @param  {number}  rect.width
+	     * @param  {number}  maxWidth
+	     * @return {boolean}
+	     */
+
+	  }, {
+	    key: 'isMultiline',
+	    value: function isMultiline(rect, maxWidth) {
+	      return rect.width * rect.height / maxWidth > height[this.props.size];
+	    }
+
+	    /**
+	     * @param  {object} rect
+	     * @param  {node}   ref
+	     */
+
+	  }, {
+	    key: 'onPositionUpdate',
+	    value: function onPositionUpdate(rect) {
+	      if (this.state.isMultiline !== this.isMultiline(rect, this.props.maxWidth)) {
+	        this.setState({
+	          isMultiline: !this.state.isMultiline
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'shouldComponentUpdatePosition',
+	    value: function shouldComponentUpdatePosition(prevProps) {
+	      return prevProps.direction !== this.props.direction;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _classNames;
+
 	      var _props = this.props;
 	      var children = _props.children;
 	      var className = _props.className;
@@ -26153,20 +27304,14 @@
 	      var size = _props.size;
 	      var type = _props.type;
 
-	      var o = _objectWithoutProperties(_props, ['children', 'className', 'direction', 'size', 'type']);
-
 	      var styles = baseStyles[type + '-' + size];
-
-	      var mixin = children ? styles.isOpened : styles.isClosed;
 
 	      return React.createElement(
 	        Overlay,
-	        _extends({}, o, {
-	          className: cx(className, mixin, styles[direction]),
-	          onUpdate: this.handleOverlayUpdate,
-	          styleName: direction,
-	          styles: styles,
-	          type: type }),
+	        {
+	          className: classNames(className, styles[direction], (_classNames = {}, _defineProperty(_classNames, styles.isClosed, !children), _defineProperty(_classNames, styles.isOpened, children), _defineProperty(_classNames, styles.isLine, !this.state.isMultiline), _classNames)),
+	          onPositionUpdate: this.onPositionUpdate,
+	          shouldComponentUpdatePosition: this.shouldComponentUpdatePosition },
 	        children
 	      );
 	    }
@@ -26192,86 +27337,86 @@
 	module.exports = Tooltip;
 
 /***/ },
-/* 331 */
+/* 327 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-normal-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-normal--bottom","left":"tooltip-normal-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-normal--left","right":"tooltip-normal-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-normal--right","top":"tooltip-normal-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-normal--top","isClosed":"tooltip-normal-xs--isClosed tooltip--isClosed","isOpened":"tooltip-normal-xs--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-normal-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-normal--bottom","left":"tooltip-normal-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-normal--left","right":"tooltip-normal-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-normal--right","top":"tooltip-normal-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-normal--top","isClosed":"tooltip-normal-xs--isClosed tooltip--isClosed","isOpened":"tooltip-normal-xs--isOpened tooltip--isOpened","isLine":"tooltip-normal-xs--isLine tooltip--isLine"};
 
 /***/ },
-/* 332 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"bottom":"tooltip-normal-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-normal--bottom","left":"tooltip-normal-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-normal--left","right":"tooltip-normal-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-normal--right","top":"tooltip-normal-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-normal--top","isClosed":"tooltip-normal-s--isClosed tooltip--isClosed","isOpened":"tooltip-normal-s--isOpened tooltip--isOpened","isLine":"tooltip-normal-s--isLine tooltip--isLine"};
+
+/***/ },
 /* 333 */,
 /* 334 */,
-/* 335 */,
-/* 336 */
+/* 335 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-normal-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-normal--bottom","left":"tooltip-normal-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-normal--left","right":"tooltip-normal-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-normal--right","top":"tooltip-normal-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-normal--top","isClosed":"tooltip-normal-s--isClosed tooltip--isClosed","isOpened":"tooltip-normal-s--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-normal-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-normal--bottom","left":"tooltip-normal-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-normal--left","right":"tooltip-normal-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-normal--right","top":"tooltip-normal-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-normal--top","isClosed":"tooltip-normal-m--isClosed tooltip--isClosed","isOpened":"tooltip-normal-m--isOpened tooltip--isOpened","isLine":"tooltip-normal-m--isLine tooltip--isLine"};
 
 /***/ },
+/* 336 */,
 /* 337 */,
-/* 338 */,
-/* 339 */
+/* 338 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-normal-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-normal--bottom","left":"tooltip-normal-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-normal--left","right":"tooltip-normal-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-normal--right","top":"tooltip-normal-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-normal--top","isClosed":"tooltip-normal-m--isClosed tooltip--isClosed","isOpened":"tooltip-normal-m--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-success-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-success--bottom","left":"tooltip-success-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-success--left","right":"tooltip-success-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-success--right","top":"tooltip-success-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-success--top","isClosed":"tooltip-success-xs--isClosed tooltip--isClosed","isOpened":"tooltip-success-xs--isOpened tooltip--isOpened","isLine":"tooltip-success-xs--isLine tooltip--isLine"};
 
 /***/ },
+/* 339 */,
 /* 340 */,
-/* 341 */,
-/* 342 */
+/* 341 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-success-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-success--bottom","left":"tooltip-success-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-success--left","right":"tooltip-success-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-success--right","top":"tooltip-success-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-success--top","isClosed":"tooltip-success-xs--isClosed tooltip--isClosed","isOpened":"tooltip-success-xs--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-success-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-success--bottom","left":"tooltip-success-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-success--left","right":"tooltip-success-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-success--right","top":"tooltip-success-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-success--top","isClosed":"tooltip-success-s--isClosed tooltip--isClosed","isOpened":"tooltip-success-s--isOpened tooltip--isOpened","isLine":"tooltip-success-s--isLine tooltip--isLine"};
 
 /***/ },
-/* 343 */,
+/* 342 */,
+/* 343 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+	module.exports = {"bottom":"tooltip-success-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-success--bottom","left":"tooltip-success-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-success--left","right":"tooltip-success-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-success--right","top":"tooltip-success-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-success--top","isClosed":"tooltip-success-m--isClosed tooltip--isClosed","isOpened":"tooltip-success-m--isOpened tooltip--isOpened","isLine":"tooltip-success-m--isLine tooltip--isLine"};
+
+/***/ },
 /* 344 */,
 /* 345 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-success-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-success--bottom","left":"tooltip-success-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-success--left","right":"tooltip-success-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-success--right","top":"tooltip-success-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-success--top","isClosed":"tooltip-success-s--isClosed tooltip--isClosed","isOpened":"tooltip-success-s--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-warning-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-warning--bottom","left":"tooltip-warning-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-warning--left","right":"tooltip-warning-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-warning--right","top":"tooltip-warning-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-warning--top","isClosed":"tooltip-warning-xs--isClosed tooltip--isClosed","isOpened":"tooltip-warning-xs--isOpened tooltip--isOpened","isLine":"tooltip-warning-xs--isLine tooltip--isLine"};
 
 /***/ },
 /* 346 */,
-/* 347 */
+/* 347 */,
+/* 348 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-success-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-success--bottom","left":"tooltip-success-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-success--left","right":"tooltip-success-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-success--right","top":"tooltip-success-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-success--top","isClosed":"tooltip-success-m--isClosed tooltip--isClosed","isOpened":"tooltip-success-m--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-warning-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-warning--bottom","left":"tooltip-warning-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-warning--left","right":"tooltip-warning-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-warning--right","top":"tooltip-warning-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-warning--top","isClosed":"tooltip-warning-s--isClosed tooltip--isClosed","isOpened":"tooltip-warning-s--isOpened tooltip--isOpened","isLine":"tooltip-warning-s--isLine tooltip--isLine"};
 
 /***/ },
-/* 348 */,
-/* 349 */
+/* 349 */,
+/* 350 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-warning-xs--bottom tooltip--bottom tooltip--control tooltip--center size-xs--bottom size-xs--control color-warning--bottom","left":"tooltip-warning-xs--left tooltip--left tooltip--control tooltip--middle size-xs--left size-xs--control color-warning--left","right":"tooltip-warning-xs--right tooltip--right tooltip--control tooltip--middle size-xs--right size-xs--control color-warning--right","top":"tooltip-warning-xs--top tooltip--top tooltip--control tooltip--center size-xs--top size-xs--control color-warning--top","isClosed":"tooltip-warning-xs--isClosed tooltip--isClosed","isOpened":"tooltip-warning-xs--isOpened tooltip--isOpened"};
+	module.exports = {"bottom":"tooltip-warning-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-warning--bottom","left":"tooltip-warning-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-warning--left","right":"tooltip-warning-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-warning--right","top":"tooltip-warning-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-warning--top","isClosed":"tooltip-warning-m--isClosed tooltip--isClosed","isOpened":"tooltip-warning-m--isOpened tooltip--isOpened","isLine":"tooltip-warning-m--isLine tooltip--isLine"};
 
 /***/ },
-/* 350 */,
 /* 351 */,
 /* 352 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-warning-s--bottom tooltip--bottom tooltip--control tooltip--center size-s--bottom size-s--control color-warning--bottom","left":"tooltip-warning-s--left tooltip--left tooltip--control tooltip--middle size-s--left size-s--control color-warning--left","right":"tooltip-warning-s--right tooltip--right tooltip--control tooltip--middle size-s--right size-s--control color-warning--right","top":"tooltip-warning-s--top tooltip--top tooltip--control tooltip--center size-s--top size-s--control color-warning--top","isClosed":"tooltip-warning-s--isClosed tooltip--isClosed","isOpened":"tooltip-warning-s--isOpened tooltip--isOpened"};
-
-/***/ },
-/* 353 */,
-/* 354 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-	module.exports = {"bottom":"tooltip-warning-m--bottom tooltip--bottom tooltip--control tooltip--center size-m--bottom size-m--control color-warning--bottom","left":"tooltip-warning-m--left tooltip--left tooltip--control tooltip--middle size-m--left size-m--control color-warning--left","right":"tooltip-warning-m--right tooltip--right tooltip--control tooltip--middle size-m--right size-m--control color-warning--right","top":"tooltip-warning-m--top tooltip--top tooltip--control tooltip--center size-m--top size-m--control color-warning--top","isClosed":"tooltip-warning-m--isClosed tooltip--isClosed","isOpened":"tooltip-warning-m--isOpened tooltip--isOpened"};
-
-/***/ },
-/* 355 */,
-/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26310,10 +27455,10 @@
 	    "size": "m",
 	    "value": "size-m"
 	  }]]
-	}, __webpack_require__(357));
+	}, __webpack_require__(353));
 
 /***/ },
-/* 357 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26323,15 +27468,15 @@
 	var PropTypes = _require.PropTypes;
 
 	var StyleComponent = __webpack_require__(179);
-	var Tumbler = __webpack_require__(358);
+	var Tumbler = __webpack_require__(354);
 
 	module.exports = StyleComponent(Tumbler, function (styles, _ref) {
 	  var size = _ref.size;
 	  return { styles: styles[size] };
 	}, {
-	  xs: __webpack_require__(359),
-	  s: __webpack_require__(362),
-	  m: __webpack_require__(364)
+	  xs: __webpack_require__(355),
+	  s: __webpack_require__(358),
+	  m: __webpack_require__(360)
 	}, {
 	  size: 'xs'
 	}, {
@@ -26339,7 +27484,7 @@
 	});
 
 /***/ },
-/* 358 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26489,24 +27634,24 @@
 	module.exports = Tumbler;
 
 /***/ },
-/* 359 */
+/* 355 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-xs":"13px","wrapper":"tumbler-xs--wrapper tumbler--wrapper","control":"tumbler-xs--control tumbler--control","label":"tumbler-xs--label tumbler--label","delimiter":"tumbler-xs--delimiter tumbler--delimiter","native":"tumbler-xs--native tumbler--native"};
 
 /***/ },
-/* 360 */,
-/* 361 */,
-/* 362 */
+/* 356 */,
+/* 357 */,
+/* 358 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 	module.exports = {"size-s":"13px","wrapper":"tumbler-s--wrapper tumbler--wrapper","control":"tumbler-s--control tumbler--control","label":"tumbler-s--label tumbler--label","delimiter":"tumbler-s--delimiter tumbler--delimiter","native":"tumbler-s--native tumbler--native"};
 
 /***/ },
-/* 363 */,
-/* 364 */
+/* 359 */,
+/* 360 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
