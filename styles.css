@@ -99,6 +99,11 @@ body
   -webkit-tap-highlight-color: transparent;
 }
 
+.button-action--control::-moz-focus-inner
+{
+  border: 0;
+}
+
 .button-action--control:hover
 {
   background: #ffd633;
@@ -163,8 +168,14 @@ body
   border: none;
   outline: none;
   background: none;
--webkit-appearance: none;
+
+  -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.button-link--control::-moz-focus-inner
+{
+  border: 0;
 }
 .link--control,
 .link--control:visited
@@ -238,6 +249,11 @@ body
   font-family: arial,sans-serif;
 
   -webkit-tap-highlight-color: transparent;
+}
+
+.button-normal--control::-moz-focus-inner
+{
+  border: 0;
 }
 
 .button-normal--control:hover
@@ -746,6 +762,13 @@ body
 {
   opacity: 1;
 }
+
+/* mixin */
+
+.input--hasClear
+{
+  /* base */
+}
 .input-xs--wrapper
 {
 
@@ -756,7 +779,7 @@ body
 .input-xs--control
 {
 
-  padding: 0 24px 0 7px;
+  padding: 0 7px;
 
   font-size: 13px;
   line-height: 24px;
@@ -769,6 +792,14 @@ body
   height: 22px;
 
   background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%3E%3Cpolygon%20points%3D%2210%2C0.7%209.3%2C0%205%2C4.3%200.7%2C0%200%2C0.7%204.3%2C5%200%2C9.3%200.7%2C10%205%2C5.7%209.3%2C10%2010%2C9.3%205.7%2C5%22%2F%3E%3C%2Fsvg%3E) 50% 50% no-repeat;
+}
+
+/* mixin */
+
+.input-xs--hasClear
+{
+
+  padding-right: 24px;
 }
 .color-picker-xs--container
 {
@@ -844,7 +875,7 @@ body
 .input-s--control
 {
 
-  padding: 0 28px 0 8px;
+  padding: 0 8px;
 
   font-size: 13px;
   line-height: 28px;
@@ -857,6 +888,14 @@ body
   height: 26px;
 
   background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%3E%3Cpolygon%20points%3D%2210%2C0.7%209.3%2C0%205%2C4.3%200.7%2C0%200%2C0.7%204.3%2C5%200%2C9.3%200.7%2C10%205%2C5.7%209.3%2C10%2010%2C9.3%205.7%2C5%22%2F%3E%3C%2Fsvg%3E) 50% 50% no-repeat;
+}
+
+/* mixin */
+
+.input-s--hasClear
+{
+
+  padding-right: 28px;
 }
 .color-picker-s--container
 {
@@ -932,7 +971,7 @@ body
 .input-m--control
 {
 
-  padding: 0 32px 0 10px;
+  padding: 0 10px;
 
   font-size: 15px;
   line-height: 32px;
@@ -945,6 +984,14 @@ body
   height: 30px;
 
   background: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2214%22%20height%3D%2214%22%3E%3Cpolygon%20points%3D%2214%2C0.7%2013.3%2C0%207%2C6.3%200.7%2C0%200%2C0.7%206.3%2C7%200%2C13.3%200.7%2C14%207%2C7.7%2013.3%2C14%2014%2C13.3%207.7%2C7%22%2F%3E%3C%2Fsvg%3E) 50% 50% no-repeat;
+}
+
+/* mixin */
+
+.input-m--hasClear
+{
+
+  padding-right: 32px;
 }
 .color-picker-m--container
 {

@@ -21743,8 +21743,6 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -21768,6 +21766,7 @@
 
 	var _require4 = __webpack_require__(170);
 
+	var style = _require4.style;
 	var styleName = _require4.styleName;
 
 	var React = __webpack_require__(3);
@@ -21850,29 +21849,35 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var id = _props.id;
-	      var styles = _props.styles;
-
-	      var o = _objectWithoutProperties(_props, ['id', 'styles']);
-
-	      var value = this.state.value;
-
-
-	      var clearElement = value && !this.props.disabled ? React.createElement('span', { className: styles.clear, onClick: this.onClearClick }) : null;
-
 	      return React.createElement(
 	        'span',
 	        { className: styleName(this.props) },
-	        React.createElement('input', _extends({}, o, {
-	          className: styles.control,
-	          defaultValue: undefined // Cause we have a controlled input
-	          , id: id,
-	          onChange: this.onChange,
-	          ref: 'control',
-	          value: value })),
-	        clearElement
+	        this.renderInput(),
+	        this.renderClear()
 	      );
+	    }
+	  }, {
+	    key: 'renderClear',
+	    value: function renderClear() {
+	      if (!this.state.value || this.props.disabled) {
+	        return null;
+	      }
+
+	      return React.createElement('span', {
+	        className: this.props.styles.clear,
+	        onClick: this.onClearClick });
+	    }
+	  }, {
+	    key: 'renderInput',
+	    value: function renderInput() {
+	      return React.createElement('input', _extends({}, this.props, {
+	        className: style(this.props.styles, 'control', {
+	          hasClear: this.state.value
+	        }),
+	        defaultValue: undefined // Cause we have a controlled input
+	        , onChange: this.onChange,
+	        ref: 'control',
+	        value: this.state.value }));
 	    }
 	  }]);
 
@@ -22343,21 +22348,21 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-xs":"13px","line-xs":"24px","wrapper":"input-xs--wrapper input--wrapper","control":"input-xs--control input--control","clear":"input-xs--clear input--clear"};
+	module.exports = {"size-xs":"13px","line-xs":"24px","wrapper":"input-xs--wrapper input--wrapper","control":"input-xs--control input--control","clear":"input-xs--clear input--clear","hasClear":"input-xs--hasClear input--hasClear"};
 
 /***/ },
 /* 214 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-s":"13px","line-s":"28px","wrapper":"input-s--wrapper input--wrapper","control":"input-s--control input--control","clear":"input-s--clear input--clear"};
+	module.exports = {"size-s":"13px","line-s":"28px","wrapper":"input-s--wrapper input--wrapper","control":"input-s--control input--control","clear":"input-s--clear input--clear","hasClear":"input-s--hasClear input--hasClear"};
 
 /***/ },
 /* 215 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"size-m":"15px","line-m":"32px","wrapper":"input-m--wrapper input--wrapper","control":"input-m--control input--control","clear":"input-m--clear input--clear"};
+	module.exports = {"size-m":"15px","line-m":"32px","wrapper":"input-m--wrapper input--wrapper","control":"input-m--control input--control","clear":"input-m--clear input--clear","hasClear":"input-m--hasClear input--hasClear"};
 
 /***/ },
 /* 216 */
