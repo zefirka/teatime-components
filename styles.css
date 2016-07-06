@@ -596,6 +596,11 @@ body
   -webkit-tap-highlight-color: transparent;
 }
 
+.color-picker--preview::-moz-focus-inner
+{
+  border: 0;
+}
+
 .color-picker--preview:hover
 {
   z-index: 1;
