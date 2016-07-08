@@ -194,7 +194,7 @@ body
 {
   color: #c00;
 }
-.link-xs--control
+.link-link-xs--control
 {
 
   font-size: 13px;
@@ -202,7 +202,7 @@ body
 .button-link-xs--control
 {
 }
-.link-s--control
+.link-link-s--control
 {
 
   font-size: 13px;
@@ -210,7 +210,7 @@ body
 .button-link-s--control
 {
 }
-.link-m--control
+.link-link-m--control
 {
 
   font-size: 15px;
@@ -218,7 +218,7 @@ body
 .button-link-m--control
 {
 }
-.link-l--control
+.link-link-l--control
 {
 
   font-size: 18px;
@@ -1060,6 +1060,30 @@ body
 }
 
 .color-picker-m--isFixedMenu
+{
+}
+.link-action-xs--control
+{
+}
+.link-action-s--control
+{
+}
+.link-action-m--control
+{
+}
+.link-action-l--control
+{
+}
+.link-normal-xs--control
+{
+}
+.link-normal-s--control
+{
+}
+.link-normal-m--control
+{
+}
+.link-normal-l--control
 {
 }
 .radio--container
