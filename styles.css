@@ -101,6 +101,9 @@ body
 
 .button-action--control::-moz-focus-inner
 {
+  margin: 0;
+  padding: 0;
+
   border: 0;
 }
 
@@ -175,6 +178,9 @@ body
 
 .button-link--control::-moz-focus-inner
 {
+  margin: 0;
+  padding: 0;
+
   border: 0;
 }
 .link--control,
@@ -253,6 +259,9 @@ body
 
 .button-normal--control::-moz-focus-inner
 {
+  margin: 0;
+  padding: 0;
+
   border: 0;
 }
 
@@ -1703,7 +1712,7 @@ body
 .select-xs--menu
 {
 
-  max-height: 150px;
+  max-height: 198px;
 }
 
 .select-xs--item
@@ -1823,7 +1832,7 @@ body
 .select-s--menu
 {
 
-  max-height: 152px;
+  max-height: 200px;
 }
 
 .select-s--item
@@ -1943,7 +1952,7 @@ body
 .select-m--menu
 {
 
-  max-height: 180px;
+  max-height: 236px;
 }
 
 .select-m--item
