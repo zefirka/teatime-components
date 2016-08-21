@@ -1,9 +1,9 @@
 'use strict';
 
 const { Component, PropTypes } = require('react');
-const { curry, get, isUndefined } = require('lodash/fp');
 const React = require('react');
 const classNames = require('classnames');
+const styleName = require('../tool2/styleName');
 
 const defined = {
   'l-action': require('../style/button/button-action-l.css'),
@@ -20,14 +20,8 @@ const defined = {
   'xs-normal': require('../style/button/button-normal-xs.css'),
 };
 
-// @todo make common for all controls and put to the standalone module
-// possible syntax:
-// ```
-// const style = require('./style')(defined, getter);
-// style(size, theme, styles)(styleName)
-// ```
-const style = curry((defined, size, theme, styles, styleName) =>
-  get(styleName, isUndefined(styles) ? defined[size + '-' + theme] : styles))(defined);
+const style = styleName(defined,
+  (defined, size, theme) => defined[size + '-' + theme]);
 
 class Button extends Component {
   focus() {
@@ -48,7 +42,7 @@ class Button extends Component {
     return (
       <button
         {...other}
-        className={classNames(style(size, theme, styles, 'control'), className)}
+        className={classNames(style('control', styles, size, theme), className)}
         ref='control'/>
     );
   }

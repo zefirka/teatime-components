@@ -1,24 +1,18 @@
 'use strict';
 
 const { Component, PropTypes } = require('react');
-const { curry, get, isUndefined, noop } = require('lodash/fp');
+const { isUndefined, noop } = require('lodash/fp');
 const React = require('react');
 const classNames = require('classnames');
 const generateId = require('../tool2/generateId');
+const styleName = require('../tool2/styleName');
 
 const defined = {
   s: require('../style/check/check-s.css'),
   m: require('../style/check/check-m.css'),
 };
 
-// @todo make common for all controls and put to the standalone module
-// possible syntax:
-// ```
-// const style = require('./style')(defined, getter);
-// style(size, theme, styles)(styleName)
-// ```
-const style = curry((defined, size, styles, styleName) =>
-  get(styleName, isUndefined(styles) ? defined[size] : styles))(defined);
+const style = styleName(defined, (defined, size) => defined[size]);
 
 class Check extends Component {
   /**
@@ -64,10 +58,10 @@ class Check extends Component {
     return (
       <div
         {...other}
-        className={classNames(style(size, styles, 'wrapper'), className)}>
+        className={classNames(style('wrapper', styles, size), className)}>
         <input
           checked={value}
-          className={style(size, styles, 'native')}
+          className={style('native', styles, size)}
           defaultChecked={defaultValue}
           disabled={disabled}
           id={this.state.id}
@@ -75,7 +69,7 @@ class Check extends Component {
           onChange={this.onChange}
           type={type}/>
         <label
-          className={style(size, styles, 'control')}
+          className={style('control', styles, size)}
           htmlFor={this.state.id}/>
         {this.renderLabel(isUndefined(label) ? children : label)}
       </div>
@@ -91,7 +85,7 @@ class Check extends Component {
 
     return (
       <label
-        className={style(this.props.size, this.props.styles, 'label')}
+        className={style('label', this.props.styles, this.props.size)}
         htmlFor={this.state.id}>
         {label}
       </label>
