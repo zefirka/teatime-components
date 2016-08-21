@@ -1527,6 +1527,7 @@ body
 .select--input
 {
   position: absolute;
+  z-index: 1;
   top: 0;
   left: 0;
 
@@ -1545,6 +1546,11 @@ body
 
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.select--input:focus + .select--label
+{
+  opacity: .4;
 }
 
 .select--menu
