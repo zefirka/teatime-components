@@ -30,24 +30,31 @@ class Check extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  componentWillReceiveProps() {
+    // update id
+  }
+
   /**
    * @param  {object}  e
    * @param  {boolean} e.target.checked
    * @return {void}
    */
   onChange(e) {
-    this.props.onChange(e, {value: e.target.checked});
+    const { checked, value } = e.target;
+    this.props.onChange(e, { checked, value });
   }
 
   render() {
     const {
+      checked,
       children,
       className,
-      defaultValue,
+      defaultChecked,
       disabled,
       id, // eslint-disable-line no-unused-vars
       label,
       name,
+      onChange, // eslint-disable-line no-unused-vars
       size,
       styles,
       type,
@@ -60,14 +67,15 @@ class Check extends Component {
         {...other}
         className={classNames(style('wrapper', styles, size), className)}>
         <input
-          checked={value}
+          checked={checked}
           className={style('native', styles, size)}
-          defaultChecked={defaultValue}
+          defaultChecked={defaultChecked}
           disabled={disabled}
           id={this.state.id}
           name={name}
           onChange={this.onChange}
-          type={type}/>
+          type={type}
+          value={value}/>
         <label
           className={style('control', styles, size)}
           htmlFor={this.state.id}/>
@@ -100,7 +108,6 @@ Check.defaultProps = {
 };
 
 Check.propTypes = {
-  defaultValue: PropTypes.bool,
   id: PropTypes.string,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -119,7 +126,6 @@ Check.propTypes = {
     'checkbox',
     'radio',
   ]),
-  value: PropTypes.bool,
 };
 
 module.exports = Check;
