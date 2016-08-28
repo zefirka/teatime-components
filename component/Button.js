@@ -3,9 +3,9 @@
 const { Component, PropTypes } = require('react');
 const React = require('react');
 const classNames = require('classnames');
-const styleName = require('../tool2/styleName');
+const style = require('../tool/style');
 
-const defined = {
+const cn = style((size, theme) => size + '-' + theme, {
   'l-action': require('../style/button/button-action-l.css'),
   'l-link': require('../style/button/button-link-l.css'),
   'l-normal': require('../style/button/button-normal-l.css'),
@@ -18,10 +18,7 @@ const defined = {
   'xs-action': require('../style/button/button-action-xs.css'),
   'xs-link': require('../style/button/button-link-xs.css'),
   'xs-normal': require('../style/button/button-normal-xs.css'),
-};
-
-const style = styleName(defined,
-  (defined, size, theme) => defined[size + '-' + theme]);
+});
 
 class Button extends Component {
   focus() {
@@ -42,7 +39,7 @@ class Button extends Component {
     return (
       <button
         {...other}
-        className={classNames(style('control', styles, size, theme), className)}
+        className={classNames(cn(styles, 'control', size, theme), className)}
         ref='control'/>
     );
   }

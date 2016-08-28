@@ -1,18 +1,16 @@
 'use strict';
 
 const { Component, PropTypes } = require('react');
-const { isUndefined, noop } = require('lodash/fp');
+const { identity, isUndefined, noop } = require('lodash/fp');
 const React = require('react');
 const classNames = require('classnames');
-const generateId = require('../tool2/generateId');
-const styleName = require('../tool2/styleName');
+const generateId = require('../tool/generateId');
+const style = require('../tool/style');
 
-const defined = {
+const cn = style(identity, {
   s: require('../style/check/check-s.css'),
   m: require('../style/check/check-m.css'),
-};
-
-const style = styleName(defined, (defined, size) => defined[size]);
+});
 
 class Check extends Component {
   /**
@@ -30,8 +28,9 @@ class Check extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  componentWillReceiveProps() {
-    // update id
+  componentWillReceiveProps(nextProps) {
+    if (isUndefined(nextProps.id)) return;
+    this.setState(nextProps.id);
   }
 
   /**
@@ -65,10 +64,10 @@ class Check extends Component {
     return (
       <div
         {...other}
-        className={classNames(style('wrapper', styles, size), className)}>
+        className={classNames(cn(styles, 'wrapper', size), className)}>
         <input
           checked={checked}
-          className={style('native', styles, size)}
+          className={cn(styles, 'native', size)}
           defaultChecked={defaultChecked}
           disabled={disabled}
           id={this.state.id}
@@ -77,7 +76,7 @@ class Check extends Component {
           type={type}
           value={value}/>
         <label
-          className={style('control', styles, size)}
+          className={cn(styles, 'control', size)}
           htmlFor={this.state.id}/>
         {this.renderLabel(isUndefined(label) ? children : label)}
       </div>
@@ -93,7 +92,7 @@ class Check extends Component {
 
     return (
       <label
-        className={style('label', this.props.styles, this.props.size)}
+        className={cn(this.props.styles, 'label', this.props.size)}
         htmlFor={this.state.id}>
         {label}
       </label>
@@ -108,7 +107,6 @@ Check.defaultProps = {
 };
 
 Check.propTypes = {
-  id: PropTypes.string,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
