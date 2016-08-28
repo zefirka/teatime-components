@@ -1,92 +1,106 @@
 'use strict';
 
-const { PropTypes } = require('react');
-const { bind } = require('../tool/component');
-const { generateId } = require('../tool/identity');
-const { noop } = require('../tool/func');
+const { Component, PropTypes } = require('react');
+const { get, isUndefined, noop } = require('lodash/fp');
 const React = require('react');
-const TeatimeComponent = require('./TeatimeComponent');
 const classNames = require('classnames');
+const generateId = require('../tool/generateId');
 
-class Check extends TeatimeComponent {
+class Check extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      id: this.props.id || generateId(),
+      id: props.id || generateId(),
     };
 
-    bind(this, 'onChange');
+    this.onChange = this.onChange.bind(this);
   }
 
-  componentWillReceiveProps({ id }) {
-    if (id) {
-      this.setState({id});
-    }
+  componentWillReceiveProps(nextProps) {
+    if (isUndefined(nextProps.id)) return;
+    this.setState(nextProps.id);
   }
 
   onChange(e) {
     const { checked, value } = e.target;
-    this.props.onChange(e, {checked, value}, this.props.tc);
+    this.props.onChange(e, { checked, value }, this.props.position);
   }
 
   render() {
-    const { children, label, ...o } = this.knownProps();
-    const { id } = this.state;
-
-    const content = label || children;
-    const labelElement = content
-      ? (<label className={this.style('label')} htmlFor={id}>{content}</label>)
-      : null;
-
-    /**
-     * Still there is an issue about controlled and uncontrolled components,
-     * related to the input[type="checkbox"] and input[type="radio"].
-     * It results in the way controlled components are determined.
-     *
-     * @see https://github.com/facebook/react/blob/v15.1.0/src/renderers/dom/client/wrappers/ReactDOMInput.js#L171
-     * @see https://github.com/facebook/react/issues/6779
-     */
+    const {
+      checked,
+      children,
+      className,
+      disabled,
+      hasLabel, // eslint-disable-line no-unused-vars
+      id, // eslint-disable-line no-unused-vars
+      label,
+      name,
+      onChange, // eslint-disable-line no-unused-vars
+      position, // eslint-disable-line no-unused-vars
+      styles,
+      type,
+      value,
+      ...other,
+    } = this.props;
 
     return (
-      <div className={classNames(this.style('wrapper'), this.props.className)}>
+      <div
+        {...other}
+        className={classNames(get('wrapper', styles), className)}>
         <input
-          {...o}
-          className={this.style('native')}
-          id={id}
-          onChange={this.onChange}/>
-        <label className={this.style('control')} htmlFor={id}/>
-        {labelElement}
+          checked={checked}
+          className={get('native', styles)}
+          disabled={disabled}
+          id={this.state.id}
+          name={name}
+          onChange={this.onChange}
+          type={type}
+          value={value}/>
+        <label
+          className={get('control', styles)}
+          htmlFor={this.state.id}/>
+        {this.renderLabel(isUndefined(label) ? children : label)}
       </div>
+    );
+  }
+
+  renderLabel(label) {
+    if (!this.props.hasLabel) return null;
+
+    return (
+      <label
+        className={get('label', this.props.styles)}
+        htmlFor={this.state.id}>
+        {label}
+      </label>
     );
   }
 }
 
 Check.defaultProps = {
+  hasLabel: true,
   onChange: noop,
   type: 'checkbox',
 };
 
 Check.propTypes = {
+  hasLabel: PropTypes.bool,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
+  position: PropTypes.number,
   styles: PropTypes.shape({
     control: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     native: PropTypes.string.isRequired,
     wrapper: PropTypes.string.isRequired,
   }),
-  tc: PropTypes.any,
-  type:  PropTypes.oneOf([
+  type: PropTypes.oneOf([
     'checkbox',
     'radio',
   ]),
 };
-
-Check.unwantedProps = [
-  'tc',
-  ...TeatimeComponent.unwantedProps,
-];
 
 module.exports = Check;
