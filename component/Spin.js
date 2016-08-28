@@ -1,31 +1,41 @@
 'use strict';
 
-const { PropTypes } = require('react');
-const Spin = require('../view/Spin');
+const { Component, PropTypes } = require('react');
+const { identity } = require('lodash/fp');
+const React = require('react');
+const classNames = require('classnames');
+const style = require('../tool/style');
 
-const predefinedStyles = {
+const cn = style(identity, {
   xs: require('../style/spin/spin-xs.css'),
   s: require('../style/spin/spin-s.css'),
   m: require('../style/spin/spin-m.css'),
   l: require('../style/spin/spin-l.css'),
   xl: require('../style/spin/spin-xl.css'),
-};
+});
 
-class SpinComponent extends Spin {
-  /**
-   * @return {object}
-   */
-  styles() {
-    return predefinedStyles[this.props.size];
+class Spin extends Component {
+  render() {
+    const {
+      className,
+      size,
+      styles,
+      ...other,
+    } = this.props;
+
+    return (
+      <span
+        {...other}
+        className={classNames(cn(styles, 'control', size), className)}/>
+    );
   }
 }
 
-SpinComponent.defaultProps = {
+Spin.defaultProps = {
   size: 's',
-  ...Spin.defaultProps,
 };
 
-SpinComponent.propTypes = {
+Spin.propTypes = {
   size: PropTypes.oneOf([
     'xs',
     's',
@@ -33,11 +43,9 @@ SpinComponent.propTypes = {
     'l',
     'xl',
   ]),
-  ...Spin.propTypes,
+  styles: PropTypes.shape({
+    control: PropTypes.string.isRequired,
+  }),
 };
 
-SpinComponent.unwantedProps = [
-  'size',
-];
-
-module.exports = SpinComponent;
+module.exports = Spin;

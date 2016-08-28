@@ -13,11 +13,6 @@ const cn = style(identity, {
 });
 
 class Check extends Component {
-  /**
-   * @param  {object} props
-   * @param  {string} [props.id]
-   * @return {void}
-   */
   constructor(props) {
     super(props);
 
@@ -33,11 +28,6 @@ class Check extends Component {
     this.setState(nextProps.id);
   }
 
-  /**
-   * @param  {object}  e
-   * @param  {boolean} e.target.checked
-   * @return {void}
-   */
   onChange(e) {
     const { checked, value } = e.target;
     this.props.onChange(e, { checked, value });

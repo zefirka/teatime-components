@@ -22,9 +22,8 @@ const cn = style((size, theme) => size + '-' + theme, {
 
 class Button extends Component {
   focus() {
-    if (this.refs.control) {
-      this.refs.control.focus();
-    }
+    if (!this.refs.button) return;
+    this.refs.button.focus();
   }
 
   render() {
@@ -40,7 +39,7 @@ class Button extends Component {
       <button
         {...other}
         className={classNames(cn(styles, 'control', size, theme), className)}
-        ref='control'/>
+        ref='button'/>
     );
   }
 }
