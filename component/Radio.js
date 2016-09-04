@@ -1,16 +1,22 @@
 'use strict';
 
 const { Component, PropTypes } = require('react');
-const { findIndex, identity, isUndefined, noop } = require('lodash/fp');
+const { findIndex, isUndefined, noop } = require('lodash/fp');
 const Check = require('../view/Check');
 const React = require('react');
 const classNames = require('classnames');
 const generateId = require('../tool/generateId');
 const style = require('../tool/style');
 
-const cn = style(identity, {
-  s: require('../style/radio/radio-s.css'),
-  m: require('../style/radio/radio-m.css'),
+const cn = style((size, type) => type + '-' + size, {
+  'button-l': require('../style/radio-group/radio-group-l.css'),
+  'button-m': require('../style/radio-group/radio-group-m.css'),
+  'button-s': require('../style/radio-group/radio-group-s.css'),
+  'button-xs': require('../style/radio-group/radio-group-xs.css'),
+  'common-l': null,
+  'common-m': require('../style/radio/radio-m.css'),
+  'common-s': require('../style/radio/radio-s.css'),
+  'common-xs': null,
 });
 
 class Radio extends Component {
@@ -54,6 +60,7 @@ class Radio extends Component {
       options,
       size,
       styles,
+      type,
       ...other,
     } = this.props;
 
@@ -63,19 +70,19 @@ class Radio extends Component {
       this.renderOption(option, {
         checked: selected === position,
         disabled,
-        hasLabel: true,
+        hasLabel: type === 'radio',
         key: prefix + option.value,
         name,
         onChange: this.onChange,
         position,
-        styles: cn(styles, null, size),
+        styles: cn(styles, null, size, type),
         type: 'radio',
       }));
 
     return (
       <div
         {...other}
-        className={classNames(cn(styles, 'container', size), className)}>
+        className={classNames(cn(styles, 'container', size, type), className)}>
         {genericOptions}
       </div>
     );
@@ -93,6 +100,7 @@ class Radio extends Component {
 Radio.defaultProps = {
   onChange: noop,
   size: 's',
+  type: 'radio',
 };
 
 Radio.propTypes = {
@@ -101,16 +109,22 @@ Radio.propTypes = {
   onChange: PropTypes.func,
   options: PropTypes.array.isRequired,
   size: PropTypes.oneOf([
-    's',
+    'l',
     'm',
+    's',
+    'xs',
   ]),
   styles: PropTypes.shape({
     container: PropTypes.string.isRequired,
     control: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     native: PropTypes.string.isRequired,
     wrapper: PropTypes.string.isRequired,
   }),
+  type: PropTypes.oneOf([
+    'button',
+    'common',
+  ]),
   value: PropTypes.string,
 };
 

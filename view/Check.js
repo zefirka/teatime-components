@@ -45,8 +45,12 @@ class Check extends Component {
       ...other,
     } = this.props;
 
+    const text = isUndefined(label)
+      ? children
+      : label;
+
     return (
-      <div
+      <span
         {...other}
         className={classNames(get('wrapper', styles), className)}>
         <input
@@ -59,10 +63,11 @@ class Check extends Component {
           type={type}
           value={value}/>
         <label
+          children={hasLabel ? void 0 : text}
           className={get('control', styles)}
           htmlFor={this.state.id}/>
-        {this.renderLabel(isUndefined(label) ? children : label)}
-      </div>
+        {this.renderLabel(text)}
+      </span>
     );
   }
 
@@ -93,7 +98,7 @@ Check.propTypes = {
   position: PropTypes.number,
   styles: PropTypes.shape({
     control: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     native: PropTypes.string.isRequired,
     wrapper: PropTypes.string.isRequired,
   }),
