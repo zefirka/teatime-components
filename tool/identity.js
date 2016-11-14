@@ -11,7 +11,7 @@ exports.mapKeyBasedOnPos = mapKeyBasedOnPos;
  * @return {string}
  */
 function generateId() {
-  return `_teatime${++counter}`;
+  return '_teatime' + ++counter;
 }
 
 /**
@@ -19,7 +19,7 @@ function generateId() {
  * @return {boolean}
  */
 function hasUniqueValues(options) {
-  const cache = {};
+  var cache = {};
 
   for (var value, i = 0; i < options.length; ++i) {
     value = options[i].value;
@@ -41,7 +41,7 @@ function hasUniqueValues(options) {
  * @return {string}
  */
 function mapKey(prefix, value) {
-  return `${prefix}${value}`;
+  return '' + prefix + value;
 }
 
 /**
@@ -51,5 +51,5 @@ function mapKey(prefix, value) {
  * @return {string}
  */
 function mapKeyBasedOnPos(prefix, value, position) {
-  return `${prefix}${value}${position}`;
+  return '' + prefix + value + position;
 }

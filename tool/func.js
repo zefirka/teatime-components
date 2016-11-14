@@ -65,7 +65,7 @@ function mapKeys(iteratee, collection) {
     return null;
   }
 
-  const nextCollection = {};
+  var nextCollection = {};
 
   for (var key in collection) {
     nextCollection[iteratee(collection[key], key)] = collection[key];
@@ -80,7 +80,7 @@ function mapKeys(iteratee, collection) {
  * @return {array}
  */
 function mapRange(iteratee, steps) {
-  const collection = new Array(steps);
+  var collection = new Array(steps);
   for (var i = 0; i < steps; ++i) {
     collection[i] = iteratee(i, steps);
   }

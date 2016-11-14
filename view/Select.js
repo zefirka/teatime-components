@@ -1,475 +1,546 @@
 'use strict';
 
-const { Component, PropTypes } = require('react');
-const { bind, hasValueProp, indexOf } = require('../tool/component');
-const { findDOMNode } = require('react-dom');
-const { generateId, hasUniqueValues, mapKey, mapKeyBasedOnPos } = require('../tool/identity');
-const { isUndefined, noop } = require('../tool/func');
-const { style, styleName } = require('../tool/className');
-const Option = require('./Option');
-const Overlay = require('./Overlay');
-const React = require('react');
-const fuzzysearch = require('fuzzysearch');
-const reactOutsideEvent = require('../mixin/ReactOutsideEvent');
-const warning = require('../tool/warning');
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _require = require('react'),
+    Component = _require.Component,
+    PropTypes = _require.PropTypes;
+
+var _require2 = require('../tool/component'),
+    bind = _require2.bind,
+    hasValueProp = _require2.hasValueProp,
+    indexOf = _require2.indexOf;
+
+var _require3 = require('react-dom'),
+    findDOMNode = _require3.findDOMNode;
+
+var _require4 = require('../tool/identity'),
+    generateId = _require4.generateId,
+    hasUniqueValues = _require4.hasUniqueValues,
+    mapKey = _require4.mapKey,
+    mapKeyBasedOnPos = _require4.mapKeyBasedOnPos;
+
+var _require5 = require('../tool/func'),
+    isUndefined = _require5.isUndefined,
+    noop = _require5.noop;
+
+var _require6 = require('../tool/className'),
+    style = _require6.style,
+    styleName = _require6.styleName;
+
+var Option = require('./Option');
+var Overlay = require('./Overlay');
+var React = require('react');
+var fuzzysearch = require('fuzzysearch');
+var reactOutsideEvent = require('../mixin/ReactOutsideEvent');
+var warning = require('../tool/warning');
 
 var didWarnForDefaultValue = false;
 
-class Select extends Component {
-  constructor(props) {
-    super(props);
+var Select = function (_Component) {
+  _inherits(Select, _Component);
 
-    bind(this, [
-      'onInputChange',
-      'onKeyDown',
-      'onMenuToggle',
-      'onOptionFocus',
-      'onOptionSelect',
-    ]);
+  function Select(props) {
+    _classCallCheck(this, Select);
 
-    this.controlled = hasValueProp(props);
+    var _this = _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, props));
 
-    if (process.env.NODE_ENV !== 'production' && this.controlled && !didWarnForDefaultValue) { // eslint-disable-line no-undef
-      warning(isUndefined(props.defaultValue),
-        'Select elements must be either controlled or uncontrolled ' +
-        '(specify either the value prop, or the defaultValue prop, but not ' +
-        'both). Decide between using a controlled or uncontrolled select ' +
-        'element and remove one of these props. More info: ' +
-        'https://fb.me/react-controlled-components');
+    bind(_this, ['onInputChange', 'onKeyDown', 'onMenuToggle', 'onOptionFocus', 'onOptionSelect']);
+
+    _this.controlled = hasValueProp(props);
+
+    if (process.env.NODE_ENV !== 'production' && _this.controlled && !didWarnForDefaultValue) {
+      // eslint-disable-line no-undef
+      warning(isUndefined(props.defaultValue), 'Select elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled select ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components');
 
       didWarnForDefaultValue = true;
     }
 
-    this.updateKeyMapper(props.hasUniqValues, props.options);
+    _this.updateKeyMapper(props.hasUniqValues, props.options);
 
-    var value = this.controlled
-      ? props.value
-      : props.defaultValue;
+    var value = _this.controlled ? props.value : props.defaultValue;
 
-    var selected = !isUndefined(value)
-      ? indexOf(props.options, value)
-      : 0; // in case of uncontrolled component
+    var selected = !isUndefined(value) ? indexOf(props.options, value) : 0; // in case of uncontrolled component
 
-    this.state = {
+    _this.state = {
       focused: -1,
       inFocus: false,
       inputValue: '',
       isOpened: false,
       prefix: generateId(),
-      selected,
+      selected: selected
     };
+    return _this;
   }
 
-  closeMenu() {
-    this.setState({
-      isOpened: false,
-      focused: -1,
-      inputValue: '',
-    });
-  }
-
-  openMenu() {
-    this.setState({
-      isOpened: true,
-      focused: this.state.selected,
-    });
-  }
-
-  componentDidUpdate() {
-    if (this.refs.menu && this.refs.selected && this.state.isOpened && !this.wereOptionsShown) {
-      this.wereOptionsShown = true;
-
-      const menu = findDOMNode(this.refs.menu);
-      const selected = findDOMNode(this.refs.selected);
-      // small fix for the padding offset. should change CSS in future.
-      menu.scrollTop = selected.offsetTop < 7 ? 0 : selected.offsetTop;
-    } else if (!this.state.isOpened) {
-      this.wereOptionsShown = false;
+  _createClass(Select, [{
+    key: 'closeMenu',
+    value: function closeMenu() {
+      this.setState({
+        isOpened: false,
+        focused: -1,
+        inputValue: ''
+      });
     }
+  }, {
+    key: 'openMenu',
+    value: function openMenu() {
+      this.setState({
+        isOpened: true,
+        focused: this.state.selected
+      });
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      if (this.refs.menu && this.refs.selected && this.state.isOpened && !this.wereOptionsShown) {
+        this.wereOptionsShown = true;
 
-    if (this.wasKeyPressed && this.refs.menu && this.refs.selected) {
-      this.wasKeyPressed = false;
+        var menu = findDOMNode(this.refs.menu);
+        var selected = findDOMNode(this.refs.selected);
+        // small fix for the padding offset. should change CSS in future.
+        menu.scrollTop = selected.offsetTop < 7 ? 0 : selected.offsetTop;
+      } else if (!this.state.isOpened) {
+        this.wereOptionsShown = false;
+      }
 
-      const menu = findDOMNode(this.refs.menu);
-      const selected = findDOMNode(this.refs.selected);
-      const menuRect = menu.getBoundingClientRect();
-      const selectedRect = selected.getBoundingClientRect();
-      if (selectedRect.bottom > menuRect.bottom || selectedRect.top < menuRect.top) {
-        menu.scrollTop = selected.offsetTop + selected.clientHeight - menu.offsetHeight;
+      if (this.wasKeyPressed && this.refs.menu && this.refs.selected) {
+        this.wasKeyPressed = false;
+
+        var _menu = findDOMNode(this.refs.menu);
+        var _selected = findDOMNode(this.refs.selected);
+        var menuRect = _menu.getBoundingClientRect();
+        var selectedRect = _selected.getBoundingClientRect();
+        if (selectedRect.bottom > menuRect.bottom || selectedRect.top < menuRect.top) {
+          _menu.scrollTop = _selected.offsetTop + _selected.clientHeight - _menu.offsetHeight;
+        }
       }
     }
-  }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(_ref) {
+      var hasUniqValues = _ref.hasUniqValues,
+          options = _ref.options,
+          value = _ref.value;
 
-  componentWillReceiveProps({ hasUniqValues, options, value }) {
-    if (this.controlled) {
+      if (this.controlled) {
+        this.setState({
+          selected: indexOf(options, value)
+        });
+      }
+
+      if (this.props.hasUniqValues !== hasUniqValues) {
+        this.updateKeyMapper(hasUniqValues, options);
+      }
+    }
+  }, {
+    key: 'filterOptions',
+    value: function filterOptions() {
+      var inputValue = this.state.inputValue.toLowerCase();
+
+      if (!this.state.inputValue) {
+        return this.props.options;
+      }
+
+      var filteredOptions = [];
+      var getHaystack = this.props.getHaystack || this.getHaystack;
+      var options = this.props.options || [];
+
+      for (var length = options.length, i = 0; i < length; ++i) {
+        if (fuzzysearch(inputValue, getHaystack(options[i]).toLowerCase())) {
+          filteredOptions.push(options[i]);
+        }
+      }
+
+      return filteredOptions;
+    }
+  }, {
+    key: 'focus',
+    value: function focus() {
+      if (this.refs.label) {
+        this.refs.label.focus();
+      }
+    }
+  }, {
+    key: 'focusNextOption',
+    value: function focusNextOption() {
+      var nextFocused = this.state.focused + 1;
+
+      this.wasKeyPressed = true;
+
       this.setState({
-        selected: indexOf(options, value),
+        focused: nextFocused < this._availableOptions.length ? nextFocused : this._availableOptions.length - 1
+      });
+    }
+  }, {
+    key: 'focusPreviousOption',
+    value: function focusPreviousOption() {
+      var nextFocused = Math.max(this.state.focused - 1, 0);
+
+      this.wasKeyPressed = true;
+
+      this.setState({
+        focused: nextFocused < this._availableOptions.length ? nextFocused : this._availableOptions.length - 1
       });
     }
 
-    if (this.props.hasUniqValues !== hasUniqValues) {
-      this.updateKeyMapper(hasUniqValues, options);
+    /**
+     * @param  {object} option
+     * @param  {string} option.label
+     * @return {string}
+     */
+
+  }, {
+    key: 'getHaystack',
+    value: function getHaystack(option) {
+      return option.label;
     }
-  }
 
-  filterOptions() {
-    const inputValue = this.state.inputValue.toLowerCase();
+    /**
+     * @param  {number} selected
+     * @return {string}
+     */
 
-    if (!this.state.inputValue) {
-      return this.props.options;
+  }, {
+    key: 'getSelectedLabel',
+    value: function getSelectedLabel(selected) {
+      return selected !== -1 ? this.props.options[selected].label : this.props.placeholder;
     }
 
-    const filteredOptions = [];
-    const getHaystack = this.props.getHaystack || this.getHaystack;
-    const options = this.props.options || [];
+    /**
+     * @param  {number} selected
+     * @return {string}
+     */
 
-    for (var length = options.length, i = 0; i < length; ++i) {
-      if (fuzzysearch(inputValue, getHaystack(options[i]).toLowerCase())) {
-        filteredOptions.push(options[i]);
+  }, {
+    key: 'getSelectedValue',
+    value: function getSelectedValue(selected) {
+      return selected !== -1 ? this.props.options[selected].value : '';
+    }
+  }, {
+    key: 'onInputChange',
+    value: function onInputChange(e) {
+      this.setState({
+        inputValue: e.target.value,
+        isOpened: true
+      });
+    }
+  }, {
+    key: 'onKeyDown',
+    value: function onKeyDown(e) {
+      if (this.props.disabled) return;
+
+      var isOpened = this.state.isOpened;
+
+
+      switch (e.keyCode) {
+        case 9:
+          // tab
+          if (!isOpened) return;
+          return void this.closeMenu();
+
+        case 13:
+          // enter
+          if (!isOpened) return;
+          e.stopPropagation();
+          this.updateValue(e, this.state.focused);
+          break;
+
+        case 27:
+          // esc
+          if (!isOpened) return;
+          this.closeMenu();
+          this.focus();
+          break;
+
+        case 32:
+          // space
+          if (this.props.isSearchable) return;
+
+          if (!isOpened) {
+            this.openMenu();
+          } else {
+            this.updateValue(e, this.state.focused);
+          }
+
+          break;
+
+        case 38:
+          // up
+          if (!isOpened) {
+            this.openMenu();
+          } else {
+            this.focusPreviousOption();
+          }
+
+          break;
+
+        case 40:
+          // down
+          if (!isOpened) {
+            this.openMenu();
+          } else {
+            this.focusNextOption();
+          }
+
+          break;
+
+        default:
+          return;
       }
+
+      e.preventDefault();
+    }
+  }, {
+    key: 'onMenuToggle',
+    value: function onMenuToggle() {
+      if (this.state.isOpened) {
+        return void this.closeMenu();
+      }
+
+      return void this.openMenu();
     }
 
-    return filteredOptions;
-  }
+    /**
+     * @param {object} e
+     * @param {*} _
+     * @param {number} tc
+     */
 
-  focus() {
-    if (this.refs.label) {
-      this.refs.label.focus();
+  }, {
+    key: 'onOptionFocus',
+    value: function onOptionFocus(e, _, tc) {
+      if (this.state.focused === tc) return;
+      this.setState({ focused: tc });
     }
-  }
 
-  focusNextOption() {
-    const nextFocused = this.state.focused + 1;
+    /**
+     * @param {object} e
+     * @param {*} _
+     * @param {number} tc
+     */
 
-    this.wasKeyPressed = true;
-
-    this.setState({
-      focused: nextFocused < this._availableOptions.length
-        ? nextFocused
-        : this._availableOptions.length - 1,
-    });
-  }
-
-  focusPreviousOption() {
-    const nextFocused = Math.max(this.state.focused - 1, 0);
-
-    this.wasKeyPressed = true;
-
-    this.setState({
-      focused: nextFocused < this._availableOptions.length
-        ? nextFocused
-        : this._availableOptions.length - 1,
-    });
-  }
-
-  /**
-   * @param  {object} option
-   * @param  {string} option.label
-   * @return {string}
-   */
-  getHaystack(option) {
-    return option.label;
-  }
-
-  /**
-   * @param  {number} selected
-   * @return {string}
-   */
-  getSelectedLabel(selected) {
-    return selected !== -1
-      ? this.props.options[selected].label
-      : this.props.placeholder;
-  }
-
-  /**
-   * @param  {number} selected
-   * @return {string}
-   */
-  getSelectedValue(selected) {
-    return selected !== -1
-      ? this.props.options[selected].value
-      : '';
-  }
-
-  onInputChange(e) {
-    this.setState({
-      inputValue: e.target.value,
-      isOpened: true,
-    });
-  }
-
-  onKeyDown(e) {
-    if (this.props.disabled) return;
-
-    const { isOpened } = this.state;
-
-    switch (e.keyCode) {
-    case 9: // tab
-      if (!isOpened) return;
-      return void this.closeMenu();
-
-    case 13: // enter
-      if (!isOpened) return;
-      e.stopPropagation();
-      this.updateValue(e, this.state.focused);
-      break;
-
-    case 27: // esc
-      if (!isOpened) return;
-      this.closeMenu();
+  }, {
+    key: 'onOptionSelect',
+    value: function onOptionSelect(e, _, tc) {
+      this.updateValue(e, tc);
       this.focus();
-      break;
+    }
+  }, {
+    key: 'onOutsideEvent',
+    value: function onOutsideEvent() {
+      if (!this.state.isOpened) return;
+      this.closeMenu();
+    }
 
-    case 32: // space
-      if (this.props.isSearchable) return;
+    /**
+     * @param {boolean} hasUniqValues
+     * @param {object[]} options
+     */
 
-      if (!isOpened) {
-        this.openMenu();
-      } else {
-        this.updateValue(e, this.state.focused);
+  }, {
+    key: 'updateKeyMapper',
+    value: function updateKeyMapper(hasUniqValues, options) {
+      this.mapKey = !(hasUniqValues && hasUniqueValues(options)) ? mapKeyBasedOnPos : mapKey;
+    }
+
+    /**
+     * @param {object} e
+     * @param {number} nextSelected
+     */
+
+  }, {
+    key: 'updateValue',
+    value: function updateValue(e, focused) {
+      var nextState = { isOpened: false };
+      var nextSelected = this.state.inputValue ? indexOf(this.props.options, this._availableOptions[focused].value) : focused;
+
+      if (focused === -1 || nextSelected === this.state.selected) {
+        return void this.setState(nextState);
       }
 
-      break;
-
-    case 38: // up
-      if (!isOpened) {
-        this.openMenu();
-      } else {
-        this.focusPreviousOption();
+      if (!this.controlled) {
+        nextState.selected = nextSelected;
       }
 
-      break;
-
-    case 40: // down
-      if (!isOpened) {
-        this.openMenu();
-      } else {
-        this.focusNextOption();
+      if (this.props.isSearchable) {
+        nextState.inputValue = '';
       }
 
-      break;
-
-    default:
-      return;
+      this.setState(nextState);
+      this.props.onChange(e, { value: this.props.options[nextSelected].value });
     }
+  }, {
+    key: 'render',
+    value: function render() {
+      var options = this._availableOptions = this.filterOptions();
 
-    e.preventDefault();
-  }
-
-  onMenuToggle() {
-    if (this.state.isOpened) {
-      return void this.closeMenu();
+      return React.createElement(
+        'div',
+        { className: styleName(this.props, { isFixedWrapper: this.props.hasFixedWidth }) },
+        this.renderValue(),
+        this.renderLabel(),
+        this.renderMenu(options)
+      );
     }
+  }, {
+    key: 'renderLabel',
+    value: function renderLabel() {
+      if (!this.props.isSearchable) {
+        return React.createElement(
+          'button',
+          {
+            className: style(this.props.styles, 'control', {
+              isClosedControl: !this.state.isOpened,
+              isOpenedControl: this.state.isOpened
+            }),
+            disabled: this.props.disabled,
+            onClick: this.onMenuToggle,
+            onKeyDown: this.onKeyDown,
+            ref: 'label',
+            tabIndex: this.props.tabIndex || 0 },
+          React.createElement(
+            'span',
+            { className: style(this.props.styles, 'label') },
+            this.getSelectedLabel(this.state.selected)
+          )
+        );
+      }
 
-    return void this.openMenu();
-  }
-
-  /**
-   * @param {object} e
-   * @param {*} _
-   * @param {number} tc
-   */
-  onOptionFocus(e, _, tc) {
-    if (this.state.focused === tc) return;
-    this.setState({focused: tc});
-  }
-
-  /**
-   * @param {object} e
-   * @param {*} _
-   * @param {number} tc
-   */
-  onOptionSelect(e, _, tc) {
-    this.updateValue(e, tc);
-    this.focus();
-  }
-
-  onOutsideEvent() {
-    if (!this.state.isOpened) return;
-    this.closeMenu();
-  }
-
-  /**
-   * @param {boolean} hasUniqValues
-   * @param {object[]} options
-   */
-  updateKeyMapper(hasUniqValues, options) {
-    this.mapKey = !(hasUniqValues && hasUniqueValues(options))
-      ? mapKeyBasedOnPos
-      : mapKey;
-  }
-
-  /**
-   * @param {object} e
-   * @param {number} nextSelected
-   */
-  updateValue(e, focused) {
-    const nextState = {isOpened: false};
-    const nextSelected = this.state.inputValue
-      ? indexOf(this.props.options, this._availableOptions[focused].value)
-      : focused;
-
-    if (focused === -1 || nextSelected === this.state.selected) {
-      return void this.setState(nextState);
-    }
-
-    if (!this.controlled) {
-      nextState.selected = nextSelected;
-    }
-
-    if (this.props.isSearchable) {
-      nextState.inputValue = '';
-    }
-
-    this.setState(nextState);
-    this.props.onChange(e, {value: this.props.options[nextSelected].value});
-  }
-
-  render() {
-    const options = this._availableOptions = this.filterOptions();
-
-    return (
-      <div className={styleName(this.props, {isFixedWrapper: this.props.hasFixedWidth})}>
-        {this.renderValue()}
-        {this.renderLabel()}
-        {this.renderMenu(options)}
-      </div>
-    );
-  }
-
-  renderLabel() {
-    if (!this.props.isSearchable) {
-      return (
-        <button
-          className={style(this.props.styles, 'control', {
+      return React.createElement(
+        'span',
+        {
+          className: style(this.props.styles, 'control', {
             isClosedControl: !this.state.isOpened,
-            isOpenedControl: this.state.isOpened,
-          })}
-          disabled={this.props.disabled}
-          onClick={this.onMenuToggle}
-          onKeyDown={this.onKeyDown}
-          ref='label'
-          tabIndex={this.props.tabIndex || 0}>
-          <span className={style(this.props.styles, 'label')}>
-            {this.getSelectedLabel(this.state.selected)}
-          </span>
-        </button>
+            isOpenedControl: this.state.isOpened
+          }) },
+        React.createElement('input', {
+          className: this.props.styles.input,
+          disabled: this.props.disabled,
+          onChange: this.onInputChange,
+          onClick: this.onMenuToggle,
+          onKeyDown: this.onKeyDown,
+          ref: 'label',
+          tabIndex: this.props.tabIndex || 0,
+          type: 'text',
+          value: this.state.inputValue }),
+        React.createElement(
+          'span',
+          { className: style(this.props.styles, 'label') },
+          this.state.inputValue ? '' : this.getSelectedLabel(this.state.selected)
+        )
+      );
+    }
+  }, {
+    key: 'renderMenu',
+    value: function renderMenu(options) {
+      return React.createElement(
+        Overlay,
+        {
+          className: style(this.props.styles, 'menu', {
+            isFixedMenu: this.props.hasFixedWidth,
+            isClosedMenu: !this.state.isOpened,
+            isOpenedMenu: this.state.isOpened
+          }),
+          ref: 'menu' },
+        this.renderOptions(options)
       );
     }
 
-    return (
-      <span
-        className={style(this.props.styles, 'control', {
-          isClosedControl: !this.state.isOpened,
-          isOpenedControl: this.state.isOpened,
-        })}>
-        <input
-          className={this.props.styles.input}
-          disabled={this.props.disabled}
-          onChange={this.onInputChange}
-          onClick={this.onMenuToggle}
-          onKeyDown={this.onKeyDown}
-          ref='label'
-          tabIndex={this.props.tabIndex || 0}
-          type='text'
-          value={this.state.inputValue}/>
-        <span className={style(this.props.styles, 'label')}>
-          {this.state.inputValue ? '' : this.getSelectedLabel(this.state.selected)}
-        </span>
-      </span>
-    );
-  }
+    /**
+     * @param  {option} option
+     * @return {string}
+     */
 
-  renderMenu(options) {
-    return (
-      <Overlay
-        className={style(this.props.styles, 'menu', {
-          isFixedMenu: this.props.hasFixedWidth,
-          isClosedMenu: !this.state.isOpened,
-          isOpenedMenu: this.state.isOpened,
-        })}
-        ref='menu'>
-        {this.renderOptions(options)}
-      </Overlay>
-    );
-  }
-
-  /**
-   * @param  {option} option
-   * @return {string}
-   */
-  renderOption(option) {
-    return option.label;
-  }
-
-  renderOptions(options) {
-    if (!this.state.isOpened) {
-      return null;
+  }, {
+    key: 'renderOption',
+    value: function renderOption(option) {
+      return option.label;
     }
+  }, {
+    key: 'renderOptions',
+    value: function renderOptions(options) {
+      if (!this.state.isOpened) {
+        return null;
+      }
 
-    const { hasFixedWidth, styles } = this.props;
-    const length = options.length;
+      var _props = this.props,
+          hasFixedWidth = _props.hasFixedWidth,
+          styles = _props.styles;
 
-    if (this.props.isSearchable && length === 0) {
-      return (
-        <Option
-          className={styles.empty}>
-          {this.props.noResults}
-        </Option>
-      );
+      var length = options.length;
+
+      if (this.props.isSearchable && length === 0) {
+        return React.createElement(
+          Option,
+          {
+            className: styles.empty },
+          this.props.noResults
+        );
+      }
+
+      var _state = this.state,
+          focused = _state.focused,
+          prefix = _state.prefix,
+          selected = _state.selected;
+
+      var renderOption = this.props.renderOption || this.renderOption;
+
+      var components = [];
+      var isFocused;
+      var isSelected;
+      var option;
+      var ref;
+
+      for (var i = 0; i < length; ++i) {
+        isFocused = focused === i;
+        isSelected = selected === i;
+        ref = isFocused ? 'selected' : null;
+
+        option = options[i];
+
+        components.push(React.createElement(
+          Option,
+          _extends({}, option, {
+            className: style(styles, 'item', {
+              isFixedItem: hasFixedWidth,
+              isFocusedItem: isFocused,
+              isSelectedItem: isSelected
+            }),
+            isFocused: isFocused,
+            key: this.mapKey(prefix, option.value, i),
+            onFocus: this.onOptionFocus,
+            onSelect: this.onOptionSelect,
+            ref: ref,
+            tc: i }),
+          renderOption(option)
+        ));
+      }
+
+      return components;
     }
-
-    const { focused, prefix, selected } = this.state;
-    const renderOption = this.props.renderOption || this.renderOption;
-
-    const components = [];
-    var isFocused;
-    var isSelected;
-    var option;
-    var ref;
-
-    for (var i = 0; i < length; ++i) {
-      isFocused = focused === i;
-      isSelected = selected === i;
-      ref = isFocused
-        ? 'selected'
-        : null;
-
-      option = options[i];
-
-      components.push((
-        <Option
-          {...option}
-          className={style(styles, 'item', {
-            isFixedItem: hasFixedWidth,
-            isFocusedItem: isFocused,
-            isSelectedItem: isSelected,
-          })}
-          isFocused={isFocused}
-          key={this.mapKey(prefix, option.value, i)}
-          onFocus={this.onOptionFocus}
-          onSelect={this.onOptionSelect}
-          ref={ref}
-          tc={i}>
-          {renderOption(option)}
-        </Option>
-      ));
+  }, {
+    key: 'renderValue',
+    value: function renderValue() {
+      return React.createElement('input', {
+        className: this.props.styles.native,
+        disabled: this.props.disabled,
+        name: this.props.name,
+        type: 'hidden',
+        value: this.getSelectedValue(this.state.selected) });
     }
+  }]);
 
-    return components;
-  }
-
-  renderValue() {
-    return (
-      <input
-        className={this.props.styles.native}
-        disabled={this.props.disabled}
-        name={this.props.name}
-        type='hidden'
-        value={this.getSelectedValue(this.state.selected)}/>
-    );
-  }
-}
+  return Select;
+}(Component);
 
 Select.defaultProps = {
   hasFixedWidth: false,
@@ -479,7 +550,7 @@ Select.defaultProps = {
   onChange: noop,
   placeholder: '—',
   styleName: 'wrapper',
-  styles: {},
+  styles: {}
 };
 
 Select.propTypes = {
@@ -511,8 +582,8 @@ Select.propTypes = {
     label: PropTypes.string.isRequired,
     menu: PropTypes.string.isRequired,
     native: PropTypes.string.isRequired,
-    wrapper: PropTypes.string,
-  }),
+    wrapper: PropTypes.string
+  })
 };
 
 module.exports = reactOutsideEvent(Select, ['click']);

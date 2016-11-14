@@ -1,10 +1,12 @@
 'use strict';
 
-const { noop } = require('./func');
+var _require = require('./func'),
+    noop = _require.noop;
 
 var warning = noop;
 
-if (process.env.NODE_ENV !== 'production') { // eslint-disable-line no-undef
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-line no-undef
   /**
    * Copy of React's warning function
    *
@@ -12,7 +14,11 @@ if (process.env.NODE_ENV !== 'production') { // eslint-disable-line no-undef
    * @param  {string}    format
    * @param  {...string} args
    */
-  warning = function warning(condition, format, ...args) {
+  warning = function warning(condition, format) {
+    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+
     if (typeof format === 'undefined') {
       throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
     }
@@ -26,7 +32,9 @@ if (process.env.NODE_ENV !== 'production') { // eslint-disable-line no-undef
     }
 
     var argIndex = 0;
-    var message = 'Warning: ' + format.replace(/%s/g, () => args[argIndex++]);
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
 
     if (typeof console !== 'undefined') {
       console.error(message); // eslint-disable-line no-console

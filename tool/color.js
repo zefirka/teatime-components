@@ -1,6 +1,6 @@
 'use strict';
 
-const hex = /^#?[a-f0-9]{3}|[a-f0-9]{6}$/i;
+var hex = /^#?[a-f0-9]{3}|[a-f0-9]{6}$/i;
 
 exports.isHexBased = isHexBased;
 exports.isValidHex = isValidHex;
@@ -38,7 +38,9 @@ function normalizeColor(color) {
   nextColor = trimHash(nextColor);
 
   if (nextColor.length === 3) {
-    nextColor = nextColor.replace(/./g, d => d + d);
+    nextColor = nextColor.replace(/./g, function (d) {
+      return d + d;
+    });
   }
 
   return nextColor.toUpperCase();
@@ -49,9 +51,7 @@ function normalizeColor(color) {
  * @return {string}
  */
 function trimHash(color) {
-  return typeof color === 'string'
-    ? color.replace('#', '')
-    : color;
+  return typeof color === 'string' ? color.replace('#', '') : color;
 }
 
 /**
@@ -59,7 +59,5 @@ function trimHash(color) {
  * @return {string}
  */
 function trimSpaces(color) {
-  return typeof color === 'string'
-    ? color.replace(/\s/g, '')
-    : color;
+  return typeof color === 'string' ? color.replace(/\s/g, '') : color;
 }

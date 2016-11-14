@@ -1,25 +1,20 @@
 'use strict';
 
-const { PropTypes } = require('react');
-const ColorPicker = require('../view/ColorPicker');
-const StyleComponent = require('../mixin/StyleComponent');
+var _require = require('react'),
+    PropTypes = _require.PropTypes;
 
-module.exports = StyleComponent(
-  ColorPicker,
-  (styles, { size }) => ({styles: styles[size]}),
-  {
-    xs: require('../style/color-picker/color-picker-xs.css'),
-    s: require('../style/color-picker/color-picker-s.css'),
-    m: require('../style/color-picker/color-picker-m.css'),
-  },
-  {
-    size: 'm',
-  },
-  {
-    size: PropTypes.oneOf([
-      'xs',
-      's',
-      'm',
-    ]),
-  }
-);
+var ColorPicker = require('../view/ColorPicker');
+var StyleComponent = require('../mixin/StyleComponent');
+
+module.exports = StyleComponent(ColorPicker, function (styles, _ref) {
+  var size = _ref.size;
+  return { styles: styles[size] };
+}, {
+  xs: require('../style/color-picker/color-picker-xs.css'),
+  s: require('../style/color-picker/color-picker-s.css'),
+  m: require('../style/color-picker/color-picker-m.css')
+}, {
+  size: 'm'
+}, {
+  size: PropTypes.oneOf(['xs', 's', 'm'])
+});

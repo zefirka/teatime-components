@@ -1,7 +1,9 @@
 'use strict';
 
-const { mapKeys } = require('./func');
-const classNames = require('classnames');
+var _require = require('./func'),
+    mapKeys = _require.mapKeys;
+
+var classNames = require('classnames');
 
 exports.classNames = classNames;
 exports.style = style;
@@ -14,8 +16,9 @@ exports.styleName = styleName;
  * @return {string}
  */
 function style(styles, name, optional) {
-  return classNames(styles[name],
-    mapKeys((_, key) => styles[key], optional));
+  return classNames(styles[name], mapKeys(function (_, key) {
+    return styles[key];
+  }, optional));
 }
 
 /**
@@ -27,6 +30,7 @@ function style(styles, name, optional) {
  * @return {string}
  */
 function styleName(props, optional) {
-  return classNames(props.className, props.styles[props.styleName],
-    mapKeys((_, key) => props.styles[key], optional));
+  return classNames(props.className, props.styles[props.styleName], mapKeys(function (_, key) {
+    return props.styles[key];
+  }, optional));
 }
